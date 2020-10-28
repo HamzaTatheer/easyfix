@@ -1,7 +1,7 @@
 git clone url....
 
 
-//then go to the new directory created using 
+//then go to new directory created using 
 git add . //add new updated files to latest version
 git comit // creates a the new version locally
 git push // push the new version into github repositry
