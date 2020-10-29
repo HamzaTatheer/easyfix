@@ -1,7 +1,5 @@
 package com.easyfix.Application.ui.Terminal;
 
-import com.easyfix.Application.bl.CustomerProvider;
-import com.easyfix.Application.bl.CustomerService;
 import com.easyfix.Application.ui.UI;
 
 public class Terminal extends UI {

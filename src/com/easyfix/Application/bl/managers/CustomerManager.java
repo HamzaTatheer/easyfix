@@ -1,9 +1,10 @@
-package com.easyfix.Application.bl;
+package com.easyfix.Application.bl.managers;
 
+import com.easyfix.Application.bl.services.CustomerService;
 import com.easyfix.Application.db.DBFactory;
 import com.easyfix.Application.db.DBService;
 
-public class CustomerManager implements CustomerService{
+public class CustomerManager implements CustomerService {
 
     DBService database = DBFactory.getDatabase();
 

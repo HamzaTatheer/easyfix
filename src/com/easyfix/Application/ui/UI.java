@@ -1,10 +1,7 @@
 package com.easyfix.Application.ui;
 
-import com.easyfix.Application.Application;
-import com.easyfix.Application.bl.CustomerProvider;
-import com.easyfix.Application.bl.CustomerService;
-import com.easyfix.Application.ui.Gui.Gui;
-import com.easyfix.Application.ui.Terminal.Terminal;
+import com.easyfix.Application.bl.serviceProviders.CustomerProvider;
+import com.easyfix.Application.bl.services.CustomerService;
 
 public abstract class UI {
     public CustomerService customerService;
