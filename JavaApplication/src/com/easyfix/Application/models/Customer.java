@@ -5,4 +5,8 @@ public class Customer {
         public String name;
         public String email;
         public String password;
+        Float wallet;
+        public String homeAddress;
+        public String creditNo;
+        public String paymentMethod;
 }
