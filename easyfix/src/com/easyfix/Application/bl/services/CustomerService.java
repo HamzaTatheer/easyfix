@@ -1,5 +1,6 @@
 package com.easyfix.Application.bl.services;
 
+import com.easyfix.Application.bl.classes.Customer;
 import com.easyfix.Application.models.CustomerModel;
 
 import java.util.ArrayList;
