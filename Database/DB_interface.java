@@ -10,13 +10,13 @@ public interface DB_interface {
 
 public boolean does_customer_exist(int id);
 public int does_customer_exist(String email,String password); //id returned
-public boolean store_customer(int id,String name,String email,String password,float wallet,String city,String area,ArrayList<Integer> favourite);
+public boolean store_customer(int id,String name,String email,String password,String credit_no,float wallet,String city,String area,ArrayList<Integer> favourite);
 public boolean update_customer_city(int id,String city);
 public boolean update_customer_area(int id,String area);
 public boolean update_customerPayment(int id,String payment);
 public CustomerModel get_customer(int id);
 
-public boolean store_worker(int id,String name,String email,String password,int average_rating,int hourly_rate,String city,String area,String speciality,ArrayList<Integer> rating);
+public boolean store_worker(int id,String name,String email,String password,float average_rating,float hourly_rate,String city,String area,String speciality,ArrayList<Integer> rating);
 public WorkerModel get_worker(int id);
 public int does_worker_exist(String email,String password); //id returned
 public ArrayList<WorkerModel> get_worker(String city,String area);
