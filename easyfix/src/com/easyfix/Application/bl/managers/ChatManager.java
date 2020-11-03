@@ -1,7 +1,6 @@
 package com.easyfix.Application.bl.managers;
 
 import com.easyfix.Application.bl.services.ChatService;
-import com.easyfix.Application.bl.classes.Chat;
 import com.easyfix.Application.bl.services.UserService;
 import com.easyfix.Application.models.ChatMessageModel;
 

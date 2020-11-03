@@ -2,10 +2,18 @@ package com.easyfix.Application.db.sqlDb;
 
 import com.easyfix.Application.db.services.CustomerDbService;
 
-public class CustomerSqlManager implements CustomerDbService {
-    //access from sql server
-    public int doesUserExist(String email,String password){
 
+public class CustomerSqlManager implements CustomerDbService {
+    public boolean does_customer_exist(int id){
+        if((id==1) || (id ==2)){
+            return true;
+        }
+        else
+            return false;
+    }
+
+    //access from sql server
+    public int does_customer_exist(String email,String password){
         if((email == "admin@gmail.com")&&(password == "admin"))
         return 1;
         else{
