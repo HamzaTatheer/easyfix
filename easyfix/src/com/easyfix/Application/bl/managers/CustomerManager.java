@@ -1,10 +1,14 @@
 package com.easyfix.Application.bl.managers;
+import com.easyfix.Application.bl.classes.Customer;
 import com.easyfix.Application.bl.services.CustomerService;
+import com.easyfix.Application.db.dbProviders;
+import com.easyfix.Application.db.services.CustomerDbService;
 import com.easyfix.Application.models.CustomerModel;
 
 public class CustomerManager implements CustomerService {
-    public int login(String email,String password){
-        return 0;
+    public int login(String email, String password){
+        CustomerDbService custdbservice = dbProviders.getCustomerDbService();
+        return custdbservice.doesUserExist(1);
     }
     private int getCustomer(int id){
             return 0;//0 for null

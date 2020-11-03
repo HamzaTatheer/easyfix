@@ -1,9 +1,9 @@
-package com.easyfix.Application.bl.serviceProviders;
+package com.easyfix.Application.bl;
 
-import com.easyfix.Application.bl.services.CustomerService;
 import com.easyfix.Application.bl.managers.CustomerManager;
+import com.easyfix.Application.bl.services.CustomerService;
 
-public class CustomerProvider {
+public class serviceProviders{
     public static CustomerService getCustomerService(){
         return new CustomerManager();
     }
