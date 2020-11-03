@@ -4,40 +4,50 @@ import com.easyfix.Application.bl.services.CustomerService;
 import com.easyfix.Application.db.dbProviders;
 import com.easyfix.Application.db.services.CustomerDbService;
 import com.easyfix.Application.models.CustomerModel;
+import com.easyfix.Application.utils.HandledException;
+
+import java.sql.SQLDataException;
 
 public class CustomerManager implements CustomerService {
-    public int login(String email, String password){
+
+    //return id
+    public int login(String email, String password) throws Exception {
         CustomerDbService custdbservice = dbProviders.getCustomerDbService();
-        return custdbservice.doesUserExist(1);
+        int userid = -1;
+        //userid = custdbservice.doesUserExist(1); or something else like doesexist(email,password)
+
+        //dummy access of database in 2 lines below
+        if((email=="admin@gmail.com")&&(password=="admin")){
+            userid=1;
+        }
+
+        if(userid < -1){
+            throw new Exception("wrong login");//used to send ui layer in catch block if there is error over normal flow
+        }
+        return userid;
     }
-    private int getCustomer(int id){
-            return 0;//0 for null
+
+    //return id
+    public int register(String name,String email,String password,String city,String area) throws Exception{
+        CustomerDbService custdbservice = dbProviders.getCustomerDbService();
+        int userid = 0;
+
+        if(password.length() <= 5){
+            throw new Exception("Password length must be greater than 5");
+        }
+        //userid = custdbservice.storeUser(...)
+        if(userid < -1){
+            throw new Exception("User can not be registered. Please try again");
+        }
+
+        return 1;
     }
-    public Boolean changePaymentMethod(int id,String newMethod){
-        //Get Customer from db and convert Model to Customer Object
-        //Customer c = getCustomer(id);
-        //c.paymentMethod = newMethod
-        //database.store(c);
-        return true;
+
+    public int[] getFavourites(int cid){
+        CustomerDbService custdbservice = dbProviders.getCustomerDbService();
+        return null;
     }
-    public Boolean addToWallet(int id,int money){
-        //Get Customer from db
-        //Convert to Customer object
-        //Make Credit Card payment
-        //if it returns successful payment
-        //add money to wallet
-        //Convert Customer object to model
-        //save in db
-        return true;
-    }
-    public Boolean changeHomeAddress(int id,String newAddress){
-        //simply change HomeAddress and store in db
-        return true;
-    }
-    public Boolean addToFavourite(int id,int wid){
-        //Get model from db
-        //Convert to Customer object
-        //Contact WorkerManager to check if id exists
-        return true;
-    }
+
+
+
 }
