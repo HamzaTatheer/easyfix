@@ -5,4 +5,5 @@ public class BookingModel {
     public int wid;
     public int cid;
     public String text;
+    public String status;
 }
