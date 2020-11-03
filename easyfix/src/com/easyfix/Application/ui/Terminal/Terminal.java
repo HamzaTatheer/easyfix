@@ -34,7 +34,7 @@ public class Terminal extends UI {
                 System.out.println("Error!!!!Login Failed");
                 userid=-2;
             }
-            //getfavourite method
+            ///getfavourite method
 
             if(userid!=-2) {
                 System.out.println("1-Get Favourites");
