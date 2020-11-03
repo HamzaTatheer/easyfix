@@ -17,21 +17,26 @@ public class Terminal extends UI {
         int choice;
         System.out.println("1-Login\n");
         System.out.println("2-Register\n");
-        Scanner sc=new Scanner(System.in);
+        Scanner sc1=new Scanner(System.in);
         System.out.println("Enter Choice : ");
-        choice=sc.nextInt();
+        choice=sc1.nextInt();
+        Scanner sc=new Scanner(System.in);
         if(choice==1) {
             int choice2;
             ArrayList<Integer> arr=new ArrayList<Integer>() ;
             int userid;
+            System.out.println("Enter Email :");
+            String email = sc.nextLine();
+            System.out.println("Enter Password :");
+            String password = sc.nextLine();
             try {
 
-                userid = customerService.login("hamza@gmail.com", "12356");
+                userid = customerService.login(email, password);
                 System.out.println("Login Successful");
 
 
             } catch (Exception e) {
-                System.out.println("Error!!!!Login Failed");
+                System.out.println(e.getMessage());
                 userid=-2;
             }
             ///getfavourite method
@@ -47,13 +52,22 @@ public class Terminal extends UI {
             }
         }
         else if(choice==2) {
-
+            System.out.println("Enter Name :");
+                String name = sc.nextLine();
+            System.out.println("Enter Email :");
+                String email = sc.nextLine();
+            System.out.println("Enter Password :");
+                String password = sc.nextLine();
+            System.out.println("Enter City :");
+                String city = sc.nextLine();
+            System.out.println("Enter Area :");
+                String area = sc.nextLine();
             try {
-                int id = customerService.register("Talha", "talha@gmail.com", "123123", "lahore", "DHA");
+                int id = customerService.register(name, email, password, city, area);
                 System.out.println(id);
             }
             catch(Exception e){
-                System.out.println("Error!!! Registration Failed");
+                System.out.println(e.getMessage());
             }
         }
 
