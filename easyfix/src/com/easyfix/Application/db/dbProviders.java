@@ -8,11 +8,9 @@ import com.easyfix.Application.db.textDb.CustomerTextManager;
 public class dbProviders {
     public static CustomerDbService getCustomerDbService(){
         if(Config.db == "sql") {
-            System.out.println("SQL");
             return new CustomerTextManager();
         }
         else {
-            System.out.println("OTHER/TEXT");
             return new CustomerSqlManager();
         }
     }

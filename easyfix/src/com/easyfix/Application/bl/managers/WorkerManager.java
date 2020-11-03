@@ -14,8 +14,8 @@ public class WorkerManager implements WorkerService {
         //userid = custdbservice.doesUserExist(1); or something else like doesexist(email,password)
 
         //dummy access of database in 2 lines below
-        if((email=="admin@gmail.com")&&(password=="admin")){
-            userid=1;
+        if((email=="worker@gmail.com")&&(password=="worker")){
+            userid=2;
         }
 
         if(userid == -1){
