@@ -6,7 +6,7 @@ import com.easyfix.Application.ui.UI;
 
 public class Application {
 
-    //public config values
+    //public config values.
     public static String ui = "terminal";//terminal or gui
     public static String db = "sql";//text or sql
 

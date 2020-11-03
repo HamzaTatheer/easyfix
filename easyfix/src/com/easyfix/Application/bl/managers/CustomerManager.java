@@ -1,6 +1,6 @@
 package com.easyfix.Application.bl.managers;
 import com.easyfix.Application.bl.services.CustomerService;
-import com.easyfix.Application.models.Customer;
+import com.easyfix.Application.models.CustomerModel;
 
 public class CustomerManager implements CustomerService {
     public int login(String email,String password){
@@ -33,7 +33,6 @@ public class CustomerManager implements CustomerService {
     public Boolean addToFavourite(int id,int wid){
         //Get model from db
         //Convert to Customer object
-        Customer c = new Customer();
         //Contact WorkerManager to check if id exists
         return true;
     }

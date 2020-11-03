@@ -1,6 +1,6 @@
 package com.easyfix.Application.bl.services;
 
-import com.easyfix.Application.models.Customer;
+import com.easyfix.Application.models.CustomerModel;
 
 public interface CustomerService{
     public int login(String email,String password);
