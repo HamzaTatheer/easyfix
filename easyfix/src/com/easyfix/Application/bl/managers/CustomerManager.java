@@ -54,24 +54,4 @@ public class CustomerManager implements CustomerService {
 
         return favourites;
     }
-
-    public boolean addToFavourite(int wid){
-
-        return true;
-    }
-
-    public boolean changePaymentMethod(int cid,String newMethod){
-        //simple db service call to change method
-        return true;
-    }
-
-    public boolean changeCity(String newCity){
-        //db call to change City
-        return true;
-    }
-
-    public boolean changeArea(String newArea){
-        //db call to change newArea
-        return true;
-    }
 }
