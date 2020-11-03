@@ -20,7 +20,7 @@ public class Terminal extends UI {
             System.out.print(userid);
         }
         catch(Exception e) {
-            System.out.println("Error!!!!");
+            System.out.println("Error!!!!Login Failed");
         }
 
     }
