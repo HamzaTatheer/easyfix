@@ -1,10 +1,6 @@
 package com.easyfix.Application.models;
 
-public class WorkerModel {
-    public int id;
-    public String name;
-    public String email;
-    public String password;
+public class WorkerModel extends UserModel{
     public int avgRating;
     public int hourlyRate;
     public String city;

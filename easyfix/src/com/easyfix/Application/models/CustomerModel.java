@@ -1,10 +1,8 @@
 package com.easyfix.Application.models;
 
-public class CustomerModel {
-    public int id;
-    public String name;
-    public String email;
-    public String password;
+import com.easyfix.Application.bl.classes.User;
+
+public class CustomerModel extends UserModel{
     public Float wallet;
     public String paymentMethod;
     public String city;

@@ -10,9 +10,14 @@ public class User {
         password = newPassword;
         return true;
     }
-
-    User(){
+    public User(){
 
     }
+
+    public String getName(){
+        return name;
+    }
+
+
 
 }
