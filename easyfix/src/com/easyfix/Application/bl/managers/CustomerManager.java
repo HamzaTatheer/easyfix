@@ -18,7 +18,7 @@ public class CustomerManager implements CustomerService {
         //userid = custdbservice.doesUserExist(1); or something else like doesexist(email,password)
 
         //dummy access of database in 2 lines below
-        if((email=="admin@gmail.com")&&(password=="admin")){
+        if((email=="customer@gmail.com")&&(password=="customer")){
             userid=1;
         }
 
