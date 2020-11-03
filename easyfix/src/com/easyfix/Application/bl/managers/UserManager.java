@@ -6,6 +6,20 @@ import com.easyfix.Application.bl.services.UserService;
 import com.easyfix.Application.models.UserModel;
 
 public class UserManager implements UserService {
+
+
+
+    public String getUserName(int id) throws Exception{
+        try {
+            UserModel u = getUser(id);
+            return u.name;
+        }
+        catch (Exception e){
+            throw new Exception(e);
+        }
+
+    }
+
     public UserModel getUser(int id) throws Exception {
         if(id == 1){
             UserModel u = new UserModel();

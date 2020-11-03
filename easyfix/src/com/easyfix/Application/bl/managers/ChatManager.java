@@ -2,8 +2,10 @@ package com.easyfix.Application.bl.managers;
 
 import com.easyfix.Application.bl.services.ChatService;
 import com.easyfix.Application.bl.classes.Chat;
+import com.easyfix.Application.bl.services.UserService;
 import com.easyfix.Application.models.ChatMessageModel;
 
+import java.security.spec.ECField;
 import java.util.ArrayList;
 
 public class ChatManager implements ChatService {
@@ -14,17 +16,53 @@ public class ChatManager implements ChatService {
         return true;
     }
     public ArrayList<ChatMessageModel> loadMessageHistory(int senderId, int receiverId){
+
+        UserManager userManage = new UserManager();
+
         //get chats from db and store in array list
         ArrayList<ChatMessageModel> chat = new ArrayList<ChatMessageModel>();
         ChatMessageModel reply1 = new ChatMessageModel();
         reply1.senderId = 1;
         reply1.receiverId = 2;
+        try {
+            reply1.senderName = userManage.getUserName(1);
+        }
+        catch (Exception e){
+            reply1.senderName = "none";
+        }
+
+        try{
+        reply1.receiverName = userManage.getUserName(2);
+        }
+        catch (Exception e){
+            reply1.senderName = "none";
+        }
+
         reply1.message = "Hi i called you 6 months ago.you did not come you stupid man";
         chat.add(reply1);
 
         ChatMessageModel reply2 = new ChatMessageModel();
         reply2.senderId = 2;
         reply2.receiverId = 1;
+
+
+        try {
+            reply2.senderName = userManage.getUserName(2);
+        }
+        catch (Exception e){
+            reply2.senderName = "none";
+        }
+
+        try{
+            reply2.receiverName = userManage.getUserName(1);
+        }
+        catch (Exception e){
+            reply2.senderName = "none";
+        }
+
+
+
+
         reply2.message = "Sorry sir, this wont happen again. i promise";
         chat.add(reply2);
         return chat;
