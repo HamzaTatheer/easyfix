@@ -9,12 +9,12 @@ public class Customer extends User{
     Float wallet;
     public String area;
     public String city;
-    public String creditNo;
+    public String creditno;
     public String paymentMethod;
     public String password;
     public ArrayList<Favourite>Favourites;
 
-
+    //constructors
     Customer(int _id,String _name,String _email,String _password,String _city,String _area, String _creditNo, String _paymentMethod,ArrayList<Favourite>_Favourites)
     {
         id = _id;
@@ -23,11 +23,10 @@ public class Customer extends User{
         password = _password;
         city = _city;
         area = _area;
-        creditNo = _creditNo;
+        creditno = _creditNo;
         paymentMethod = _paymentMethod;
         Favourites=_Favourites;
     }
-
 
     Customer(CustomerModel model){
         id = model.id;
@@ -36,25 +35,11 @@ public class Customer extends User{
         password = model.password;
         area = model.area;
         city = model.city;
-        creditNo = model.creditno;
+        creditno = model.creditno;
         paymentMethod = model.paymentMethod;
         //Favourites=model.Favourites; //conversion needed from model to entity
     }
-
-    public CustomerModel getCustomerModel(CustomerModel model){
-        CustomerModel c = new CustomerModel();
-        c.id = model.id;
-        c.name = model.name;
-        c.email = model.email;
-        c.password = "hidden";
-        c.area = model.area;
-        c.city = model.city;
-        c.creditno = model.creditno;
-        c.paymentMethod = model.paymentMethod;
-        return c;
-    }
-
-
+    //setters
     public Boolean addToWallet(Float newAmount){
         wallet += newAmount;
         return true;
@@ -69,9 +54,21 @@ public class Customer extends User{
             return true;
         }
     }
-
     public Boolean makeCreditCardPayment(Float amount){
         //external api to charge amount
         return true;
+    }
+    //getters
+    public CustomerModel getCustomerModel(){
+        CustomerModel c = new CustomerModel();
+        c.id = id;
+        c.name = name;
+        c.email = email;
+        c.password = "hidden";
+        c.area = area;
+        c.city = city;
+        c.creditno = creditno;
+        c.paymentMethod =paymentMethod;
+        return c;
     }
 }
