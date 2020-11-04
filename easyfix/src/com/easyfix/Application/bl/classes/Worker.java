@@ -89,26 +89,4 @@ public class Worker extends  User{
     public String getSpeciality() {
         return speciality;
     }
-
-    //setters
-
-    public void setArea(String area) {
-        this.area = area;
-    }
-
-    public void setAvgRating(float avgRating) {
-        this.avgRating = avgRating;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public void setHourlyRate(float hourlyRate) {
-        this.hourlyRate = hourlyRate;
-    }
-
-    public void setSpeciality(String speciality) {
-        this.speciality = speciality;
-    }
 }
