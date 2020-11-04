@@ -1,5 +1,6 @@
 package com.easyfix.Application.bl.classes;
-
+import java.io.*;
+import java.util.*;
 public class User {
     public int id;
     public String name;
