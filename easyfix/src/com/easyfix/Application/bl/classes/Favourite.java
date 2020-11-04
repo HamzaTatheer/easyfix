@@ -5,7 +5,7 @@ import com.easyfix.Application.models.FavouriteModel;
 import java.io.*;
 import java.util.*;
 public class Favourite {
-    public Worker obj;
+    public Worker obj=new Worker();
     Favourite(Worker W){
         obj=W;
     }
