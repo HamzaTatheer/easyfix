@@ -17,21 +17,21 @@ public class Complain {
         cid=_cid;
         text=_text;
     }
-    Complain(ComplainModel C){
-        id=C.id;
-        wid=C.wid;
-        cid=C.cid;
-        text=C.text;
+    Complain(ComplainModel obj){
+        id=obj.id;
+        wid=obj.wid;
+        cid=obj.cid;
+        text=obj.text;
     }
     //setters
 
     //getters
-    ComplainModel get_ComplainModel(){
+    ComplainModel getComplainModel(Complain obj){
         ComplainModel temp=new ComplainModel();
-        temp.cid=cid;
-        temp.id=id;
-        temp.text=text;
-        temp.wid=wid;
+        temp.cid=obj.cid;
+        temp.id=obj.id;
+        temp.text=obj.text;
+        temp.wid=obj.wid;
         return temp;
     }
 }
