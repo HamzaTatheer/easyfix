@@ -25,7 +25,7 @@ public class Worker extends  User{
         city = _city;
         area = _area;
     }
-    Worker(WorkerModel model){
+    public Worker(WorkerModel model){
         id = model.id;
         name = model.name;
         email =model.email;
