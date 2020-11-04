@@ -34,13 +34,13 @@ public class ChatMessage {
     }
 
     //getters
-    public ChatMessageModel get_ChatMessageModel(){
+    public ChatMessageModel getChatMessageModel(ChatMessage obj){
         ChatMessageModel temp=new ChatMessageModel();
-        temp.senderId=senderId;
-        temp.receiverId=receiverId;
-        temp.senderName=senderName;
-        temp.receiverName=receiverName;
-        temp.message=message;
+        temp.senderId=obj.senderId;
+        temp.receiverId=obj.receiverId;
+        temp.senderName=obj.senderName;
+        temp.receiverName=obj.receiverName;
+        temp.message=obj.message;
         return temp;
     }
 

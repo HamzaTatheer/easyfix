@@ -16,28 +16,28 @@ public class Booking {
         id=_id;
         wid=_wid;
         cid=_cid;
-        _text=text;
-        _status=status;
+        text=_text;
+        status=_status;
     }
-    Booking(BookingModel B){
-        id=B.id;
-        wid=B.wid;
-        cid=B.cid;
-        text=B.text;
-        status=B.status;
+    Booking(BookingModel obj){
+        id=obj.id;
+        wid=obj.wid;
+        cid=obj.cid;
+        text=obj.text;
+        status=obj.status;
 
     }
     //setters
 
 
     //getters
-    public BookingModel get_BookingModel(){
+    public BookingModel getBookingModel(Booking obj){  //return BookingModel
         BookingModel temp=new BookingModel();
-        temp.id=id;
-        temp.wid=wid;
-        temp.cid=cid;
-        temp.text=text;
-        temp.status=status;
+        temp.id=obj.id;
+        temp.wid=obj.wid;
+        temp.cid=obj.cid;
+        temp.text=obj.text;
+        temp.status=obj.status;
         return temp;
     }
 }
