@@ -6,6 +6,7 @@ import java.io.*;
 import java.util.*;
 public class Favourite {
     public Worker obj=new Worker();
+    //constructors
     Favourite(Worker W){
         obj=W;
     }
@@ -19,18 +20,23 @@ public class Favourite {
         obj.speciality=F.obj.speciality;
         obj.avgRating=F.obj.avgRating;
     }
-    public FavouriteModel get_Favourite_Model(FavouriteModel F){
+    //setters
+
+    //getters
+    public Worker getObj() {
+        return obj;
+    }
+    public FavouriteModel get_Favourite_Model(){
         FavouriteModel f=new FavouriteModel();
-        f.obj.name=F.obj.name;
-        f.obj.email=F.obj.email;
-        f.obj.id=F.obj.id;
-        f.obj.area=F.obj.area;
-        f.obj.city=F.obj.city;
-        f.obj.password=F.obj.password;
-        f.obj.hourlyRate=F.obj.hourlyRate;
-        f.obj.speciality=F.obj.speciality;
-        f.obj.avgRating=F.obj.avgRating;
-        f.obj.rating=F.obj.rating;
+        f.obj.name=obj.name;
+        f.obj.email=obj.email;
+        f.obj.id=obj.id;
+        f.obj.area=obj.area;
+        f.obj.city=obj.city;
+        f.obj.password=obj.password;
+        f.obj.hourlyRate=obj.hourlyRate;
+        f.obj.speciality=obj.speciality;
+        f.obj.avgRating=obj.avgRating;
         return f;
     }
 
