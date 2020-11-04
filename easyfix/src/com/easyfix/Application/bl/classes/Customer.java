@@ -2,6 +2,8 @@ package com.easyfix.Application.bl.classes;
 
 import com.easyfix.Application.models.CustomerModel;
 
+import java.util.ArrayList;
+
 public class Customer extends User{
     Float wallet;
     public String area;
@@ -9,6 +11,7 @@ public class Customer extends User{
     public String creditNo;
     public String paymentMethod;
     public String password;
+    ArrayList<Favourite>Favourites;
 
     Customer(int _id,String _name,String _email,String _password,String _city,String _area, String _creditNo, String _paymentMethod)
     {
