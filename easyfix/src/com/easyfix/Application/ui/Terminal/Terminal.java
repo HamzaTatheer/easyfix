@@ -1,5 +1,6 @@
 package com.easyfix.Application.ui.Terminal;
 
+import com.easyfix.Application.models.WorkerModel;
 import com.easyfix.Application.ui.UI;
 
 import java.util.ArrayList;
@@ -24,8 +25,19 @@ public class Terminal extends UI {
 */
 
 
-        ArrayList<Integer> favourites = customerService.getFavourites(1);
+
+    /*    ArrayList<Integer> favourites = customerService.getFavourites(1);
         String output = favourites.toString();
         System.out.println(output);
+    */
+
+        try {
+            WorkerModel w = workerService.getWorker(1);
+            System.out.println(w.name);
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
     }
 }
