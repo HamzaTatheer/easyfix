@@ -8,16 +8,18 @@ public class Booking {
     public int cid;
     public String text;
     public String status;
+    int hours;
     //constructors
     Booking(){
 
     }
-    Booking(int _id,int _wid,int _cid,String _text,String _status){
+    Booking(int _id,int _wid,int _cid,String _text,String _status,int _hours){
         id=_id;
         wid=_wid;
         cid=_cid;
         text=_text;
         status=_status;
+        hours=_hours;
     }
     Booking(BookingModel obj){
         id=obj.id;

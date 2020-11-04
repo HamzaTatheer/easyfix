@@ -6,6 +6,7 @@ public class BookingModel {
     public int cid;
     public String text;
     public String status;
+    int hours;
     //getters
     public BookingModel get_BookingModel(){
         BookingModel temp=new BookingModel();
@@ -14,6 +15,7 @@ public class BookingModel {
         temp.cid=cid;
         temp.text=text;
         temp.status=status;
+        temp.hours=hours;
         return temp;
     }
 }
