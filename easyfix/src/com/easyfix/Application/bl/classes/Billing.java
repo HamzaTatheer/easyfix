@@ -17,9 +17,9 @@ public class Billing {
     //getters
     public BillingModel getBillingModelEntity(Billing obj){
         BillingModel temp=new BillingModel();
+        temp.totalCost=obj.totalCost;
         temp.id=obj.id;
         temp.bid=obj.bid;
-        temp.totalCost=obj.totalCost;
         return temp;
 
     }
