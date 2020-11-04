@@ -25,7 +25,6 @@ public class Worker extends  User{
         city = _city;
         area = _area;
     }
-    // WorkerModel related functions
     Worker(WorkerModel model){
         id = model.id;
         name = model.name;
@@ -37,20 +36,7 @@ public class Worker extends  User{
         city = model.city;
         area = model.area;
     }
-    public WorkerModel getWorkerModel(){
-
-        WorkerModel w = new WorkerModel();
-        w.id = id;
-        w.name = name;
-        w.email =email;
-        w.password =password;
-        w.hourlyRate = hourlyRate;
-        w.speciality = speciality;
-        w.city = city;
-        w.area = area;
-        return w;
-    }
-    // Change data functions
+    // Setters
     public Boolean changeHourlyRate(float new_rate){
         if(new_rate >= 0) {
             hourlyRate = new_rate;
@@ -88,5 +74,18 @@ public class Worker extends  User{
 
     public String getSpeciality() {
         return speciality;
+    }
+    public WorkerModel getWorkerModel(){
+
+        WorkerModel w = new WorkerModel();
+        w.id = id;
+        w.name = name;
+        w.email =email;
+        w.password =password;
+        w.hourlyRate = hourlyRate;
+        w.speciality = speciality;
+        w.city = city;
+        w.area = area;
+        return w;
     }
 }
