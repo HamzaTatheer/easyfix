@@ -10,6 +10,9 @@ public class Worker extends  User{
     public String city;
     public String area;
 
+    Worker(){
+
+    }
     Worker(int _id,String _name,String _email,String _password,String _city,String _area,float avgrating, float _HourlyRate,String _speciality,String _location){
         id = _id;
         name = _name;
