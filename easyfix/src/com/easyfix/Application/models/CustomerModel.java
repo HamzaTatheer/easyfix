@@ -11,6 +11,5 @@ public class CustomerModel extends UserModel{
     public String paymentMethod;
     public String city;
     public String area;
-    public ArrayList<Integer> Favourites;
-
+    public ArrayList<WorkerModel> Favourites;
 }

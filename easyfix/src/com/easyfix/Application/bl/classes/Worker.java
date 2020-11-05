@@ -8,7 +8,6 @@ public class Worker extends  User{
     public String speciality;
     public String city;
     public String area;
-    public int[] rating;
 
     //constructors
     Worker(){
@@ -24,7 +23,6 @@ public class Worker extends  User{
         speciality = _speciality;
         city = _city;
         area = _area;
-        rating=_rating;
     }
     public Worker(WorkerModel model){
         id = model.id;
@@ -36,7 +34,6 @@ public class Worker extends  User{
         speciality = model.speciality;
         city = model.city;
         area = model.area;
-        rating=model.rating;
     }
     // Setters
     public Boolean changeHourlyRate(float new_rate){
@@ -88,7 +85,6 @@ public class Worker extends  User{
         w.speciality = model.speciality;
         w.city = model.city;
         w.area = model.area;
-        w.rating=model.rating;
         return w;
     }
     public WorkerModel getWorkerModel(Worker temp){ // convert class to model
@@ -102,7 +98,6 @@ public class Worker extends  User{
         w.speciality = temp.speciality;
         w.city = temp.city;
         w.area = temp.area;
-        w.rating=temp.rating;
         return w;
     }
 

@@ -40,7 +40,6 @@ public class Customer extends User{
         paymentMethod = model.paymentMethod;
         city = model.city;
         area = model.area;
-
     }
     //setters
     public Boolean addToWallet(Float newAmount){

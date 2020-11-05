@@ -2,9 +2,9 @@ package com.easyfix.Application.bl.services;
 
 import com.easyfix.Application.bl.classes.Customer;
 import com.easyfix.Application.models.CustomerModel;
+import com.easyfix.Application.models.RatingModel;
 
 import java.util.ArrayList;
-
 public interface CustomerService{
     public int login(String email,String password) throws Exception;
     public int register(String name,String email,String password,String city,String area) throws Exception;//returns id after registering so you can login directly. -1 on error
@@ -13,4 +13,9 @@ public interface CustomerService{
     public boolean changePaymentMethod(int cid,String newMethod);
     public boolean changeCity(String newCity);
     public boolean changeArea(String newArea);
+    public boolean giveRating(int cid,int wid);
 }
+
+
+
+

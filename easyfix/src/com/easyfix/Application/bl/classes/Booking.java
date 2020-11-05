@@ -4,8 +4,8 @@ import com.easyfix.Application.models.BookingModel;
 import java.time.LocalDateTime;
 public class Booking {
     public int id;
-    public int wid;
-    public int cid;
+    public Customer customer;
+    public Worker worker;
     public String text;
     public String status;
     public LocalDateTime startTime;
@@ -16,8 +16,6 @@ public class Booking {
     }
     Booking(int _id,int _wid,int _cid,String _text,String _status,LocalDateTime _startTime,LocalDateTime _endTime){
         id=_id;
-        wid=_wid;
-        cid=_cid;
         text=_text;
         status=_status;
         startTime=_startTime;
@@ -31,7 +29,6 @@ public class Booking {
         status=obj.status;
         startTime=obj.startTime;
         endTime=obj.endTime;
-
     }
     //setters
 
