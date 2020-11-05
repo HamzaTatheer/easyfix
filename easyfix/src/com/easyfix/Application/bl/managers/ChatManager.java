@@ -23,19 +23,7 @@ public class ChatManager implements ChatService {
         ChatMessageModel reply1 = new ChatMessageModel();
         reply1.senderId = 1;
         reply1.receiverId = 2;
-        try {
-            reply1.senderName = userManage.getUserName(1);
-        }
-        catch (Exception e){
-            reply1.senderName = "none";
-        }
 
-        try{
-        reply1.receiverName = userManage.getUserName(2);
-        }
-        catch (Exception e){
-            reply1.senderName = "none";
-        }
 
         reply1.message = "Hi i called you 6 months ago.you did not come you stupid man";
         chat.add(reply1);
@@ -43,21 +31,6 @@ public class ChatManager implements ChatService {
         ChatMessageModel reply2 = new ChatMessageModel();
         reply2.senderId = 2;
         reply2.receiverId = 1;
-
-
-        try {
-            reply2.senderName = userManage.getUserName(2);
-        }
-        catch (Exception e){
-            reply2.senderName = "none";
-        }
-
-        try{
-            reply2.receiverName = userManage.getUserName(1);
-        }
-        catch (Exception e){
-            reply2.senderName = "none";
-        }
 
 
 

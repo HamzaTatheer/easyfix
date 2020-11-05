@@ -95,7 +95,7 @@ public class WorkerManager implements WorkerService {
         Worker workerObj = new Worker(w); //covert model to class
         updated = workerObj.changeHourlyRate(newRate); //update in class
         //get updated worker model
-        w = workerObj.getWorkerModel(workerObj); //convert class to model
+        w = workerObj.getWorkerModel(); //convert class to model
         //store in db
 
 
@@ -118,7 +118,7 @@ public class WorkerManager implements WorkerService {
         Worker workerObj = new Worker(w); //convert model to  class
         updated = workerObj.changeCity(newCity); //update in class
         //get updated model and store in db
-        w = workerObj.getWorkerModel(workerObj); // convert class to model
+        w = workerObj.getWorkerModel(); // convert class to model
         //store in db
 
         return updated;
@@ -141,7 +141,7 @@ public class WorkerManager implements WorkerService {
         Worker workerObj = new Worker(w);//convert model to class
         updated = workerObj.changeArea(newArea); //update in class
         //get updated model and store in db
-        w = workerObj.getWorkerModel(workerObj); //get model
+        w = workerObj.getWorkerModel(); //get model
         //store in db
 
         return updated;

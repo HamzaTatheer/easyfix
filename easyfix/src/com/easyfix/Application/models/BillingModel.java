@@ -1,7 +1,7 @@
-package com.easyfix.Application.models;
+package models;
 
 public class BillingModel {
     public int id;
-    public BookingModel bookingModel;
+    public int bid;
     public int totalCost;
 }
