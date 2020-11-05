@@ -1,6 +1,7 @@
 package com.easyfix.Application.bl.services;
 import com.easyfix.Application.models.ChatMessageModel;
 
+import java.util.ArrayList;
 
 
 public interface ChatService {
