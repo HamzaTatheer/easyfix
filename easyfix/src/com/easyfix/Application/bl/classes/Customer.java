@@ -2,23 +2,21 @@ package com.easyfix.Application.bl.classes;
 import java.util.ArrayList;
 import com.easyfix.Application.models.CustomerModel;
 import com.easyfix.Application.models.FavouriteModel;
-import com.easyfix.Application.bl.classes.Favourite;
-import java.io.*;
-import java.util.*;
+
 public class Customer extends User{
     public Float wallet;
     public String creditno;
     public String paymentMethod;
     public String city;
     public String area;
-    public ArrayList<Favourite>Favourites;
+    public ArrayList<Worker> Favourites;
 
 
     //constructors
     Customer(){
 
     }
-    Customer(int _id,String _name,String _email,String _password,float _wallet, String _creditNo, String _paymentMethod,String _city,String _area,ArrayList<Favourite>_Favourites)
+    Customer(int _id,String _name,String _email,String _password,float _wallet, String _creditNo, String _paymentMethod,String _city,String _area,ArrayList<Worker>_Favourites)
     {
         id = _id;
         name = _name;
@@ -42,10 +40,7 @@ public class Customer extends User{
         paymentMethod = model.paymentMethod;
         city = model.city;
         area = model.area;
-        for (int i=0;i<model.Favourites.size();i++){
-            Favourite obj=new Favourite(model.Favourites.get(i));//conversion here for favourites
-            Favourites.add(i,obj);
-        }
+
     }
     //setters
     public Boolean addToWallet(Float newAmount){
