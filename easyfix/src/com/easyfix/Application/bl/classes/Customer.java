@@ -36,7 +36,7 @@ public class Customer extends User{
         c.city = temp.city;
         c.area = temp.area;
         for (int i=0;i<temp.Favourites.size();i++){
-            
+
         }
         return c;
     }

@@ -5,34 +5,23 @@ import com.easyfix.Application.models.BookingModel;
 
 public class Billing {
     public int id; //bill id
-    public int bid; //booking id
+    public BookingModel bookingModel;
     public int totalCost;
 
     //constructors
     Billing(BillingModel obj){
         id=obj.id;
-        bid=obj.bid;
+        bookingModel=obj.bookingModel;
         totalCost=obj.totalCost;
     }
 
     public BillingModel getBillingModel(){ //convert class to model
         BillingModel temp=new BillingModel();
         temp.id=id;
-        temp.bid=bid;
+        temp.bookingModel=bookingModel;
         temp.totalCost=totalCost;
         return temp;
     }
-
-    public int getId() {
-        return id;
-    }
-
-    public int getBid() {
-        return bid;
-    }
-
-    public int getTotalCost() {
-        return totalCost;
-    }
+    
     //setters
 }
