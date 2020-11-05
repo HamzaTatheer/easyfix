@@ -22,7 +22,7 @@ public class CustomerManager implements CustomerService {
             userid=1;
         }
 
-        if(userid < -1){
+        if(userid <= -1){
             throw new Exception("wrong login");//used to send ui layer in catch block if there is error over normal flow
         }
         return userid;
