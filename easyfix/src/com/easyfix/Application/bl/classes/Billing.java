@@ -22,6 +22,6 @@ public class Billing {
         temp.totalCost=totalCost;
         return temp;
     }
-    
+
     //setters
 }
