@@ -1,15 +1,8 @@
 package com.easyfix.Application.ui.Terminal;
-
-<<<<<<< HEAD
 import com.easyfix.Application.models.WorkerModel;
-=======
-<<<<<<< HEAD
 import com.easyfix.Application.models.ChatMessageModel;
 import com.easyfix.Application.models.UserModel;
-=======
 import com.easyfix.Application.bl.services.CustomerService;
->>>>>>> 7ce0c2e1de265838461de897b21cd1052b705e61
->>>>>>> parent of 03170ac... Revert "randomchanges"
 import com.easyfix.Application.ui.UI;
 import java.util.ArrayList;
 import java.util.*;
@@ -46,17 +39,56 @@ public class Terminal extends UI {
 
             } catch (Exception e) {
                 System.out.println(e.getMessage());
-                userid=-2;
+                userid = -2;
             }
-            ///getfavourite method
 
             if(userid!=-2) {
                 System.out.println("1-Get Favourites");
+                System.out.println("2-Add to favourite");
+                System.out.println("3-Change Area");
+                System.out.println("4-Change city");
+                System.out.println("5-Change Payment method");
                 choice2 = sc.nextInt();
 
                 if (choice2 == 1) {
-                    arr = customerService.getFavourites(userid);
-                        System.out.println(arr);
+                    ArrayList<Integer> favourites = customerService.getFavourites(userid);
+                    System.out.println(arr);
+                }
+                else if (choice == 2){
+                    System.out.println("Enter worker id :");
+                    int wid = sc.nextInt();
+                    boolean fav=customerService.addToFavourite(wid);
+                    if(fav == true)
+                        System.out.println("Worker added to favourites");
+                    else
+                        System.out.println("Error!!!!");
+                }
+                else if(choice  == 3){
+                    System.out.println("Enter area :");
+                    String area = sc.nextLine();
+                    boolean changearea=customerService.changeArea(area);
+                    if(changearea == true)
+                        System.out.println("Area changed successfully");
+                    else
+                        System.out.println("Error!!!!");
+                }
+                else if(choice == 4){
+                    System.out.println("Enter city :");
+                    String city = sc.nextLine();
+                    boolean changecity=customerService.changeCity(city);
+                    if(changecity == true)
+                        System.out.println("City changed successfully");
+                    else
+                        System.out.println("Error!!!!");
+                }
+                else if(choice == 5){
+                    System.out.println("Enter payment method :");
+                    String paymethod = sc.nextLine();
+                    boolean method=customerService.changePaymentMethod(userid,paymethod);
+                    if(method == true)
+                        System.out.println("Payment method updated successfully");
+                    else
+                        System.out.println("Error!!!!");
                 }
             }
         }
@@ -79,9 +111,6 @@ public class Terminal extends UI {
                 System.out.println(e.getMessage());
             }
         }
-<<<<<<< HEAD
-*/
-
 
 
     /*    ArrayList<Integer> favourites = customerService.getFavourites(1);
@@ -96,9 +125,6 @@ public class Terminal extends UI {
         catch (Exception e){
             System.out.println(e.getMessage());
         }
-<<<<<<< HEAD
-=======
-*/
 
 
         /*
@@ -110,11 +136,6 @@ public class Terminal extends UI {
         catch (Exception e){
             System.out.println(e.getMessage());
         }*/
-
-
-=======
->>>>>>> 7ce0c2e1de265838461de897b21cd1052b705e61
->>>>>>> parent of 03170ac... Revert "randomchanges"
 
     }
 }
