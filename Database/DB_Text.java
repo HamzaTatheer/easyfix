@@ -1298,7 +1298,7 @@ public class DB_Text implements DB_interface {
                 else
                     mywriter.write(0 + "\n");
                 if (give.get(i).wid!=null)
-                mywriter.write(give.get(i).wid + "\n");
+                mywriter.write(give.get(i).wid.id + "\n");
                 else
                     mywriter.write(0 + "\n");
                 mywriter.write(give.get(i).text + "\n");
