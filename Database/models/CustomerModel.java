@@ -12,5 +12,5 @@ public class CustomerModel {
     public String creditno;
     public String city;
     public String area;
-    public ArrayList<Integer> Favourite;
+    public ArrayList<WorkerModel> Favourite;
 }

@@ -1,10 +1,9 @@
 package Classes;
 
 //import org.json.simple.JSONObject;
-import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
+
 import models.*;
 
 public interface DB_interface {
@@ -17,7 +16,7 @@ public boolean update_customer_area(int id,String area);
 public boolean update_customerPayment(int id,String payment);
 public CustomerModel get_customer(int id);
 
-public boolean store_worker(String name,String email,String password,float average_rating,float hourly_rate,String city,String area,String speciality,ArrayList<Integer> rating);//id given by default by DB
+public boolean store_worker(String name,String email,String password,float average_rating,float hourly_rate,String city,String area,String speciality);//id given by default by DB
 public WorkerModel get_worker(int id);
 public int does_worker_exist(String email,String password); //id returned
 public ArrayList<WorkerModel> get_worker(String city,String area);
@@ -26,8 +25,11 @@ public boolean update_Worker_city(int id,String city);
 public boolean update_Worker_area(int id,String area);
 public boolean update_hourly_rate(int id,float rate);
 
-public boolean store_booking( int customer_id, int worker_id, String text, String status, LocalDateTime start_time,LocalDateTime end_time);//bid given by default by DB
+public boolean store_booking( int customer_id, int worker_id, String text, String status, LocalDateTime start_time,LocalDateTime end_time,ArrayList<Integer> spareParts);//bid given by default by DB
 public  ArrayList<BookingModel> get_booking(int customer_id);
+public ArrayList<BookingModel> get_booking(int customer_id,String status);
+public boolean update_booking_status(int booking_id,String status);
+
 
 public boolean store_spare_holder(int booking_id,int spare_id,int quantity);
 public ArrayList<SparePartModel> get_all_spare_parts_booking(int booking_id);//part id,quantity returned

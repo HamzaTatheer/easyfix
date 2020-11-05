@@ -12,5 +12,6 @@ public class WorkerModel {
     public String city;
     public String area;
     public String speciality;
-    public ArrayList<Integer> rating;
+
+
 }
