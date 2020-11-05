@@ -46,8 +46,17 @@ public class User {
     public String getPassword() {
         return password;
     }
-    public UserModel get_User_Model(UserModel U){
+    public User getUser(UserModel U){ //convert model to class
+        User temp=new User();
+        temp.id=U.id;
+        temp.name=U.name;
+        temp.email=U.email;
+        temp.password=U.password;
+        return  temp;
+    }
+    public UserModel getUserModel(User U){ //convert class to model
         UserModel temp=new UserModel();
+        temp.id=U.id;
         temp.name=U.name;
         temp.email=U.email;
         temp.password=U.password;

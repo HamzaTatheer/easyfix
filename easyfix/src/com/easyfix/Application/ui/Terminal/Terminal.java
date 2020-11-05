@@ -74,12 +74,6 @@ public class Terminal extends UI {
             }
         }
 
-
-    /*    ArrayList<Integer> favourites = customerService.getFavourites(1);
-        String output = favourites.toString();
-        System.out.println(output);
-    */
-
         try {
             WorkerModel w = workerService.getWorker(1);
             System.out.println(w.name);
