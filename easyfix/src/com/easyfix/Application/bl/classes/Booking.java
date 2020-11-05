@@ -37,7 +37,18 @@ public class Booking {
 
 
     //getters
-    public BookingModel getBookingModel(Booking obj){  //return BookingModel
+    public Booking getBooking(BookingModel obj){  //convert model to class
+        Booking temp=new Booking();
+        temp.id=obj.id;
+        temp.wid=obj.wid;
+        temp.cid=obj.cid;
+        temp.text=obj.text;
+        temp.status=obj.status;
+        temp.startTime=obj.startTime;
+        temp.endTime=obj.endTime;
+        return temp;
+    }
+    public BookingModel getBookingModel(Booking obj){  //convert class to model
         BookingModel temp=new BookingModel();
         temp.id=obj.id;
         temp.wid=obj.wid;
@@ -48,4 +59,5 @@ public class Booking {
         temp.endTime=obj.endTime;
         return temp;
     }
+
 }

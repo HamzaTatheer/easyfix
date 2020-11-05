@@ -38,11 +38,18 @@ public class Rating {
         return wid;
     }
 
-    public RatingModel get_RatingModel(){
+    public Rating getRating(RatingModel R){ //convert model to class
+        Rating temp=new Rating();
+        temp.cid=R.cid;
+        temp.rating=R.rating;
+        temp.wid=R.wid;
+        return temp;
+    }
+    public RatingModel getRatingModel(Rating R){ //convert class to model
         RatingModel temp=new RatingModel();
-        temp.cid=cid;
-        temp.rating=rating;
-        temp.wid=wid;
+        temp.cid=R.cid;
+        temp.rating=R.rating;
+        temp.wid=R.wid;
         return temp;
     }
 }

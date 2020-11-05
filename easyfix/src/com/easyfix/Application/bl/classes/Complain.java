@@ -26,7 +26,15 @@ public class Complain {
     //setters
 
     //getters
-    ComplainModel getComplainModel(Complain obj){
+    Complain getComplain(ComplainModel obj){ //convert model to class
+        Complain temp=new Complain();
+        temp.cid=obj.cid;
+        temp.id=obj.id;
+        temp.text=obj.text;
+        temp.wid=obj.wid;
+        return temp;
+    }
+    ComplainModel getComplainModel(Complain obj){ //convert class to model
         ComplainModel temp=new ComplainModel();
         temp.cid=obj.cid;
         temp.id=obj.id;

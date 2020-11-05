@@ -42,13 +42,22 @@ public class SparePart {
     public String getName() {
         return name;
     }
-    public SparePartModel get_SparePartModel()
+    public SparePart getSparePart(SparePartModel S) //convert model to class
+    {
+        SparePart temp=new SparePart();
+        temp.id=S.id;
+        temp.name=S.name;
+        temp.quantity=S.quantity;
+        temp.cost=S.cost;
+        return temp;
+    }
+    public SparePartModel getSparePartModel(SparePart S) //convert class to model
     {
         SparePartModel temp=new SparePartModel();
-        temp.cost=cost;
-        temp.id=id;
-        temp.name=name;
-        temp.quantity=quantity;
+        temp.id=S.id;
+        temp.name=S.name;
+        temp.quantity=S.quantity;
+        temp.cost=S.cost;
         return temp;
     }
 }

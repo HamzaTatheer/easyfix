@@ -11,4 +11,17 @@ public class CustomerModel extends UserModel{
     public String city;
     public String area;
     public ArrayList<FavouriteModel>Favourites;
+    //getters
+    public CustomerModel getCustomerModel(){
+        CustomerModel c = new CustomerModel();
+        c.id = id;
+        c.name = name;
+        c.email = email;
+        c.password = "hidden";
+        c.area = area;
+        c.city = city;
+        c.creditno = creditno;
+        c.paymentMethod =paymentMethod;
+        return c;
+    }
 }
