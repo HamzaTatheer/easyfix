@@ -1,15 +1,9 @@
 package com.easyfix.Application.ui.Terminal;
 
-<<<<<<< HEAD
 import com.easyfix.Application.models.WorkerModel;
-=======
-<<<<<<< HEAD
 import com.easyfix.Application.models.ChatMessageModel;
 import com.easyfix.Application.models.UserModel;
-=======
 import com.easyfix.Application.bl.services.CustomerService;
->>>>>>> 7ce0c2e1de265838461de897b21cd1052b705e61
->>>>>>> parent of 03170ac... Revert "randomchanges"
 import com.easyfix.Application.ui.UI;
 import java.util.ArrayList;
 import java.util.*;
@@ -79,9 +73,6 @@ public class Terminal extends UI {
                 System.out.println(e.getMessage());
             }
         }
-<<<<<<< HEAD
-*/
-
 
 
     /*    ArrayList<Integer> favourites = customerService.getFavourites(1);
@@ -96,9 +87,6 @@ public class Terminal extends UI {
         catch (Exception e){
             System.out.println(e.getMessage());
         }
-<<<<<<< HEAD
-=======
-*/
 
 
         /*
@@ -112,9 +100,6 @@ public class Terminal extends UI {
         }*/
 
 
-=======
->>>>>>> 7ce0c2e1de265838461de897b21cd1052b705e61
->>>>>>> parent of 03170ac... Revert "randomchanges"
 
     }
 }
