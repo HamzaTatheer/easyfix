@@ -10,16 +10,5 @@ public class BookingModel {
     public String status;
     public LocalDateTime startTime;
     public LocalDateTime endTime;
-    //getters
-    public BookingModel get_BookingModel(){
-        BookingModel temp=new BookingModel();
-        temp.id=id;
-        temp.wid=wid;
-        temp.cid=cid;
-        temp.text=text;
-        temp.status=status;
-        temp.startTime=startTime;
-        temp.endTime=endTime;
-        return temp;
-    }
+
 }
