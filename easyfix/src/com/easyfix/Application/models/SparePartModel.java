@@ -5,5 +5,4 @@ public class SparePartModel {
     public String name;
     public float cost;
     public int quantity;
-
 }

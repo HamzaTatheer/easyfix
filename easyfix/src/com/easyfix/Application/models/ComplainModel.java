@@ -5,5 +5,4 @@ public class ComplainModel {
     public int wid;
     public int cid;
     public String text;
-
 }

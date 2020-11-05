@@ -8,6 +8,7 @@ import java.util.Date;
 
 public interface DB_interface {
 /*
+
 public boolean store_customer(int id,String name,String email,String password,String creditNo,float wallet,String city,String area,ArrayList<Integer> favourite);
 public boolean update_customer_city(int id,String city);
 public boolean update_customer_area(int id,String area);

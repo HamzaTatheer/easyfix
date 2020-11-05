@@ -51,8 +51,8 @@ public class Terminal extends UI {
                 choice2 = sc.nextInt();
 
                 if (choice2 == 1) {
-                    ArrayList<Integer> favourites = customerService.getFavourites(userid);
-                    System.out.println(arr);
+                    ArrayList<WorkerModel> favourites = customerService.getFavourites(userid);
+                    System.out.println(favourites.toString());
                 }
                 else if (choice2 == 2){
                     System.out.println("Enter worker id :");
