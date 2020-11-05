@@ -54,7 +54,7 @@ public class Terminal extends UI {
                     ArrayList<Integer> favourites = customerService.getFavourites(userid);
                     System.out.println(arr);
                 }
-                else if (choice == 2){
+                else if (choice2 == 2){
                     System.out.println("Enter worker id :");
                     int wid = sc.nextInt();
                     boolean fav=customerService.addToFavourite(wid);
@@ -63,7 +63,7 @@ public class Terminal extends UI {
                     else
                         System.out.println("Error!!!!");
                 }
-                else if(choice  == 3){
+                else if(choice2  == 3){
                     System.out.println("Enter area :");
                     String area = sc.nextLine();
                     boolean changearea=customerService.changeArea(area);
@@ -72,7 +72,7 @@ public class Terminal extends UI {
                     else
                         System.out.println("Error!!!!");
                 }
-                else if(choice == 4){
+                else if(choice2 == 4){
                     System.out.println("Enter city :");
                     String city = sc.nextLine();
                     boolean changecity=customerService.changeCity(city);
@@ -81,7 +81,7 @@ public class Terminal extends UI {
                     else
                         System.out.println("Error!!!!");
                 }
-                else if(choice == 5){
+                else if(choice2 == 5){
                     System.out.println("Enter payment method :");
                     String paymethod = sc.nextLine();
                     boolean method=customerService.changePaymentMethod(userid,paymethod);
@@ -111,12 +111,6 @@ public class Terminal extends UI {
                 System.out.println(e.getMessage());
             }
         }
-
-
-    /*    ArrayList<Integer> favourites = customerService.getFavourites(1);
-        String output = favourites.toString();
-        System.out.println(output);
-    */
 
         try {
             WorkerModel w = workerService.getWorker(1);
