@@ -8,7 +8,7 @@ import java.security.spec.ECField;
 import java.util.ArrayList;
 
 public class ChatManager implements ChatService {
-    public boolean sendMessage(int senderId,int receiverId,String message){
+    public Boolean sendMessage(int senderId,int receiverId,String message){
         //call db Service to store message in db
         //Return true when there is a message in db for sure
         //Hence User can do loadmessagehistory as soon as message is stored in db to get new messages
