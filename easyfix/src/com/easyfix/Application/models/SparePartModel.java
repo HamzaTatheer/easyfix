@@ -5,14 +5,5 @@ public class SparePartModel {
     public String name;
     public float cost;
     public int quantity;
-    //getters
-    public SparePartModel getSparePartModel()
-    {
-        SparePartModel temp=new SparePartModel();
-        temp.id=id;
-        temp.name=name;
-        temp.quantity=quantity;
-        temp.cost=cost;
-        return temp;
-    }
+
 }

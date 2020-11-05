@@ -70,6 +70,11 @@ public class CustomerManager implements CustomerService {
         return true;
     }
 
+    public boolean giveRating(int cid,int wid){
+
+        return true;
+    }
+
     public boolean changeArea(String newArea){
         //db call to change newArea
         return true;

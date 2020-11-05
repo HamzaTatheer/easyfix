@@ -5,41 +5,23 @@ import com.easyfix.Application.models.BookingModel;
 
 public class Billing {
     public int id; //bill id
-    public int bid; //booking id
+    public BookingModel bookingModel;
     public int totalCost;
 
     //constructors
-    Billing(){
-        // checkkkkkkkkkkkkkkkkkkk
-        /////dhwhdfjwhejfhwejhj
+    Billing(BillingModel obj){
+        id=obj.id;
+        bookingModel=obj.bookingModel;
+        totalCost=obj.totalCost;
+    }
 
-    }
-    //getters
-    public Billing getBilling(BillingModel obj){ //convert model to class
-        Billing temp=new Billing();
-        temp.totalCost=obj.totalCost;
-        temp.id=obj.id;
-        temp.bid=obj.bid;
-        return temp;
-    }
-    public BillingModel getBillingModel(Billing obj){ //convert class to model
+    public BillingModel getBillingModel(){ //convert class to model
         BillingModel temp=new BillingModel();
-        temp.totalCost=obj.totalCost;
-        temp.id=obj.id;
-        temp.bid=obj.bid;
+        temp.id=id;
+        temp.bookingModel=bookingModel;
+        temp.totalCost=totalCost;
         return temp;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public int getBid() {
-        return bid;
-    }
-
-    public int getTotalCost() {
-        return totalCost;
-    }
     //setters
 }
