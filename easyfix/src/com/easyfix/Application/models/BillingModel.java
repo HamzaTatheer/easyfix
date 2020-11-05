@@ -1,4 +1,4 @@
-package models;
+package com.easyfix.Application.models;
 
 public class BillingModel {
     public int id;

@@ -1,4 +1,4 @@
-package models;
+package com.easyfix.Application.models;
 
 public class RatingModel {
     public int cid;

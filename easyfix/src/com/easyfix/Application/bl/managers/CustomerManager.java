@@ -4,6 +4,7 @@ import com.easyfix.Application.bl.services.CustomerService;
 import com.easyfix.Application.db.dbProviders;
 import com.easyfix.Application.db.services.CustomerDbService;
 import com.easyfix.Application.models.CustomerModel;
+import com.easyfix.Application.models.WorkerModel;
 import com.easyfix.Application.utils.HandledException;
 
 import java.sql.SQLDataException;
@@ -44,15 +45,9 @@ public class CustomerManager implements CustomerService {
         return 1;
     }
 
-    public ArrayList<Integer> getFavourites(int cid){
-        CustomerDbService custdbservice = dbProviders.getCustomerDbService();
-
-
-        //dummy db processing of getting favourite array
-        ArrayList<Integer> favourites = new ArrayList();
-        favourites.add(2);
-
-        return favourites;
+    public ArrayList<WorkerModel> getFavourites(int cid){
+        CustomerDbService customerDbService = dbProviders.getCustomerDbService();
+        return customerDbService.get_customer(cid).Favourite;
     }
 
     public boolean addToFavourite(int wid){

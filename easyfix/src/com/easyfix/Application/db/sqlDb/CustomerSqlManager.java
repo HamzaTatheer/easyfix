@@ -1,6 +1,9 @@
 package com.easyfix.Application.db.sqlDb;
 
 import com.easyfix.Application.db.services.CustomerDbService;
+import com.easyfix.Application.models.CustomerModel;
+
+import java.util.ArrayList;
 
 
 public class CustomerSqlManager implements CustomerDbService {
@@ -19,5 +22,47 @@ public class CustomerSqlManager implements CustomerDbService {
         else{
             return -1;
         }
+    }
+
+    public boolean store_customer(String name,String email,String password,String creditNo,float wallet,String city,String area,ArrayList<Integer> favourite) throws Exception {
+        throw new Exception("Functionality still in progress. try customer@gmail.com or worker@gmail.com");
+    }
+
+    public boolean update_customer_city(int id,String city){
+        if(id == 1){
+            return true;
+        }
+        else
+            return false;
+    }
+    public boolean update_customer_area(int id,String area){
+        if(id == 1){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    public boolean update_customerPayment(int id,String payment){
+            if(id == 1){
+                return true;
+            }
+            else{
+                return false;
+            }
+    }
+    public CustomerModel get_customer(int id){
+            CustomerModel c = new CustomerModel();
+            c.id=1;
+            c.name="customer";
+            c.email="customer";
+            c.password="customer";
+            c.city="lahore";
+            c.area="dha";
+            c.creditno="1234678";
+            c.Favourite = new ArrayList<>();
+            c.paymentMethod="cash";
+            c.wallet = 200.0f;
+            return c;
     }
 }

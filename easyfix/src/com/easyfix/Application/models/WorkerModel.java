@@ -1,4 +1,4 @@
-package models;
+package com.easyfix.Application.models;
 
 import java.util.ArrayList;
 
