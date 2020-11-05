@@ -1,30 +1,34 @@
 package com.easyfix.Application.bl.classes;
-
-import com.easyfix.Application.models.CustomerModel;
-
 import java.util.ArrayList;
+import com.easyfix.Application.models.CustomerModel;
+import com.easyfix.Application.models.FavouriteModel;
+import com.easyfix.Application.bl.classes.Favourite;
 import java.io.*;
 import java.util.*;
 public class Customer extends User{
-    Float wallet;
-    public String area;
-    public String city;
+    public Float wallet;
     public String creditno;
     public String paymentMethod;
-    public String password;
+    public String city;
+    public String area;
     public ArrayList<Favourite>Favourites;
 
+
     //constructors
-    Customer(int _id,String _name,String _email,String _password,String _city,String _area, String _creditNo, String _paymentMethod,ArrayList<Favourite>_Favourites)
+    Customer(){
+
+    }
+    Customer(int _id,String _name,String _email,String _password,float _wallet, String _creditNo, String _paymentMethod,String _city,String _area,ArrayList<Favourite>_Favourites)
     {
         id = _id;
         name = _name;
         email = _email;
         password = _password;
-        city = _city;
-        area = _area;
+        wallet=_wallet;
         creditno = _creditNo;
         paymentMethod = _paymentMethod;
+        city = _city;
+        area = _area;
         Favourites=_Favourites;
     }
 
@@ -33,11 +37,15 @@ public class Customer extends User{
         name = model.name;
         email = model.email;
         password = model.password;
-        area = model.area;
-        city = model.city;
+        wallet=model.wallet;
         creditno = model.creditno;
         paymentMethod = model.paymentMethod;
-        //Favourites=model.Favourites; //conversion needed from model to entity
+        city = model.city;
+        area = model.area;
+        for (int i=0;i<model.Favourites.size();i++){
+            Favourite obj=new Favourite(model.Favourites.get(i));//conversion here for favourites
+            Favourites.add(i,obj);
+        }
     }
     //setters
     public Boolean addToWallet(Float newAmount){
@@ -59,16 +67,40 @@ public class Customer extends User{
         return true;
     }
     //getters
-    public CustomerModel getCustomerModel(){
-        CustomerModel c = new CustomerModel();
-        c.id = id;
-        c.name = name;
-        c.email = email;
+    public Customer getCustomer(CustomerModel temp){ //convert model to class
+        Customer c = new Customer();
+        c.id = temp.id;
+        c.name = temp.name;
+        c.email = temp.email;
         c.password = "hidden";
-        c.area = area;
-        c.city = city;
-        c.creditno = creditno;
-        c.paymentMethod =paymentMethod;
+        c.wallet=temp.wallet;
+        c.creditno = temp.creditno;
+        c.paymentMethod =temp.paymentMethod;
+        c.city = temp.city;
+        c.area = temp.area;
+        for (int i=0;i<temp.Favourites.size();i++){
+            Favourite obj=new Favourite(temp.Favourites.get(i));//conversion here for favourites
+            Favourites.add(i,obj);
+        }
+        return c;
+    }
+    public CustomerModel getCustomerModel(Customer temp){ //convert class to model
+        CustomerModel c = new CustomerModel();
+        c.id = temp.id;
+        c.name = temp.name;
+        c.email = temp.email;
+        c.password = "hidden";
+        c.wallet=temp.wallet;
+        c.creditno = temp.creditno;
+        c.paymentMethod =temp.paymentMethod;
+        c.city = temp.city;
+        c.area = temp.area;
+        for (int i=0;i<temp.Favourites.size();i++){
+
+            Favourite entity=new Favourite();
+            FavouriteModel store=entity.getFavouriteModel(temp.Favourites.get(i));//conversion here
+            c.Favourites.add(i,store);
+        }
         return c;
     }
 }

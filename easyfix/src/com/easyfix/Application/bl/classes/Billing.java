@@ -15,13 +15,19 @@ public class Billing {
 
     }
     //getters
-    public BillingModel getBillingModelEntity(Billing obj){
-        BillingModel temp=new BillingModel();
+    public Billing getBilling(BillingModel obj){ //convert model to class
+        Billing temp=new Billing();
+        temp.totalCost=obj.totalCost;
         temp.id=obj.id;
         temp.bid=obj.bid;
-        temp.totalCost=obj.totalCost;
         return temp;
-
+    }
+    public BillingModel getBillingModel(Billing obj){ //convert class to model
+        BillingModel temp=new BillingModel();
+        temp.totalCost=obj.totalCost;
+        temp.id=obj.id;
+        temp.bid=obj.bid;
+        return temp;
     }
 
     public int getId() {

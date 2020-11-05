@@ -1,29 +1,30 @@
 package com.easyfix.Application.bl.classes;
 
 import com.easyfix.Application.models.WorkerModel;
-import java.io.*;
-import java.util.*;
+
 public class Worker extends  User{
     public float avgRating;
     public float hourlyRate;
     public String speciality;
     public String city;
     public String area;
+    public int[] rating;
 
     //constructors
     Worker(){
 
     }
-    Worker(int _id,String _name,String _email,String _password,String _city,String _area,float _avgrating, float _HourlyRate,String _speciality,String _location){
+    Worker(int _id,String _name,String _email,String _password,float _avgRating, float _HourlyRate,String _speciality,String _city,String _area,int []_rating){
         id = _id;
         name = _name;
         email =_email;
         password =_password;
-        avgRating = _avgrating;
+        avgRating = _avgRating;
         hourlyRate = _HourlyRate;
         speciality = _speciality;
         city = _city;
         area = _area;
+        rating=_rating;
     }
     public Worker(WorkerModel model){
         id = model.id;
@@ -35,6 +36,7 @@ public class Worker extends  User{
         speciality = model.speciality;
         city = model.city;
         area = model.area;
+        rating=model.rating;
     }
     // Setters
     public Boolean changeHourlyRate(float new_rate){
@@ -75,17 +77,33 @@ public class Worker extends  User{
     public String getSpeciality() {
         return speciality;
     }
-    public WorkerModel getWorkerModel(){
+    public Worker getWorker(WorkerModel model){ // convert model to class
 
-        WorkerModel w = new WorkerModel();
-        w.id = id;
-        w.name = name;
-        w.email =email;
-        w.password =password;
-        w.hourlyRate = hourlyRate;
-        w.speciality = speciality;
-        w.city = city;
-        w.area = area;
+        Worker w = new Worker();
+        w.id = model.id;
+        w.name = model.name;
+        w.email =model.email;
+        w.password =model.password;
+        w.hourlyRate = model.hourlyRate;
+        w.speciality = model.speciality;
+        w.city = model.city;
+        w.area = model.area;
+        w.rating=model.rating;
         return w;
     }
+    public WorkerModel getWorkerModel(Worker temp){ // convert class to model
+
+        WorkerModel w = new WorkerModel();
+        w.id = temp.id;
+        w.name = temp.name;
+        w.email =temp.email;
+        w.password =temp.password;
+        w.hourlyRate = temp.hourlyRate;
+        w.speciality = temp.speciality;
+        w.city = temp.city;
+        w.area = temp.area;
+        w.rating=temp.rating;
+        return w;
+    }
+
 }

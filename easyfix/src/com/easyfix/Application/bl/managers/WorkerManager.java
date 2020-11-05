@@ -92,10 +92,10 @@ public class WorkerManager implements WorkerService {
         w.avgRating = 2.4f;
 
         boolean updated = false;
-        Worker workerObj = new Worker(w);
-        updated = workerObj.changeHourlyRate(newRate);
+        Worker workerObj = new Worker(w); //covert model to class
+        updated = workerObj.changeHourlyRate(newRate); //update in class
         //get updated worker model
-        w = workerObj.getWorkerModel();
+        w = workerObj.getWorkerModel(workerObj); //convert class to model
         //store in db
 
 
@@ -115,10 +115,10 @@ public class WorkerManager implements WorkerService {
 
         //w is model
         boolean updated =false;
-        Worker workerObj = new Worker(w);
-        updated = workerObj.changeCity(newCity);
+        Worker workerObj = new Worker(w); //convert model to  class
+        updated = workerObj.changeCity(newCity); //update in class
         //get updated model and store in db
-        w = workerObj.getWorkerModel();
+        w = workerObj.getWorkerModel(workerObj); // convert class to model
         //store in db
 
         return updated;
@@ -138,10 +138,10 @@ public class WorkerManager implements WorkerService {
 
         //w is model
         boolean updated =false;
-        Worker workerObj = new Worker(w);
-        updated = workerObj.changeArea(newArea);
+        Worker workerObj = new Worker(w);//convert model to class
+        updated = workerObj.changeArea(newArea); //update in class
         //get updated model and store in db
-        w = workerObj.getWorkerModel();
+        w = workerObj.getWorkerModel(workerObj); //get model
         //store in db
 
         return updated;

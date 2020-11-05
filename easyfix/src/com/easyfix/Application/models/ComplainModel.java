@@ -6,7 +6,7 @@ public class ComplainModel {
     public int cid;
     public String text;
     //getters
-    ComplainModel getComplainModel(){
+    public ComplainModel getComplainModel(){
         ComplainModel temp=new ComplainModel();
         temp.cid=cid;
         temp.id=id;
