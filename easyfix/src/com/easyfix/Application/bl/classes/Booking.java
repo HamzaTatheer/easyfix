@@ -1,5 +1,5 @@
 package com.easyfix.Application.bl.classes;
-
+import java.util.ArrayList;
 import com.easyfix.Application.models.BookingModel;
 import java.time.LocalDateTime;
 public class Booking {
@@ -10,20 +10,12 @@ public class Booking {
     public String status;
     public LocalDateTime startTime;
     public LocalDateTime endTime;
+    public ArrayList<SparePart> spareParts;
     //constructors
-    Booking(){
 
-    }
-    Booking(int _id,int _wid,int _cid,String _text,String _status,LocalDateTime _startTime,LocalDateTime _endTime){
-        id=_id;
-        text=_text;
-        status=_status;
-        startTime=_startTime;
-        endTime=_endTime;
-    }
     Booking(BookingModel obj){
         id=obj.id;
-        wid=obj.wid;
+        customer=obj.customer;
         cid=obj.cid;
         text=obj.text;
         status=obj.status;
@@ -34,17 +26,6 @@ public class Booking {
 
 
     //getters
-    public Booking getBooking(BookingModel obj){  //convert model to class
-        Booking temp=new Booking();
-        temp.id=obj.id;
-        temp.wid=obj.wid;
-        temp.cid=obj.cid;
-        temp.text=obj.text;
-        temp.status=obj.status;
-        temp.startTime=obj.startTime;
-        temp.endTime=obj.endTime;
-        return temp;
-    }
     public BookingModel getBookingModel(Booking obj){  //convert class to model
         BookingModel temp=new BookingModel();
         temp.id=obj.id;
@@ -56,5 +37,6 @@ public class Booking {
         temp.endTime=obj.endTime;
         return temp;
     }
+
 
 }
