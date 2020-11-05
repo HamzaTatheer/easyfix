@@ -2,9 +2,7 @@ package com.easyfix.Application.bl.classes;
 import java.util.ArrayList;
 import com.easyfix.Application.models.CustomerModel;
 import com.easyfix.Application.models.FavouriteModel;
-import com.easyfix.Application.bl.classes.Favourite;
-import java.io.*;
-import java.util.*;
+
 public class Customer extends User{
     public Float wallet;
     public String creditno;
