@@ -1,6 +1,7 @@
 package com.easyfix.Application.bl.classes;
 import java.util.ArrayList;
 import com.easyfix.Application.models.BookingModel;
+import com.easyfix.Application.bl.classes.Customer;
 import java.time.LocalDateTime;
 public class Booking {
     public int id;
@@ -15,8 +16,8 @@ public class Booking {
 
     Booking(BookingModel obj){
         id=obj.id;
-        customer=obj.customer;
-        cid=obj.cid;
+        //customer=obj.customer;
+        //cid=obj.cid;
         text=obj.text;
         status=obj.status;
         startTime=obj.startTime;
@@ -26,15 +27,14 @@ public class Booking {
 
 
     //getters
-    public BookingModel getBookingModel(Booking obj){  //convert class to model
+    public BookingModel getBookingModel(){
         BookingModel temp=new BookingModel();
-        temp.id=obj.id;
-        temp.wid=obj.wid;
-        temp.cid=obj.cid;
-        temp.text=obj.text;
-        temp.status=obj.status;
-        temp.startTime=obj.startTime;
-        temp.endTime=obj.endTime;
+        temp.id=id;
+
+        temp.text=text;
+        temp.status=status;
+        temp.startTime=startTime;
+        temp.endTime=endTime;
         return temp;
     }
 
