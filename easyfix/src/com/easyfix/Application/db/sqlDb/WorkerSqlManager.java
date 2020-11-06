@@ -1,5 +1,4 @@
 package com.easyfix.Application.db.sqlDb;
-import com.easyfix.Application.db.services.WorkerDbService;
 import com.easyfix.Application.models.WorkerModel;
 
 import java.util.ArrayList;

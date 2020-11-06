@@ -3,11 +3,7 @@ package com.easyfix.Application.bl.managers;
 import com.easyfix.Application.bl.classes.Rating;
 import com.easyfix.Application.bl.services.RatingService;
 import com.easyfix.Application.db.dbProviders;
-import com.easyfix.Application.db.services.CustomerDbService;
-import com.easyfix.Application.db.services.WorkerDbService;
 import com.easyfix.Application.models.RatingModel;
-
-import java.util.ArrayList;
 
 public class RatingManager implements RatingService {
     //public ArrayList<RatingModel> showAllRatings(int id){ //pending}

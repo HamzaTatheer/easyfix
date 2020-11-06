@@ -3,11 +3,7 @@ package com.easyfix.Application.bl.managers;
 import com.easyfix.Application.bl.classes.Worker;
 import com.easyfix.Application.bl.services.WorkerService;
 import com.easyfix.Application.db.dbProviders;
-import com.easyfix.Application.db.services.CustomerDbService;
-import com.easyfix.Application.models.BookingModel;
 import com.easyfix.Application.models.WorkerModel;
-
-import java.util.ArrayList;
 
 public class WorkerManager implements WorkerService {
 

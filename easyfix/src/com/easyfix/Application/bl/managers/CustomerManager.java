@@ -3,9 +3,6 @@ import com.easyfix.Application.bl.classes.Customer;
 import com.easyfix.Application.bl.services.CustomerService;
 import com.easyfix.Application.bl.services.RatingService;
 import com.easyfix.Application.db.dbProviders;
-import com.easyfix.Application.db.services.CustomerDbService;
-import com.easyfix.Application.db.services.RatingDbService;
-import com.easyfix.Application.models.CustomerModel;
 import com.easyfix.Application.models.WorkerModel;
 
 import java.util.ArrayList;

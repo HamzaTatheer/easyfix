@@ -1,6 +1,5 @@
 package com.easyfix.Application.db.sqlDb;
 
-import com.easyfix.Application.db.services.CustomerDbService;
 import com.easyfix.Application.models.CustomerModel;
 
 import java.util.ArrayList;
