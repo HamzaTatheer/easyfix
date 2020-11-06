@@ -18,9 +18,6 @@ public class BookingManager {
         return true;
     }
 
-
-
-
     public boolean createBooking(BookingModel b){
         return true;
     }
