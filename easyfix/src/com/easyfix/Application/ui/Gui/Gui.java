@@ -1,9 +1,11 @@
 package com.easyfix.Application.ui.Gui;
-
+import java.util.ArrayList;
 import com.easyfix.Application.bl.serviceProviders;
+import com.easyfix.Application.models.WorkerModel;
 import com.easyfix.Application.ui.UI;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
+import com.easyfix.Application.models.WorkerModel;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -20,10 +22,15 @@ public class Gui extends Application {
 
     Scene scene;
     Scene scene2;
-
+    Scene scene3;
+    Scene scene4;
+    static int userid;
     public CustomerService customerService;
+
+
     public Gui(){
         super();
+        customerService = serviceProviders.getCustomerService();
     }
 
     @Override
@@ -71,21 +78,23 @@ public class Gui extends Application {
         TextField areaa = new TextField();
        // GridPane.setConstraints(btn3,4,6);
 
+
         btn.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
-                int userid;
+
                 try {
-                    String finalemail = emaill.getText();
-                    String finalpass = passw.getText();
+                    String finalemail = emaill2.getText();
+                    String finalpass = passw2.getText();
                     userid = customerService.login(finalemail, finalpass);
                     System.out.println("Login Successful");
+                    primaryStage.setScene(scene3);
 
 
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
-                    userid=-2;
+                    userid =-2;
                 }
             }
 
@@ -97,12 +106,16 @@ public class Gui extends Application {
 
             @Override
             public void handle(ActionEvent event) {
-                int userid;
+
                 try {
-                    String finalemail = emaill.getText();
-                    String finalpass = passw.getText();
-                    userid = customerService.login(finalemail, finalpass);
-                    System.out.println("Login Successful");
+                    String regName = namee.getText();
+                    String regEmail = emaill.getText();
+                    String regPass = passw.getText();
+                    String regCity = cityy.getText();
+                    String regArea = areaa.getText();
+                    userid = customerService.register(regName,regEmail,regPass,regCity,regArea);
+                    System.out.println("Register Successful");
+                    primaryStage.setScene(scene3);
 
 
                 } catch (Exception e) {
@@ -112,17 +125,89 @@ public class Gui extends Application {
             }
 
         });
+        Button Getfavourite = new Button("Getfavourite");
+        Getfavourite.setOnAction(new EventHandler<ActionEvent>() {
 
+            @Override
+            public void handle(ActionEvent event) {
+
+                ArrayList<WorkerModel> favourites = customerService.getFavourites(userid);
+                String fav = favourites.toString();
+                System.out.println(fav);
+            }
+
+        });
+        Button EditProfile = new Button("Edit Profile");
+        EditProfile.setOnAction(e -> primaryStage.setScene(scene4));
+
+        Label ccity = new Label("Enter City name");
+        TextField ccityy = new TextField();
+        Button changecity = new Button("Change City");
+        changecity.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                String finalcity = ccityy.getText();
+                boolean check = customerService.changeCity(userid,finalcity);
+                if(check == true )
+                    System.out.println("City changed");
+                else
+                    System.out.println("unable to change city");
+            }
+
+        });
+
+        Label carea = new Label("Enter Area name");
+        TextField careaa = new TextField();
+        Button changearea = new Button("Change Area");
+        changecity.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                String finalarea = careaa.getText();
+                boolean check = customerService.changeArea(userid,finalarea);
+                if(check == true )
+                    System.out.println("Area changed");
+                else
+                    System.out.println("unable to change Area");
+            }
+
+        });
+
+        Label cpaymethod = new Label("Enter payment method");
+        TextField cpaymethodd = new TextField();
+        Button changepaymethod = new Button("Change Payment Method");
+        changecity.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                String finalpaymethod = cpaymethodd.getText();
+                boolean check = customerService.changePaymentMethod(userid,finalpaymethod);
+                if(check == true )
+                    System.out.println("Payment Method changed");
+                else
+                    System.out.println("unable to change Payment Method");
+            }
+
+        });
 
         root.getChildren().addAll(email2,emaill2,pass2,passw2,btn,btn2);
         scene = new Scene(root, 500, 300);
 
         vbox.getChildren().addAll(name,namee,email,emaill,pass,passw,city,cityy,area,areaa,btn3);
-
-
-
         scene2 = new Scene(vbox, 500, 300);
-        primaryStage.setTitle("Login");
+
+        VBox homepage = new VBox();
+        homepage.setAlignment(Pos.BASELINE_CENTER);
+        homepage.getChildren().addAll(Getfavourite,EditProfile);
+        scene3 = new Scene(homepage,500,300);
+
+        VBox EditProfilee = new VBox();
+        EditProfilee.setAlignment(Pos.BASELINE_LEFT);
+        EditProfilee.getChildren().addAll(ccity,ccityy,changecity,carea,careaa,changearea,cpaymethod,cpaymethodd,changepaymethod);
+        scene4 = new Scene(EditProfilee,500,300);
+
+        primaryStage.setTitle("EasyFix");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

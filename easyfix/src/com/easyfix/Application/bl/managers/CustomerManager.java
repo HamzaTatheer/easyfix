@@ -1,20 +1,30 @@
 package com.easyfix.Application.bl.managers;
 import com.easyfix.Application.bl.classes.Customer;
 import com.easyfix.Application.bl.services.CustomerService;
+import com.easyfix.Application.bl.services.RatingService;
 import com.easyfix.Application.db.dbProviders;
 import com.easyfix.Application.db.services.CustomerDbService;
+import com.easyfix.Application.db.services.RatingDbService;
 import com.easyfix.Application.models.CustomerModel;
 import com.easyfix.Application.models.WorkerModel;
-import com.easyfix.Application.utils.HandledException;
 
-import java.sql.SQLDataException;
 import java.util.ArrayList;
 
 public class CustomerManager implements CustomerService {
 
+    private CustomerDbService customerDbService;
+    private RatingDbService ratingDbService;
+
+    public CustomerManager(){
+        //service provider of CustomerDb
+        CustomerDbService customerDbService = dbProviders.getCustomerDbService();
+        //user service from someone else
+        RatingService ratingDbService = new RatingManager();
+    }
+
+
     //return id
     public int login(String email, String password) throws Exception {
-        CustomerDbService custdbservice = dbProviders.getCustomerDbService();
         int userid = -1;
         //userid = custdbservice.doesUserExist(1); or something else like doesexist(email,password)
 
@@ -31,7 +41,6 @@ public class CustomerManager implements CustomerService {
 
     //return id
     public int register(String name,String email,String password,String city,String area) throws Exception{
-        CustomerDbService custdbservice = dbProviders.getCustomerDbService();
         int userid = 0;
 
         if(password.length() <= 5){
@@ -46,32 +55,33 @@ public class CustomerManager implements CustomerService {
     }
 
     public ArrayList<WorkerModel> getFavourites(int cid){
-        CustomerDbService customerDbService = dbProviders.getCustomerDbService();
         return customerDbService.get_customer(cid).Favourite;
     }
 
-    public boolean addToFavourite(int wid){
-
-        return true;
+    public boolean addToFavourite(int cid,int wid) throws Exception {
+        //functionality still not done. needed from arsalan. still asking
+        //same goes for removeFromFavourite
+        throw new Exception("Functionality still not done");
     }
 
-    public boolean changePaymentMethod(int cid,String newMethod){
-        //simple db service call to change method
-        return true;
+    public boolean changePaymentMethod(int cid,String newPaymentMethod){
+        Customer c = new Customer(customerDbService.get_customer(cid));
+        return c.changePaymentMethod(newPaymentMethod);
     }
 
-    public boolean changeCity(String newCity){
-        //db call to change City
-        return true;
+    public boolean changeCity(int cid,String newCity){
+        Customer c = new Customer(customerDbService.get_customer(cid));
+
+        return (c.changeCity(newCity) != true);
     }
 
-    public boolean giveRating(int cid,int wid){
-
-        return true;
+    public Exception giveRating(int cid, int wid){
+        return new Exception("Rating still to be done by roqiah in ratingManager");
     }
 
-    public boolean changeArea(String newArea){
-        //db call to change newArea
-        return true;
+    public boolean changeArea(int cid,String newArea){
+        Customer c = new Customer(customerDbService.get_customer(cid));
+        c.changeArea(newArea);
+        return customerDbService.update_customer_area(cid,c.getArea());
     }
 }

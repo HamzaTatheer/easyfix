@@ -25,4 +25,13 @@ public class dbProviders {
             return new WorkerTextManager();
         }
     }
+
+    public static RatingDbService getRatingDbService(){
+        if(Config.db=="sql"){
+            return new RatingSqlManager();
+        }
+        else{
+            return new RatingTextManager();
+        }
+    }
 }
