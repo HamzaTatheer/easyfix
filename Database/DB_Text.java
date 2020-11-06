@@ -423,6 +423,93 @@ public class DB_Text implements DB_interface {
     }
 
     @Override
+    public boolean update_customerWallet(int id, Float money) {
+        File myobj=new File("Customer.txt");
+        ArrayList<CustomerModel> store=new ArrayList<CustomerModel>();
+        boolean check=false;
+
+
+
+        try {
+            Scanner myReader = new Scanner(myobj);
+            while(myReader.hasNext()) {
+                CustomerModel temp=new CustomerModel();
+                temp.Favourite=new ArrayList<WorkerModel>();
+
+                temp.id = myReader.nextInt();
+                myReader.nextLine();
+                temp.name = myReader.nextLine();
+                temp.email = myReader.nextLine();
+                temp.password = myReader.nextLine();
+                temp.paymentMethod=myReader.nextLine();
+                temp.creditno=myReader.nextLine();
+                temp.wallet = myReader.nextFloat();
+                myReader.nextLine();
+                temp.city = myReader.nextLine();
+                temp.area = myReader.nextLine();
+                int size = myReader.nextInt();
+                myReader.nextLine();
+                ArrayList<Integer> favourite = new ArrayList<Integer>();
+
+                for (int i = 0; i < size; i++) {
+                    favourite.add(myReader.nextInt());
+                    myReader.nextLine();
+                }
+                for (int i=0;i<favourite.size();i++) {
+                    WorkerModel tempp=get_worker(favourite.get(i));
+                    if (tempp!=null)
+                        temp.Favourite.add(tempp);
+                }
+                if (id == temp.id) {
+                    temp.wallet=money;
+                    check=true;
+                }
+                store.add(temp);
+
+
+            }
+        } catch (FileNotFoundException e) {
+            //  System.out.print("Error in reading a file\n");
+            e.printStackTrace();
+        }
+
+
+
+
+        try {
+            FileWriter mywriter=new FileWriter("Customer.txt",false);
+
+            for (int i=0;i<store.size();i++) {
+                mywriter.write(store.get(i).id + "\n");
+                mywriter.write(store.get(i).name + "\n");
+                mywriter.write(store.get(i).email + "\n");
+                mywriter.write(store.get(i).password + "\n");
+                mywriter.write(store.get(i).paymentMethod + "\n");
+                mywriter.write(store.get(i).creditno + "\n");
+                mywriter.write(store.get(i).wallet + "\n");
+                mywriter.write(store.get(i).city + "\n");
+                mywriter.write(store.get(i).area + "\n");
+                mywriter.write(store.get(i).Favourite.size() + "\n");
+                for (int j = 0; j < store.get(i).Favourite.size(); j++) {
+                    mywriter.write(store.get(i).Favourite.get(j).id + "\n");
+                }
+
+
+
+            }
+            mywriter.close();
+            if (check)
+                return true;
+            else
+                return false;
+        } catch (IOException e) {
+            // System.out.print("Error in storing customer in filling\n");
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
     public CustomerModel get_customer(int id) {
         File myobj=new File("Customer.txt");
 
@@ -1389,45 +1476,419 @@ public class DB_Text implements DB_interface {
 
     @Override
     public boolean add_favourite(int customer_id, int worker_id) {
-        return false;
+
+        File myobj=new File("Customer.txt");
+        ArrayList<CustomerModel> store=new ArrayList<CustomerModel>();
+        boolean check=false;
+
+
+
+        try {
+            Scanner myReader = new Scanner(myobj);
+            while(myReader.hasNext()) {
+                CustomerModel temp=new CustomerModel();
+                temp.Favourite=new ArrayList<WorkerModel>();
+
+                temp.id = myReader.nextInt();
+                myReader.nextLine();
+                temp.name = myReader.nextLine();
+                temp.email = myReader.nextLine();
+                temp.password = myReader.nextLine();
+                temp.paymentMethod=myReader.nextLine();
+                temp.creditno=myReader.nextLine();
+                temp.wallet = myReader.nextFloat();
+                myReader.nextLine();
+                temp.city = myReader.nextLine();
+                temp.area = myReader.nextLine();
+                int size = myReader.nextInt();
+                myReader.nextLine();
+                ArrayList<Integer> favourite = new ArrayList<Integer>();
+
+                boolean present=false;
+                for (int i = 0; i < size; i++) {
+                    favourite.add(myReader.nextInt());
+                    myReader.nextLine();
+
+                    if (favourite.get(i)==worker_id)
+                        present=true;
+                }
+                if (customer_id == temp.id&&!present) {
+                    favourite.add(worker_id);
+                    check=true;
+                }
+
+
+                for (int i=0;i<favourite.size();i++) {
+                    WorkerModel tempp= new WorkerModel();
+                    tempp=get_worker(favourite.get(i));
+                    if (tempp!=null)
+                        temp.Favourite.add(tempp);
+                }
+
+
+                store.add(temp);
+
+
+            }
+        } catch (FileNotFoundException e) {
+            //  System.out.print("Error in reading a file\n");
+            e.printStackTrace();
+        }
+
+
+
+
+        try {
+            FileWriter mywriter=new FileWriter("Customer.txt",false);
+
+            for (int i=0;i<store.size();i++) {
+                mywriter.write(store.get(i).id + "\n");
+                mywriter.write(store.get(i).name + "\n");
+                mywriter.write(store.get(i).email + "\n");
+                mywriter.write(store.get(i).password + "\n");
+                mywriter.write(store.get(i).paymentMethod + "\n");
+                mywriter.write(store.get(i).creditno + "\n");
+                mywriter.write(store.get(i).wallet + "\n");
+                mywriter.write(store.get(i).city + "\n");
+                mywriter.write(store.get(i).area + "\n");
+                mywriter.write(store.get(i).Favourite.size() + "\n");
+                for (int j = 0; j < store.get(i).Favourite.size(); j++) {
+                    mywriter.write(store.get(i).Favourite.get(j).id + "\n");
+                }
+
+
+
+            }
+            mywriter.close();
+            if (check)
+                return true;
+            else
+                return false;
+        } catch (IOException e) {
+            // System.out.print("Error in storing customer in filling\n");
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
     public boolean remove_favourite(int customer_id, int worker_id) {
-        return false;
+
+
+        File myobj = new File("Customer.txt");
+        ArrayList<CustomerModel> store = new ArrayList<CustomerModel>();
+        boolean check = false;
+
+
+        try {
+            Scanner myReader = new Scanner(myobj);
+            while (myReader.hasNext()) {
+                CustomerModel temp = new CustomerModel();
+                temp.Favourite = new ArrayList<WorkerModel>();
+
+                temp.id = myReader.nextInt();
+                myReader.nextLine();
+                temp.name = myReader.nextLine();
+                temp.email = myReader.nextLine();
+                temp.password = myReader.nextLine();
+                temp.paymentMethod = myReader.nextLine();
+                temp.creditno = myReader.nextLine();
+                temp.wallet = myReader.nextFloat();
+                myReader.nextLine();
+                temp.city = myReader.nextLine();
+                temp.area = myReader.nextLine();
+                int size = myReader.nextInt();
+                myReader.nextLine();
+                ArrayList<Integer> favourite = new ArrayList<Integer>();
+
+                boolean present = false;
+                for (int i = 0; i < size; i++) {
+                    favourite.add(myReader.nextInt());
+                    myReader.nextLine();
+
+                    if (favourite.get(i) == worker_id)
+                        present = true;
+                }
+                if (customer_id == temp.id && present) {
+                    favourite.remove(new Integer(worker_id));
+                    check = true;
+                }
+
+
+                for (int i = 0; i < favourite.size(); i++) {
+                    WorkerModel tempp = new WorkerModel();
+                    tempp = get_worker(favourite.get(i));
+                    if (tempp != null)
+                        temp.Favourite.add(tempp);
+                }
+
+
+                store.add(temp);
+
+
+            }
+        } catch (FileNotFoundException e) {
+            //  System.out.print("Error in reading a file\n");
+            e.printStackTrace();
+        }
+
+
+        try {
+            FileWriter mywriter = new FileWriter("Customer.txt", false);
+
+            for (int i = 0; i < store.size(); i++) {
+                mywriter.write(store.get(i).id + "\n");
+                mywriter.write(store.get(i).name + "\n");
+                mywriter.write(store.get(i).email + "\n");
+                mywriter.write(store.get(i).password + "\n");
+                mywriter.write(store.get(i).paymentMethod + "\n");
+                mywriter.write(store.get(i).creditno + "\n");
+                mywriter.write(store.get(i).wallet + "\n");
+                mywriter.write(store.get(i).city + "\n");
+                mywriter.write(store.get(i).area + "\n");
+                mywriter.write(store.get(i).Favourite.size() + "\n");
+                for (int j = 0; j < store.get(i).Favourite.size(); j++) {
+                    mywriter.write(store.get(i).Favourite.get(j).id + "\n");
+                }
+
+
+            }
+            mywriter.close();
+            if (check)
+                return true;
+            else
+                return false;
+        } catch (IOException e) {
+            // System.out.print("Error in storing customer in filling\n");
+            e.printStackTrace();
+            return false;
+        }
     }
 
-
+    //not needed
     @Override
     public ArrayList<Integer> get_favourites(int customer_id) {
         return null;
     }
+    //------------
 
     @Override
-    public boolean store_customer_billing( int booking_id, int worker_id, int cost)//give int billing_id by db
+    public boolean store_customer_billing( int booking_id,String title,String customerName,String workerName,String status,Float totalCost)//give int billing_id by db
     {
-        return false;
+        try {
+            FileWriter myWriter=new FileWriter("Billing.txt",true);
+            myWriter.write(booking_id+"\n");
+            myWriter.write(title+"\n");
+            myWriter.write(customerName+"\n");
+            myWriter.write(workerName+"\n");
+            myWriter.write(status+"\n");
+            myWriter.write(totalCost+"\n");
+            myWriter.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+
+        return true;
     }
 
     @Override
-    public ArrayList<BillingModel> get_customer_billing(int booking_id) {
+    public BillingModel get_bill(int booking_id) {
+        File obj=new File("Billing.txt");
+
+        try {
+            Scanner myReader = new Scanner(obj);
+            while (myReader.hasNext())
+            {
+                BillingModel ret=new BillingModel();
+                ret.bookingId=myReader.nextInt();
+                myReader.nextLine();
+                ret.title=myReader.nextLine();
+                ret.customerName=myReader.nextLine();
+                ret.workerName=myReader.nextLine();
+                ret.status=myReader.nextLine();
+                ret.totalCost=myReader.nextFloat();
+                myReader.nextLine();
+                if (ret.bookingId==booking_id)
+                    return ret;
+
+
+            }
+
+
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+
         return null;
     }
 
     @Override
+    public boolean change_billing_status(int booking_id, String status) {
+        File obj=new File("Billing.txt");
+        ArrayList<BillingModel> store=new ArrayList<BillingModel>();
+
+        try {
+            Scanner myReader = new Scanner(obj);
+            while (myReader.hasNext())
+            {
+                BillingModel ret=new BillingModel();
+                ret.bookingId=myReader.nextInt();
+                myReader.nextLine();
+                ret.title=myReader.nextLine();
+                ret.customerName=myReader.nextLine();
+                ret.workerName=myReader.nextLine();
+                ret.status=myReader.nextLine();
+                ret.totalCost=myReader.nextFloat();
+                myReader.nextLine();
+                if (ret.bookingId==booking_id) {
+                    ret.status = status;
+
+                }
+                store.add(ret);
+            }
+
+
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
+        try {
+            FileWriter myWriter=new FileWriter("Billing.txt",false);
+            for (int i=0;i<store.size();i++) {
+                myWriter.write(store.get(i).bookingId + "\n");
+                myWriter.write(store.get(i).title + "\n");
+                myWriter.write(store.get(i).customerName + "\n");
+                myWriter.write(store.get(i).workerName + "\n");
+                myWriter.write(store.get(i).status + "\n");
+                myWriter.write(store.get(i).totalCost + "\n");
+            }
+            myWriter.close();
+            return true;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+    @Override
     public boolean store_complaint( int customer_id, int worker_id, String complain_text)//give int complain_id by DB
     {
-        return false;
+        int id=0;
+        File myo=new File("CountComplaint.txt");
+        try {
+            Scanner myr = new Scanner(myo);
+            id=myr.nextInt();
+        } catch (FileNotFoundException e) {
+            id=0;
+        }
+
+        id++;
+        try {
+            FileWriter myw=new FileWriter("CountComplaint.txt",false);
+            myw.write(id+"\n");
+            myw.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        try {
+            FileWriter myWriter=new FileWriter("Complaint.txt",true);
+            myWriter.write(id+"\n");
+            myWriter.write(customer_id+"\n");
+            myWriter.write(worker_id+"\n");
+            myWriter.write(complain_text+"\n");
+            myWriter.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        return true;
+
+
     }
 
     @Override
     public ComplainModel get_complaint(int complaint_id) {
+        File obj=new File("Complaint.txt");
+
+        try {
+            Scanner myReader = new Scanner(obj);
+            while (myReader.hasNext())
+            {
+                ComplainModel ret=new ComplainModel();
+                ret.id=myReader.nextInt();
+                myReader.nextLine();
+                ret.cid=myReader.nextInt();
+                myReader.nextLine();
+                ret.wid=myReader.nextInt();
+                myReader.nextLine();
+                ret.text=myReader.nextLine();
+                if (ret.id==complaint_id)
+                    return ret;
+
+
+            }
+
+
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+
         return null;
     }
 
     @Override
     public ArrayList<ComplainModel> show_all_complaint(int customer_id) {
-        return null;
+        File obj=new File("Complaint.txt");
+        ArrayList<ComplainModel> store=new ArrayList<ComplainModel>();
+
+        try {
+            Scanner myReader = new Scanner(obj);
+            while (myReader.hasNext())
+            {
+                ComplainModel ret=new ComplainModel();
+                ret.id=myReader.nextInt();
+                myReader.nextLine();
+                ret.cid=myReader.nextInt();
+                myReader.nextLine();
+                ret.wid=myReader.nextInt();
+                myReader.nextLine();
+                ret.text=myReader.nextLine();
+                if (ret.cid==customer_id)
+                {
+                    store.add(ret);
+                }
+
+
+            }
+
+
+         return store;
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
     @Override
@@ -1507,36 +1968,266 @@ public class DB_Text implements DB_interface {
 
     @Override
     public ArrayList<SparePartModel> get_all_parts() {
+
+        File obj=new File("spareParts.txt");
+        ArrayList<SparePartModel> give=new ArrayList<SparePartModel>();
+
+        try {
+            Scanner myReader = new Scanner(obj);
+            while (myReader.hasNext())
+            {
+                SparePartModel ret=new SparePartModel();
+                ret.id=myReader.nextInt();
+                myReader.nextLine();
+                ret.name=myReader.nextLine();
+                ret.cost=myReader.nextFloat();
+                myReader.nextLine();
+                ret.quantity=myReader.nextInt();
+                myReader.nextLine();
+
+                give.add(ret);
+
+
+            }
+            return give;
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
         return null;
     }
 
     @Override
     public boolean deduct_part(int spare_id, int quantity) {
-        return false;
+        File obj=new File("spareParts.txt");
+        ArrayList<SparePartModel> give=new ArrayList<SparePartModel>();
+        boolean check=false;
+
+        try {
+            Scanner myReader = new Scanner(obj);
+            while (myReader.hasNext())
+            {
+                SparePartModel ret=new SparePartModel();
+                ret.id=myReader.nextInt();
+                myReader.nextLine();
+                ret.name=myReader.nextLine();
+                ret.cost=myReader.nextFloat();
+                myReader.nextLine();
+                ret.quantity=myReader.nextInt();
+                myReader.nextLine();
+                if (ret.id==spare_id)
+                {
+                    if ((ret.quantity-quantity)>=0)
+                    {
+                        ret.quantity= ret.quantity-quantity;
+                        check=true;
+
+                    }
+                    else
+                        return false;
+                }
+
+
+                give.add(ret);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+        try {
+            FileWriter myWriter=new FileWriter("spareParts.txt",false);
+
+            for (int i=0;i<give.size();i++) {
+                myWriter.write(give.get(i).id + "\n");
+                myWriter.write(give.get(i).name + "\n");
+                myWriter.write(give.get(i).cost + "\n");
+                myWriter.write(give.get(i).quantity + "\n");
+            }
+            myWriter.close();
+
+            if (check)
+                return true;
+            else
+                return false;
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+return false;
+
     }
 
     @Override
     public boolean store_rating(int customer_id, int worker_id, int rating) {
+        try {
+            FileWriter myWriter=new FileWriter("Rating.txt",true);
+
+
+                myWriter.write(customer_id + "\n");
+                myWriter.write(worker_id + "\n");
+                myWriter.write(rating + "\n");
+
+
+            myWriter.close();
+
+            return true;
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return false;
     }
 
     @Override
-    public float get_avg_rating(int customer_id) {
-        return 0;
+    public float get_avg_rating(int worker_id) {
+        File obj=new File("Rating.txt");
+        ArrayList<RatingModel> store =new ArrayList<RatingModel>();
+
+        try {
+            Scanner myReader = new Scanner(obj);
+            while (myReader.hasNext())
+            {
+                RatingModel ret=new RatingModel();
+                ret.cid=myReader.nextInt();
+                myReader.nextLine();
+                ret.wid=myReader.nextInt();
+                myReader.nextLine();
+                ret.rating=myReader.nextInt();
+                myReader.nextLine();
+                if (ret.wid==worker_id)
+                {
+                    store.add(ret);
+                }
+
+
+
+            }
+
+            float rat=0f;
+            int sum=0;
+            for (int i=0;i<store.size();i++)
+            {
+                sum=sum+store.get(i).rating;
+
+            }
+            rat=sum/store.size();
+
+            return rat;
+
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return 0f;
     }
 
     @Override
     public ArrayList<RatingModel> getAllRatings(int customer_id) {
+        File obj=new File("Rating.txt");
+        ArrayList<RatingModel> store =new ArrayList<RatingModel>();
+
+        try {
+            Scanner myReader = new Scanner(obj);
+            while (myReader.hasNext())
+            {
+                RatingModel ret=new RatingModel();
+                ret.cid=myReader.nextInt();
+                myReader.nextLine();
+                ret.wid=myReader.nextInt();
+                myReader.nextLine();
+                ret.rating=myReader.nextInt();
+                myReader.nextLine();
+                if (ret.cid==customer_id)
+                {
+                    store.add(ret);
+                }
+
+
+
+            }
+
+
+
+            return store;
+
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
         return null;
     }
 
     @Override
-    public boolean store_chat(int customer_id, int worker_id, String text) {
+    public boolean store_chat(int sender_id,int reciever_id,String sender_name,String receiver_name,String text) {
+        try {
+            FileWriter myWriter=new FileWriter("Rating.txt",true);
+
+
+            myWriter.write(sender_id + "\n");
+            myWriter.write(reciever_id + "\n");
+            myWriter.write(sender_name + "\n");
+            myWriter.write(receiver_name + "\n");
+            myWriter.write(text + "\n");
+
+
+            myWriter.close();
+
+            return true;
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return false;
     }
 
     @Override
     public ArrayList<ChatMessageModel> get_chat_history(int customer_id, int worker_id) {
+        File obj=new File("Rating.txt");
+        ArrayList<ChatMessageModel> store =new ArrayList<ChatMessageModel>();
+
+        try {
+            Scanner myReader = new Scanner(obj);
+            while (myReader.hasNext())
+            {
+                ChatMessageModel ret=new ChatMessageModel();
+                ret.senderId=myReader.nextInt();
+                myReader.nextLine();
+                ret.receiverId=myReader.nextInt();
+                myReader.nextLine();
+                ret.senderName=myReader.nextLine();
+                ret.receiverName=myReader.nextLine();
+                ret.message=myReader.nextLine();
+                if (ret.senderId==customer_id&&ret.receiverId==worker_id)
+                {
+                    store.add(ret);
+                }
+
+
+
+            }
+
+
+
+            return store;
+
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
         return null;
     }
 }

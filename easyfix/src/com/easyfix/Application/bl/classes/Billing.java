@@ -11,6 +11,7 @@ public class Billing {
     //constructors
     Billing(BillingModel obj){
         id=obj.id;
+        //ask db to fetch bookingModel for bid
         bookingModel=obj.bookingModel;
         totalCost=obj.totalCost;
     }
@@ -18,7 +19,7 @@ public class Billing {
     public BillingModel getBillingModel(){ //convert class to model
         BillingModel temp=new BillingModel();
         temp.id=id;
-        temp.bookingModel=bookingModel;
+        temp.bid=bookingModel.id;
         temp.totalCost=totalCost;
         return temp;
     }
