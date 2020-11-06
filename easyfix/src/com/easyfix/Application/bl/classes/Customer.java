@@ -6,12 +6,12 @@ public class Customer extends User{
     public String creditno;
     public String paymentMethod;
     public String city;
-    public String area;
+    private String area;
     public ArrayList<Worker> Favourites;
 
 
     //constructors
-    Customer(CustomerModel model){
+    public Customer(CustomerModel model){
         id = model.id;
         name = model.name;
         email = model.email;
@@ -24,20 +24,17 @@ public class Customer extends User{
     }
     //getters
 
-    public CustomerModel getCustomerModel(Customer temp){ //convert class to model
+    public CustomerModel getCustomerModel(){
         CustomerModel c = new CustomerModel();
-        c.id = temp.id;
-        c.name = temp.name;
-        c.email = temp.email;
+        c.id = id;
+        c.name = name;
+        c.email = email;
         c.password = "hidden";
-        c.wallet=temp.wallet;
-        c.creditno = temp.creditno;
-        c.paymentMethod =temp.paymentMethod;
-        c.city = temp.city;
-        c.area = temp.area;
-        for (int i=0;i<temp.Favourites.size();i++){
-
-        }
+        c.wallet=wallet;
+        c.creditno = creditno;
+        c.paymentMethod =paymentMethod;
+        c.city = city;
+        c.area = area;
         return c;
     }
     //setters
@@ -55,6 +52,26 @@ public class Customer extends User{
             return true;
         }
     }
+
+    public String getArea(){
+        return area;
+    }
+
+    public boolean changePaymentMethod(String newMethod){
+        paymentMethod = newMethod;
+        return true;
+    }
+
+    public Boolean changeCity(String newCity){
+        city = newCity;
+        return true;
+    }
+
+    public Boolean changeArea(String newArea){
+        area = newArea;
+        return true;
+    }
+
     public Boolean makeCreditCardPayment(Float amount){
         //external api to charge amount
         return true;
