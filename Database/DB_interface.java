@@ -14,6 +14,7 @@ public boolean store_customer(String name,String email,String password,String cr
 public boolean update_customer_city(int id,String city);
 public boolean update_customer_area(int id,String area);
 public boolean update_customerPayment(int id,String payment);
+public boolean update_customerWallet(int id,Float money);
 public CustomerModel get_customer(int id);
 
 public boolean store_worker(String name,String email,String password,float average_rating,float hourly_rate,String city,String area,String speciality);//id given by default by DB
@@ -62,7 +63,7 @@ public boolean store_rating(int customer_id,int worker_id,int rating);
 public float get_avg_rating(int worker_id);
 public ArrayList<RatingModel> getAllRatings(int customer_id);
 
-public  boolean store_chat(int customer_id,int worker_id,String text);
+public  boolean store_chat(int sender_id,int reciever_id,String sender_name,String receiver_name,String text);
 public ArrayList<ChatMessageModel> get_chat_history(int customer_id,int worker_id);
 
 }
