@@ -14,7 +14,7 @@ public class ComplainManager {
         CustomerDbService custdbservice = dbProviders.getCustomerDbService();
         WorkerDbService workDbService=dbProviders.getWorkerDbService();
 
-        if((custdbservice.does_customer_exist(_wid)&& (workDbService.does_Worker_Exist(_cid)))){
+        if((custdbservice.does_customer_exist(_wid)&& (workDbService.does_worker_exist(_cid)))){
 
             //ComplainDbService complainDbService=dbProviders.getComplainDbService();
             //c is model

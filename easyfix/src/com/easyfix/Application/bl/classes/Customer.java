@@ -71,9 +71,4 @@ public class Customer extends User{
         area = newArea;
         return true;
     }
-
-    public Boolean makeCreditCardPayment(Float amount){
-        //external api to charge amount
-        return true;
-    }
 }

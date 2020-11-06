@@ -1,22 +1,23 @@
 package com.easyfix.Application.bl.managers;
 
+import com.easyfix.Application.models.BookingModel;
+
 public class BookingManager {
 
-    public void createBooking(){
+    public void createBooking(BookingModel b){
+
 
     }
 
-    public void showBookings(int id, String status){
+    public void showActiveBookingOfCustomer(int cid){
 
     }
 
-    public void acceptBooking(int bid){
+    public void showFinishedBookingOfCustomer(int uid){
 
     }
-
-    public void rejectBooking(int bid){
+    
+    public void showActiveBookingOfWorker(int cid){
 
     }
-
-
 }
