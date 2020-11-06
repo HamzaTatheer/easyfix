@@ -57,7 +57,13 @@ public class Terminal extends UI {
                 else if (choice2 == 2){
                     System.out.println("Enter worker id :");
                     int wid = sc.nextInt();
-                    boolean fav=customerService.addToFavourite(wid);
+                    boolean fav = false;
+                    try {
+                        fav = customerService.addToFavourite(userid, wid);
+                    }
+                    catch (Exception e){
+                        System.out.println(e.getMessage());
+                    }
                     if(fav == true)
                         System.out.println("Worker added to favourites");
                     else
@@ -66,7 +72,7 @@ public class Terminal extends UI {
                 else if(choice2  == 3){
                     System.out.println("Enter area :");
                     String area = sc.nextLine();
-                    boolean changearea=customerService.changeArea(area);
+                    boolean changearea=customerService.changeArea(userid,area);
                     if(changearea == true)
                         System.out.println("Area changed successfully");
                     else
@@ -75,7 +81,7 @@ public class Terminal extends UI {
                 else if(choice2 == 4){
                     System.out.println("Enter city :");
                     String city = sc.nextLine();
-                    boolean changecity=customerService.changeCity(city);
+                    boolean changecity=customerService.changeCity(userid,city);
                     if(changecity == true)
                         System.out.println("City changed successfully");
                     else
