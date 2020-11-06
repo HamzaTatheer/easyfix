@@ -7,7 +7,7 @@ public class Rating {
     public int wid;
     public int rating;
     //constructors
-    Rating(RatingModel R){
+    public Rating(RatingModel R){
         cid=R.cid;
         wid=R.wid;
         rating=R.rating;
@@ -19,6 +19,14 @@ public class Rating {
         temp.rating=rating;
         temp.wid=wid;
         return temp;
+    }
+    public Boolean checkRating(int _rating){
+        if(_rating>=0 && _rating<=5){
+            return true;
+        }
+        else
+            return false;
+
     }
     //setters
 
