@@ -132,10 +132,43 @@ public class Terminal extends UI {
             }
             if(wid!=-1){
 
-                System.out.println("3-Get Worker");
-                System.out.println("3-Change Area");
-                System.out.println("4-Change City");
-                System.out.println("5-Change Hourly rate");
+                System.out.println("1-Get Worker");
+                System.out.println("2-Change Area");
+                System.out.println("3-Change City");
+                System.out.println("4-Change Hourly rate");
+                int wchoice;
+                wchoice=sc.nextInt();
+                if(wchoice == 1){
+                    try{
+                        WorkerModel w=workerService.getWorker(wid);
+                        System.out.println(w);
+                    }
+                    catch(Exception e){
+                        System.out.println(e.getMessage());
+                    }
+                }
+                else if(wchoice == 2){
+                    System.out.println("Enter area :");
+                    String area=sc.nextLine();
+                    boolean b=workerService.changeArea(wid,area);
+                    if(b == true)
+                        System.out.println("Area updated successfully");
+                }
+                else if(wchoice == 3){
+                    System.out.println("Enter city :");
+                    String city=sc.nextLine();
+                    boolean b=workerService.changeArea(wid,city);
+                    if(b == true)
+                        System.out.println("City updated successfully");
+                }
+                else if(wchoice == 4){
+                    System.out.println("Enter hourly rate :");
+                    float rate=sc.nextFloat();
+                    boolean b=workerService.changeHourlyRate(wid,rate);
+                    if(b == true)
+                        System.out.println("Hourly rate updated successfully");
+                }
+
             }
 
         }
