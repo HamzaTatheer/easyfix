@@ -3,5 +3,6 @@ import com.easyfix.Application.models.RatingModel;
 import java.util.ArrayList;
 
 public interface RatingService {
-    public void giveRating(int giverID,int receiverID,int workerRating);
+    public ArrayList<RatingModel> showAllRatings(int id);
+    public Boolean giveRating(int giverID,int receiverID,int workerRating)throws Exception;
 }
