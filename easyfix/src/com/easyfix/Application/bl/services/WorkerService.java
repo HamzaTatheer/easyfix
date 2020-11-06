@@ -6,7 +6,6 @@ import com.easyfix.Application.models.WorkerModel;
 import java.util.ArrayList;
 
 public interface WorkerService {
-
     public int login(String email,String password) throws Exception;
     public WorkerModel getWorker(int id) throws Exception;
     public boolean changeHourlyRate(int id,float newRate);

@@ -2,10 +2,13 @@ package com.easyfix.Application.db;
 
 import com.easyfix.Application.Config;
 import com.easyfix.Application.db.services.CustomerDbService;
+import com.easyfix.Application.db.services.RatingDbService;
 import com.easyfix.Application.db.services.WorkerDbService;
 import com.easyfix.Application.db.sqlDb.CustomerSqlManager;
+import com.easyfix.Application.db.sqlDb.RatingSqlManager;
 import com.easyfix.Application.db.sqlDb.WorkerSqlManager;
 import com.easyfix.Application.db.textDb.CustomerTextManager;
+import com.easyfix.Application.db.textDb.RatingTextManager;
 import com.easyfix.Application.db.textDb.WorkerTextManager;
 
 public class dbProviders {
