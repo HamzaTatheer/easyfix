@@ -4,5 +4,5 @@ import java.util.ArrayList;
 
 public interface RatingService {
     public ArrayList<RatingModel> showAllRatings(int id);
-    public void giveRating(int giverID,int receiverID,int workerRating);
+    public Boolean giveRating(int giverID,int receiverID,int workerRating)throws Exception;
 }

@@ -8,14 +8,14 @@ public class Complain {
     public int cid;
     public String text;
     //constructors
-    Complain(ComplainModel obj){
+    public Complain(ComplainModel obj){
         id=obj.id;
         wid=obj.wid;
         cid=obj.cid;
         text=obj.text;
     }
     //getters
-    ComplainModel getComplainModel(){
+    public ComplainModel getComplainModel(){
         ComplainModel temp=new ComplainModel();
         temp.cid=cid;
         temp.id=id;
@@ -24,5 +24,10 @@ public class Complain {
         return temp;
     }
     //setters
-
+    public Boolean checkTextlength(String _text){
+        if(_text.length()>=30)
+            return true;
+        else
+            return false;
+    }
 }
