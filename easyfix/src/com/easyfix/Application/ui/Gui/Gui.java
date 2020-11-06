@@ -1,5 +1,20 @@
 package com.easyfix.Application.ui.Gui;
 
+import com.easyfix.Application.ui.UI;
+
+public class Gui extends UI {
+    Gui(){
+
+    }
+    public void start(){
+        System.out.println("Gui");
+    }
+
+}
+
+
+
+/*
 import com.easyfix.Application.bl.serviceProviders;
 import com.easyfix.Application.ui.UI;
 import javafx.application.Application;
@@ -136,3 +151,4 @@ public class Gui extends Application {
 //    }
 
 }
+*/
