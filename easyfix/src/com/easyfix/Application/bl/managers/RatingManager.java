@@ -17,13 +17,14 @@ public class RatingManager {
 
         CustomerDbService custdbservice = dbProviders.getCustomerDbService();
         WorkerDbService workDbService=dbProviders.getWorkerDbService();
+
         if((custdbservice.does_customer_exist(giverID)&& (workDbService.does_Worker_Exist(receiverID)))){
             //RatingDbService rateDbService=dbProviders.getRatingDbService();
-            //w is model
+            //r is model
             RatingModel r = new RatingModel();
-            r.cid = 2;
-            r.wid=3;
-            r.rating=4;
+            r.cid = giverID;
+            r.wid=receiverID;
+            r.rating=workerRating;
             boolean updated =false;
             Rating ratingObj = new Rating(r);//convert model to class
             updated = ratingObj.checkRating(workerRating); //update in class
