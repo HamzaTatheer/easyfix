@@ -23,7 +23,8 @@ public class Gui extends Application {
     Scene scene;
     Scene scene2;
     Scene scene3;
-
+    Scene scene4;
+    static int userid;
     public CustomerService customerService;
 
 
@@ -76,7 +77,8 @@ public class Gui extends Application {
         Label area = new Label("Area");
         TextField areaa = new TextField();
        // GridPane.setConstraints(btn3,4,6);
-        final int[] userid = new int[1];
+
+
         btn.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
@@ -85,14 +87,14 @@ public class Gui extends Application {
                 try {
                     String finalemail = emaill2.getText();
                     String finalpass = passw2.getText();
-                    userid[0] = customerService.login(finalemail, finalpass);
+                    userid = customerService.login(finalemail, finalpass);
                     System.out.println("Login Successful");
                     primaryStage.setScene(scene3);
 
 
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
-                    userid[0] =-2;
+                    userid =-2;
                 }
             }
 
@@ -104,7 +106,7 @@ public class Gui extends Application {
 
             @Override
             public void handle(ActionEvent event) {
-                int userid;
+
                 try {
                     String regName = namee.getText();
                     String regEmail = emaill.getText();
@@ -114,6 +116,7 @@ public class Gui extends Application {
                     userid = customerService.register(regName,regEmail,regPass,regCity,regArea);
                     System.out.println("Register Successful");
                     primaryStage.setScene(scene3);
+
 
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
@@ -127,9 +130,63 @@ public class Gui extends Application {
 
             @Override
             public void handle(ActionEvent event) {
-                ArrayList<WorkerModel> favourites = customerService.getFavourites(userid[0]);
+
+                ArrayList<WorkerModel> favourites = customerService.getFavourites(userid);
                 String fav = favourites.toString();
                 System.out.println(fav);
+            }
+
+        });
+        Button EditProfile = new Button("Edit Profile");
+        EditProfile.setOnAction(e -> primaryStage.setScene(scene4));
+
+        Label ccity = new Label("Enter City name");
+        TextField ccityy = new TextField();
+        Button changecity = new Button("Change City");
+        changecity.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                String finalcity = ccityy.getText();
+                boolean check = customerService.changeCity(userid,finalcity);
+                if(check == true )
+                    System.out.println("City changed");
+                else
+                    System.out.println("unable to change city");
+            }
+
+        });
+
+        Label carea = new Label("Enter Area name");
+        TextField careaa = new TextField();
+        Button changearea = new Button("Change Area");
+        changecity.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                String finalarea = careaa.getText();
+                boolean check = customerService.changeArea(userid,finalarea);
+                if(check == true )
+                    System.out.println("Area changed");
+                else
+                    System.out.println("unable to change Area");
+            }
+
+        });
+
+        Label cpaymethod = new Label("Enter payment method");
+        TextField cpaymethodd = new TextField();
+        Button changepaymethod = new Button("Change Payment Method");
+        changecity.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                String finalpaymethod = cpaymethodd.getText();
+                boolean check = customerService.changePaymentMethod(userid,finalpaymethod);
+                if(check == true )
+                    System.out.println("Payment Method changed");
+                else
+                    System.out.println("unable to change Payment Method");
             }
 
         });
@@ -142,9 +199,13 @@ public class Gui extends Application {
 
         VBox homepage = new VBox();
         homepage.setAlignment(Pos.BASELINE_CENTER);
-        homepage.getChildren().addAll(Getfavourite);
+        homepage.getChildren().addAll(Getfavourite,EditProfile);
         scene3 = new Scene(homepage,500,300);
 
+        VBox EditProfilee = new VBox();
+        EditProfilee.setAlignment(Pos.BASELINE_LEFT);
+        EditProfilee.getChildren().addAll(ccity,ccityy,changecity,carea,careaa,changearea,cpaymethod,cpaymethodd,changepaymethod);
+        scene4 = new Scene(EditProfilee,500,300);
 
         primaryStage.setTitle("EasyFix");
         primaryStage.setScene(scene);
