@@ -1,9 +1,11 @@
 package com.easyfix.Application.ui.Gui;
-
+import java.util.ArrayList;
 import com.easyfix.Application.bl.serviceProviders;
+import com.easyfix.Application.models.WorkerModel;
 import com.easyfix.Application.ui.UI;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
+import com.easyfix.Application.models.WorkerModel;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -74,22 +76,23 @@ public class Gui extends Application {
         Label area = new Label("Area");
         TextField areaa = new TextField();
        // GridPane.setConstraints(btn3,4,6);
-
+        final int[] userid = new int[1];
         btn.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
-                int userid;
+
                 try {
-                    String finalemail = emaill.getText();
-                    String finalpass = passw.getText();
-                    userid = customerService.login(finalemail, finalpass);
+                    String finalemail = emaill2.getText();
+                    String finalpass = passw2.getText();
+                    userid[0] = customerService.login(finalemail, finalpass);
                     System.out.println("Login Successful");
+                    primaryStage.setScene(scene3);
 
 
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
-                    userid=-2;
+                    userid[0] =-2;
                 }
             }
 
@@ -110,7 +113,7 @@ public class Gui extends Application {
                     String regArea = areaa.getText();
                     userid = customerService.register(regName,regEmail,regPass,regCity,regArea);
                     System.out.println("Register Successful");
-
+                    primaryStage.setScene(scene3);
 
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
@@ -119,7 +122,17 @@ public class Gui extends Application {
             }
 
         });
+        Button Getfavourite = new Button("Getfavourite");
+        Getfavourite.setOnAction(new EventHandler<ActionEvent>() {
 
+            @Override
+            public void handle(ActionEvent event) {
+                ArrayList<WorkerModel> favourites = customerService.getFavourites(userid[0]);
+                String fav = favourites.toString();
+                System.out.println(fav);
+            }
+
+        });
 
         root.getChildren().addAll(email2,emaill2,pass2,passw2,btn,btn2);
         scene = new Scene(root, 500, 300);
@@ -127,7 +140,12 @@ public class Gui extends Application {
         vbox.getChildren().addAll(name,namee,email,emaill,pass,passw,city,cityy,area,areaa,btn3);
         scene2 = new Scene(vbox, 500, 300);
 
-        
+        VBox homepage = new VBox();
+        homepage.setAlignment(Pos.BASELINE_CENTER);
+        homepage.getChildren().addAll(Getfavourite);
+        scene3 = new Scene(homepage,500,300);
+
+
         primaryStage.setTitle("EasyFix");
         primaryStage.setScene(scene);
         primaryStage.show();
