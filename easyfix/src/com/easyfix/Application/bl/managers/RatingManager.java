@@ -33,12 +33,12 @@ public class RatingManager {
                 r = ratingObj.getRatingModel(); //get model
                 //store in db
 
-                if(rateDbService.store_rating(giverID,receiverID,workerRating))
-                {
+               // if(rateDbService.store_rating(giverID,receiverID,workerRating))
+                //{
                     return true;
-                }
-                else
-                    throw new Exception("You already have given rating\n");
+                //}
+                //else
+                    //throw new Exception("You already have given rating\n");
             }
             else
                 throw new Exception("Invalid Rating");
