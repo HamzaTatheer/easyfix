@@ -656,6 +656,55 @@ public class DB_Text implements DB_interface {
     }
 
     @Override
+    public boolean does_worker_exist(int id) {
+        File myobj=new File("Worker.txt");
+
+
+
+        try {
+            Scanner myReader = new Scanner(myobj);
+            while(myReader.hasNext()) {
+
+                int id_n = myReader.nextInt();
+                myReader.nextLine();
+                String name = myReader.nextLine();
+                String email_n = myReader.nextLine();
+                String password_n = myReader.nextLine();
+                float average_rating=myReader.nextFloat();
+                myReader.nextLine();
+                float hourly_rate=myReader.nextFloat();
+                myReader.nextLine();
+                String city = myReader.nextLine();
+                String area = myReader.nextLine();
+                String speciality=myReader.nextLine();
+                /*
+                int size = myReader.nextInt();
+                myReader.nextLine();
+                ArrayList<Integer> rating = new ArrayList<Integer>();
+
+                for (int i = 0; i < size; i++) {
+                    rating.add(myReader.nextInt());
+                    myReader.nextLine();
+                }
+                */
+
+
+                if (id_n==id) {
+
+                    return true;
+                }
+            }
+        } catch (FileNotFoundException e) {
+            //  System.out.print("Error in reading a file\n");
+            e.printStackTrace();
+        }
+        // System.out.print("ID not found\n");
+
+
+        return false;
+    }
+
+    @Override
     public ArrayList<WorkerModel> get_worker(String city, String area) {
         File myobj=new File("Worker.txt");
         ArrayList<WorkerModel> ret=new ArrayList<WorkerModel>();
@@ -1474,6 +1523,11 @@ public class DB_Text implements DB_interface {
     @Override
     public float get_avg_rating(int customer_id) {
         return 0;
+    }
+
+    @Override
+    public ArrayList<RatingModel> getAllRatings(int customer_id) {
+        return null;
     }
 
     @Override
