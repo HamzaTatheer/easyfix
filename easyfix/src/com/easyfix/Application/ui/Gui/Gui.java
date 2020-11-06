@@ -20,10 +20,14 @@ public class Gui extends Application {
 
     Scene scene;
     Scene scene2;
+    Scene scene3;
 
     public CustomerService customerService;
+
+
     public Gui(){
         super();
+        customerService = serviceProviders.getCustomerService();
     }
 
     @Override
@@ -99,10 +103,13 @@ public class Gui extends Application {
             public void handle(ActionEvent event) {
                 int userid;
                 try {
-                    String finalemail = emaill.getText();
-                    String finalpass = passw.getText();
-                    userid = customerService.login(finalemail, finalpass);
-                    System.out.println("Login Successful");
+                    String regName = namee.getText();
+                    String regEmail = emaill.getText();
+                    String regPass = passw.getText();
+                    String regCity = cityy.getText();
+                    String regArea = areaa.getText();
+                    userid = customerService.register(regName,regEmail,regPass,regCity,regArea);
+                    System.out.println("Register Successful");
 
 
                 } catch (Exception e) {
@@ -118,11 +125,10 @@ public class Gui extends Application {
         scene = new Scene(root, 500, 300);
 
         vbox.getChildren().addAll(name,namee,email,emaill,pass,passw,city,cityy,area,areaa,btn3);
-
-
-
         scene2 = new Scene(vbox, 500, 300);
-        primaryStage.setTitle("Login");
+
+        
+        primaryStage.setTitle("EasyFix");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
