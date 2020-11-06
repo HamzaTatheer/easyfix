@@ -1610,7 +1610,7 @@ public class DB_Text implements DB_interface {
                         present = true;
                 }
                 if (customer_id == temp.id && present) {
-                    favourite.remove(worker_id);
+                    favourite.remove(new Integer(worker_id));
                     check = true;
                 }
 
