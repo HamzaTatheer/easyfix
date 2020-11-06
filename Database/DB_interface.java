@@ -18,7 +18,8 @@ public CustomerModel get_customer(int id);
 
 public boolean store_worker(String name,String email,String password,float average_rating,float hourly_rate,String city,String area,String speciality);//id given by default by DB
 public WorkerModel get_worker(int id);
-public int does_worker_exist(String email,String password); //id returned
+public int does_worker_exist(String email,String password);
+public boolean does_worker_exist(int id);
 public ArrayList<WorkerModel> get_worker(String city,String area);
 public ArrayList<WorkerModel> get_all_worker();
 public boolean update_Worker_city(int id,String city);
@@ -31,6 +32,7 @@ public ArrayList<BookingModel> get_booking(int customer_id,String status);
 public boolean update_booking_status(int booking_id,String status);
 
 
+//these not needed maybe see them
 public boolean store_spare_holder(int booking_id,int spare_id,int quantity);
 public ArrayList<SparePartModel> get_all_spare_parts_booking(int booking_id);//part id,quantity returned
 
@@ -38,6 +40,7 @@ public ArrayList<SparePartModel> get_all_spare_parts_booking(int booking_id);//p
 
 public boolean add_favourite(int customer_id,int worker_id);
 public boolean remove_favourite(int customer_id,int worker_id);
+//this not needed
 public ArrayList<Integer> get_favourites(int customer_id);
 
 
@@ -49,13 +52,14 @@ public boolean store_complaint(int customer_id,int worker_id,String complain_tex
 public  ComplainModel get_complaint(int complaint_id);
 public ArrayList<ComplainModel> show_all_complaint(int customer_id);
 
-public boolean store_spar_parts(String name,int cost,int quantity);//int spare_id, given by DB
+public boolean store_spar_parts(String name,float cost,int quantity);//int spare_id, given by DB
 public  SparePartModel get_spare_part(int part_id);
 public ArrayList<SparePartModel> get_all_parts();//for quantity>0
 public boolean deduct_part(int spare_id,int quantity);
 
 public boolean store_rating(int customer_id,int worker_id,int rating);
 public float get_avg_rating(int worker_id);
+public ArrayList<RatingModel> getAllRatings(int customer_id);
 
 public  boolean store_chat(int customer_id,int worker_id,String text);
 public ArrayList<ChatMessageModel> get_chat_history(int customer_id,int worker_id);
