@@ -7,14 +7,14 @@ import com.easyfix.Application.models.WorkerModel;
 
 import java.time.LocalDateTime;
 public class Booking {
-    public int id;
-    public Customer customer;
-    public Worker worker;
-    public String text;
-    public String status;
-    public LocalDateTime startTime;
-    public LocalDateTime endTime;
-    public ArrayList<SparePart> spareParts;
+    private int id;
+    private Customer customer;
+    private Worker worker;
+    private String text;
+    private String status;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
+    private ArrayList<SparePart> spareParts;
     //constructors
 
     Booking(int _id,String _text,String _status,LocalDateTime _startTime,LocalDateTime _endTime,ArrayList<SparePart> _spareparts,Customer _customer,Worker _worker){
@@ -39,5 +39,72 @@ public class Booking {
         temp.customerModel = new CustomerModel(customer);
         temp.workerModel = new WorkerModel(worker);
         return temp;
+    }
+    //getters
+    public int getId() {
+        return id;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public Worker getWorker() {
+        return worker;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public ArrayList<SparePart> getSpareParts() {
+        return spareParts;
+    }
+
+    //setters
+
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public void setWorker(Worker worker) {
+        this.worker = worker;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public void setSpareParts(ArrayList<SparePart> spareParts) {
+        this.spareParts = spareParts;
     }
 }

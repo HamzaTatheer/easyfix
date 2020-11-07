@@ -1,8 +1,9 @@
-package Classes;
-
-import models.*;
-
+package com.easyfix.Application.db.textDb;
+//package Classes;
 import javax.swing.*;
+
+import com.easyfix.Application.db.services.dbInterface;
+import com.easyfix.Application.models.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.io.File;
@@ -11,9 +12,7 @@ import java.io.IOException;  // Import the IOException class to handle errors
 import java.io.FileNotFoundException;  // Import this class to handle errors
 import java.util.Scanner; // Import the Scanner class to read text files
 
-
-
-public class DB_Text implements DB_interface {
+public class dbManager implements dbInterface {
 
     @Override
     public boolean does_customer_exist(int id) {
@@ -148,7 +147,7 @@ public class DB_Text implements DB_interface {
             //System.out.print("Filling done\n");
             return true;
         } catch (IOException e) {
-           // System.out.print("Error in storing customer in filling\n");
+            // System.out.print("Error in storing customer in filling\n");
             e.printStackTrace();
             return false;
         }
@@ -237,7 +236,7 @@ public class DB_Text implements DB_interface {
             }
             mywriter.close();
             if (check)
-            return true;
+                return true;
             else
                 return false;
         } catch (IOException e) {
@@ -515,47 +514,47 @@ public class DB_Text implements DB_interface {
 
 
 
-            try {
-                Scanner myReader = new Scanner(myobj);
-                while(myReader.hasNext()) {
+        try {
+            Scanner myReader = new Scanner(myobj);
+            while(myReader.hasNext()) {
 
-                    int id_n = myReader.nextInt();
-                    myReader.nextLine();
-                    String name = myReader.nextLine();
-                    String email = myReader.nextLine();
-                    String password = myReader.nextLine();
-                    String payment=myReader.nextLine();
-                    String credit_no=myReader.nextLine();
-                    float wallet = myReader.nextFloat();
-                    myReader.nextLine();
-                    String city = myReader.nextLine();
-                    String area = myReader.nextLine();
-                    int size = myReader.nextInt();
-                    myReader.nextLine();
-                    ArrayList<Integer> favourite = new ArrayList<Integer>();
+                int id_n = myReader.nextInt();
+                myReader.nextLine();
+                String name = myReader.nextLine();
+                String email = myReader.nextLine();
+                String password = myReader.nextLine();
+                String payment=myReader.nextLine();
+                String credit_no=myReader.nextLine();
+                float wallet = myReader.nextFloat();
+                myReader.nextLine();
+                String city = myReader.nextLine();
+                String area = myReader.nextLine();
+                int size = myReader.nextInt();
+                myReader.nextLine();
+                ArrayList<Integer> favourite = new ArrayList<Integer>();
 
-                    for (int i = 0; i < size; i++) {
-                        favourite.add(myReader.nextInt());
-                        myReader.nextLine();
-                    }
+                for (int i = 0; i < size; i++) {
+                    favourite.add(myReader.nextInt());
+                    myReader.nextLine();
+                }
 
-                    if (id == id_n) {
-                        CustomerModel ret=new CustomerModel();
-                        ret.Favourite=new ArrayList<WorkerModel>();
-                        ret.id=id_n;
-                        ret.name=name;
-                        ret.email=email;
-                        ret.password=password;
-                        ret.paymentMethod=payment;
-                        ret.creditno=credit_no;
-                        ret.wallet=wallet;
-                        ret.city=city;
-                        ret.area=area;
-                        for (int i=0;i<favourite.size();i++) {
-                            WorkerModel temp=get_worker(favourite.get(i));
-                            if (temp!=null)
+                if (id == id_n) {
+                    CustomerModel ret=new CustomerModel();
+                    ret.Favourite=new ArrayList<WorkerModel>();
+                    ret.id=id_n;
+                    ret.name=name;
+                    ret.email=email;
+                    ret.password=password;
+                    ret.paymentMethod=payment;
+                    ret.creditno=credit_no;
+                    ret.wallet=wallet;
+                    ret.city=city;
+                    ret.area=area;
+                    for (int i=0;i<favourite.size();i++) {
+                        WorkerModel temp=get_worker(favourite.get(i));
+                        if (temp!=null)
                             ret.Favourite.add(temp);
-                        }
+                    }
                         /*
                         System.out.print(id_n+"\n");
                         System.out.print(name+"\n");
@@ -569,14 +568,14 @@ public class DB_Text implements DB_interface {
                         System.out.print(favourite+"\n");
                         */
 
-                        return ret;
-                    }
+                    return ret;
                 }
-            } catch (FileNotFoundException e) {
-              //  System.out.print("Error in reading a file\n");
-                e.printStackTrace();
             }
-           // System.out.print("ID not found\n");
+        } catch (FileNotFoundException e) {
+            //  System.out.print("Error in reading a file\n");
+            e.printStackTrace();
+        }
+        // System.out.print("ID not found\n");
 
 
         return null;
@@ -679,7 +678,7 @@ public class DB_Text implements DB_interface {
                     ret.city=city;
                     ret.area=area;
                     ret.speciality=speciality;
-                   // ret.rating=rating;
+                    // ret.rating=rating;
                     return ret;
                 }
             }
@@ -1183,23 +1182,23 @@ public class DB_Text implements DB_interface {
             FileWriter mywriter=new FileWriter("Booking.txt",true);
 
 
-                mywriter.write(bid + "\n");
-                mywriter.write(customer_id + "\n");
-                mywriter.write(worker_id + "\n");
-                mywriter.write(text + "\n");
-                mywriter.write(status + "\n");
-                mywriter.write(start_time + "\n");
-                mywriter.write(end_time + "\n");
-                mywriter.write(spareParts.size()+"\n");
-                 for (int i=0;i<spareParts.size();i++)
-                 {
-                     mywriter.write(spareParts.get(i)+"\n");
-                 }
+            mywriter.write(bid + "\n");
+            mywriter.write(customer_id + "\n");
+            mywriter.write(worker_id + "\n");
+            mywriter.write(text + "\n");
+            mywriter.write(status + "\n");
+            mywriter.write(start_time + "\n");
+            mywriter.write(end_time + "\n");
+            mywriter.write(spareParts.size()+"\n");
+            for (int i=0;i<spareParts.size();i++)
+            {
+                mywriter.write(spareParts.get(i)+"\n");
+            }
 
 
-                mywriter.close();
+            mywriter.close();
 
-            } catch (IOException ioException) {
+        } catch (IOException ioException) {
             ioException.printStackTrace();
             return false;
         }
@@ -1255,7 +1254,7 @@ public class DB_Text implements DB_interface {
                         SparePartModel temp=new SparePartModel();
                         temp=get_spare_part(spare.get(i));
                         if (temp!=null)
-                        ret.spareParts.add(temp);
+                            ret.spareParts.add(temp);
                     }
                     /*
                         System.out.print(bid+"\n");
@@ -1388,22 +1387,22 @@ public class DB_Text implements DB_interface {
 
 
 
-                    ret.id=bid;
-                    ret.customerName=get_customer(cid);
-                    ret.WorkerName=get_worker(wid);
-                    ret.text=text;
-                    ret.status=status_n;
-                    ret.startTime=start;
-                    ret.endTime=end;
+                ret.id=bid;
+                ret.customerName=get_customer(cid);
+                ret.WorkerName=get_worker(wid);
+                ret.text=text;
+                ret.status=status_n;
+                ret.startTime=start;
+                ret.endTime=end;
 
-                    for (int i=0;i<spare.size();i++) {
-                        SparePartModel temp=new SparePartModel();
-                        temp=get_spare_part(spare.get(i));
-                        if (temp!=null)
-                            ret.spareParts.add(temp);
+                for (int i=0;i<spare.size();i++) {
+                    SparePartModel temp=new SparePartModel();
+                    temp=get_spare_part(spare.get(i));
+                    if (temp!=null)
+                        ret.spareParts.add(temp);
 
 
-                        }
+                }
                 if (bid==booking_id) {
                     ret.status=status;
                     check=true;
@@ -1413,9 +1412,9 @@ public class DB_Text implements DB_interface {
                 gi++;
 
 
-                }
             }
-         catch (FileNotFoundException e) {
+        }
+        catch (FileNotFoundException e) {
             //  System.out.print("Error in reading a file\n");
             e.printStackTrace();
             return false;
@@ -1430,11 +1429,11 @@ public class DB_Text implements DB_interface {
             for (int i = 0; i < give.size(); i++) {
                 mywriter.write(give.get(i).id + "\n");
                 if (give.get(i).customerName!=null)
-                mywriter.write(give.get(i).customerName.id + "\n");
+                    mywriter.write(give.get(i).customerName.id + "\n");
                 else
                     mywriter.write(0 + "\n");
                 if (give.get(i).WorkerName!=null)
-                mywriter.write(give.get(i).WorkerName.id + "\n");
+                    mywriter.write(give.get(i).WorkerName.id + "\n");
                 else
                     mywriter.write(0 + "\n");
                 mywriter.write(give.get(i).text + "\n");
@@ -1882,7 +1881,7 @@ public class DB_Text implements DB_interface {
             }
 
 
-         return store;
+            return store;
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -2057,7 +2056,7 @@ public class DB_Text implements DB_interface {
             e.printStackTrace();
         }
 
-return false;
+        return false;
 
     }
 
@@ -2067,9 +2066,9 @@ return false;
             FileWriter myWriter=new FileWriter("Rating.txt",true);
 
 
-                myWriter.write(customer_id + "\n");
-                myWriter.write(worker_id + "\n");
-                myWriter.write(rating + "\n");
+            myWriter.write(customer_id + "\n");
+            myWriter.write(worker_id + "\n");
+            myWriter.write(rating + "\n");
 
 
             myWriter.close();

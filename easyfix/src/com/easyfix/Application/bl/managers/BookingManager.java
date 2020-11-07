@@ -6,9 +6,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class BookingManager {
-
     public Boolean addBooking(int _cid, int _wid, String _text, String _status, LocalDateTime _startTime, LocalDateTime _endTime, ArrayList<Integer> _sparePart){
-
         return true;
     }
 
@@ -19,6 +17,9 @@ public class BookingManager {
 
         return true;
     }
+
+
+
 
     public boolean createBooking(BookingModel b){
         return true;

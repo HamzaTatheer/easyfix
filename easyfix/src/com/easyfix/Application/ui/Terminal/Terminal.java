@@ -1,4 +1,5 @@
 package com.easyfix.Application.ui.Terminal;
+import com.easyfix.Application.bl.services.WorkerService;
 import com.easyfix.Application.models.WorkerModel;
 import com.easyfix.Application.models.ChatMessageModel;
 import com.easyfix.Application.models.UserModel;
@@ -17,8 +18,9 @@ public class Terminal extends UI {
 
     public void start(){
         int choice;
-        System.out.println("1-Login\n");
-        System.out.println("2-Register\n");
+        System.out.println("1-Login as Customer\n");
+        System.out.println("1-Login as Worker\n");
+        System.out.println("2-Register Customer\n");
         Scanner sc1=new Scanner(System.in);
         System.out.println("Enter Choice : ");
         choice=sc1.nextInt();
@@ -26,32 +28,38 @@ public class Terminal extends UI {
         if(choice==1) {
             int choice2;
             ArrayList<Integer> arr=new ArrayList<Integer>() ;
-            int userid;
+            int cid;
             System.out.println("Enter Email :");
             String email = sc.nextLine();
             System.out.println("Enter Password :");
             String password = sc.nextLine();
             try {
 
-                userid = customerService.login(email, password);
+                cid = customerService.login(email, password);
                 System.out.println("Login Successful");
 
 
             } catch (Exception e) {
                 System.out.println(e.getMessage());
-                userid = -2;
+                cid = -2;
             }
 
-            if(userid!=-2) {
+            if(cid!=-2) {
                 System.out.println("1-Get Favourites");
                 System.out.println("2-Add to favourite");
                 System.out.println("3-Change Area");
                 System.out.println("4-Change city");
                 System.out.println("5-Change Payment method");
+                System.out.println("6-Give Rating");
+                System.out.println("7-Show Workers");
+                System.out.println("8-Show Active Bookings");
+                System.out.println("9-Show Finished Bookings");
+                System.out.println("10-Logout");
+
                 choice2 = sc.nextInt();
 
                 if (choice2 == 1) {
-                    ArrayList<WorkerModel> favourites = customerService.getFavourites(userid);
+                    ArrayList<WorkerModel> favourites = customerService.getFavourites(cid);
                     System.out.println(favourites.toString());
                 }
                 else if (choice2 == 2){
@@ -59,7 +67,7 @@ public class Terminal extends UI {
                     int wid = sc.nextInt();
                     boolean fav = false;
                     try {
-                        fav = customerService.addToFavourite(userid, wid);
+                        fav = customerService.addToFavourite(cid, wid);
                     }
                     catch (Exception e){
                         System.out.println(e.getMessage());
@@ -72,7 +80,7 @@ public class Terminal extends UI {
                 else if(choice2  == 3){
                     System.out.println("Enter area :");
                     String area = sc.nextLine();
-                    boolean changearea=customerService.changeArea(userid,area);
+                    boolean changearea=customerService.changeArea(cid,area);
                     if(changearea == true)
                         System.out.println("Area changed successfully");
                     else
@@ -81,7 +89,7 @@ public class Terminal extends UI {
                 else if(choice2 == 4){
                     System.out.println("Enter city :");
                     String city = sc.nextLine();
-                    boolean changecity=customerService.changeCity(userid,city);
+                    boolean changecity=customerService.changeCity(cid,city);
                     if(changecity == true)
                         System.out.println("City changed successfully");
                     else
@@ -90,15 +98,81 @@ public class Terminal extends UI {
                 else if(choice2 == 5){
                     System.out.println("Enter payment method :");
                     String paymethod = sc.nextLine();
-                    boolean method=customerService.changePaymentMethod(userid,paymethod);
+                    boolean method=customerService.changePaymentMethod(cid,paymethod);
                     if(method == true)
                         System.out.println("Payment method updated successfully");
                     else
                         System.out.println("Error!!!!");
                 }
+                else if(choice2 == 6){
+                    System.out.println("Enter worker id : ");
+                    int workerid = sc.nextInt();
+                    try{
+                        customerService.giveRating(cid,workerid);
+                    }
+                    catch(Exception e){
+                        System.out.println(e.getMessage());
+                    }
+                }
             }
         }
-        else if(choice==2) {
+        else if(choice == 2){
+
+            System.out.println("Enter Email :");
+            String wemail = sc.nextLine();
+            System.out.println("Enter Password :");
+            String wpassword = sc.nextLine();
+
+            int wid=0;
+            try{
+                wid=workerService.login(wemail,wpassword);
+            }
+            catch(Exception e){
+                System.out.println(e.getMessage());
+            }
+            if(wid!=-1){
+
+                System.out.println("1-Get Worker");
+                System.out.println("2-Change Area");
+                System.out.println("3-Change City");
+                System.out.println("4-Change Hourly rate");
+                int wchoice;
+                wchoice=sc.nextInt();
+                if(wchoice == 1){
+                    try{
+                        WorkerModel w=workerService.getWorker(wid);
+                        System.out.println(w);
+                    }
+                    catch(Exception e){
+                        System.out.println(e.getMessage());
+                    }
+                }
+                else if(wchoice == 2){
+                    System.out.println("Enter area :");
+                    String area=sc.nextLine();
+                    boolean b=workerService.changeArea(wid,area);
+                    if(b == true)
+                        System.out.println("Area updated successfully");
+                }
+                else if(wchoice == 3){
+                    System.out.println("Enter city :");
+                    String city=sc.nextLine();
+                    boolean b=workerService.changeArea(wid,city);
+                    if(b == true)
+                        System.out.println("City updated successfully");
+                }
+                else if(wchoice == 4){
+                    System.out.println("Enter hourly rate :");
+                    float rate=sc.nextFloat();
+                    boolean b=workerService.changeHourlyRate(wid,rate);
+                    if(b == true)
+                        System.out.println("Hourly rate updated successfully");
+                }
+
+            }
+
+        }
+        else if(choice==3) {
             System.out.println("Enter Name :");
                 String name = sc.nextLine();
             System.out.println("Enter Email :");
