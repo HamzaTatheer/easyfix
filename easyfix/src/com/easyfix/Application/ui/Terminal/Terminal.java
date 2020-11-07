@@ -19,8 +19,8 @@ public class Terminal extends UI {
     public void start(){
         int choice;
         System.out.println("1-Login as Customer\n");
-        System.out.println("1-Login as Worker\n");
-        System.out.println("2-Register Customer\n");
+        System.out.println("2-Login as Worker\n");
+        System.out.println("3-Register Customer\n");
         Scanner sc1=new Scanner(System.in);
         System.out.println("Enter Choice : ");
         choice=sc1.nextInt();
@@ -51,11 +51,11 @@ public class Terminal extends UI {
                 System.out.println("4-Change city");
                 System.out.println("5-Change Payment method");
                 System.out.println("6-Give Rating");
-                System.out.println("7-Show Workers");
+                System.out.println("7-Show Workers By Area");
                 System.out.println("8-Show Active Bookings");
                 System.out.println("9-Show Finished Bookings");
                 System.out.println("10-Logout");
-
+                   
                 choice2 = sc.nextInt();
 
                 if (choice2 == 1) {
