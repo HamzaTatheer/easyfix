@@ -2,15 +2,17 @@ package com.easyfix.Application.bl.managers;
 
 import com.easyfix.Application.bl.classes.Complain;
 import com.easyfix.Application.db.dbProviders;
+import com.easyfix.Application.db.services.DbService;
 import com.easyfix.Application.models.ComplainModel;
 
 public class ComplainManager {
 
     public Boolean giveComplain(int _id,int _wid,int _cid, String _text)throws Exception{
-        CustomerDbService custdbservice = dbProviders.getCustomerDbService();
-        WorkerDbService workDbService=dbProviders.getWorkerDbService();
 
-        if((custdbservice.does_customer_exist(_wid)&& (workDbService.does_worker_exist(_cid)))){
+        DbService dbService = dbProviders.getDbService();
+
+
+        if((dbService.does_customer_exist(_wid)&& (dbService.does_worker_exist(_cid)))){
 
             //ComplainDbService complainDbService=dbProviders.getComplainDbService();
             //c is model

@@ -9,7 +9,7 @@ public class Worker extends  User{
     private String area;
 
     //constructors
-    Worker(WorkerModel model){
+    public Worker(WorkerModel model){
         super(model.id,model.name,model.email,model.password);
         avgRating = model.avgRating;
         hourlyRate = model.hourlyRate;
@@ -31,6 +31,28 @@ public class Worker extends  User{
         w.area =area;
         return w;
     }
+
+    public Float getAvgRate(){
+        return avgRating;
+    }
+
+    public Float getHourlyRate(){
+        return hourlyRate;
+    }
+
+    public String getSpeciality(){
+        return speciality;
+    }
+
+    public String getCity(){
+        return city;
+    }
+
+    public String getArea(){
+        return area;
+    }
+
+
     // Setters
     public Boolean changeHourlyRate(float new_rate){
         if(new_rate >= 0) {

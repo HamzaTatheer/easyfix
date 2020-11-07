@@ -3,36 +3,29 @@ import com.easyfix.Application.bl.classes.Customer;
 import com.easyfix.Application.bl.services.CustomerService;
 import com.easyfix.Application.bl.services.RatingService;
 import com.easyfix.Application.db.dbProviders;
+import com.easyfix.Application.db.services.DbService;
 import com.easyfix.Application.models.WorkerModel;
 
 import java.util.ArrayList;
 
 public class CustomerManager implements CustomerService {
 
-    private CustomerDbService customerDbService;
-    private RatingDbService ratingDbService;
+    private DbService dbService;
 
     public CustomerManager(){
-        //service provider of CustomerDb
-        CustomerDbService customerDbService = dbProviders.getCustomerDbService();
-        //user service from someone else
+        dbService = dbProviders.getDbService();
         RatingService ratingDbService = new RatingManager();
     }
 
 
     //return id
     public int login(String email, String password) throws Exception {
-        int userid = -1;
-        //userid = custdbservice.doesUserExist(1); or something else like doesexist(email,password)
-
-        //dummy access of database in 2 lines below
-        if((email=="customer@gmail.com")&&(password=="customer")){
-            userid=1;
-        }
+        int userid = dbService.does_customer_exist(email,password);
 
         if(userid <= -1){
             throw new Exception("wrong login");//used to send ui layer in catch block if there is error over normal flow
         }
+
         return userid;
     }
 
@@ -52,7 +45,7 @@ public class CustomerManager implements CustomerService {
     }
 
     public ArrayList<WorkerModel> getFavourites(int cid){
-        return customerDbService.get_customer(cid).Favourite;
+        return dbService.get_customer(cid).Favourite;
     }
 
     public boolean addToFavourite(int cid,int wid) throws Exception {
@@ -62,12 +55,12 @@ public class CustomerManager implements CustomerService {
     }
 
     public boolean changePaymentMethod(int cid,String newPaymentMethod){
-        Customer c = new Customer(customerDbService.get_customer(cid));
+        Customer c = new Customer(dbService.get_customer(cid));
         return c.changePaymentMethod(newPaymentMethod);
     }
 
     public boolean changeCity(int cid,String newCity){
-        Customer c = new Customer(customerDbService.get_customer(cid));
+        Customer c = new Customer(dbService.get_customer(cid));
 
         return (c.changeCity(newCity) != true);
     }
@@ -77,8 +70,8 @@ public class CustomerManager implements CustomerService {
     }
 
     public boolean changeArea(int cid,String newArea){
-        Customer c = new Customer(customerDbService.get_customer(cid));
+        Customer c = new Customer(dbService.get_customer(cid));
         c.changeArea(newArea);
-        return customerDbService.update_customer_area(cid,c.getArea());
+        return dbService.update_customer_area(cid,c.getArea());
     }
 }
