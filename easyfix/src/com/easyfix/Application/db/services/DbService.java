@@ -15,6 +15,11 @@ public interface DbService {
     public boolean update_customerPayment(int id,String payment);
     public boolean update_customerWallet(int id,Float money);
     public CustomerModel get_customer(int id);
+    public boolean add_favourite(int customer_id, int worker_id);
+
+    public boolean does_worker_exist(int id);
+
+
 
     /*
 

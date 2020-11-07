@@ -6,6 +6,8 @@ import com.easyfix.Application.models.WorkerModel;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -281,4 +283,104 @@ public class TextDbManager implements DbService {
     public float get_avg_rating(int worker_id){
         return 2.5f;
     }
+
+    public boolean add_favourite(int customer_id, int worker_id) {
+
+        File myobj=new File("Customer.txt");
+        ArrayList<CustomerModel> store=new ArrayList<CustomerModel>();
+        boolean check=false;
+
+
+
+        try {
+            Scanner myReader = new Scanner(myobj);
+            while(myReader.hasNext()) {
+                CustomerModel temp=new CustomerModel();
+                temp.Favourite=new ArrayList<WorkerModel>();
+
+                temp.id = myReader.nextInt();
+                myReader.nextLine();
+                temp.name = myReader.nextLine();
+                temp.email = myReader.nextLine();
+                temp.password = myReader.nextLine();
+                temp.paymentMethod=myReader.nextLine();
+                temp.creditno=myReader.nextLine();
+                temp.wallet = myReader.nextFloat();
+                myReader.nextLine();
+                temp.city = myReader.nextLine();
+                temp.area = myReader.nextLine();
+                int size = myReader.nextInt();
+                myReader.nextLine();
+                ArrayList<Integer> favourite = new ArrayList<Integer>();
+
+                boolean present=false;
+                for (int i = 0; i < size; i++) {
+                    favourite.add(myReader.nextInt());
+                    myReader.nextLine();
+
+                    if (favourite.get(i)==worker_id)
+                        present=true;
+                }
+                if (customer_id == temp.id&&!present) {
+                    favourite.add(worker_id);
+                    check=true;
+                }
+
+
+                for (int i=0;i<favourite.size();i++) {
+                    WorkerModel tempp= new WorkerModel();
+                    tempp=get_worker(favourite.get(i));
+                    if (tempp!=null)
+                        temp.Favourite.add(tempp);
+                }
+
+
+                store.add(temp);
+
+
+            }
+        } catch (FileNotFoundException e) {
+            //  System.out.print("Error in reading a file\n");
+            e.printStackTrace();
+        }
+
+
+
+
+        try {
+            FileWriter mywriter=new FileWriter("Customer.txt",false);
+
+            for (int i=0;i<store.size();i++) {
+                mywriter.write(store.get(i).id + "\n");
+                mywriter.write(store.get(i).name + "\n");
+                mywriter.write(store.get(i).email + "\n");
+                mywriter.write(store.get(i).password + "\n");
+                mywriter.write(store.get(i).paymentMethod + "\n");
+                mywriter.write(store.get(i).creditno + "\n");
+                mywriter.write(store.get(i).wallet + "\n");
+                mywriter.write(store.get(i).city + "\n");
+                mywriter.write(store.get(i).area + "\n");
+                mywriter.write(store.get(i).Favourite.size() + "\n");
+                for (int j = 0; j < store.get(i).Favourite.size(); j++) {
+                    mywriter.write(store.get(i).Favourite.get(j).id + "\n");
+                }
+
+
+
+            }
+            mywriter.close();
+            if (check)
+                return true;
+            else
+                return false;
+        } catch (IOException e) {
+            // System.out.print("Error in storing customer in filling\n");
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+
+
 }

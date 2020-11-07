@@ -4,7 +4,12 @@ import com.easyfix.Application.db.services.DbService;
 import com.easyfix.Application.models.CustomerModel;
 import com.easyfix.Application.models.WorkerModel;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class SqlDbManager implements DbService {
 
@@ -148,8 +153,8 @@ public class SqlDbManager implements DbService {
     public float get_avg_rating(int worker_id){
         return 2.5f;
     }
-
-
-
+    public boolean add_favourite(int customer_id, int worker_id){
+        return true;
+    }
 
 }
