@@ -1242,8 +1242,8 @@ public class dbManager implements dbInterface {
                     ret.spareParts=new ArrayList<SparePartModel>();
 
                     ret.id=bid;
-                    ret.cid=get_customer(cid);
-                    ret.wid=get_worker(wid);
+                    ret.customerName=get_customer(cid);
+                    ret.WorkerName=get_worker(wid);
                     ret.text=text;
                     ret.status=status;
                     ret.startTime=start;
@@ -1314,8 +1314,8 @@ public class dbManager implements dbInterface {
                     ret.spareParts=new ArrayList<SparePartModel>();
 
                     ret.id=bid;
-                    ret.cid=get_customer(cid);
-                    ret.wid=get_worker(wid);
+                    ret.customerName=get_customer(cid);
+                    ret.WorkerName=get_worker(wid);
                     ret.text=text;
                     ret.status=status;
                     ret.startTime=start;
@@ -1388,8 +1388,8 @@ public class dbManager implements dbInterface {
 
 
                 ret.id=bid;
-                ret.cid=get_customer(cid);
-                ret.wid=get_worker(wid);
+                ret.customerName=get_customer(cid);
+                ret.WorkerName=get_worker(wid);
                 ret.text=text;
                 ret.status=status_n;
                 ret.startTime=start;
@@ -1428,12 +1428,12 @@ public class dbManager implements dbInterface {
 
             for (int i = 0; i < give.size(); i++) {
                 mywriter.write(give.get(i).id + "\n");
-                if (give.get(i).cid!=null)
-                    mywriter.write(give.get(i).cid.id + "\n");
+                if (give.get(i).customerName!=null)
+                    mywriter.write(give.get(i).customerName.id + "\n");
                 else
                     mywriter.write(0 + "\n");
-                if (give.get(i).wid!=null)
-                    mywriter.write(give.get(i).wid.id + "\n");
+                if (give.get(i).WorkerName!=null)
+                    mywriter.write(give.get(i).WorkerName.id + "\n");
                 else
                     mywriter.write(0 + "\n");
                 mywriter.write(give.get(i).text + "\n");
@@ -2230,4 +2230,3 @@ public class dbManager implements dbInterface {
         return null;
     }
 }
-

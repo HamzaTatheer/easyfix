@@ -2,28 +2,25 @@ package com.easyfix.Application.bl.classes;
 import java.util.ArrayList;
 import com.easyfix.Application.models.CustomerModel;
 public class Customer extends User{
-    public Float wallet;
-    public String creditno;
-    public String paymentMethod;
-    public String city;
+    private Float wallet;
+    private String creditno;
+    private String paymentMethod;
+    private String city;
     private String area;
-    public ArrayList<Worker> Favourites;
+    private ArrayList<Worker> Favourites;
 
 
     //constructors
-    public Customer(CustomerModel model){
-        id = model.id;
-        name = model.name;
-        email = model.email;
-        password = model.password;
+    Customer(CustomerModel model){
+
+        super(model.id,model.name,model.email,model.password);
         wallet=model.wallet;
         creditno = model.creditno;
         paymentMethod = model.paymentMethod;
         city = model.city;
         area = model.area;
     }
-    //getters
-
+    //member functions
     public CustomerModel getCustomerModel(){
         CustomerModel c = new CustomerModel();
         c.id = id;
@@ -37,7 +34,6 @@ public class Customer extends User{
         c.area = area;
         return c;
     }
-    //setters
     public Boolean addToWallet(Float newAmount){
         wallet += newAmount;
         return true;
@@ -53,10 +49,6 @@ public class Customer extends User{
         }
     }
 
-    public String getArea(){
-        return area;
-    }
-
     public boolean changePaymentMethod(String newMethod){
         paymentMethod = newMethod;
         return true;
@@ -70,5 +62,53 @@ public class Customer extends User{
     public Boolean changeArea(String newArea){
         area = newArea;
         return true;
+    }
+    //getters
+    public Float getWallet() {
+        return wallet;
+    }
+
+    public String getCreditno() {
+        return creditno;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public String getCity() {
+        return city;
+    }
+    public String getArea(){
+
+        return area;
+    }
+
+    public ArrayList<Worker> getFavourites() {
+        return Favourites;
+    }
+    //setters
+    public void setWallet(Float wallet) {
+        this.wallet = wallet;
+    }
+
+    public void setCreditno(String creditno) {
+        this.creditno = creditno;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public void setFavourites(ArrayList<Worker> favourites) {
+        Favourites = favourites;
     }
 }

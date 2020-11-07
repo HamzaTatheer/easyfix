@@ -1,20 +1,16 @@
 package com.easyfix.Application.bl.classes;
 
 import com.easyfix.Application.models.WorkerModel;
-
 public class Worker extends  User{
-    public float avgRating;
-    public float hourlyRate;
-    public String speciality;
-    public String city;
-    public String area;
+    private float avgRating;
+    private float hourlyRate;
+    private String speciality;
+    private String city;
+    private String area;
 
     //constructors
-    public Worker(WorkerModel model){
-        id = model.id;
-        name = model.name;
-        email =model.email;
-        password = model.password;
+    Worker(WorkerModel model){
+        super(model.id,model.name,model.email,model.password);
         avgRating = model.avgRating;
         hourlyRate = model.hourlyRate;
         speciality = model.speciality;

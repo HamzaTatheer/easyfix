@@ -3,10 +3,10 @@ package com.easyfix.Application.bl.classes;
 import com.easyfix.Application.models.SparePartModel;
 
 public class SparePart {
-    int id;
-    String name;
-    int quantity;
-    float cost;
+    private int id;
+    private String name;
+    private int quantity;
+    private float cost;
 
     //constructors
     SparePart(SparePartModel S){
@@ -15,7 +15,7 @@ public class SparePart {
         quantity=S.quantity;
         cost=S.cost;
     }
-    //getters
+    //member functions
     public SparePartModel getSparePartModel()
     {
         SparePartModel temp=new SparePartModel();
@@ -25,6 +25,37 @@ public class SparePart {
         temp.cost=cost;
         return temp;
     }
-    //setters
+    //getters
 
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public float getCost() {
+        return cost;
+    }
+    //setters
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setCost(float cost) {
+        this.cost = cost;
+    }
 }
