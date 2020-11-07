@@ -1,68 +1,119 @@
-create database easyfix
+create table customers(
+id int AUTO_INCREMENT,
+name varchar(50),
+ email varchar(50),
+ password varchar(50),
+ credit_no varchar(50) DEFAULT 'cash',
+ wallet float,
+ city varchar(50), 
+ area varchar(50),
+ primary key(id)
+);
 
-use easyfix
+INSERT INTO `easyfix`.`customers`
+(
+`name`,
+`email`,
+`password`,
 
-create table Customers(
-ID int primary key,
-Name varchar(50) not null,
-email varchar(50) not null,
-[Password] varchar(50),
-wallet float,
-[Address] varchar(50),
-favorite int
-)
+`wallet`,
+`city`,
+`area`)
+VALUES
+(
+"noor",
+"noor14211@gmail",
+"abcd",
 
-
-insert into Customers VALUES ('1','noor','noor14211','qwerty','0','wapdat town lahore','100')
-
-insert into Customers VALUES('2','ali','ali111','qwerty','0','wapda town lahore','200');
-
-insert into Customers VALUES('3','arsalan','arsalan444','qwerty','0','valencia lahore','100');
-
+100,
+"lahore",
+"wapda town");
 
 create table worker(
-id int,
-average_rating int,
-hourly_rate int, 
-city varchar(50),
-area varchar(50),
-speciality varchar(50),
-rating int
+ wid int AUTO_INCREMENT,
+ name varchar(50),
+ email varchar(50),
+ password varchar(50),
+ average_rating float,
+ hourly_rate float,
+ city varchar(50),
+ area varchar(50),
+ speciality varchar(50),
+ 
+ primary key(wid)
 
+);
+
+create table favorite(
+id int ,
+favourite int,
+
+ foreign key(id) references customers(id),
+ foreign key(favourite) references worker(wid)
+);
+
+
+
+
+create table booking(
+bid int AUTO_INCREMENT,
+ customer_id int,
+ worker_id int, 
+ booking_text varchar(100),
+ booking_status varchar(50),
+ start_time datetime,
+ end_time datetime ,
+ primary key(bid),
+ foreign key(customer_id) references customers(id),
+ foreign key(worker_id) references worker(wid)
+);
+
+create table booking_spareparts(bid int ,part_id int);
+
+
+create table billing (
+id int AUTO_INCREMENT,
+bid int,
+totalcost int,
+primary key(id),
+foreign key(bid) references booking(bid)
+);
+
+
+create table complain (
+id int AUTO_INCREMENT,
+cid int,
+wid int,
+complain_text varchar(200),
+primary key(id),
+foreign key(wid) references worker(wid),
+foreign key(cid) references customers(id)
+);
+
+
+create table sparepart(
+id int AUTO_INCREMENT,
+part_name varchar(50),
+cost float,
+quantity int,
+
+primary key(id)
+);
+
+create table rating(
+cid int,
+wid int,
+rate int,
+foreign key(wid) references worker(wid),
+foreign key(cid) references customers(id)
+
+);
+
+create table chat(
+ senderId int,
+ receiverId int,
+ senderName varchar(50),
+ receiverName varchar(50),
+ message varchar(200)
 
 )
-
-
-
---does user exist
-go
-Create Procedure does_user_exist @uname varchar(50), @pass varchar(50), @output int OUTPUT
-As
-Begin
-
-	if  not exists (select * 
-			From Customers 
-			Where Name=@uname and [Password]=@pass)
-	Begin
-	set @output=0
-	print 'Error! Username and password combination incorrect'
-	return
-	End
-
-	set @output=1
-	print 'login successful!'
-End
-
-
-
-go
-Create Procedure storeuser @vid int, @uname varchar(50), @vemail varchar(50),@vpass varchar(50),@wall float, @vAddress varchar(50),@vfavorite int
-As
-Begin
-
-	insert into Customers values(@vid,@uname, @vemail ,@vpass ,@wall , @vAddress,@vfavorite)
-End
-
-
-
-
