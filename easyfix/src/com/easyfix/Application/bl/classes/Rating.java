@@ -3,16 +3,16 @@ package com.easyfix.Application.bl.classes;
 import com.easyfix.Application.models.RatingModel;
 
 public class Rating {
-    public int cid;
-    public int wid;
-    public int rating;
+    private int cid;
+    private int wid;
+    private int rating;
     //constructors
-    public Rating(RatingModel R){
+    Rating(RatingModel R){
         cid=R.cid;
         wid=R.wid;
         rating=R.rating;
     }
-    //getters
+    //member functions
     public RatingModel getRatingModel(){
         RatingModel temp=new RatingModel();
         temp.cid=cid;
@@ -28,7 +28,28 @@ public class Rating {
             return false;
 
     }
+    //getters
+    public int getCid() {
+        return cid;
+    }
+
+    public int getWid() {
+        return wid;
+    }
+
+    public int getRating() {
+        return rating;
+    }
     //setters
+    public void setCid(int cid) {
+        this.cid = cid;
+    }
 
+    public void setWid(int wid) {
+        this.wid = wid;
+    }
 
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
 }

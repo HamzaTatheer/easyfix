@@ -4,13 +4,13 @@ import com.easyfix.Application.models.BillingModel;
 import com.easyfix.Application.models.BookingModel;
 
 public class Billing {
-    int bookingId;
-    String title;
-    String customerName;
-    String workerName;
-    String status;
-    Float totalCost;
-
+    private int bookingId;
+    private String title;
+    private String customerName;
+    private String workerName;
+    private String status;
+    private Float totalCost;
+    //constructors
     Billing(int _bookingId,String _title,String _customerName,String _workerName,String _status,Float _TotalCost){
         bookingId = _bookingId;
         title = _title;
@@ -19,7 +19,7 @@ public class Billing {
         status = _status;
         totalCost = _TotalCost;
     }
-
+    //member functions
     BillingModel getBillingModel(){
         BillingModel b = new BillingModel();
         b.bookingId = bookingId;
@@ -45,6 +45,55 @@ public class Billing {
         else
             return false;
     }
+    //getters
 
+    public int getBookingId() {
+        return bookingId;
+    }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public String getWorkerName() {
+        return workerName;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public Float getTotalCost() {
+        return totalCost;
+    }
+
+    //setters
+
+    public void setBookingId(int bookingId) {
+        this.bookingId = bookingId;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public void setWorkerName(String workerName) {
+        this.workerName = workerName;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setTotalCost(Float totalCost) {
+        this.totalCost = totalCost;
+    }
 }
