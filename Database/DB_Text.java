@@ -1467,6 +1467,119 @@ public class DB_Text implements DB_interface {
     }
 
     @Override
+    public boolean updateFinishTime(int booking_id, LocalDateTime finishTime) {
+        File myobj=new File("Booking.txt");
+
+        ArrayList<BookingModel> give=new ArrayList<BookingModel>();
+        boolean check=false;
+
+
+        try {
+            Scanner myReader = new Scanner(myobj);
+            int gi=0;
+            while(myReader.hasNext()) {
+                BookingModel ret=new BookingModel();
+                ret.spareParts=new ArrayList<SparePartModel>();
+
+                int bid = myReader.nextInt();
+                myReader.nextLine();
+                int cid = myReader.nextInt();
+                myReader.nextLine();
+                int wid = myReader.nextInt();
+                myReader.nextLine();
+                String text = myReader.nextLine();
+                String status_n = myReader.nextLine();
+                LocalDateTime start = LocalDateTime.parse(myReader.next());
+                LocalDateTime end= LocalDateTime.parse(myReader.next());
+                int size=myReader.nextInt();
+                myReader.nextLine();
+                ArrayList<Integer> spare=new ArrayList<Integer>();
+
+                for (int i=0;i<size;i++)
+                {
+                    spare.add(myReader.nextInt());
+                    myReader.nextLine();
+
+                }
+
+
+
+                ret.id=bid;
+                ret.customerName=get_customer(cid);
+                ret.WorkerName=get_worker(wid);
+                ret.text=text;
+                ret.status=status_n;
+                ret.startTime=start;
+                ret.endTime=end;
+
+                for (int i=0;i<spare.size();i++) {
+                    SparePartModel temp=new SparePartModel();
+                    temp=get_spare_part(spare.get(i));
+                    if (temp!=null)
+                        ret.spareParts.add(temp);
+
+
+                }
+                if (bid==booking_id) {
+                    ret.endTime=finishTime;
+                    check=true;
+                }
+                give.add(ret);
+                //give.get(gi).spareParts=new ArrayList<SparePartModel>();
+                gi++;
+
+
+            }
+        }
+        catch (FileNotFoundException e) {
+            //  System.out.print("Error in reading a file\n");
+            e.printStackTrace();
+            return false;
+        }
+        // System.out.print("ID not found\n");
+
+
+        try {
+            FileWriter mywriter = new FileWriter("Booking.txt", false);
+
+
+            for (int i = 0; i < give.size(); i++) {
+                mywriter.write(give.get(i).id + "\n");
+                if (give.get(i).customerName!=null)
+                    mywriter.write(give.get(i).customerName.id + "\n");
+                else
+                    mywriter.write(0 + "\n");
+                if (give.get(i).WorkerName!=null)
+                    mywriter.write(give.get(i).WorkerName.id + "\n");
+                else
+                    mywriter.write(0 + "\n");
+                mywriter.write(give.get(i).text + "\n");
+                mywriter.write(give.get(i).status + "\n");
+                mywriter.write(give.get(i).startTime + "\n");
+                mywriter.write(give.get(i).endTime + "\n");
+                mywriter.write(give.get(i).spareParts.size() + "\n");
+                for (int j = 0; j < give.get(i).spareParts.size(); j++) {
+                    mywriter.write(give.get(i).spareParts.get(j).id + "\n");
+                }
+
+
+
+
+            }
+            mywriter.close();
+            if (check)
+                return true;
+            else
+                return false;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
+    @Override
     public boolean store_spare_holder(int booking_id, int spare_id, int quantity) {
         return false;
     }
