@@ -20,7 +20,6 @@ public interface DbService {
     public boolean does_worker_exist(int id);
 
 
-
     /*
 
     public boolean store_worker(String name,String email,String password,float average_rating,float hourly_rate,String city,String area,String speciality);//id given by default by DB

@@ -15,7 +15,7 @@ public class TextDbManager implements DbService {
     @Override
     public boolean does_customer_exist(int id) {
 
-        File myobj=new File("Customer.txt");
+        File myobj=new File("E:\\easyfix\\easyfix\\src\\com\\easyfix\\Application\\db\\textDb\\TextFiles\\Customer\\Customer.txt");
 
 
 
@@ -59,9 +59,7 @@ public class TextDbManager implements DbService {
     @Override
     public int does_customer_exist(String email, String password) {
 
-        File myobj=new File("Customer.txt");
-
-
+        File myobj=new File("E:\\easyfix\\easyfix\\src\\com\\easyfix\\Application\\db\\textDb\\TextFiles\\Customer\\Customer.txt");
 
         try {
             Scanner myReader = new Scanner(myobj);
@@ -135,7 +133,7 @@ public class TextDbManager implements DbService {
 
 
     public CustomerModel get_customer(int id) {
-        File myobj=new File("Customer.txt");
+        File myobj=new File("E:\\easyfix\\easyfix\\src\\com\\easyfix\\Application\\db\\textDb\\TextFiles\\Customer\\Customer.txt");
 
 
 
