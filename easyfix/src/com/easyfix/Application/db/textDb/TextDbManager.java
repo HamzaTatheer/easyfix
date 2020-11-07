@@ -4,24 +4,98 @@ import com.easyfix.Application.db.services.DbService;
 import com.easyfix.Application.models.CustomerModel;
 import com.easyfix.Application.models.WorkerModel;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class TextDbManager implements DbService {
-    public boolean does_customer_exist(int id){
-    if((id==1) || (id ==2)){
-        return true;
-    }
-    else
-        return false;
-}
+    @Override
+    public boolean does_customer_exist(int id) {
 
-    //access from sql server
-    public int does_customer_exist(String email,String password){
-        if((email == "admin@gmail.com")&&(password == "admin"))
-            return 1;
-        else{
-            return -1;
+        File myobj=new File("Customer.txt");
+
+
+
+        try {
+            Scanner myReader = new Scanner(myobj);
+            while(myReader.hasNext()) {
+
+                int id_n = myReader.nextInt();
+                myReader.nextLine();
+                String name = myReader.nextLine();
+                String email = myReader.nextLine();
+                String password = myReader.nextLine();
+                String payment=myReader.nextLine();
+                String credit_no=myReader.nextLine();
+                float wallet = myReader.nextFloat();
+                myReader.nextLine();
+                String city = myReader.nextLine();
+                String area = myReader.nextLine();
+                int size = myReader.nextInt();
+                myReader.nextLine();
+                ArrayList<Integer> favourite = new ArrayList<Integer>();
+
+                for (int i = 0; i < size; i++) {
+                    favourite.add(myReader.nextInt());
+                    myReader.nextLine();
+                }
+
+                if (id == id_n) {
+                    return true;
+                }
+            }
+        } catch (FileNotFoundException e) {
+            //  System.out.print("Error in reading a file\n");
+            e.printStackTrace();
         }
+        // System.out.print("ID not found\n");
+        return false;
+
+    }
+
+    @Override
+    public int does_customer_exist(String email, String password) {
+
+        File myobj=new File("Customer.txt");
+
+
+
+        try {
+            Scanner myReader = new Scanner(myobj);
+            while(myReader.hasNext()) {
+
+                int id_n = myReader.nextInt();
+                myReader.nextLine();
+                String name = myReader.nextLine();
+                String email_n = myReader.nextLine();
+                String password_n = myReader.nextLine();
+                String payment=myReader.nextLine();
+                String credit_no=myReader.nextLine();
+                float wallet = myReader.nextFloat();
+                myReader.nextLine();
+                String city = myReader.nextLine();
+                String area = myReader.nextLine();
+                int size = myReader.nextInt();
+                myReader.nextLine();
+                ArrayList<Integer> favourite = new ArrayList<Integer>();
+
+                for (int i = 0; i < size; i++) {
+                    favourite.add(myReader.nextInt());
+                    myReader.nextLine();
+                }
+
+                if (email_n.equals(email)&&password_n.equals(password)) {
+                    return id_n;
+                }
+            }
+        } catch (FileNotFoundException e) {
+            //  System.out.print("Error in reading a file\n");
+            e.printStackTrace();
+        }
+
+        return -1;
+
     }
 
     public boolean store_customer(String name, String email, String password, String creditNo, float wallet, String city, String area, ArrayList<Integer> favourite) throws Exception {
@@ -58,20 +132,78 @@ public class TextDbManager implements DbService {
     }
 
 
-    public CustomerModel get_customer(int id){
-        CustomerModel c = new CustomerModel();
-        c.id=1;
-        c.name="customer";
-        c.email="customer";
-        c.password="customer";
-        c.city="lahore";
-        c.area="dha";
-        c.creditno="1234678";
-        c.Favourite = new ArrayList<>();
-        c.paymentMethod="cash";
-        c.wallet = 200.0f;
-        return c;
+    public CustomerModel get_customer(int id) {
+        File myobj=new File("Customer.txt");
+
+
+
+        try {
+            Scanner myReader = new Scanner(myobj);
+            while(myReader.hasNext()) {
+
+                int id_n = myReader.nextInt();
+                myReader.nextLine();
+                String name = myReader.nextLine();
+                String email = myReader.nextLine();
+                String password = myReader.nextLine();
+                String payment=myReader.nextLine();
+                String credit_no=myReader.nextLine();
+                float wallet = myReader.nextFloat();
+                myReader.nextLine();
+                String city = myReader.nextLine();
+                String area = myReader.nextLine();
+                int size = myReader.nextInt();
+                myReader.nextLine();
+                ArrayList<Integer> favourite = new ArrayList<Integer>();
+
+                for (int i = 0; i < size; i++) {
+                    favourite.add(myReader.nextInt());
+                    myReader.nextLine();
+                }
+
+                if (id == id_n) {
+                    CustomerModel ret=new CustomerModel();
+                    ret.Favourite=new ArrayList<WorkerModel>();
+                    ret.id=id_n;
+                    ret.name=name;
+                    ret.email=email;
+                    ret.password=password;
+                    ret.paymentMethod=payment;
+                    ret.creditno=credit_no;
+                    ret.wallet=wallet;
+                    ret.city=city;
+                    ret.area=area;
+                    for (int i=0;i<favourite.size();i++) {
+                        WorkerModel temp=get_worker(favourite.get(i));
+                        if (temp!=null)
+                            ret.Favourite.add(temp);
+                    }
+                        /*
+                        System.out.print(id_n+"\n");
+                        System.out.print(name+"\n");
+                        System.out.print(email+"\n");
+                        System.out.print(password+"\n");
+                        System.out.print(payment+"\n");
+                        System.out.print(wallet+"\n");
+                        System.out.print(city+"\n");
+                        System.out.print(area+"\n");
+                        System.out.print(size+"\n");
+                        System.out.print(favourite+"\n");
+                        */
+
+                    return ret;
+                }
+            }
+        } catch (FileNotFoundException e) {
+            //  System.out.print("Error in reading a file\n");
+            e.printStackTrace();
+        }
+        // System.out.print("ID not found\n");
+
+
+        return null;
     }
+
 
     public boolean store_worker(String name,String email,String password,float average_rating,float hourly_rate,String city,String area,String speciality){
         return true;
