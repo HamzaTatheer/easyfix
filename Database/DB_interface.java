@@ -42,7 +42,7 @@ public ArrayList<SparePartModel> get_all_spare_parts_booking(int booking_id);//p
 public boolean add_favourite(int customer_id,int worker_id);
 public boolean remove_favourite(int customer_id,int worker_id);
 //this not needed
-public ArrayList<Integer> get_favourites(int customer_id);
+public ArrayList<WorkerModel> get_favourites(int customer_id);
 //----------------------------------------
 
 

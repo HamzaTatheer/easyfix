@@ -1254,8 +1254,10 @@ public class DB_Text implements DB_interface {
                     for (int i=0;i<spare.size();i++) {
                         SparePartModel temp=new SparePartModel();
                         temp=get_spare_part(spare.get(i));
-                        if (temp!=null)
-                        ret.spareParts.add(temp);
+                        if (temp!=null) {
+                            ret.spareParts.add(temp);
+                            ret.spareParts.get(i).quantity=10;
+                        }
                     }
                     /*
                         System.out.print(bid+"\n");
@@ -1667,8 +1669,8 @@ public class DB_Text implements DB_interface {
 
     //not needed
     @Override
-    public ArrayList<Integer> get_favourites(int customer_id) {
-        return null;
+    public ArrayList<WorkerModel> get_favourites(int customer_id) {
+        return get_customer(customer_id).Favourite;
     }
     //------------
 
