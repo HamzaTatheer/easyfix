@@ -5,15 +5,18 @@ import com.easyfix.Application.models.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public interface dbInterface {
+public interface DbService {
+
     public boolean does_customer_exist(int id);
     public int does_customer_exist(String email,String password); //id returned
-    public boolean store_customer(String name, String email, String password, String credit_no, float wallet, String city, String area, ArrayList<Integer> favourite);//id given by default by DB
+    public boolean store_customer(String name, String email, String password, String credit_no, float wallet, String city, String area, ArrayList<Integer> favourite) throws Exception;//id given by default by DB
     public boolean update_customer_city(int id,String city);
     public boolean update_customer_area(int id,String area);
     public boolean update_customerPayment(int id,String payment);
     public boolean update_customerWallet(int id,Float money);
     public CustomerModel get_customer(int id);
+
+    /*
 
     public boolean store_worker(String name,String email,String password,float average_rating,float hourly_rate,String city,String area,String speciality);//id given by default by DB
     public WorkerModel get_worker(int id);
@@ -63,5 +66,5 @@ public interface dbInterface {
 
     public  boolean store_chat(int sender_id,int reciever_id,String sender_name,String receiver_name,String text);
     public ArrayList<ChatMessageModel> get_chat_history(int customer_id,int worker_id);
-
+*/
 }

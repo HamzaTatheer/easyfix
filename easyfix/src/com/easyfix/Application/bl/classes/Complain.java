@@ -8,7 +8,7 @@ public class Complain {
     private int cid;
     private String text;
     //constructors
-     Complain(ComplainModel obj){
+    public Complain(ComplainModel obj){
         id=obj.id;
         wid=obj.wid;
         cid=obj.cid;

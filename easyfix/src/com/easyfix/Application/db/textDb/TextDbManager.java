@@ -1,9 +1,77 @@
-package com.easyfix.Application.db.sqlDb;
+package com.easyfix.Application.db.textDb;
+
+import com.easyfix.Application.db.services.DbService;
+import com.easyfix.Application.models.CustomerModel;
 import com.easyfix.Application.models.WorkerModel;
 
 import java.util.ArrayList;
 
-public class WorkerSqlManager implements WorkerDbService{
+public class TextDbManager implements DbService {
+    public boolean does_customer_exist(int id){
+    if((id==1) || (id ==2)){
+        return true;
+    }
+    else
+        return false;
+}
+
+    //access from sql server
+    public int does_customer_exist(String email,String password){
+        if((email == "admin@gmail.com")&&(password == "admin"))
+            return 1;
+        else{
+            return -1;
+        }
+    }
+
+    public boolean store_customer(String name, String email, String password, String creditNo, float wallet, String city, String area, ArrayList<Integer> favourite) throws Exception {
+        throw new Exception("Functionality still in progress. try customer@gmail.com or worker@gmail.com");
+    }
+
+    public boolean update_customer_city(int id,String city){
+        if(id == 1){
+            return true;
+        }
+        else
+            return false;
+    }
+    public boolean update_customer_area(int id,String area){
+        if(id == 1){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    public boolean update_customerPayment(int id,String payment){
+        if(id == 1){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+
+    public boolean update_customerWallet(int cid,Float money){
+            return true;
+    }
+
+
+    public CustomerModel get_customer(int id){
+        CustomerModel c = new CustomerModel();
+        c.id=1;
+        c.name="customer";
+        c.email="customer";
+        c.password="customer";
+        c.city="lahore";
+        c.area="dha";
+        c.creditno="1234678";
+        c.Favourite = new ArrayList<>();
+        c.paymentMethod="cash";
+        c.wallet = 200.0f;
+        return c;
+    }
 
     public boolean store_worker(String name,String email,String password,float average_rating,float hourly_rate,String city,String area,String speciality){
         return true;
@@ -75,4 +143,10 @@ public class WorkerSqlManager implements WorkerDbService{
         return true;
     }
 
+    public boolean store_rating(int customer_id,int worker_id,int rating){
+        return true;
+    }
+    public float get_avg_rating(int worker_id){
+        return 2.5f;
+    }
 }

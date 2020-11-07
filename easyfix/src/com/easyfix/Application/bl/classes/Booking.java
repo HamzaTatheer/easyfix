@@ -28,7 +28,7 @@ public class Booking {
         worker = _worker;
     }
 
-
+/*
     public BookingModel getBookingModel(){
         BookingModel temp=new BookingModel();
         temp.id=id;
@@ -39,7 +39,7 @@ public class Booking {
         temp.customerModel = new CustomerModel(customer);
         temp.workerModel = new WorkerModel(worker);
         return temp;
-    }
+    }*/
     //getters
     public int getId() {
         return id;

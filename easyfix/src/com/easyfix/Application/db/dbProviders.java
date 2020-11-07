@@ -1,34 +1,17 @@
 package com.easyfix.Application.db;
 
 import com.easyfix.Application.Config;
-import com.easyfix.Application.db.sqlDb.CustomerSqlManager;
-import com.easyfix.Application.db.sqlDb.RatingSqlManager;
-import com.easyfix.Application.db.sqlDb.WorkerSqlManager;
+import com.easyfix.Application.db.services.DbService;
+import com.easyfix.Application.db.sqlDb.SqlDbManager;
+import com.easyfix.Application.db.textDb.TextDbManager;
 
 public class dbProviders {
-    public static CustomerDbService getCustomerDbService(){
+    public static DbService getDbService(){
         if(Config.db == "sql") {
-            return new CustomerTextManager(); //there should be CustomerSqlManager()
-        }
-        else {
-            return new CustomerSqlManager(); //there should be CustomerTextManager()
-        }
-    }
-    public static WorkerDbService getWorkerDbService(){
-        if(Config.db == "sql") {
-            return new WorkerSqlManager();
-        }
-        else {
-            return new WorkerTextManager();
-        }
-    }
-
-    public static RatingDbService getRatingDbService(){
-        if(Config.db=="sql"){
-            return new RatingSqlManager();
+            return new SqlDbManager();
         }
         else{
-            return new RatingTextManager();
+            return new TextDbManager();
         }
     }
 }

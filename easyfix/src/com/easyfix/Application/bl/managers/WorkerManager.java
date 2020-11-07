@@ -3,6 +3,7 @@ package com.easyfix.Application.bl.managers;
 import com.easyfix.Application.bl.classes.Worker;
 import com.easyfix.Application.bl.services.WorkerService;
 import com.easyfix.Application.db.dbProviders;
+import com.easyfix.Application.db.services.DbService;
 import com.easyfix.Application.models.WorkerModel;
 
 public class WorkerManager implements WorkerService {
@@ -10,19 +11,15 @@ public class WorkerManager implements WorkerService {
 
     //return id
     public int login(String email, String password) throws Exception {
-        CustomerDbService custdbservice = dbProviders.getCustomerDbService();
+        DbService dbservice = dbProviders.getDbService();
         int userid = -1;
-        //userid = custdbservice.doesUserExist(1); or something else like doesexist(email,password)
 
-        //dummy access of database in 2 lines below
-        if((email=="worker@gmail.com")&&(password=="worker")){
-            userid=2;
+        if(userid >=0){
+            return userid;
         }
-
-        if(userid == -1){
-            throw new Exception("Worker not Found. Please try again");//used to send ui layer in catch block if there is error over normal flow
+        else{
+            throw new Exception("User not Found");
         }
-        return userid;
     }
 
     //return id

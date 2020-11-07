@@ -11,7 +11,7 @@ public class Customer extends User{
 
 
     //constructors
-    Customer(CustomerModel model){
+    public Customer(CustomerModel model){
 
         super(model.id,model.name,model.email,model.password);
         wallet=model.wallet;
@@ -21,7 +21,7 @@ public class Customer extends User{
         area = model.area;
     }
     //member functions
-    public CustomerModel getCustomerModel(){
+    /*public CustomerModel getCustomerModel(){
         CustomerModel c = new CustomerModel();
         c.id = id;
         c.name = name;
@@ -34,6 +34,7 @@ public class Customer extends User{
         c.area = area;
         return c;
     }
+    */
     public Boolean addToWallet(Float newAmount){
         wallet += newAmount;
         return true;

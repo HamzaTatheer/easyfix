@@ -3,6 +3,7 @@ package com.easyfix.Application.bl.managers;
 import com.easyfix.Application.bl.classes.Rating;
 import com.easyfix.Application.bl.services.RatingService;
 import com.easyfix.Application.db.dbProviders;
+import com.easyfix.Application.db.services.DbService;
 import com.easyfix.Application.models.RatingModel;
 
 public class RatingManager implements RatingService {
@@ -11,10 +12,9 @@ public class RatingManager implements RatingService {
     // UI should send us model, then we will extract giverID,  receiverID, workerRating,, What do you say?
     public Boolean giveRating(int giverID,int receiverID,int workerRating) throws Exception{
 
-        CustomerDbService custdbservice = dbProviders.getCustomerDbService();
-        WorkerDbService workDbService=dbProviders.getWorkerDbService();
+        DbService dbService = dbProviders.getDbService();
 
-        if((custdbservice.does_customer_exist(giverID)&& (workDbService.does_worker_exist(receiverID)))){
+        if((dbService.does_customer_exist(giverID)&& (dbService.does_worker_exist(receiverID)))){
             //RatingDbService rateDbService=dbProviders.getRatingDbService();
             //r is model
             RatingModel r = new RatingModel();

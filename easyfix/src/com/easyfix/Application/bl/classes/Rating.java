@@ -7,7 +7,7 @@ public class Rating {
     private int wid;
     private int rating;
     //constructors
-    Rating(RatingModel R){
+    public Rating(RatingModel R){
         cid=R.cid;
         wid=R.wid;
         rating=R.rating;

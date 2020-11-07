@@ -16,16 +16,29 @@ public class WorkerModel {
     public String speciality;
 
 
+    public WorkerModel(){
+        id=-1;
+        name="none";
+        email="none";
+        password="none";
+        avgRating=0f;
+        hourlyRate=0f;
+        city="none";
+        area="none";
+        speciality="none";
+    }
+
+
     WorkerModel(Worker w){
-        id = w.id;
-        name = w.name;
-        email = w.email;
-        password = w.password;
-        avgRating = w.avgRating;
-        hourlyRate = w.hourlyRate;
-        city = w.city;
-        area = w.area;
-        speciality = w.speciality;
+        id = w.getId();
+        name = w.getName();
+        email = w.getEmail();
+        password = w.getPassword();
+        avgRating = w.getAvgRate();
+        hourlyRate = w.getHourlyRate();
+        city = w.getCity();
+        area = w.getArea();
+        speciality = w.getSpeciality();
     }
 
 
