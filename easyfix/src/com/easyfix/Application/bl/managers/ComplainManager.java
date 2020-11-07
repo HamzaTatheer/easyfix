@@ -12,7 +12,7 @@ public class ComplainManager {
         DbService dbService = dbProviders.getDbService();
 
 
-        if((dbService.does_customer_exist(_wid)&& (dbService.does_worker_exist(_cid)))){
+        //if((dbService.does_customer_exist(_wid)&& (dbService.does_worker_exist(_cid)))){
 
             //ComplainDbService complainDbService=dbProviders.getComplainDbService();
             //c is model
@@ -41,7 +41,6 @@ public class ComplainManager {
                 throw new Exception("Invalid Complain text length");
 
         }
-        else
-            throw new Exception("One of the user doesn't exist. Please try again\n");
+        //else
+            //throw new Exception("One of the user doesn't exist. Please try again\n");
     }
-}
