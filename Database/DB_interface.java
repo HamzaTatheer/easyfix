@@ -31,6 +31,7 @@ public boolean store_booking( int customer_id, int worker_id, String text, Strin
 public  ArrayList<BookingModel> get_booking(int customer_id);
 public ArrayList<BookingModel> get_booking(int customer_id,String status);
 public boolean update_booking_status(int booking_id,String status);
+public boolean updateFinishTime(int booking_id,LocalDateTime finishTime);
 
 
 //these not needed maybe see them
