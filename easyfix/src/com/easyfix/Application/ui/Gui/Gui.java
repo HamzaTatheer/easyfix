@@ -1,4 +1,4 @@
-/*package com.easyfix.Application.ui.Gui;
+package com.easyfix.Application.ui.Gui;
 import com.easyfix.Application.bl.serviceProviders;
 import com.easyfix.Application.models.WorkerModel;
 import com.easyfix.Application.ui.UI;
@@ -16,6 +16,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 import com.easyfix.Application.bl.services.CustomerService;
 import com.easyfix.Application.bl.serviceProviders;
+
+import java.util.ArrayList;
+
 public class Gui extends Application {
 
 
@@ -220,4 +223,4 @@ public class Gui extends Application {
 //    }
 
 }
-*/
+
