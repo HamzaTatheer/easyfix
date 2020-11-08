@@ -1,22 +1,4 @@
 package com.easyfix.Application.db.sqlDb;
-
-
-class sqldb{
-
-}
-
-
-
-
-
-
-
-
-
-
-/*
-package com.easyfix.Application.db.sqlDb;
-
 import com.easyfix.Application.db.services.DbService;
 import com.easyfix.Application.models.*;
 import java.sql.*;
@@ -43,26 +25,34 @@ public class dbsql implements DbService {
         return false;
     }
 
+
+    //needed
     @Override
     public ArrayList<BookingModel> get_booking_of_customer(int customer_id) {
         return null;
     }
 
+
+    //needed
     @Override
     public ArrayList<BookingModel> get_booking_of_worker(int worker_id) {
         return null;
     }
 
+
+    //needed
     @Override
     public ArrayList<BookingModel> get_booking_of_customer(int customer_id, String status) {
         return null;
     }
 
+    //needed
     @Override
     public ArrayList<BookingModel> get_booking_of_worker(int worker_id, String status) {
         return null;
     }
 
+    //needed
     @Override
     public ArrayList<Integer> get_favourites(int customer_id) {
         return null;
@@ -131,15 +121,11 @@ public class dbsql implements DbService {
             {
                 return -1;
             }
-
                 while (rs.next())
                 {
                     System.out.println( rs.getInt("id"));
                     return rs.getInt("id");
-
                 }
-
-
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -304,7 +290,7 @@ public class dbsql implements DbService {
             {
                 workerid=rs2.getInt("favourite");
 
-                c1.Favourite.add(get_worker(workerid));// get funtion
+                c1.Favourite.add(workerid);// get funtion
             }
 
             return c1;
@@ -682,12 +668,12 @@ public class dbsql implements DbService {
             while (rs.next()) {
 
                 c1.get(i).id= rs.getInt("bid");
-                c1.get(i).customerName=get_customer(rs.getInt("customer_id"));
-                c1.get(i).workerName=get_worker(rs.getInt("worker_id"));
+                c1.get(i).cid = rs.getInt("customer_id");
+                c1.get(i).wid = rs.getInt("worker_id");
                 c1.get(i).text=rs.getString("booking_text");
                 c1.get(i).status=rs.getString("booking_status");
-                c1.get(i).startTime=rs.getTimestamp("start_time");
-                c1.get(i).endTime=rs.getTimestamp("end_time");
+                c1.get(i).startTime= rs.getTimestamp("start_time").toLocalDateTime();
+                c1.get(i).endTime=rs.getTimestamp("end_time").toLocalDateTime();
 
                 i++;
 
@@ -704,7 +690,7 @@ public class dbsql implements DbService {
                 {
                     partid=rs2.getInt("part_id");
 
-                    c1.get(i).spareParts.add(get_spare_part(partid));// get spare part function
+                    c1.get(i).spareParts.add(partid);// get spare part function
                 }
 
 
@@ -788,12 +774,12 @@ public class dbsql implements DbService {
             while (rs.next()) {
 
                 c1.get(i).id= rs.getInt("bid");
-                c1.get(i).customerName=get_customer(rs.getInt("customer_id"));
-                c1.get(i).workerName=get_worker(rs.getInt("worker_id"));
+                c1.get(i).cid=rs.getInt("customer_id");
+                c1.get(i).wid=rs.getInt("worker_id");
                 c1.get(i).text=rs.getString("booking_text");
                 c1.get(i).status=rs.getString("booking_status");
-                c1.get(i).startTime=rs.getTimestamp("start_time");
-                c1.get(i).endTime=rs.getTimestamp("end_time");
+                c1.get(i).startTime=rs.getTimestamp("start_time").toLocalDateTime();
+                c1.get(i).endTime=rs.getTimestamp("end_time").toLocalDateTime();
 
                 i++;
 
@@ -809,13 +795,8 @@ public class dbsql implements DbService {
                 while (rs2.next())
                 {
                     partid=rs2.getInt("part_id");
-
-                    c1.get(i).spareParts.add(get_spare_part(partid));// get spare part function
+                    c1.get(i).spareParts.add(partid);// get spare part function
                 }
-
-
-
-
             }
             return c1;
 
@@ -859,6 +840,9 @@ public class dbsql implements DbService {
 
     public ArrayList<BillingModel> get_customer_billing(int booking_id)
     {
+
+        return null;
+        /*
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
             Statement mystmt = conn.createStatement();
@@ -869,13 +853,10 @@ public class dbsql implements DbService {
 
             int i=0;
             while (rs.next()) {
-
                 c1.get(i).id= rs.getInt("id");
-                c1.get(i).bid=rs.getInt("bid");
-                c1.get(i).totalCost=rs.getInt("totalcost");
-
+                c1.get(i).=rs.getInt("bid");
+                c1.get(i).totalCost = (float)(rs.getInt("totalcost"));
                 i++;
-
             }
             return c1;
 
@@ -884,7 +865,8 @@ public class dbsql implements DbService {
         catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+*/
+            //return null;
 
     }
 
@@ -1272,8 +1254,4 @@ public class dbsql implements DbService {
         return null;
     }
 
-
-
-
 }
-*/

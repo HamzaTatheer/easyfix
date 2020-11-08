@@ -32,7 +32,7 @@ public boolean store_booking( int customer_id, int worker_id, String text, Strin
 public  ArrayList<BookingModel> get_booking_of_customer(int customer_id);
 public  ArrayList<BookingModel> get_booking_of_worker(int worker_id);
 public ArrayList<BookingModel> get_booking_of_customer(int customer_id,String status);
-    public ArrayList<BookingModel> get_booking_of_worker(int worker_id,String status);
+public ArrayList<BookingModel> get_booking_of_worker(int worker_id,String status);
 public boolean update_booking_status(int booking_id,String status);
 public boolean updateFinishTime(int booking_id,LocalDateTime finishTime);
 
