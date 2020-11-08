@@ -1,5 +1,5 @@
-package com.company;
-
+/*
+package com.easyfix.;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -48,3 +48,4 @@ public interface DB_interface {
     public  boolean store_chat( int senderId, int receiverId, String senderName, String receiverName, String message);
     public ArrayList<ChatMessageModel> get_chat_history(int customer_id,int worker_id);
 }
+*/

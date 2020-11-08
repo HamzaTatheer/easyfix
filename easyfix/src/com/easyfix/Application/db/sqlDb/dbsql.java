@@ -1,5 +1,24 @@
-package com.company;
+package com.easyfix.Application.db.sqlDb;
 
+
+class sqldb{
+
+}
+
+
+
+
+
+
+
+
+
+
+/*
+package com.easyfix.Application.db.sqlDb;
+
+import com.easyfix.Application.db.services.DbService;
+import com.easyfix.Application.models.*;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -7,7 +26,79 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 
-public class dbsql implements DB_interface {
+public class dbsql implements DbService {
+
+    @Override
+    public boolean change_billing_status(int booking_id, String status) {
+        return false;
+    }
+
+    @Override
+    public ArrayList<WorkerModel> get_favourites_workers(int customer_id) {
+        return null;
+    }
+
+    @Override
+    public boolean update_customerWallet(int id, Float money) {
+        return false;
+    }
+
+    @Override
+    public ArrayList<BookingModel> get_booking_of_customer(int customer_id) {
+        return null;
+    }
+
+    @Override
+    public ArrayList<BookingModel> get_booking_of_worker(int worker_id) {
+        return null;
+    }
+
+    @Override
+    public ArrayList<BookingModel> get_booking_of_customer(int customer_id, String status) {
+        return null;
+    }
+
+    @Override
+    public ArrayList<BookingModel> get_booking_of_worker(int worker_id, String status) {
+        return null;
+    }
+
+    @Override
+    public ArrayList<Integer> get_favourites(int customer_id) {
+        return null;
+    }
+
+    @Override
+    public ArrayList<SparePartModel> get_all_spare_parts_booking(int booking_id) {
+        return null;
+    }
+
+    @Override
+    public BillingModel get_bill(int booking_id) {
+        return null;
+    }
+
+    @Override
+    public boolean update_booking_status(int booking_id, String status) {
+        return false;
+    }
+
+    @Override
+    public boolean updateFinishTime(int booking_id, LocalDateTime finishTime) {
+        return false;
+    }
+
+    @Override
+    public boolean store_spare_holder(int booking_id, int spare_id, int quantity) {
+        return false;
+    }
+
+    @Override
+    public boolean store_customer_billing(int booking_id, String title, String customerName, String workerName, String status, Float totalCost) {
+        return false;
+    }
+
+
 
     public boolean does_customer_exist(int id)//done
     {
@@ -1185,3 +1276,4 @@ public class dbsql implements DB_interface {
 
 
 }
+*/
