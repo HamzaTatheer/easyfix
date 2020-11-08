@@ -1,4 +1,5 @@
 package com.easyfix.Application.ui.Terminal;
+import com.easyfix.Application.bl.services.BookingService;
 import com.easyfix.Application.bl.services.WorkerService;
 import com.easyfix.Application.models.*;
 import com.easyfix.Application.bl.services.CustomerService;
@@ -64,10 +65,11 @@ public class Terminal extends UI {
                         System.out.println("4-Change city");
                         System.out.println("5-Change Payment method");
                         System.out.println("6-Give Rating");
-                        System.out.println("7-Show Workers By Area");
-                        System.out.println("8-Show Active Bookings");
-                        System.out.println("9-Show Finished Bookings");
-                        System.out.println("10-Logout\n");
+                        System.out.println("7-Show Workers In your area to Book");
+                        System.out.println("8-Show Pending Bookings");
+                        System.out.println("9-Show Active Bookings");
+                        System.out.println("10-Show Finished Bookings");
+                        System.out.println("11-Logout\n");
 
 
                         System.out.println("Enter Choice : ");
@@ -80,6 +82,12 @@ public class Terminal extends UI {
                                 System.out.println("id: " + favourites.get(i).id + " " + favourites.get(i).name + " speciality: " + favourites.get(i).speciality);
                             }
                         } else if (choice2 == 2) {
+
+                            ArrayList<WorkerModel> w = workerService.getAllWorkers();
+                            for(int i=0;i<w.size();i++){
+                                System.out.println(w.get(i).id + ". "+w.get(i).name+" "+w.get(i).avgRating+" "+w.get(i).speciality);
+                            }
+
                             System.out.println("Enter worker id :");
                             int wid = sc.nextInt();
                             boolean fav = false;
@@ -158,8 +166,21 @@ public class Terminal extends UI {
                                 System.out.println("Error: " + e.getMessage());
                             }
                         }
+                        else if(choice2 == 8){
+                            System.out.println("Your Pending Bookings: ");
+                            ArrayList<BookingModel> pendingBookings = bookingService.showPendingBookingsOfCustomer(cid);
+                            for(int i=0;i<pendingBookings.size();i++){
+                                try {
+                                    WorkerModel myworker = workerService.getWorker(pendingBookings.get(i).wid);
+                                    String name = myworker.name;
+                                    System.out.println("Title:"+ pendingBookings.get(i).text + "     Start Time:" + pendingBookings.get(i).startTime + "  Booking with - "+ name);
+                                }
+                                catch (Exception e){
+                                    System.out.println(e.getMessage());
+                                }
+                            }
+                        }
                     }
-
                 } else if (choice2 == 10) {
                     break;
                 }

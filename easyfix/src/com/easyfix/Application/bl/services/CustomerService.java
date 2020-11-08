@@ -16,7 +16,3 @@ public interface CustomerService{
     public boolean changeArea(int cid,String newArea);
     public Exception giveRating(int cid, int wid);
 }
-
-
-
-

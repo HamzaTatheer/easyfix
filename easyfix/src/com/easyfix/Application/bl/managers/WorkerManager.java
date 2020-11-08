@@ -40,16 +40,8 @@ public class WorkerManager implements WorkerService {
     }
 
     public Boolean doesWorkerExist(int id) throws Exception {
-        //WorkerDbService workerDbService = WorkerDbServiceProvider.getWorkerService();
-        //workerDbService.doesWorkerExist();
-        if(id == 2)//id 1 is cid and 2 is wid for fake db
-            return true;
-
-        if(id < 0){
-            throw new Exception("Invalid id supplied to service");
-        }
-
-        return false;
+        DbService db = dbProviders.getDbService();
+        return db.does_worker_exist(id);
     }
 
     public WorkerModel getWorker(int id) throws Exception{
@@ -61,6 +53,12 @@ public class WorkerManager implements WorkerService {
         return w;
     }
 
+
+    public ArrayList<WorkerModel> getAllWorkers(){
+        DbService db = dbProviders.getDbService();
+        ArrayList<WorkerModel> w = db.get_all_worker();
+        return w;
+    }
 
     public ArrayList<WorkerModel> getWorkers(String city,String area){
         DbService db = dbProviders.getDbService();

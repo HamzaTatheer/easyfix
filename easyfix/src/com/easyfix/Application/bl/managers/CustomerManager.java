@@ -63,7 +63,7 @@ public class CustomerManager implements CustomerService {
         DbService db = dbProviders.getDbService();
         try{
         if((db.does_worker_exist(wid)==true)&&(db.does_customer_exist(cid) == true)){
-            return db.add_favourite(1,1);
+            return db.add_favourite(cid,wid);
         }
         else{
             return false;
@@ -81,6 +81,7 @@ public class CustomerManager implements CustomerService {
         Customer c = new Customer(customerModel);
         return wm.getWorkers(c.getCity(),c.getArea());
     }
+
 
     public boolean changePaymentMethod(int cid,String newPaymentMethod){
         Customer c = new Customer(dbService.get_customer(cid));

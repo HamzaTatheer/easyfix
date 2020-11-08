@@ -488,7 +488,7 @@ public class TextDbManager implements DbService {
 
 
     public CustomerModel get_customer(int id) {
-        File myobj=new File("Customer.txt");
+        File myobj=new File(currentPath+"Customer.txt");
 
 
 
@@ -672,7 +672,7 @@ public class TextDbManager implements DbService {
 
 
     public int does_worker_exist(String email, String password) {
-        File myobj=new File("Worker.txt");
+        File myobj=new File(currentPath+"Worker.txt");
 
 
 
@@ -820,9 +820,8 @@ public class TextDbManager implements DbService {
 
 
     public ArrayList<WorkerModel> get_all_worker() {
-        File myobj=new File("Worker.txt");
+        File myobj=new File(currentPath+"Worker.txt");
         ArrayList<WorkerModel> ret=new ArrayList<WorkerModel>();
-
 
 
         try {
@@ -1134,7 +1133,7 @@ public class TextDbManager implements DbService {
     {
 
         int bid=0;
-        File myo=new File("CountBooking.txt");
+        File myo=new File(currentPath+"CountBooking.txt");
         try {
             Scanner myr = new Scanner(myo);
             bid=myr.nextInt();
@@ -1144,7 +1143,7 @@ public class TextDbManager implements DbService {
 
         bid++;
         try {
-            FileWriter myw=new FileWriter("CountBooking.txt",false);
+            FileWriter myw=new FileWriter(currentPath+"CountBooking.txt",false);
             myw.write(bid+"\n");
             myw.close();
 
@@ -1155,7 +1154,7 @@ public class TextDbManager implements DbService {
 
 
         try {
-            FileWriter mywriter=new FileWriter("Booking.txt",true);
+            FileWriter mywriter=new FileWriter(currentPath+"Booking.txt",true);
 
 
             mywriter.write(bid + "\n");

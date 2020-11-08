@@ -31,23 +31,15 @@ public class BookingManager implements BookingService {
         Worker w = new Worker(db.get_worker(_wid));
         Booking mybooking = new Booking(-1,_text,"pending",_startTime,_startTime,new ArrayList<SparePart>(),c,w);
 
-        System.out.println(mybooking.toString());
-        workerBookings.forEach((ww)->System.out.println(ww.toString()));
         //check if Booking Time of our user matched any booking time other user
         boolean sameTime = false;
         for(int i =0;i<workerBookings.size();i++){
             if(workerBookings.get(i).hasSameStartTime(mybooking))
-                sameTime = true;
-        }
-
-        if(sameTime == true){
-            throw new Exception("Worker is already booked in the same Time");
-        }
-        else{
-            throw new Exception("Booking can booked but for now. Not storing in db. test without it");
+                throw new Exception("Another Booking of The worker also has same time. Please try again.");
         }
         //if it does return false
         //if it does not create booking
+        return db.store_booking(mybooking.getCustomer().getId(),mybooking.getWorker().getId(),mybooking.getText(),mybooking.getStatus(),mybooking.getStartTime(),mybooking.getEndTime(),new ArrayList<Integer>());
     }
 
     public Boolean acceptBooking(int _bid){
@@ -64,7 +56,8 @@ public class BookingManager implements BookingService {
         return false;
     }
     public ArrayList<BookingModel> showPendingBookingsOfCustomer(int cid){
-        return new ArrayList<>();
+        DbService db = dbProviders.getDbService();
+        return db.get_booking_of_customer(cid,"pending");
     }
     public ArrayList<BookingModel> showFinishedBookingOfCustomer(int uid){
         return new ArrayList<>();
