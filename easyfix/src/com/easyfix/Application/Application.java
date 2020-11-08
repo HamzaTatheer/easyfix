@@ -7,7 +7,7 @@ import com.easyfix.Application.ui.UI;
 import com.sun.java.accessibility.util.GUIInitializedListener;
 
 public class Application {
-    public static void start(){
+    public static void start() throws Exception {
         String ui = Config.ui;
 
         System.out.println("User Interface: " + Config.ui);

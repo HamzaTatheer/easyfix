@@ -1,3 +1,4 @@
+package com.easyfix.Application.ui.Gui;/*
 package com.easyfix.Application.ui.Gui;
 import com.easyfix.Application.bl.serviceProviders;
 import com.easyfix.Application.bl.services.BookingService;
@@ -231,3 +232,15 @@ public class Gui extends Application {
 
 }
 
+
+*/
+
+
+public class Gui{
+    public Gui(){
+
+    }
+    public static void start(){
+        System.out.println("Fake gui");
+    }
+}

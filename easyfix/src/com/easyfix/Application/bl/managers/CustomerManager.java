@@ -4,6 +4,7 @@ import com.easyfix.Application.bl.services.CustomerService;
 import com.easyfix.Application.bl.services.RatingService;
 import com.easyfix.Application.db.dbProviders;
 import com.easyfix.Application.db.services.DbService;
+import com.easyfix.Application.models.CustomerModel;
 import com.easyfix.Application.models.WorkerModel;
 
 import java.util.ArrayList;
@@ -44,14 +45,41 @@ public class CustomerManager implements CustomerService {
         return 1;
     }
 
+    public CustomerModel getCustomerDetails(int cid) throws Exception {
+        if(dbService.does_customer_exist(cid) == true){
+            return dbService.get_customer(cid);
+        }
+        else{
+            throw new Exception("Customer Details not found. Make sure Customer exists");
+        }
+    }
+
     public ArrayList<WorkerModel> getFavourites(int cid){
-        return dbService.get_customer(cid).Favourite;
+        ArrayList<WorkerModel> w = dbService.get_favourites_workers(cid);
+        return w;
     }
 
     public boolean addToFavourite(int cid,int wid) throws Exception {
-        //functionality still not done. needed from arsalan. still asking
-        //same goes for removeFromFavourite
-        throw new Exception("Functionality still not done");
+        DbService db = dbProviders.getDbService();
+        try{
+        if((db.does_worker_exist(wid)==true)&&(db.does_customer_exist(cid) == true)){
+            return db.add_favourite(1,1);
+        }
+        else{
+            return false;
+        }
+        }
+        catch (Exception e){
+            return false;
+        }
+    }
+
+
+    public ArrayList<WorkerModel> getWorkersCloseBy(int cid){
+        WorkerManager wm = new WorkerManager();
+        CustomerModel customerModel = dbService.get_customer(cid);
+        Customer c = new Customer(customerModel);
+        return wm.getWorkers(c.getCity(),c.getArea());
     }
 
     public boolean changePaymentMethod(int cid,String newPaymentMethod){

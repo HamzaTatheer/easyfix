@@ -6,6 +6,8 @@ import com.easyfix.Application.db.dbProviders;
 import com.easyfix.Application.db.services.DbService;
 import com.easyfix.Application.models.WorkerModel;
 
+import java.util.ArrayList;
+
 public class WorkerManager implements WorkerService {
 
 
@@ -51,25 +53,25 @@ public class WorkerManager implements WorkerService {
     }
 
     public WorkerModel getWorker(int id) throws Exception{
-        if(id == 2){
-            WorkerModel w = new WorkerModel();
-            w.id = 2;
-            w.name = "ali";
-            w.email = "ali@gmail.com";
-            w.password = "1234567";
-            w.city = "lahore";
-            w.area = "faisaltown";
-            w.speciality = "plumber";
-            w.hourlyRate = 10f;
-            w.avgRating = 2.4f;
+        DbService db = dbProviders.getDbService();
+        WorkerModel w = db.get_worker(id);
+        if(w == null)
+            throw new Exception("Worker is null");
 
-            return w;
-        }
-        else{
-            throw new Exception("Worker not found");
-        }
+        return w;
     }
 
+
+    public ArrayList<WorkerModel> getWorkers(String city,String area){
+        DbService db = dbProviders.getDbService();
+        try {
+            return db.get_worker(city, area);
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            return new ArrayList<WorkerModel>();
+        }
+    }
 
 
     public boolean changeHourlyRate(int id,float newRate){
