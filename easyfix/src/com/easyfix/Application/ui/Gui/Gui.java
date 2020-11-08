@@ -1,5 +1,7 @@
+package com.easyfix.Application.ui.Gui;/*
 package com.easyfix.Application.ui.Gui;
 import com.easyfix.Application.bl.serviceProviders;
+import com.easyfix.Application.bl.services.BookingService;
 import com.easyfix.Application.models.WorkerModel;
 import com.easyfix.Application.ui.UI;
 import javafx.application.Application;
@@ -16,6 +18,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 import com.easyfix.Application.bl.services.CustomerService;
 import com.easyfix.Application.bl.serviceProviders;
+
+import java.util.ArrayList;
+
 public class Gui extends Application {
 
 
@@ -23,13 +28,15 @@ public class Gui extends Application {
     Scene scene2;
     Scene scene3;
     Scene scene4;
+    Scene scene5;
     static int userid;
     public CustomerService customerService;
-
+    public BookingService bookingService;
 
     public Gui(){
         super();
         customerService = serviceProviders.getCustomerService();
+
     }
 
     @Override
@@ -159,7 +166,7 @@ public class Gui extends Application {
         Label carea = new Label("Enter Area name");
         TextField careaa = new TextField();
         Button changearea = new Button("Change Area");
-        changecity.setOnAction(new EventHandler<ActionEvent>() {
+        changearea.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
@@ -176,7 +183,7 @@ public class Gui extends Application {
         Label cpaymethod = new Label("Enter payment method");
         TextField cpaymethodd = new TextField();
         Button changepaymethod = new Button("Change Payment Method");
-        changecity.setOnAction(new EventHandler<ActionEvent>() {
+        changepaymethod.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
@@ -195,10 +202,14 @@ public class Gui extends Application {
 
         vbox.getChildren().addAll(name,namee,email,emaill,pass,passw,city,cityy,area,areaa,btn3);
         scene2 = new Scene(vbox, 500, 300);
-
+        Button addbooking = new Button("Book Worker");
+        addbooking.setOnAction(e -> primaryStage.setScene(scene5));
+        VBox bookworker = new VBox();
+        bookworker.setAlignment(Pos.BASELINE_LEFT);
+        scene5 = new Scene(bookworker,500,300);
         VBox homepage = new VBox();
         homepage.setAlignment(Pos.BASELINE_CENTER);
-        homepage.getChildren().addAll(Getfavourite,EditProfile);
+        homepage.getChildren().addAll(Getfavourite,EditProfile,addbooking);
         scene3 = new Scene(homepage,500,300);
 
         VBox EditProfilee = new VBox();
@@ -221,3 +232,15 @@ public class Gui extends Application {
 
 }
 
+
+*/
+
+
+public class Gui{
+    public Gui(){
+
+    }
+    public static void start(){
+        System.out.println("Fake gui");
+    }
+}

@@ -14,7 +14,7 @@ public class RatingManager implements RatingService {
 
         DbService dbService = dbProviders.getDbService();
 
-        if((dbService.does_customer_exist(giverID)&& (dbService.does_worker_exist(receiverID)))){
+        //if((dbService.does_customer_exist(giverID)&& (dbService.does_worker_exist(receiverID)))){
             //RatingDbService rateDbService=dbProviders.getRatingDbService();
             //r is model
             RatingModel r = new RatingModel();
@@ -41,7 +41,7 @@ public class RatingManager implements RatingService {
                 throw new Exception("Invalid Rating");
 
         }
-        else
-            throw new Exception("One of the user doesn't exist. Please try again\n");
+        //else
+            //throw new Exception("One of the user doesn't exist. Please try again\n");
     }
-}
+//}
