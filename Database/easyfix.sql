@@ -61,12 +61,16 @@ bid int AUTO_INCREMENT,
  worker_id int, 
  booking_text varchar(100),
  booking_status varchar(50),
- start_time datetime,
- end_time datetime ,
+ start_time time,
+ end_time time ,
+ start_date date,
+ end_date date,
  primary key(bid),
  foreign key(customer_id) references customers(id),
  foreign key(worker_id) references worker(wid)
 );
+
+select * from booking;
 
 create table booking_spareparts(bid int ,part_id int);
 
@@ -116,4 +120,47 @@ create table chat(
  receiverName varchar(50),
  message varchar(200)
 
-)
+);
+
+INSERT INTO `easyfix`.`worker`
+(`name`,
+`email`,
+`password`,
+`average_rating`,
+`hourly_rate`,
+`city`,
+`area`,
+`speciality`)
+VALUES
+(
+"hamza",
+"hamza123@gmail",
+"abcd",
+3.5,
+500,
+"lahore",
+"dha",
+"programmer");
+INSERT INTO `easyfix`.`worker`
+(`name`,
+`email`,
+`password`,
+`average_rating`,
+`hourly_rate`,
+`city`,
+`area`,
+`speciality`)
+VALUES
+(
+"fahad",
+"fahad123@gmail",
+"abcd",
+3.5,
+500,
+"lahore",
+"dha",
+"programmer");
+
+select * from worker;
+select * from customers;
+select * from favorite;

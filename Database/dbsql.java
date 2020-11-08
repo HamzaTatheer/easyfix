@@ -225,13 +225,13 @@ public class dbsql implements DB_interface {
     }
 
 
-    public boolean store_worker(String name,String email,String password,float average_rating,float hourly_rate,String city,String area,String speciality)
+    public boolean store_worker(String name,String email,String password,float average_rating,float hourly_rate,String city,String area,String speciality)//done
     {
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
             Statement mystmt = conn.createStatement();
 
-            String sql = "INSERT INTO customers(name,email,password,average_rating,hourly_rate,city,area,speciality) " + "VALUES(?,?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO worker(name,email,password,average_rating,hourly_rate,city,area,speciality) " + "VALUES(?,?,?,?,?,?,?,?)";
             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, name);
             pstmt.setString(2,email);
@@ -344,7 +344,7 @@ public class dbsql implements DB_interface {
     }
 
 
-    public ArrayList<WorkerModel> get_worker(String city,String area)//done
+    public ArrayList<WorkerModel> get_worker(String city,String area)
     {
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
@@ -353,19 +353,24 @@ public class dbsql implements DB_interface {
             ResultSet rs = mystmt.executeQuery("select * from worker where city = '"+ city + "' and area = '"+area + "'");
             //WorkerModel c1=new WorkerModel();
             ArrayList<WorkerModel> c1=new ArrayList<WorkerModel>();
+            WorkerModel c2=new WorkerModel();
+
             int i=0;
             while (rs.next()) {
 
-                c1.get(i).id= rs.getInt("id");
-                c1.get(i).name=rs.getString("name");
-                c1.get(i).email=rs.getString("email");
-                c1.get(i).password=rs.getString("password");
-                c1.get(i).avgRating=rs.getFloat("average_rating");
-                c1.get(i).hourlyRate=rs.getFloat("wallet");
-                c1.get(i).city=rs.getString("city");
-                c1.get(i).area=rs.getString("area");
-                c1.get(i).speciality=rs.getString("speciality");
-                i++;
+                c2.id= rs.getInt("wid");
+
+                //System.out.println("c1 get id "+c1.get(i).id);
+                c2.name=rs.getString("name");
+                c2.email=rs.getString("email");
+                c2.password=rs.getString("password");
+                c2.avgRating=rs.getFloat("average_rating");
+                c2.hourlyRate=rs.getFloat("wallet");
+                c2.city=rs.getString("city");
+                c2.area=rs.getString("area");
+                c2.speciality=rs.getString("speciality");
+                c1.add(c2);
+                //i++;
 
 
             }
@@ -391,8 +396,8 @@ public class dbsql implements DB_interface {
             ArrayList<WorkerModel> c1=new ArrayList<WorkerModel>();
             int i=0;
             while (rs.next()) {
-
-                c1.get(i).id= rs.getInt("id");
+                System.out.println("wid  "+rs.getInt("id"));
+                c1.get(i).id= rs.getInt("wid");
                 c1.get(i).name=rs.getString("name");
                 c1.get(i).email=rs.getString("email");
                 c1.get(i).password=rs.getString("password");
@@ -417,14 +422,14 @@ public class dbsql implements DB_interface {
     }
 
 
-    public boolean update_Worker_city(int id,String city)
+    public boolean update_Worker_city(int id,String city)//done
     {
 
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
             Statement mystmt = conn.createStatement();
 
-            String sql = "update worker set city = ? where id = ?" ;
+            String sql = "update worker set city = ? where wid = ?" ;
             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             pstmt.setString(1,city);
@@ -442,13 +447,13 @@ public class dbsql implements DB_interface {
         return false;
 
     }
-    public boolean update_Worker_area(int id,String area)
+    public boolean update_Worker_area(int id,String area)//done
     {
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
             Statement mystmt = conn.createStatement();
 
-            String sql = "update worker set area = ? where id = ?" ;
+            String sql = "update worker set area = ? where wid = ?" ;
             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             pstmt.setString(1,area);
@@ -465,13 +470,13 @@ public class dbsql implements DB_interface {
 
         return false;
     }
-    public boolean update_hourly_rate(int id,float rate)
+    public boolean update_hourly_rate(int id,float rate)//done
     {
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
             Statement mystmt = conn.createStatement();
 
-            String sql = "update worker set hourly_rate = ? where id = ?" ;
+            String sql = "update worker set hourly_rate = ? where wid = ?" ;
             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             pstmt.setFloat(1,rate);
@@ -490,19 +495,25 @@ public class dbsql implements DB_interface {
     }
 
 
-    public int get_bid(int customer_id, int worker_id, String text)
+    public int get_bid(int customer_id, int worker_id, String text)//done
     {
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
             Statement mystmt = conn.createStatement();
 
-            ResultSet rs = mystmt.executeQuery("select * from booking where customer_id = "+customer_id+"and worker_id = "+worker_id+"and booking_text = "+text);
+            ResultSet rs = mystmt.executeQuery("select * from booking where customer_id = '" + customer_id+"'" + "and worker_id = '" + worker_id +"'" );
+            if(rs.next())
+            {
+                return rs.getInt("bid");
+            }
             if(!rs.next())
             {
                 return -1;
             }
             else {
+                System.out.println("else");
                 while (rs.next()) {
+                    System.out.println("while loop");
                     return rs.getInt("bid");
                 }
 
@@ -512,23 +523,28 @@ public class dbsql implements DB_interface {
         catch (Exception e) {
             e.printStackTrace();
         }
+
         return 0;
     }
 
-    public boolean store_booking(int customer_id, int worker_id, String text, String status, LocalDateTime start_time, LocalDateTime end_time, ArrayList<Integer> spareParts)
+    public boolean store_booking(int customer_id, int worker_id, String text, String status, LocalDateTime start_time, LocalDateTime end_time, ArrayList<Integer> spareParts)//done
     {
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
             Statement mystmt = conn.createStatement();
 
-            String sql = "INSERT INTO customers(customer_id,worker_id,booking_text,booking_status,) " + "VALUES(?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO booking(customer_id,worker_id,booking_text,booking_status,start_time,end_time,start_date,end_date) " + "VALUES(?,?,?,?,?,?,?,?)";
             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, customer_id);
             pstmt.setInt(2,worker_id);
             pstmt.setString(3,text);
             pstmt.setString(4,status);
-            pstmt.setTimestamp(5, Timestamp.valueOf(start_time));
-            pstmt.setTimestamp(6, Timestamp.valueOf(end_time));
+            pstmt.setTime(5, Time.valueOf(start_time.toLocalTime()));
+            pstmt.setTime(6, Time.valueOf(end_time.toLocalTime()));
+            pstmt.setDate(7, Date.valueOf(start_time.toLocalDate()));
+            pstmt.setDate(8, Date.valueOf(end_time.toLocalDate()));
+
+
 
 
 
@@ -539,6 +555,7 @@ public class dbsql implements DB_interface {
                 PreparedStatement pstmt2 = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 ArrayList<Integer> a;
                 int iid=get_bid(customer_id,worker_id,text);
+
                 for(int i=0;i<spareParts.size();i++)
                 {
 
@@ -719,7 +736,7 @@ public class dbsql implements DB_interface {
         return null;
     }
 
-    public boolean store_customer_billing(int booking_id,int worker_id,int cost)
+    public boolean store_customer_billing(int booking_id,int worker_id,int cost)//done
     {
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
@@ -781,13 +798,13 @@ public class dbsql implements DB_interface {
     }
 
 
-    public boolean store_complaint(int customer_id,int worker_id,String complain_text)
+    public boolean store_complaint(int customer_id,int worker_id,String complain_text)//done
     {
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
             Statement mystmt = conn.createStatement();
 
-            String sql = "INSERT INTO complain(cid,bid,complain_text) " + "VALUES(?,?,?)";
+            String sql = "INSERT INTO complain(cid,wid,complain_text) " + "VALUES(?,?,?)";
             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, customer_id);
             pstmt.setInt(2,worker_id);
@@ -810,7 +827,7 @@ public class dbsql implements DB_interface {
     }//int complain_id, given by DB
 
 
-    public  ComplainModel get_complaint(int complaint_id)
+    public  ComplainModel get_complaint(int complaint_id)//done
     {
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
@@ -872,7 +889,7 @@ public class dbsql implements DB_interface {
     }
 
 
-    public boolean store_spar_parts(String name,float cost,int quantity)
+    public boolean store_spar_parts(String name,float cost,int quantity)//done
     {
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
@@ -922,7 +939,7 @@ public class dbsql implements DB_interface {
         return null;
     }
 
-    public  SparePartModel get_spare_part(int part_id)
+    public  SparePartModel get_spare_part(int part_id)//done
     {
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
@@ -968,6 +985,7 @@ public class dbsql implements DB_interface {
             while (rs.next()) {
 
                 c1.get(i).id= rs.getInt("id");
+
                 c1.get(i).name=rs.getString("part_name");
                 c1.get(i).cost=rs.getFloat("cost");
                 c1.get(i).quantity=rs.getInt("quantity");
@@ -986,7 +1004,7 @@ public class dbsql implements DB_interface {
         return null;
     }//for quantity>0
 
-    public boolean deduct_part(int spare_id,int quantity)
+    public boolean deduct_part(int spare_id,int quantity)//done
     {
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
@@ -1012,7 +1030,7 @@ public class dbsql implements DB_interface {
     }
 
 
-    public boolean store_rating(int customer_id,int worker_id,int rating)
+    public boolean store_rating(int customer_id,int worker_id,int rating) //done
     {
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
@@ -1045,10 +1063,14 @@ public class dbsql implements DB_interface {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
             Statement mystmt = conn.createStatement();
 
-            ResultSet rs = mystmt.executeQuery("select avg(rating) from rating where wid = "+ worker_id );
+            ResultSet rs = mystmt.executeQuery("select avg(rate) from rating where wid = "+ worker_id );
 
 
             float i=0;
+            if(rs.next())
+            {
+                return rs.getFloat(1);
+            }
             while (rs.next()) {
 
                 i= rs.getFloat(0);
