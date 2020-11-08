@@ -1,5 +1,6 @@
 package com.easyfix.Application.ui.Gui;
 import com.easyfix.Application.bl.serviceProviders;
+import com.easyfix.Application.bl.services.BookingService;
 import com.easyfix.Application.models.WorkerModel;
 import com.easyfix.Application.ui.UI;
 import javafx.application.Application;
@@ -26,13 +27,15 @@ public class Gui extends Application {
     Scene scene2;
     Scene scene3;
     Scene scene4;
+    Scene scene5;
     static int userid;
     public CustomerService customerService;
-
+    public BookingService bookingService;
 
     public Gui(){
         super();
         customerService = serviceProviders.getCustomerService();
+
     }
 
     @Override
@@ -198,10 +201,14 @@ public class Gui extends Application {
 
         vbox.getChildren().addAll(name,namee,email,emaill,pass,passw,city,cityy,area,areaa,btn3);
         scene2 = new Scene(vbox, 500, 300);
-
+        Button addbooking = new Button("Book Worker");
+        addbooking.setOnAction(e -> primaryStage.setScene(scene5));
+        VBox bookworker = new VBox();
+        bookworker.setAlignment(Pos.BASELINE_LEFT);
+        scene5 = new Scene(bookworker,500,300);
         VBox homepage = new VBox();
         homepage.setAlignment(Pos.BASELINE_CENTER);
-        homepage.getChildren().addAll(Getfavourite,EditProfile);
+        homepage.getChildren().addAll(Getfavourite,EditProfile,addbooking);
         scene3 = new Scene(homepage,500,300);
 
         VBox EditProfilee = new VBox();
