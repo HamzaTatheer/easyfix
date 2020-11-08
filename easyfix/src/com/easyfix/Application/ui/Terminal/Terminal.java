@@ -1,10 +1,15 @@
 package com.easyfix.Application.ui.Terminal;
 import com.easyfix.Application.bl.services.WorkerService;
+import com.easyfix.Application.models.BookingModel;
 import com.easyfix.Application.models.WorkerModel;
 import com.easyfix.Application.models.ChatMessageModel;
 import com.easyfix.Application.models.UserModel;
 import com.easyfix.Application.bl.services.CustomerService;
 import com.easyfix.Application.ui.UI;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.*;
 
@@ -16,7 +21,7 @@ public class Terminal extends UI {
         super();
     }
 
-    public void start(){
+    public void start() throws Exception {
         int choice;
         System.out.println("1-Login as Customer\n");
         System.out.println("2-Login as Worker\n");
@@ -60,7 +65,10 @@ public class Terminal extends UI {
 
                 if (choice2 == 1) {
                     ArrayList<WorkerModel> favourites = customerService.getFavourites(cid);
-                    System.out.println(favourites.toString());
+                    System.out.println("Your Favourites: ");
+                    for(int i=0;i<favourites.size();i++){
+                        System.out.println("id: "+favourites.get(i).id + " "+favourites.get(i).name+" speciality: "+favourites.get(i).speciality);
+                    }
                 }
                 else if (choice2 == 2){
                     System.out.println("Enter worker id :");
@@ -112,6 +120,41 @@ public class Terminal extends UI {
                     }
                     catch(Exception e){
                         System.out.println(e.getMessage());
+                    }
+                }
+                else if(choice2 == 7){
+                    System.out.println("Showing Workers at your current location");
+                    ArrayList<WorkerModel> workersCloseBy = customerService.getWorkersCloseBy(cid);
+                    for (WorkerModel workerModel : workersCloseBy) {
+                        System.out.print(workerModel.id+".");
+                        System.out.print(workerModel.name);
+                        System.out.print("-");
+                        System.out.println(" "+workerModel.speciality);
+                    }
+                    System.out.println("Select a worker to Book (enter number): ");
+                    int selected_worker = sc.nextInt();
+                    BookingModel b = new BookingModel();
+                    System.out.println("Select day");
+                    int bDay = sc.nextInt();
+                    System.out.println("Select month");
+                    int bMonth = sc.nextInt();
+                    //leaving year
+                    System.out.println("Select Hour (24 hour clock) ");
+                    int bHour = sc.nextInt();
+                    System.out.println("Select Minute");
+                    int bMinute = sc.nextInt();
+                    b.startTime = LocalDateTime.of(LocalDate.of(2020,bMonth,bDay), LocalTime.of(bHour,bMinute));
+                    System.out.println("Select Title");
+                    Scanner scc = new Scanner(System.in);//sc was skipping text
+                    b.text = scc.nextLine();
+                    b.cid = cid;
+                    b.wid = selected_worker;
+                    b.spareParts = new ArrayList<Integer>();
+                    try {
+                        bookingService.makeBooking(b.cid, b.wid, b.text, b.startTime, b.spareParts);
+                    }
+                    catch (Exception e){
+                        System.out.println("Error: "+ e.getMessage());
                     }
                 }
             }
@@ -192,13 +235,13 @@ public class Terminal extends UI {
             }
         }
 
-        try {
+/*        try {
             WorkerModel w = workerService.getWorker(1);
             System.out.println(w.name);
         }
         catch (Exception e){
             System.out.println(e.getMessage());
-        }
+        }*/
 
 
         /*

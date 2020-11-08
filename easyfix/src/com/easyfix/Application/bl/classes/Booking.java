@@ -1,4 +1,5 @@
 package com.easyfix.Application.bl.classes;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import com.easyfix.Application.models.BookingModel;
 import com.easyfix.Application.bl.classes.Customer;
@@ -17,7 +18,7 @@ public class Booking {
     private ArrayList<SparePart> spareParts;
     //constructors
 
-    Booking(int _id,String _text,String _status,LocalDateTime _startTime,LocalDateTime _endTime,ArrayList<SparePart> _spareparts,Customer _customer,Worker _worker){
+    public Booking(int _id, String _text, String _status, LocalDateTime _startTime, LocalDateTime _endTime, ArrayList<SparePart> _spareparts, Customer _customer, Worker _worker){
         id = _id;
         text = _text;
         status = _status;
@@ -106,5 +107,18 @@ public class Booking {
 
     public void setSpareParts(ArrayList<SparePart> spareParts) {
         this.spareParts = spareParts;
+    }
+
+    public String toString(){
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        String res =  ("id: " + id + " title: " + text + "Worker Name: "+worker.getName()+ " Customer Name: "+customer.getName() + " StartTime: " +startTime.format(format));
+        if((endTime != null)&&(startTime != endTime)){
+            res+= " End Time: "+ endTime.format(format);
+        }
+        return res;
+    }
+
+    public boolean hasSameStartTime(Booking b){
+        return (startTime.getDayOfMonth() == b.startTime.getDayOfMonth())&&(startTime.getMonthValue()==b.startTime.getMonthValue())&&(startTime.getYear() == b.startTime.getYear())&&(startTime.getHour() == b.startTime.getHour())&&(startTime.getMinute() == b.startTime.getMinute());
     }
 }
