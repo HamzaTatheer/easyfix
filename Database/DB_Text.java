@@ -168,7 +168,7 @@ public class DB_Text implements DB_interface {
             Scanner myReader = new Scanner(myobj);
             while(myReader.hasNext()) {
                 CustomerModel temp=new CustomerModel();
-                temp.Favourite=new ArrayList<WorkerModel>();
+
 
                 temp.id = myReader.nextInt();
                 myReader.nextLine();
@@ -189,14 +189,11 @@ public class DB_Text implements DB_interface {
                     favourite.add(myReader.nextInt());
                     myReader.nextLine();
                 }
+                temp.Favourite=favourite;
 
 
-                for (int i=0;i<favourite.size();i++) {
-                    WorkerModel tempp= new WorkerModel();
-                    tempp=get_worker(favourite.get(i));
-                    if (tempp!=null)
-                        temp.Favourite.add(tempp);
-                }
+
+
 
                 if (id == temp.id) {
                     temp.city=city;
@@ -229,7 +226,7 @@ public class DB_Text implements DB_interface {
                 mywriter.write(store.get(i).area + "\n");
                 mywriter.write(store.get(i).Favourite.size() + "\n");
                 for (int j = 0; j < store.get(i).Favourite.size(); j++) {
-                    mywriter.write(store.get(i).Favourite.get(j).id + "\n");
+                    mywriter.write(store.get(i).Favourite.get(j) + "\n");
                 }
 
 
@@ -260,7 +257,7 @@ public class DB_Text implements DB_interface {
             Scanner myReader = new Scanner(myobj);
             while(myReader.hasNext()) {
                 CustomerModel temp=new CustomerModel();
-                temp.Favourite=new ArrayList<WorkerModel>();
+
 
                 temp.id = myReader.nextInt();
                 myReader.nextLine();
@@ -281,11 +278,8 @@ public class DB_Text implements DB_interface {
                     favourite.add(myReader.nextInt());
                     myReader.nextLine();
                 }
-                for (int i=0;i<favourite.size();i++) {
-                    WorkerModel tempp=get_worker(favourite.get(i));
-                    if (tempp!=null)
-                        temp.Favourite.add(tempp);
-                }
+               temp.Favourite=favourite;
+
                 if (id == temp.id) {
                     temp.area=area;
                     check=true;
@@ -317,7 +311,7 @@ public class DB_Text implements DB_interface {
                 mywriter.write(store.get(i).area + "\n");
                 mywriter.write(store.get(i).Favourite.size() + "\n");
                 for (int j = 0; j < store.get(i).Favourite.size(); j++) {
-                    mywriter.write(store.get(i).Favourite.get(j).id + "\n");
+                    mywriter.write(store.get(i).Favourite.get(j) + "\n");
                 }
 
 
@@ -347,7 +341,6 @@ public class DB_Text implements DB_interface {
             Scanner myReader = new Scanner(myobj);
             while(myReader.hasNext()) {
                 CustomerModel temp=new CustomerModel();
-                temp.Favourite=new ArrayList<WorkerModel>();
 
                 temp.id = myReader.nextInt();
                 myReader.nextLine();
@@ -368,11 +361,7 @@ public class DB_Text implements DB_interface {
                     favourite.add(myReader.nextInt());
                     myReader.nextLine();
                 }
-                for (int i=0;i<favourite.size();i++) {
-                    WorkerModel tempp=get_worker(favourite.get(i));
-                    if (tempp!=null)
-                        temp.Favourite.add(tempp);
-                }
+                temp.Favourite=favourite;
                 if (id == temp.id) {
                     temp.paymentMethod=payment;
                     check=true;
@@ -404,7 +393,7 @@ public class DB_Text implements DB_interface {
                 mywriter.write(store.get(i).area + "\n");
                 mywriter.write(store.get(i).Favourite.size() + "\n");
                 for (int j = 0; j < store.get(i).Favourite.size(); j++) {
-                    mywriter.write(store.get(i).Favourite.get(j).id + "\n");
+                    mywriter.write(store.get(i).Favourite.get(j) + "\n");
                 }
 
 
@@ -434,7 +423,7 @@ public class DB_Text implements DB_interface {
             Scanner myReader = new Scanner(myobj);
             while(myReader.hasNext()) {
                 CustomerModel temp=new CustomerModel();
-                temp.Favourite=new ArrayList<WorkerModel>();
+
 
                 temp.id = myReader.nextInt();
                 myReader.nextLine();
@@ -455,11 +444,8 @@ public class DB_Text implements DB_interface {
                     favourite.add(myReader.nextInt());
                     myReader.nextLine();
                 }
-                for (int i=0;i<favourite.size();i++) {
-                    WorkerModel tempp=get_worker(favourite.get(i));
-                    if (tempp!=null)
-                        temp.Favourite.add(tempp);
-                }
+
+                temp.Favourite=favourite;
                 if (id == temp.id) {
                     temp.wallet=money;
                     check=true;
@@ -491,7 +477,7 @@ public class DB_Text implements DB_interface {
                 mywriter.write(store.get(i).area + "\n");
                 mywriter.write(store.get(i).Favourite.size() + "\n");
                 for (int j = 0; j < store.get(i).Favourite.size(); j++) {
-                    mywriter.write(store.get(i).Favourite.get(j).id + "\n");
+                    mywriter.write(store.get(i).Favourite.get(j)+ "\n");
                 }
 
 
@@ -541,7 +527,7 @@ public class DB_Text implements DB_interface {
 
                     if (id == id_n) {
                         CustomerModel ret=new CustomerModel();
-                        ret.Favourite=new ArrayList<WorkerModel>();
+
                         ret.id=id_n;
                         ret.name=name;
                         ret.email=email;
@@ -551,11 +537,7 @@ public class DB_Text implements DB_interface {
                         ret.wallet=wallet;
                         ret.city=city;
                         ret.area=area;
-                        for (int i=0;i<favourite.size();i++) {
-                            WorkerModel temp=get_worker(favourite.get(i));
-                            if (temp!=null)
-                            ret.Favourite.add(temp);
-                        }
+                        ret.Favourite=favourite;
                         /*
                         System.out.print(id_n+"\n");
                         System.out.print(name+"\n");
@@ -1240,25 +1222,18 @@ public class DB_Text implements DB_interface {
                 }
                 if (cid == customer_id) {
                     BookingModel ret=new BookingModel();
-                    ret.spareParts=new ArrayList<SparePartModel>();
+
 
                     ret.id=bid;
-                    ret.customerName=get_customer(cid);
-                    ret.WorkerName=get_worker(wid);
+                    ret.customerName=cid;
+                    ret.WorkerName=wid;
                     ret.text=text;
                     ret.status=status;
                     ret.startTime=start;
                     ret.endTime=end;
-                    ret.spareParts=new ArrayList<SparePartModel>();
+                    ret.spareParts=spare;
 
-                    for (int i=0;i<spare.size();i++) {
-                        SparePartModel temp=new SparePartModel();
-                        temp=get_spare_part(spare.get(i));
-                        if (temp!=null) {
-                            ret.spareParts.add(temp);
-                            ret.spareParts.get(i).quantity=10;
-                        }
-                    }
+
                     /*
                         System.out.print(bid+"\n");
                     System.out.print(cid+"\n");
@@ -1314,22 +1289,16 @@ public class DB_Text implements DB_interface {
                 }
                 if (cid == customer_id&& status_n.equals(status)) {
                     BookingModel ret=new BookingModel();
-                    ret.spareParts=new ArrayList<SparePartModel>();
+
 
                     ret.id=bid;
-                    ret.customerName=get_customer(cid);
-                    ret.WorkerName=get_worker(wid);
+                    ret.customerName=cid;
+                    ret.WorkerName=wid;
                     ret.text=text;
                     ret.status=status;
                     ret.startTime=start;
                     ret.endTime=end;
-
-                    for (int i=0;i<spare.size();i++) {
-                        SparePartModel temp=new SparePartModel();
-                        temp=get_spare_part(spare.get(i));
-                        if (temp!=null)
-                            ret.spareParts.add(temp);
-                    }
+                    ret.spareParts=spare;
                     /*
                         System.out.print(bid+"\n");
                     System.out.print(cid+"\n");
@@ -1365,7 +1334,7 @@ public class DB_Text implements DB_interface {
             int gi=0;
             while(myReader.hasNext()) {
                 BookingModel ret=new BookingModel();
-                ret.spareParts=new ArrayList<SparePartModel>();
+
 
                 int bid = myReader.nextInt();
                 myReader.nextLine();
@@ -1391,21 +1360,14 @@ public class DB_Text implements DB_interface {
 
 
                     ret.id=bid;
-                    ret.customerName=get_customer(cid);
-                    ret.WorkerName=get_worker(wid);
+                    ret.customerName=cid;
+                    ret.WorkerName=wid;
                     ret.text=text;
                     ret.status=status_n;
                     ret.startTime=start;
                     ret.endTime=end;
 
-                    for (int i=0;i<spare.size();i++) {
-                        SparePartModel temp=new SparePartModel();
-                        temp=get_spare_part(spare.get(i));
-                        if (temp!=null)
-                            ret.spareParts.add(temp);
-
-
-                        }
+                    ret.spareParts=spare;
                 if (bid==booking_id) {
                     ret.status=status;
                     check=true;
@@ -1431,21 +1393,15 @@ public class DB_Text implements DB_interface {
 
             for (int i = 0; i < give.size(); i++) {
                 mywriter.write(give.get(i).id + "\n");
-                if (give.get(i).customerName!=null)
-                mywriter.write(give.get(i).customerName.id + "\n");
-                else
-                    mywriter.write(0 + "\n");
-                if (give.get(i).WorkerName!=null)
-                mywriter.write(give.get(i).WorkerName.id + "\n");
-                else
-                    mywriter.write(0 + "\n");
+                mywriter.write(give.get(i).customerName + "\n");
+                mywriter.write(give.get(i).WorkerName + "\n");
                 mywriter.write(give.get(i).text + "\n");
                 mywriter.write(give.get(i).status + "\n");
                 mywriter.write(give.get(i).startTime + "\n");
                 mywriter.write(give.get(i).endTime + "\n");
                 mywriter.write(give.get(i).spareParts.size() + "\n");
                 for (int j = 0; j < give.get(i).spareParts.size(); j++) {
-                    mywriter.write(give.get(i).spareParts.get(j).id + "\n");
+                    mywriter.write(give.get(i).spareParts.get(j) + "\n");
                 }
 
 
@@ -1479,7 +1435,7 @@ public class DB_Text implements DB_interface {
             int gi=0;
             while(myReader.hasNext()) {
                 BookingModel ret=new BookingModel();
-                ret.spareParts=new ArrayList<SparePartModel>();
+
 
                 int bid = myReader.nextInt();
                 myReader.nextLine();
@@ -1505,21 +1461,15 @@ public class DB_Text implements DB_interface {
 
 
                 ret.id=bid;
-                ret.customerName=get_customer(cid);
-                ret.WorkerName=get_worker(wid);
+                ret.customerName=cid;
+                ret.WorkerName=wid;
                 ret.text=text;
                 ret.status=status_n;
                 ret.startTime=start;
                 ret.endTime=end;
-
-                for (int i=0;i<spare.size();i++) {
-                    SparePartModel temp=new SparePartModel();
-                    temp=get_spare_part(spare.get(i));
-                    if (temp!=null)
-                        ret.spareParts.add(temp);
+                ret.spareParts=spare;
 
 
-                }
                 if (bid==booking_id) {
                     ret.endTime=finishTime;
                     check=true;
@@ -1545,21 +1495,15 @@ public class DB_Text implements DB_interface {
 
             for (int i = 0; i < give.size(); i++) {
                 mywriter.write(give.get(i).id + "\n");
-                if (give.get(i).customerName!=null)
-                    mywriter.write(give.get(i).customerName.id + "\n");
-                else
-                    mywriter.write(0 + "\n");
-                if (give.get(i).WorkerName!=null)
-                    mywriter.write(give.get(i).WorkerName.id + "\n");
-                else
-                    mywriter.write(0 + "\n");
+                    mywriter.write(give.get(i).customerName + "\n");
+                    mywriter.write(give.get(i).WorkerName + "\n");
                 mywriter.write(give.get(i).text + "\n");
                 mywriter.write(give.get(i).status + "\n");
                 mywriter.write(give.get(i).startTime + "\n");
                 mywriter.write(give.get(i).endTime + "\n");
                 mywriter.write(give.get(i).spareParts.size() + "\n");
                 for (int j = 0; j < give.get(i).spareParts.size(); j++) {
-                    mywriter.write(give.get(i).spareParts.get(j).id + "\n");
+                    mywriter.write(give.get(i).spareParts.get(j)+ "\n");
                 }
 
 
@@ -1602,7 +1546,7 @@ public class DB_Text implements DB_interface {
             Scanner myReader = new Scanner(myobj);
             while(myReader.hasNext()) {
                 CustomerModel temp=new CustomerModel();
-                temp.Favourite=new ArrayList<WorkerModel>();
+
 
                 temp.id = myReader.nextInt();
                 myReader.nextLine();
@@ -1633,12 +1577,7 @@ public class DB_Text implements DB_interface {
                 }
 
 
-                for (int i=0;i<favourite.size();i++) {
-                    WorkerModel tempp= new WorkerModel();
-                    tempp=get_worker(favourite.get(i));
-                    if (tempp!=null)
-                        temp.Favourite.add(tempp);
-                }
+               temp.Favourite=favourite;
 
 
                 store.add(temp);
@@ -1668,7 +1607,7 @@ public class DB_Text implements DB_interface {
                 mywriter.write(store.get(i).area + "\n");
                 mywriter.write(store.get(i).Favourite.size() + "\n");
                 for (int j = 0; j < store.get(i).Favourite.size(); j++) {
-                    mywriter.write(store.get(i).Favourite.get(j).id + "\n");
+                    mywriter.write(store.get(i).Favourite.get(j) + "\n");
                 }
 
 
@@ -1699,7 +1638,7 @@ public class DB_Text implements DB_interface {
             Scanner myReader = new Scanner(myobj);
             while (myReader.hasNext()) {
                 CustomerModel temp = new CustomerModel();
-                temp.Favourite = new ArrayList<WorkerModel>();
+
 
                 temp.id = myReader.nextInt();
                 myReader.nextLine();
@@ -1730,13 +1669,7 @@ public class DB_Text implements DB_interface {
                 }
 
 
-                for (int i = 0; i < favourite.size(); i++) {
-                    WorkerModel tempp = new WorkerModel();
-                    tempp = get_worker(favourite.get(i));
-                    if (tempp != null)
-                        temp.Favourite.add(tempp);
-                }
-
+               temp.Favourite=favourite;
 
                 store.add(temp);
 
@@ -1763,7 +1696,7 @@ public class DB_Text implements DB_interface {
                 mywriter.write(store.get(i).area + "\n");
                 mywriter.write(store.get(i).Favourite.size() + "\n");
                 for (int j = 0; j < store.get(i).Favourite.size(); j++) {
-                    mywriter.write(store.get(i).Favourite.get(j).id + "\n");
+                    mywriter.write(store.get(i).Favourite.get(j) + "\n");
                 }
 
 
@@ -1783,7 +1716,78 @@ public class DB_Text implements DB_interface {
     //not needed
     @Override
     public ArrayList<WorkerModel> get_favourites(int customer_id) {
-        return get_customer(customer_id).Favourite;
+
+        File myobj=new File("Customer.txt");
+
+
+
+        try {
+            Scanner myReader = new Scanner(myobj);
+            while(myReader.hasNext()) {
+
+                int id_n = myReader.nextInt();
+                myReader.nextLine();
+                String name = myReader.nextLine();
+                String email = myReader.nextLine();
+                String password = myReader.nextLine();
+                String payment=myReader.nextLine();
+                String credit_no=myReader.nextLine();
+                float wallet = myReader.nextFloat();
+                myReader.nextLine();
+                String city = myReader.nextLine();
+                String area = myReader.nextLine();
+                int size = myReader.nextInt();
+                myReader.nextLine();
+                ArrayList<Integer> favourite = new ArrayList<Integer>();
+
+                for (int i = 0; i < size; i++) {
+                    favourite.add(myReader.nextInt());
+                    myReader.nextLine();
+                }
+
+                if (customer_id== id_n) {
+                    CustomerModel ret=new CustomerModel();
+                    ArrayList<WorkerModel> back=new ArrayList<WorkerModel>();
+                    ret.id=id_n;
+                    ret.name=name;
+                    ret.email=email;
+                    ret.password=password;
+                    ret.paymentMethod=payment;
+                    ret.creditno=credit_no;
+                    ret.wallet=wallet;
+                    ret.city=city;
+                    ret.area=area;
+                    for (int i=0;i<favourite.size();i++) {
+                        WorkerModel temp=get_worker(favourite.get(i));
+                        if (temp!=null)
+                            back.add(temp);
+                    }
+                        /*
+                        System.out.print(id_n+"\n");
+                        System.out.print(name+"\n");
+                        System.out.print(email+"\n");
+                        System.out.print(password+"\n");
+                        System.out.print(payment+"\n");
+                        System.out.print(wallet+"\n");
+                        System.out.print(city+"\n");
+                        System.out.print(area+"\n");
+                        System.out.print(size+"\n");
+                        System.out.print(favourite+"\n");
+                        */
+
+                    return back;
+                }
+            }
+        } catch (FileNotFoundException e) {
+            //  System.out.print("Error in reading a file\n");
+            e.printStackTrace();
+        }
+        // System.out.print("ID not found\n");
+
+
+        return null;
+
+
     }
     //------------
 
