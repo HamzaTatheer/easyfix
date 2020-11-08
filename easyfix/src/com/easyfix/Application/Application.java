@@ -1,6 +1,7 @@
 package com.easyfix.Application;
 
 //import com.easyfix.Application.ui.Gui.Gui;
+import com.easyfix.Application.ui.Gui.Gui;
 import com.easyfix.Application.ui.Terminal.Terminal;
 import com.easyfix.Application.ui.UI;
 import com.sun.java.accessibility.util.GUIInitializedListener;
@@ -17,6 +18,8 @@ public class Application {
             terminal.start();
         }
         else if(ui == "gui"){
+            Gui g = new Gui();
+            Gui.start();
 
         }
     }

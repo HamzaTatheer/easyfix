@@ -1,4 +1,4 @@
-/*package com.easyfix.Application.ui.Gui;
+package com.easyfix.Application.ui.Gui;
 import com.easyfix.Application.bl.serviceProviders;
 import com.easyfix.Application.models.WorkerModel;
 import com.easyfix.Application.ui.UI;
@@ -16,6 +16,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 import com.easyfix.Application.bl.services.CustomerService;
 import com.easyfix.Application.bl.serviceProviders;
+
+import java.util.ArrayList;
+
 public class Gui extends Application {
 
 
@@ -159,7 +162,7 @@ public class Gui extends Application {
         Label carea = new Label("Enter Area name");
         TextField careaa = new TextField();
         Button changearea = new Button("Change Area");
-        changecity.setOnAction(new EventHandler<ActionEvent>() {
+        changearea.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
@@ -176,7 +179,7 @@ public class Gui extends Application {
         Label cpaymethod = new Label("Enter payment method");
         TextField cpaymethodd = new TextField();
         Button changepaymethod = new Button("Change Payment Method");
-        changecity.setOnAction(new EventHandler<ActionEvent>() {
+        changepaymethod.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
@@ -220,4 +223,4 @@ public class Gui extends Application {
 //    }
 
 }
-*/
+
