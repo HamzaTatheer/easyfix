@@ -63,6 +63,9 @@ public class BookingManager implements BookingService {
     public Boolean finishBookingTime(int bid){
         return false;
     }
+    public ArrayList<BookingModel> showPendingBookingsOfCustomer(int cid){
+        return new ArrayList<>();
+    }
     public ArrayList<BookingModel> showFinishedBookingOfCustomer(int uid){
         return new ArrayList<>();
     }

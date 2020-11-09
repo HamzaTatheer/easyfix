@@ -1,6 +1,5 @@
-package com.easyfix.Application.db.sqlDb;
-import com.easyfix.Application.db.services.DbService;
-import com.easyfix.Application.models.*;
+package com.company;
+
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -8,87 +7,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 
-public class dbsql implements DbService {
-
-    @Override
-    public boolean change_billing_status(int booking_id, String status) {
-        return false;
-    }
-
-    @Override
-    public ArrayList<WorkerModel> get_favourites_workers(int customer_id) {
-        return null;
-    }
-
-    @Override
-    public boolean update_customerWallet(int id, Float money) {
-        return false;
-    }
-
-
-    //needed
-    @Override
-    public ArrayList<BookingModel> get_booking_of_customer(int customer_id) {
-        return null;
-    }
-
-
-    //needed
-    @Override
-    public ArrayList<BookingModel> get_booking_of_worker(int worker_id) {
-        return null;
-    }
-
-
-    //needed
-    @Override
-    public ArrayList<BookingModel> get_booking_of_customer(int customer_id, String status) {
-        return null;
-    }
-
-    //needed
-    @Override
-    public ArrayList<BookingModel> get_booking_of_worker(int worker_id, String status) {
-        return null;
-    }
-
-    //needed
-    @Override
-    public ArrayList<Integer> get_favourites(int customer_id) {
-        return null;
-    }
-
-    @Override
-    public ArrayList<SparePartModel> get_all_spare_parts_booking(int booking_id) {
-        return null;
-    }
-
-    @Override
-    public BillingModel get_bill(int booking_id) {
-        return null;
-    }
-
-    @Override
-    public boolean update_booking_status(int booking_id, String status) {
-        return false;
-    }
-
-    @Override
-    public boolean updateFinishTime(int booking_id, LocalDateTime finishTime) {
-        return false;
-    }
-
-    @Override
-    public boolean store_spare_holder(int booking_id, int spare_id, int quantity) {
-        return false;
-    }
-
-    @Override
-    public boolean store_customer_billing(int booking_id, String title, String customerName, String workerName, String status, Float totalCost) {
-        return false;
-    }
-
-
+public class dbsql implements DB_interface {
 
     public boolean does_customer_exist(int id)//done
     {
@@ -121,11 +40,15 @@ public class dbsql implements DbService {
             {
                 return -1;
             }
+
                 while (rs.next())
                 {
                     System.out.println( rs.getInt("id"));
                     return rs.getInt("id");
+
                 }
+
+
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -290,7 +213,7 @@ public class dbsql implements DbService {
             {
                 workerid=rs2.getInt("favourite");
 
-                c1.Favourite.add(workerid);// get funtion
+                c1.Favourite.add(2);// get funtion
             }
 
             return c1;
@@ -356,7 +279,7 @@ public class dbsql implements DbService {
                 c1.email=rs.getString("email");
                 c1.password=rs.getString("password");
                 c1.avgRating=rs.getFloat("average_rating");
-                c1.hourlyRate=rs.getFloat("wallet");
+                c1.hourlyRate=rs.getFloat("hourly_rate");
                 c1.city=rs.getString("city");
                 c1.area=rs.getString("area");
                 c1.speciality=rs.getString("speciality");
@@ -421,7 +344,7 @@ public class dbsql implements DbService {
     }
 
 
-    public ArrayList<WorkerModel> get_worker(String city,String area)
+    public ArrayList<WorkerModel> get_worker(String city,String area)//done
     {
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
@@ -437,16 +360,17 @@ public class dbsql implements DbService {
 
                 c2.id= rs.getInt("wid");
 
-                //System.out.println("c1 get id "+c1.get(i).id);
+                System.out.println("id "+c2.id);
                 c2.name=rs.getString("name");
                 c2.email=rs.getString("email");
                 c2.password=rs.getString("password");
                 c2.avgRating=rs.getFloat("average_rating");
-                c2.hourlyRate=rs.getFloat("wallet");
+                c2.hourlyRate=rs.getFloat("hourly_rate");
                 c2.city=rs.getString("city");
                 c2.area=rs.getString("area");
                 c2.speciality=rs.getString("speciality");
                 c1.add(c2);
+                System.out.println(c1.get(i).id);
                 //i++;
 
 
@@ -663,19 +587,35 @@ public class dbsql implements DbService {
             ResultSet rs = mystmt.executeQuery("select * from booking where customer_id = "+ customer_id );
             //WorkerModel c1=new WorkerModel();
             ArrayList<BookingModel> c1=new ArrayList<BookingModel>();
+            BookingModel c2=new BookingModel();
 
             int i=0;
             while (rs.next()) {
 
-                c1.get(i).id= rs.getInt("bid");
-                c1.get(i).cid = rs.getInt("customer_id");
-                c1.get(i).wid = rs.getInt("worker_id");
-                c1.get(i).text=rs.getString("booking_text");
-                c1.get(i).status=rs.getString("booking_status");
-                c1.get(i).startTime= rs.getTimestamp("start_time").toLocalDateTime();
-                c1.get(i).endTime=rs.getTimestamp("end_time").toLocalDateTime();
+                c2.id= rs.getInt("bid");
+                c2.cid=rs.getInt("customer_id");
+                c2.wid=rs.getInt("worker_id");
+                c2.text=rs.getString("booking_text");
+                c2.status=rs.getString("booking_status");
 
-                i++;
+                Time st=rs.getTime("start_time");
+                Time et=rs.getTime("end_time");
+                Date sd=rs.getDate("start_date");
+                Date ed=rs.getDate("end_date");
+                String ss= String.valueOf(sd)+String.valueOf(st);
+
+
+
+
+                //c2.startTime= LocalDateTime.from(sd.toLocalDate());
+                //c2.endTime= sd;
+
+
+                //c2.startTime=rs.getTimestamp("start_time");
+                //c2.endTime=rs.getTimestamp("end_time");
+                c1.add(c2);
+
+                //i++;
 
                 Statement mystmt2 = conn.createStatement();
 
@@ -690,7 +630,9 @@ public class dbsql implements DbService {
                 {
                     partid=rs2.getInt("part_id");
 
-                    c1.get(i).spareParts.add(partid);// get spare part function
+                    //c1.get(i).spareParts.add(get_spare_part(partid));// get spare part function
+                    c2.spareParts.add(partid);
+                    c1.add(c2);
                 }
 
 
@@ -769,19 +711,32 @@ public class dbsql implements DbService {
             ResultSet rs = mystmt.executeQuery("select * from booking where customer_id = "+ customer_id + "and status = " + status);
             //WorkerModel c1=new WorkerModel();
             ArrayList<BookingModel> c1=new ArrayList<BookingModel>();
+            BookingModel c2=new BookingModel();
 
             int i=0;
             while (rs.next()) {
 
-                c1.get(i).id= rs.getInt("bid");
-                c1.get(i).cid=rs.getInt("customer_id");
-                c1.get(i).wid=rs.getInt("worker_id");
-                c1.get(i).text=rs.getString("booking_text");
-                c1.get(i).status=rs.getString("booking_status");
-                c1.get(i).startTime=rs.getTimestamp("start_time").toLocalDateTime();
-                c1.get(i).endTime=rs.getTimestamp("end_time").toLocalDateTime();
+                c2.id= rs.getInt("bid");
+                c2.cid=rs.getInt("customer_id");
+                c2.wid=rs.getInt("worker_id");
+                c2.text=rs.getString("booking_text");
+                c2.status=rs.getString("booking_status");
 
-                i++;
+                Time st=rs.getTime("start_time");
+                Time et=rs.getTime("end_time");
+                Date sd=rs.getDate("start_date");
+                Date ed=rs.getDate("end_date");
+                LocalDateTime ss= LocalDateTime.from(st.toLocalTime());
+
+
+
+                //c2.startTime=rs.getTimestamp("start_time");
+                //c2.endTime=rs.getTimestamp("end_time");
+                c2.startTime= LocalDateTime.from(sd.toLocalDate());
+                c2.endTime= LocalDateTime.from(sd.toLocalDate());
+                c1.add(c2);
+
+                //i++;
 
                 Statement mystmt2 = conn.createStatement();
 
@@ -795,8 +750,15 @@ public class dbsql implements DbService {
                 while (rs2.next())
                 {
                     partid=rs2.getInt("part_id");
-                    c1.get(i).spareParts.add(partid);// get spare part function
+
+                    //c1.get(i).spareParts.add(get_spare_part(partid));// get spare part function
+                    c2.spareParts.add(partid);
+                    c1.add(c2);
                 }
+
+
+
+
             }
             return c1;
 
@@ -840,9 +802,6 @@ public class dbsql implements DbService {
 
     public ArrayList<BillingModel> get_customer_billing(int booking_id)
     {
-
-        return null;
-        /*
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
             Statement mystmt = conn.createStatement();
@@ -853,10 +812,13 @@ public class dbsql implements DbService {
 
             int i=0;
             while (rs.next()) {
+
                 c1.get(i).id= rs.getInt("id");
-                c1.get(i).=rs.getInt("bid");
-                c1.get(i).totalCost = (float)(rs.getInt("totalcost"));
+                c1.get(i).bid=rs.getInt("bid");
+                c1.get(i).totalCost=rs.getInt("totalcost");
+
                 i++;
+
             }
             return c1;
 
@@ -865,8 +827,7 @@ public class dbsql implements DbService {
         catch (Exception e) {
             e.printStackTrace();
         }
-*/
-            //return null;
+        return null;
 
     }
 
@@ -1253,5 +1214,8 @@ public class dbsql implements DbService {
         }
         return null;
     }
+
+
+
 
 }

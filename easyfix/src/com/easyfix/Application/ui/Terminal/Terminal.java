@@ -1,9 +1,6 @@
 package com.easyfix.Application.ui.Terminal;
 import com.easyfix.Application.bl.services.WorkerService;
-import com.easyfix.Application.models.BookingModel;
-import com.easyfix.Application.models.WorkerModel;
-import com.easyfix.Application.models.ChatMessageModel;
-import com.easyfix.Application.models.UserModel;
+import com.easyfix.Application.models.*;
 import com.easyfix.Application.bl.services.CustomerService;
 import com.easyfix.Application.ui.UI;
 
@@ -24,8 +21,8 @@ public class Terminal extends UI {
     public void start() {
         int choice;
         while (true) {
-            System.out.println("1-Login as Customer\n");
-            System.out.println("2-Login as Worker\n");
+            System.out.println("1-Login as Customer");
+            System.out.println("2-Login as Worker");
             System.out.println("3-Register Customer\n");
             Scanner sc1 = new Scanner(System.in);
             System.out.println("Enter Choice : ");
@@ -43,6 +40,13 @@ public class Terminal extends UI {
 
                     cid = customerService.login(email, password);
                     System.out.println("Login Successful");
+                    CustomerModel c=customerService.getCustomerDetails(cid);
+                    System.out.println("ID             : "+c.id);
+                    System.out.println("Name           : "+c.name);
+                    System.out.println("City           : "+c.city);
+                    System.out.println("Area           : "+c.area);
+                    System.out.println("Payment method : "+c.paymentMethod);
+
 
 
                 } catch (Exception e) {
@@ -53,6 +57,7 @@ public class Terminal extends UI {
 
                 if (cid != -2) {
                     while (true) {
+                        System.out.println("------------------------------------------------");
                         System.out.println("1-Get Favourites");
                         System.out.println("2-Add to favourite");
                         System.out.println("3-Change Area");
@@ -62,8 +67,10 @@ public class Terminal extends UI {
                         System.out.println("7-Show Workers By Area");
                         System.out.println("8-Show Active Bookings");
                         System.out.println("9-Show Finished Bookings");
-                        System.out.println("10-Logout");
+                        System.out.println("10-Logout\n");
 
+
+                        System.out.println("Enter Choice : ");
                         choice2 = sc.nextInt();
 
                         if (choice2 == 1) {
