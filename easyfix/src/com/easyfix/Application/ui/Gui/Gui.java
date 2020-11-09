@@ -1,5 +1,5 @@
-package com.easyfix.Application.ui.Gui;/*
 package com.easyfix.Application.ui.Gui;
+
 import com.easyfix.Application.bl.serviceProviders;
 import com.easyfix.Application.bl.services.BookingService;
 import com.easyfix.Application.models.WorkerModel;
@@ -29,6 +29,9 @@ public class Gui extends Application {
     Scene scene3;
     Scene scene4;
     Scene scene5;
+    Scene favouritescene;
+    private ArrayList<Label> names ;
+    private ArrayList<Label> emails;
     static int userid;
     public CustomerService customerService;
     public BookingService bookingService;
@@ -36,7 +39,8 @@ public class Gui extends Application {
     public Gui(){
         super();
         customerService = serviceProviders.getCustomerService();
-
+        names = new ArrayList<Label>();
+        emails = new ArrayList<Label>();
     }
 
     @Override
@@ -131,18 +135,29 @@ public class Gui extends Application {
             }
 
         });
+
+
         Button Getfavourite = new Button("Getfavourite");
         Getfavourite.setOnAction(new EventHandler<ActionEvent>() {
-
+            
             @Override
             public void handle(ActionEvent event) {
 
+                //String fav = favourites.toString();
                 ArrayList<WorkerModel> favourites = customerService.getFavourites(userid);
-                String fav = favourites.toString();
-                System.out.println(fav);
+                System.out.println(favourites.size());
+                for (WorkerModel fav : favourites)
+                {
+                    Label nam = new Label(fav.name);
+                    names.add(nam);
+                    Label emaill = new Label(fav.email);
+                    emails.add(emaill);
+                }
+                primaryStage.setScene(favouritescene);
             }
 
         });
+        System.out.println(names.size());
         Button EditProfile = new Button("Edit Profile");
         EditProfile.setOnAction(e -> primaryStage.setScene(scene4));
 
@@ -200,13 +215,38 @@ public class Gui extends Application {
         root.getChildren().addAll(email2,emaill2,pass2,passw2,btn,btn2);
         scene = new Scene(root, 500, 300);
 
+
+        //String workerss = workers.toString();
+       // Label ww = new Label(workerss);
+
         vbox.getChildren().addAll(name,namee,email,emaill,pass,passw,city,cityy,area,areaa,btn3);
         scene2 = new Scene(vbox, 500, 300);
         Button addbooking = new Button("Book Worker");
         addbooking.setOnAction(e -> primaryStage.setScene(scene5));
         VBox bookworker = new VBox();
         bookworker.setAlignment(Pos.BASELINE_LEFT);
+        bookworker.getChildren().addAll();
         scene5 = new Scene(bookworker,500,300);
+
+        addbooking.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                ArrayList<WorkerModel> workers = customerService.getWorkersCloseBy(userid);
+                ArrayList<Label> workersname = new ArrayList<Label>();
+                ArrayList<Label> workersid = new ArrayList<Label>();
+                ArrayList<Label> workersemail = new ArrayList<Label>();
+                for(WorkerModel work : workers)
+                {
+                    //workersid.add(work.id.);
+
+                }
+
+            }
+
+        });
+        Label one = new Label("mufa");
+        Label two = new Label("mufa@gmail.com");
         VBox homepage = new VBox();
         homepage.setAlignment(Pos.BASELINE_CENTER);
         homepage.getChildren().addAll(Getfavourite,EditProfile,addbooking);
@@ -217,6 +257,11 @@ public class Gui extends Application {
         EditProfilee.getChildren().addAll(ccity,ccityy,changecity,carea,careaa,changearea,cpaymethod,cpaymethodd,changepaymethod);
         scene4 = new Scene(EditProfilee,500,300);
 
+        VBox showfav = new VBox();//names.add(one);emails.add(two);
+        showfav.setAlignment(Pos.BASELINE_LEFT);
+        showfav.getChildren().addAll(names);
+        //showfav.getChildren().addAll(emails);
+        favouritescene = new Scene(showfav,500,300);
         primaryStage.setTitle("EasyFix");
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -232,15 +277,3 @@ public class Gui extends Application {
 
 }
 
-
-*/
-
-
-public class Gui{
-    public Gui(){
-
-    }
-    public static void start(){
-        System.out.println("Fake gui");
-    }
-}
