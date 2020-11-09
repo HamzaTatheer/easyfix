@@ -9,6 +9,8 @@ import javafx.event.ActionEvent;
 import com.easyfix.Application.models.WorkerModel;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import com.easyfix.Application.bl.classes.SparePart;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
@@ -19,6 +21,7 @@ import javafx.scene.control.Label;
 import com.easyfix.Application.bl.services.CustomerService;
 import com.easyfix.Application.bl.serviceProviders;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Gui extends Application {
@@ -29,10 +32,12 @@ public class Gui extends Application {
     Scene scene3;
     Scene scene4;
     Scene scene5;
+    Scene scene6;
     Scene favouritescene;
     private ArrayList<Label> names ;
     private ArrayList<Label> emails;
     static int userid;
+    static int workerid;
     public CustomerService customerService;
     public BookingService bookingService;
 
@@ -143,17 +148,22 @@ public class Gui extends Application {
             @Override
             public void handle(ActionEvent event) {
 
+
+                getFav();
+                primaryStage.setScene(favouritescene);
+            }
+            Label nam,email123;
+            private void getFav() {
                 //String fav = favourites.toString();
                 ArrayList<WorkerModel> favourites = customerService.getFavourites(userid);
-                System.out.println(favourites.size());
+                //System.out.println(favourites.size());
                 for (WorkerModel fav : favourites)
                 {
-                    Label nam = new Label(fav.name);
+                    nam = new Label(fav.name);
                     names.add(nam);
-                    Label emaill = new Label(fav.email);
-                    emails.add(emaill);
+                    email123 = new Label(fav.email);
+                    emails.add(email123);
                 }
-                primaryStage.setScene(favouritescene);
             }
 
         });
@@ -211,42 +221,75 @@ public class Gui extends Application {
             }
 
         });
-
+        Label three = new Label("saqib");
+        Label four = new Label("saqib@gmail.com");
         root.getChildren().addAll(email2,emaill2,pass2,passw2,btn,btn2);
         scene = new Scene(root, 500, 300);
 
-
+        Label one = new Label("mufa");
+        Label two = new Label("mufa@gmail.com");
         //String workerss = workers.toString();
        // Label ww = new Label(workerss);
 
+
+        ArrayList<Label> workersname = new ArrayList<Label>();
+        ArrayList<Label> workersid = new ArrayList<Label>();
+        ArrayList<Label> workersemail = new ArrayList<Label>();workersname.add(one);workersname.add(three);
+        workersemail.add(two);workersemail.add(four);
         vbox.getChildren().addAll(name,namee,email,emaill,pass,passw,city,cityy,area,areaa,btn3);
         scene2 = new Scene(vbox, 500, 300);
         Button addbooking = new Button("Book Worker");
         addbooking.setOnAction(e -> primaryStage.setScene(scene5));
         VBox bookworker = new VBox();
         bookworker.setAlignment(Pos.BASELINE_LEFT);
-        bookworker.getChildren().addAll();
-        scene5 = new Scene(bookworker,500,300);
+        Button booktop = new Button("Book Top worker");
+        ArrayList<Integer> spare = new ArrayList<Integer>();String text= "Booking your wotker";
+        booktop.setOnAction(new EventHandler<ActionEvent>() {
 
+            @Override
+            public void handle(ActionEvent event) {
+                LocalDateTime time = LocalDateTime.now();
+                try {
+                    bookingService.makeBooking(userid,workerid,text,time,spare);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+                primaryStage.setScene(scene6);
+            }
+
+        });
+        VBox bookingdone = new VBox();
+        scene6 = new Scene(bookingdone,500,300);
+        Label done = new Label("Booking Successfull");
+        bookingdone.getChildren().add(done);
+        scene5 = new Scene(bookworker,500,300);
+        bookworker.getChildren().addAll(workersname);
+        bookworker.getChildren().addAll(workersemail);
+        bookworker.getChildren().add(booktop);
         addbooking.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
+                getcloseby();
+                primaryStage.setScene(scene5);
+            }
+            Label n,e;
+            private void getcloseby() {
                 ArrayList<WorkerModel> workers = customerService.getWorkersCloseBy(userid);
-                ArrayList<Label> workersname = new ArrayList<Label>();
-                ArrayList<Label> workersid = new ArrayList<Label>();
-                ArrayList<Label> workersemail = new ArrayList<Label>();
+
                 for(WorkerModel work : workers)
                 {
-                    //workersid.add(work.id.);
 
+                    n = new Label(work.name);
+                    //workersid.add(work.id.);
+                    workersname.add(n);
+                    e = new Label(work.email);
+                    workersemail.add(e);
                 }
 
             }
 
         });
-        Label one = new Label("mufa");
-        Label two = new Label("mufa@gmail.com");
         VBox homepage = new VBox();
         homepage.setAlignment(Pos.BASELINE_CENTER);
         homepage.getChildren().addAll(Getfavourite,EditProfile,addbooking);
@@ -257,10 +300,10 @@ public class Gui extends Application {
         EditProfilee.getChildren().addAll(ccity,ccityy,changecity,carea,careaa,changearea,cpaymethod,cpaymethodd,changepaymethod);
         scene4 = new Scene(EditProfilee,500,300);
 
-        VBox showfav = new VBox();//names.add(one);emails.add(two);
+        VBox showfav = new VBox();names.add(one);emails.add(two);
         showfav.setAlignment(Pos.BASELINE_LEFT);
         showfav.getChildren().addAll(names);
-        //showfav.getChildren().addAll(emails);
+        showfav.getChildren().addAll(emails);
         favouritescene = new Scene(showfav,500,300);
         primaryStage.setTitle("EasyFix");
         primaryStage.setScene(scene);
