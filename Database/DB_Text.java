@@ -1190,7 +1190,7 @@ public class DB_Text implements DB_interface {
     }
 
     @Override
-    public ArrayList<BookingModel> get_booking(int customer_id) {
+    public ArrayList<BookingModel> get_booking_of_customer(int customer_id) {
         File myobj=new File("Booking.txt");
 
         ArrayList<BookingModel> give=new ArrayList<BookingModel>();
@@ -1234,6 +1234,138 @@ public class DB_Text implements DB_interface {
                     ret.spareParts=spare;
 
 
+                    /*
+                        System.out.print(bid+"\n");
+                    System.out.print(cid+"\n");
+                    System.out.print(wid+"\n");
+                    System.out.print(text+"\n");
+                    System.out.print(status+"\n");
+                    System.out.print(start+"\n");
+                    System.out.print(end+"\n");
+*/
+                    give.add(ret);
+                }
+            }
+        } catch (FileNotFoundException e) {
+            //  System.out.print("Error in reading a file\n");
+            e.printStackTrace();
+        }
+        // System.out.print("ID not found\n");
+
+
+        return give;
+    }
+
+    @Override
+    public ArrayList<BookingModel> get_booking_of_worker(int worker_id) {
+        File myobj=new File("Booking.txt");
+
+        ArrayList<BookingModel> give=new ArrayList<BookingModel>();
+
+
+        try {
+            Scanner myReader = new Scanner(myobj);
+            while(myReader.hasNext()) {
+
+                int bid = myReader.nextInt();
+                myReader.nextLine();
+                int cid = myReader.nextInt();
+                myReader.nextLine();
+                int wid = myReader.nextInt();
+                myReader.nextLine();
+                String text = myReader.nextLine();
+                String status = myReader.nextLine();
+                LocalDateTime start = LocalDateTime.parse(myReader.next());
+                LocalDateTime end= LocalDateTime.parse(myReader.next());
+                int size=myReader.nextInt();
+                myReader.nextLine();
+                ArrayList<Integer> spare=new ArrayList<Integer>();
+
+                for (int i=0;i<size;i++)
+                {
+                    spare.add(myReader.nextInt());
+                    myReader.nextLine();
+
+                }
+                if (wid == worker_id) {
+                    BookingModel ret=new BookingModel();
+
+
+                    ret.id=bid;
+                    ret.customerName=cid;
+                    ret.WorkerName=wid;
+                    ret.text=text;
+                    ret.status=status;
+                    ret.startTime=start;
+                    ret.endTime=end;
+                    ret.spareParts=spare;
+
+
+                    /*
+                        System.out.print(bid+"\n");
+                    System.out.print(cid+"\n");
+                    System.out.print(wid+"\n");
+                    System.out.print(text+"\n");
+                    System.out.print(status+"\n");
+                    System.out.print(start+"\n");
+                    System.out.print(end+"\n");
+*/
+                    give.add(ret);
+                }
+            }
+        } catch (FileNotFoundException e) {
+            //  System.out.print("Error in reading a file\n");
+            e.printStackTrace();
+        }
+        // System.out.print("ID not found\n");
+
+
+        return give;
+    }
+
+    @Override
+    public ArrayList<BookingModel> get_booking_of_worker(int worker_id, String status) {
+        File myobj=new File("Booking.txt");
+
+        ArrayList<BookingModel> give=new ArrayList<BookingModel>();
+
+
+        try {
+            Scanner myReader = new Scanner(myobj);
+            while(myReader.hasNext()) {
+
+                int bid = myReader.nextInt();
+                myReader.nextLine();
+                int cid = myReader.nextInt();
+                myReader.nextLine();
+                int wid = myReader.nextInt();
+                myReader.nextLine();
+                String text = myReader.nextLine();
+                String status_n = myReader.nextLine();
+                LocalDateTime start = LocalDateTime.parse(myReader.next());
+                LocalDateTime end= LocalDateTime.parse(myReader.next());
+                int size=myReader.nextInt();
+                myReader.nextLine();
+                ArrayList<Integer> spare=new ArrayList<Integer>();
+
+                for (int i=0;i<size;i++)
+                {
+                    spare.add(myReader.nextInt());
+                    myReader.nextLine();
+
+                }
+                if (wid == worker_id&& status_n.equals(status)) {
+                    BookingModel ret=new BookingModel();
+
+
+                    ret.id=bid;
+                    ret.customerName=cid;
+                    ret.WorkerName=wid;
+                    ret.text=text;
+                    ret.status=status;
+                    ret.startTime=start;
+                    ret.endTime=end;
+                    ret.spareParts=spare;
                     /*
                         System.out.print(bid+"\n");
                     System.out.print(cid+"\n");
