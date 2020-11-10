@@ -20,6 +20,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 import com.easyfix.Application.bl.services.CustomerService;
 import com.easyfix.Application.bl.serviceProviders;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Reflection;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.geometry.Insets;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -80,8 +89,48 @@ public class Gui extends Application {
         VBox vbox = new VBox();
         vbox.setAlignment(Pos.TOP_LEFT);
 
-        VBox root = new VBox();
-        root.setAlignment(Pos.TOP_LEFT);
+        ///////////////////////////
+        //VBox root = new VBox();
+        //root.setAlignment(Pos.TOP_LEFT);
+        GridPane gp=new GridPane();
+        gp.setPadding(new Insets(20,20,20,20));
+        gp.setHgap(5);
+        gp.setVgap(5);
+
+        BorderPane bp = new BorderPane();
+        bp.setPadding(new Insets(10,50,50,50));
+
+        //Adding HBox
+        HBox hb = new HBox();
+        hb.setPadding(new Insets(20,20,20,30));
+
+        //Reflection for gridPane
+        Reflection r = new Reflection();
+        r.setFraction(0.7f);
+        gp.setEffect(r);
+
+        //DropShadow effect
+        DropShadow dropShadow = new DropShadow();
+        dropShadow.setOffsetX(5);
+        dropShadow.setOffsetY(5);
+
+        //Adding text and DropShadow effect to it
+        Text text = new Text("EasyFix Login");
+        text.setFont(Font.font("Courier New", FontWeight.BOLD, 28));
+        text.setEffect(dropShadow);
+
+        //Adding text to HBox
+        hb.getChildren().add(text);
+
+        //Add ID's to Nodes
+        bp.setId("bp");
+        gp.setId("root");
+        btn.setId("btnLogin");
+        text.setId("text");
+
+        //Add HBox and GridPane layout to BorderPane Layout
+        bp.setTop(hb);
+        bp.setCenter(gp);
 
         Label name = new Label("Name");
         TextField namee = new TextField();
@@ -92,7 +141,6 @@ public class Gui extends Application {
         Label area = new Label("Area");
         TextField areaa = new TextField();
        // GridPane.setConstraints(btn3,4,6);
-
 
         btn.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -223,8 +271,23 @@ public class Gui extends Application {
         });
         Label three = new Label("saqib");
         Label four = new Label("saqib@gmail.com");
-        root.getChildren().addAll(email2,emaill2,pass2,passw2,btn,btn2);
-        scene = new Scene(root, 500, 300);
+        //root.getChildren().addAll(email2,emaill2,pass2,passw2,btn,btn2);
+        scene = new Scene(bp);
+        ////////////////////////////////////////
+        scene.getStylesheets().add(getClass().getResource("Login.css").toExternalForm());
+        //Creating title
+
+        gp.addRow(2, email2,emaill2);
+        gp.addRow(3, pass2,passw2);
+        gp.addRow(5, btn);
+        gp.addRow(7, btn2);
+
+        //   scene2.getStylesheets().add(getClass().getResource("signup.css").toExternalForm());
+     //   scene3.getStylesheets().add(getClass().getResource("signup.css").toExternalForm());
+     //   scene4.getStylesheets().add(getClass().getResource("signup.css").toExternalForm());
+     //   scene5.getStylesheets().add(getClass().getResource("signup.css").toExternalForm());
+     //   scene6.getStylesheets().add(getClass().getResource("signup.css").toExternalForm());
+     //   favouritescene.getStylesheets().add(getClass().getResource("signup.css").toExternalForm());
 
         Label one = new Label("mufa");
         Label two = new Label("mufa@gmail.com");
@@ -243,14 +306,14 @@ public class Gui extends Application {
         VBox bookworker = new VBox();
         bookworker.setAlignment(Pos.BASELINE_LEFT);
         Button booktop = new Button("Book Top worker");
-        ArrayList<Integer> spare = new ArrayList<Integer>();String text= "Booking your wotker";
+        ArrayList<Integer> spare = new ArrayList<Integer>();String text1= "Booking your wotker";
         booktop.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
                 LocalDateTime time = LocalDateTime.now();
                 try {
-                    bookingService.makeBooking(userid,workerid,text,time,spare);
+                    bookingService.makeBooking(userid,workerid,text1,time,spare);
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
