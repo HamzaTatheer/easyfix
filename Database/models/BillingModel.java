@@ -3,8 +3,8 @@ package models;
 public class BillingModel {
     public int bookingId;
     public String title;
-    public String  customerName;
-    public String  workerName;
+    public int cid;
+    public int  wid;
     public String status;
     public Float totalCost;
 }

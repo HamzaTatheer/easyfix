@@ -1225,8 +1225,8 @@ public class DB_Text implements DB_interface {
 
 
                     ret.id=bid;
-                    ret.customerName=cid;
-                    ret.WorkerName=wid;
+                    ret.cid=cid;
+                    ret.wid=wid;
                     ret.text=text;
                     ret.status=status;
                     ret.startTime=start;
@@ -1292,8 +1292,8 @@ public class DB_Text implements DB_interface {
 
 
                     ret.id=bid;
-                    ret.customerName=cid;
-                    ret.WorkerName=wid;
+                    ret.cid=cid;
+                    ret.wid=wid;
                     ret.text=text;
                     ret.status=status;
                     ret.startTime=start;
@@ -1359,8 +1359,8 @@ public class DB_Text implements DB_interface {
 
 
                     ret.id=bid;
-                    ret.customerName=cid;
-                    ret.WorkerName=wid;
+                    ret.cid=cid;
+                    ret.wid=wid;
                     ret.text=text;
                     ret.status=status;
                     ret.startTime=start;
@@ -1389,7 +1389,7 @@ public class DB_Text implements DB_interface {
     }
 
     @Override
-    public ArrayList<BookingModel> get_booking(int customer_id, String status) {
+    public ArrayList<BookingModel> get_booking_of_customer(int customer_id, String status) {
         File myobj=new File("Booking.txt");
 
         ArrayList<BookingModel> give=new ArrayList<BookingModel>();
@@ -1424,8 +1424,8 @@ public class DB_Text implements DB_interface {
 
 
                     ret.id=bid;
-                    ret.customerName=cid;
-                    ret.WorkerName=wid;
+                    ret.cid=cid;
+                    ret.wid=wid;
                     ret.text=text;
                     ret.status=status;
                     ret.startTime=start;
@@ -1492,8 +1492,8 @@ public class DB_Text implements DB_interface {
 
 
                     ret.id=bid;
-                    ret.customerName=cid;
-                    ret.WorkerName=wid;
+                    ret.cid=cid;
+                    ret.wid=wid;
                     ret.text=text;
                     ret.status=status_n;
                     ret.startTime=start;
@@ -1525,8 +1525,8 @@ public class DB_Text implements DB_interface {
 
             for (int i = 0; i < give.size(); i++) {
                 mywriter.write(give.get(i).id + "\n");
-                mywriter.write(give.get(i).customerName + "\n");
-                mywriter.write(give.get(i).WorkerName + "\n");
+                mywriter.write(give.get(i).cid + "\n");
+                mywriter.write(give.get(i).wid + "\n");
                 mywriter.write(give.get(i).text + "\n");
                 mywriter.write(give.get(i).status + "\n");
                 mywriter.write(give.get(i).startTime + "\n");
@@ -1593,8 +1593,8 @@ public class DB_Text implements DB_interface {
 
 
                 ret.id=bid;
-                ret.customerName=cid;
-                ret.WorkerName=wid;
+                ret.cid=cid;
+                ret.wid=wid;
                 ret.text=text;
                 ret.status=status_n;
                 ret.startTime=start;
@@ -1627,8 +1627,8 @@ public class DB_Text implements DB_interface {
 
             for (int i = 0; i < give.size(); i++) {
                 mywriter.write(give.get(i).id + "\n");
-                    mywriter.write(give.get(i).customerName + "\n");
-                    mywriter.write(give.get(i).WorkerName + "\n");
+                    mywriter.write(give.get(i).cid + "\n");
+                    mywriter.write(give.get(i).wid + "\n");
                 mywriter.write(give.get(i).text + "\n");
                 mywriter.write(give.get(i).status + "\n");
                 mywriter.write(give.get(i).startTime + "\n");
@@ -1662,7 +1662,65 @@ public class DB_Text implements DB_interface {
 
     @Override
     public ArrayList<SparePartModel> get_all_spare_parts_booking(int booking_id) {
-        return null;
+        File myobj=new File("Booking.txt");
+
+        ArrayList<SparePartModel> give=new ArrayList<SparePartModel>();
+
+
+        try {
+            Scanner myReader = new Scanner(myobj);
+            while(myReader.hasNext()) {
+
+                int bid = myReader.nextInt();
+                myReader.nextLine();
+                int cid = myReader.nextInt();
+                myReader.nextLine();
+                int wid = myReader.nextInt();
+                myReader.nextLine();
+                String text = myReader.nextLine();
+                String status_n = myReader.nextLine();
+                LocalDateTime start = LocalDateTime.parse(myReader.next());
+                LocalDateTime end= LocalDateTime.parse(myReader.next());
+                int size=myReader.nextInt();
+                myReader.nextLine();
+                ArrayList<Integer> spare=new ArrayList<Integer>();
+
+                for (int i=0;i<size;i++)
+                {
+                    spare.add(myReader.nextInt());
+                    myReader.nextLine();
+
+                }
+                if (bid == booking_id) {
+
+
+
+                    for (int i=0;i<spare.size();i++) {
+                        SparePartModel temp=new SparePartModel();
+                        temp=get_spare_part(spare.get(i));
+                        if (temp!=null)
+                            give.add(temp);
+                    }
+                    /*
+                        System.out.print(bid+"\n");
+                    System.out.print(cid+"\n");
+                    System.out.print(wid+"\n");
+                    System.out.print(text+"\n");
+                    System.out.print(status+"\n");
+                    System.out.print(start+"\n");
+                    System.out.print(end+"\n");
+*/
+
+                }
+            }
+        } catch (FileNotFoundException e) {
+            //  System.out.print("Error in reading a file\n");
+            e.printStackTrace();
+        }
+        // System.out.print("ID not found\n");
+
+
+        return give;
     }
 
     @Override
@@ -1847,7 +1905,7 @@ public class DB_Text implements DB_interface {
 
     //not needed
     @Override
-    public ArrayList<WorkerModel> get_favourites(int customer_id) {
+    public ArrayList<Integer> get_favourites(int customer_id) {
 
         File myobj=new File("Customer.txt");
 
@@ -1889,11 +1947,15 @@ public class DB_Text implements DB_interface {
                     ret.wallet=wallet;
                     ret.city=city;
                     ret.area=area;
+                    ret.Favourite=favourite;
+                    /*
                     for (int i=0;i<favourite.size();i++) {
                         WorkerModel temp=get_worker(favourite.get(i));
                         if (temp!=null)
                             back.add(temp);
                     }
+
+                     */
                         /*
                         System.out.print(id_n+"\n");
                         System.out.print(name+"\n");
@@ -1907,7 +1969,7 @@ public class DB_Text implements DB_interface {
                         System.out.print(favourite+"\n");
                         */
 
-                    return back;
+                    return ret.Favourite;
                 }
             }
         } catch (FileNotFoundException e) {
@@ -1959,8 +2021,10 @@ public class DB_Text implements DB_interface {
                 ret.bookingId=myReader.nextInt();
                 myReader.nextLine();
                 ret.title=myReader.nextLine();
-                ret.customerName=myReader.nextLine();
-                ret.workerName=myReader.nextLine();
+                ret.cid=myReader.nextInt();
+                myReader.nextLine();
+                ret.wid=myReader.nextInt();
+                myReader.nextLine();
                 ret.status=myReader.nextLine();
                 ret.totalCost=myReader.nextFloat();
                 myReader.nextLine();
@@ -1994,8 +2058,10 @@ public class DB_Text implements DB_interface {
                 ret.bookingId=myReader.nextInt();
                 myReader.nextLine();
                 ret.title=myReader.nextLine();
-                ret.customerName=myReader.nextLine();
-                ret.workerName=myReader.nextLine();
+                ret.cid=myReader.nextInt();
+                myReader.nextLine();
+                ret.wid=myReader.nextInt();
+                myReader.nextLine();
                 ret.status=myReader.nextLine();
                 ret.totalCost=myReader.nextFloat();
                 myReader.nextLine();
@@ -2018,8 +2084,8 @@ public class DB_Text implements DB_interface {
             for (int i=0;i<store.size();i++) {
                 myWriter.write(store.get(i).bookingId + "\n");
                 myWriter.write(store.get(i).title + "\n");
-                myWriter.write(store.get(i).customerName + "\n");
-                myWriter.write(store.get(i).workerName + "\n");
+                myWriter.write(store.get(i).cid + "\n");
+                myWriter.write(store.get(i).wid + "\n");
                 myWriter.write(store.get(i).status + "\n");
                 myWriter.write(store.get(i).totalCost + "\n");
             }
