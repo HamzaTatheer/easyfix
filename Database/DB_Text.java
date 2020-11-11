@@ -1693,9 +1693,11 @@ public class DB_Text implements DB_interface {
                 if (bookingId == booking_id) {
                      SparePartModel temp=new SparePartModel();
                         temp=get_spare_part(spareId);
-                        if (temp!=null)
+                        if (temp!=null) {
+                            temp.quantity=quantity;
                             give.add(temp);
 
+                        }
                 }
             }
         } catch (FileNotFoundException e) {
