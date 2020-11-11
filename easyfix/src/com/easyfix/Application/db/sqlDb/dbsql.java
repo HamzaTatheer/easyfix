@@ -1,3 +1,4 @@
+/*
 package com.company;
 
 import java.sql.*;
@@ -1297,3 +1298,4 @@ public class dbsql implements DB_interface {
 
 
 }
+*/

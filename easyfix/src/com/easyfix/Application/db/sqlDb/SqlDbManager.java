@@ -3,6 +3,7 @@ import com.easyfix.Application.db.services.DbService;
 import com.easyfix.Application.models.*;
 
 import javax.swing.*;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.io.File;
@@ -14,2405 +15,1291 @@ import java.util.Scanner; // Import the Scanner class to read text files
 
 
 public class SqlDbManager implements DbService {
-    private static String currentPath = "./src/com/easyfix/Application/db/textDb/";
-
-    public ArrayList<WorkerModel> get_favourites_workers(int customer_id){
-        File myobj=new File("Customer.txt");
-        ArrayList<CustomerModel> store=new ArrayList<CustomerModel>();
-        boolean check=false;
-
-
-        try {
-            Scanner myReader = new Scanner(myobj);
-            while(myReader.hasNext()) {
-                CustomerModel temp=new CustomerModel();
-                temp.Favourite=new ArrayList<Integer>();
-
-                temp.id = myReader.nextInt();
-                myReader.nextLine();
-                temp.name = myReader.nextLine();
-                temp.email = myReader.nextLine();
-                temp.password = myReader.nextLine();
-                temp.paymentMethod=myReader.nextLine();
-                temp.creditno=myReader.nextLine();
-                temp.wallet = myReader.nextFloat();
-                myReader.nextLine();
-                temp.city = myReader.nextLine();
-                temp.area = myReader.nextLine();
-                int size = myReader.nextInt();
-                myReader.nextLine();
-
-                boolean present=false;
-                for (int i = 0; i < size; i++) {
-                    temp.Favourite.add(myReader.nextInt());
-                    myReader.nextLine();
-
-                }
-                store.add(temp);
-            }
-
-            int index = -1;
-            for(int i = 0;i<store.size();i++){
-                if(store.get(i).id == customer_id){
-                    index = store.get(i).id;
-                    i=store.size()+1;
-                }
-            }
-
-            if(index != -1) {
-                ArrayList<Integer> myfav = store.get(index).Favourite;
-                ArrayList<WorkerModel> tt = new ArrayList<WorkerModel>();
-                for (int i = 0; i < myfav.size(); i++) {
-                    tt.add(get_worker(myfav.get(i)));
-                }
-                return new ArrayList<WorkerModel>();
-            }
-            else
-                return new ArrayList<WorkerModel>();
-
-        } catch (FileNotFoundException e) {
-            System.out.print("Error in reading a file\n");
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-            return new ArrayList<WorkerModel>();
-        }
-
-    }
-
-
-
-    public boolean updateFinishTime(int booking_id,LocalDateTime finishTime){
-        return false;
-    }
-
-
-    public boolean does_customer_exist(int id) {
-
-        File myobj=new File("Customer.txt");
-
-
-
-        try {
-            Scanner myReader = new Scanner(myobj);
-            while(myReader.hasNext()) {
-
-                int id_n = myReader.nextInt();
-                myReader.nextLine();
-                String name = myReader.nextLine();
-                String email = myReader.nextLine();
-                String password = myReader.nextLine();
-                String payment=myReader.nextLine();
-                String credit_no=myReader.nextLine();
-                float wallet = myReader.nextFloat();
-                myReader.nextLine();
-                String city = myReader.nextLine();
-                String area = myReader.nextLine();
-                int size = myReader.nextInt();
-                myReader.nextLine();
-                ArrayList<Integer> favourite = new ArrayList<Integer>();
-
-                for (int i = 0; i < size; i++) {
-                    favourite.add(myReader.nextInt());
-                    myReader.nextLine();
-                }
-
-                if (id == id_n) {
-                    return true;
-                }
-            }
-        } catch (FileNotFoundException e) {
-            //  System.out.print("Error in reading a file\n");
-            e.printStackTrace();
-        }
-        // System.out.print("ID not found\n");
-        return false;
-
-    }
-
-
-    public int does_customer_exist(String email, String password) {
-
-        File myobj=new File("Customer.txt");
-
-
-
-        try {
-            Scanner myReader = new Scanner(myobj);
-            while(myReader.hasNext()) {
-
-                int id_n = myReader.nextInt();
-                myReader.nextLine();
-                String name = myReader.nextLine();
-                String email_n = myReader.nextLine();
-                String password_n = myReader.nextLine();
-                String payment=myReader.nextLine();
-                String credit_no=myReader.nextLine();
-                float wallet = myReader.nextFloat();
-                myReader.nextLine();
-                String city = myReader.nextLine();
-                String area = myReader.nextLine();
-                int size = myReader.nextInt();
-                myReader.nextLine();
-                ArrayList<Integer> favourite = new ArrayList<Integer>();
-
-                for (int i = 0; i < size; i++) {
-                    favourite.add(myReader.nextInt());
-                    myReader.nextLine();
-                }
-
-                if (email_n.equals(email)&&password_n.equals(password)) {
-                    return id_n;
-                }
-            }
-        } catch (FileNotFoundException e) {
-            //  System.out.print("Error in reading a file\n");
-            e.printStackTrace();
-        }
-
-        return -1;
-
-    }
-
-
-    public boolean store_customer(String name, String email, String password,String credit_no, float wallet, String city,String area, ArrayList<Integer> favourite) {
-        int id=0;
-        File myo=new File("CountCustomer.txt");
-        try {
-            Scanner myr = new Scanner(myo);
-            id=myr.nextInt();
-        } catch (FileNotFoundException e) {
-            id=0;
-        }
-
-        id++;
-        try {
-            FileWriter myw=new FileWriter("CountCustomer.txt",false);
-            myw.write(id+"\n");
-            myw.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-        try {
-            FileWriter mywriter=new FileWriter("Customer.txt",true);
-            mywriter.write(id+"\n");
-            mywriter.write(name+"\n");
-            mywriter.write(email+"\n");
-            mywriter.write(password+"\n");
-            //default payment of customer
-            String payment="cash";
-            mywriter.write(payment+"\n");
-            mywriter.write(credit_no+"\n");
-            mywriter.write(wallet+"\n");
-            mywriter.write(city+"\n");
-            mywriter.write(area+"\n");
-            mywriter.write(favourite.size()+"\n");
-            for (int i=0;i<favourite.size();i++)
-            {
-                mywriter.write(favourite.get(i)+"\n");
-            }
-            mywriter.close();
-
-            //System.out.print("Filling done\n");
-            return true;
-        } catch (IOException e) {
-            // System.out.print("Error in storing customer in filling\n");
-            e.printStackTrace();
-            return false;
-        }
-
-    }
-
-
-    public boolean update_customer_city(int id, String city) {
-
-        File myobj=new File("Customer.txt");
-        ArrayList<CustomerModel> store=new ArrayList<CustomerModel>();
-        boolean check=false;
-
-
-
-        try {
-            Scanner myReader = new Scanner(myobj);
-            while(myReader.hasNext()) {
-                CustomerModel temp=new CustomerModel();
-                temp.Favourite=new ArrayList<Integer>();
-
-                temp.id = myReader.nextInt();
-                myReader.nextLine();
-                temp.name = myReader.nextLine();
-                temp.email = myReader.nextLine();
-                temp.password = myReader.nextLine();
-                temp.paymentMethod=myReader.nextLine();
-                temp.creditno=myReader.nextLine();
-                temp.wallet = myReader.nextFloat();
-                myReader.nextLine();
-                temp.city = myReader.nextLine();
-                temp.area = myReader.nextLine();
-                int size = myReader.nextInt();
-                myReader.nextLine();
-
-                for (int i = 0; i < size; i++) {
-                    temp.Favourite.add(myReader.nextInt());
-                    myReader.nextLine();
-                }
-
-
-                if (id == temp.id) {
-                    temp.city=city;
-                    check=true;
-                }
-                store.add(temp);
-            }
-        } catch (FileNotFoundException e) {
-            //  System.out.print("Error in reading a file\n");
-            e.printStackTrace();
-        }
-
-
-
-
-        try {
-            FileWriter mywriter=new FileWriter("Customer.txt",false);
-
-            for (int i=0;i<store.size();i++) {
-                mywriter.write(store.get(i).id + "\n");
-                mywriter.write(store.get(i).name + "\n");
-                mywriter.write(store.get(i).email + "\n");
-                mywriter.write(store.get(i).password + "\n");
-                mywriter.write(store.get(i).paymentMethod + "\n");
-                mywriter.write(store.get(i).creditno + "\n");
-                mywriter.write(store.get(i).wallet + "\n");
-                mywriter.write(store.get(i).city + "\n");
-                mywriter.write(store.get(i).area + "\n");
-                mywriter.write(store.get(i).Favourite.size() + "\n");
-                for (int j = 0; j < store.get(i).Favourite.size(); j++) {
-                    mywriter.write(store.get(i).Favourite + "\n");
-                }
-
-
-
-            }
-            mywriter.close();
-            if (check)
-                return true;
-            else
-                return false;
-        } catch (IOException e) {
-            // System.out.print("Error in storing customer in filling\n");
-            e.printStackTrace();
-            return false;
-        }
-
-    }
-
-
-    public boolean update_customer_area(int id, String area) {
-        File myobj=new File("Customer.txt");
-        ArrayList<CustomerModel> store=new ArrayList<CustomerModel>();
-        boolean check=false;
-
-
-
-        try {
-            Scanner myReader = new Scanner(myobj);
-            while(myReader.hasNext()) {
-                CustomerModel temp=new CustomerModel();
-
-                temp.id = myReader.nextInt();
-                myReader.nextLine();
-                temp.name = myReader.nextLine();
-                temp.email = myReader.nextLine();
-                temp.password = myReader.nextLine();
-                temp.paymentMethod=myReader.nextLine();
-                temp.creditno=myReader.nextLine();
-                temp.wallet = myReader.nextFloat();
-                myReader.nextLine();
-                temp.city = myReader.nextLine();
-                temp.area = myReader.nextLine();
-                int size = myReader.nextInt();
-                myReader.nextLine();
-                ArrayList<Integer> favourite = new ArrayList<Integer>();
-
-                for (int i = 0; i < size; i++) {
-                    temp.Favourite.add(myReader.nextInt());
-                    myReader.nextLine();
-                }
-
-                if (id == temp.id) {
-                    temp.area=area;
-                    check=true;
-                }
-                store.add(temp);
-
-
-            }
-        } catch (FileNotFoundException e) {
-            //  System.out.print("Error in reading a file\n");
-            e.printStackTrace();
-        }
-
-
-
-
-        try {
-            FileWriter mywriter=new FileWriter("Customer.txt",false);
-
-            for (int i=0;i<store.size();i++) {
-                mywriter.write(store.get(i).id + "\n");
-                mywriter.write(store.get(i).name + "\n");
-                mywriter.write(store.get(i).email + "\n");
-                mywriter.write(store.get(i).password + "\n");
-                mywriter.write(store.get(i).paymentMethod + "\n");
-                mywriter.write(store.get(i).creditno + "\n");
-                mywriter.write(store.get(i).wallet + "\n");
-                mywriter.write(store.get(i).city + "\n");
-                mywriter.write(store.get(i).area + "\n");
-                mywriter.write(store.get(i).Favourite.size() + "\n");
-                for (int j = 0; j < store.get(i).Favourite.size(); j++) {
-                    mywriter.write(store.get(i).Favourite + "\n");
-                }
-
-
-
-            }
-            mywriter.close();
-            if (check)
-                return true;
-            else
-                return false;
-        } catch (IOException e) {
-            // System.out.print("Error in storing customer in filling\n");
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-
-    public boolean update_customerPayment(int id, String payment) {
-        File myobj=new File("Customer.txt");
-        ArrayList<CustomerModel> store=new ArrayList<CustomerModel>();
-        boolean check=false;
-
-
-
-        try {
-            Scanner myReader = new Scanner(myobj);
-            while(myReader.hasNext()) {
-                CustomerModel temp=new CustomerModel();
-                temp.Favourite=new ArrayList<Integer>();
-
-                temp.id = myReader.nextInt();
-                myReader.nextLine();
-                temp.name = myReader.nextLine();
-                temp.email = myReader.nextLine();
-                temp.password = myReader.nextLine();
-                temp.paymentMethod=myReader.nextLine();
-                temp.creditno=myReader.nextLine();
-                temp.wallet = myReader.nextFloat();
-                myReader.nextLine();
-                temp.city = myReader.nextLine();
-                temp.area = myReader.nextLine();
-                int size = myReader.nextInt();
-                myReader.nextLine();
-                ArrayList<Integer> favourite = new ArrayList<Integer>();
-
-                for (int i = 0; i < size; i++) {
-                    temp.Favourite.add(myReader.nextInt());
-                    myReader.nextLine();
-                }
-                if (id == temp.id) {
-                    temp.paymentMethod=payment;
-                    check=true;
-                }
-                store.add(temp);
-
-
-            }
-        } catch (FileNotFoundException e) {
-            //  System.out.print("Error in reading a file\n");
-            e.printStackTrace();
-        }
-
-
-
-
-        try {
-            FileWriter mywriter=new FileWriter("Customer.txt",false);
-
-            for (int i=0;i<store.size();i++) {
-                mywriter.write(store.get(i).id + "\n");
-                mywriter.write(store.get(i).name + "\n");
-                mywriter.write(store.get(i).email + "\n");
-                mywriter.write(store.get(i).password + "\n");
-                mywriter.write(store.get(i).paymentMethod + "\n");
-                mywriter.write(store.get(i).creditno + "\n");
-                mywriter.write(store.get(i).wallet + "\n");
-                mywriter.write(store.get(i).city + "\n");
-                mywriter.write(store.get(i).area + "\n");
-                mywriter.write(store.get(i).Favourite.size() + "\n");
-                for (int j = 0; j < store.get(i).Favourite.size(); j++) {
-                    mywriter.write(store.get(i).Favourite.get(j) + "\n");
-                }
-
-
-
-            }
-            mywriter.close();
-            if (check)
-                return true;
-            else
-                return false;
-        } catch (IOException e) {
-            // System.out.print("Error in storing customer in filling\n");
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-
-    public boolean update_customerWallet(int id, Float money) {
-        File myobj=new File("Customer.txt");
-        ArrayList<CustomerModel> store=new ArrayList<CustomerModel>();
-        boolean check=false;
-
-
-
-        try {
-            Scanner myReader = new Scanner(myobj);
-            while(myReader.hasNext()) {
-                CustomerModel temp=new CustomerModel();
-
-                temp.id = myReader.nextInt();
-                myReader.nextLine();
-                temp.name = myReader.nextLine();
-                temp.email = myReader.nextLine();
-                temp.password = myReader.nextLine();
-                temp.paymentMethod=myReader.nextLine();
-                temp.creditno=myReader.nextLine();
-                temp.wallet = myReader.nextFloat();
-                myReader.nextLine();
-                temp.city = myReader.nextLine();
-                temp.area = myReader.nextLine();
-                int size = myReader.nextInt();
-                myReader.nextLine();
-                ArrayList<Integer> favourite = new ArrayList<Integer>();
-
-                for (int i = 0; i < size; i++) {
-                    temp.Favourite.add(myReader.nextInt());
-                    myReader.nextLine();
-                }
-
-                if (id == temp.id) {
-                    temp.wallet=money;
-                    check=true;
-                }
-                store.add(temp);
-
-
-            }
-        } catch (FileNotFoundException e) {
-            //  System.out.print("Error in reading a file\n");
-            e.printStackTrace();
-        }
-
-
-
-
-        try {
-            FileWriter mywriter=new FileWriter("Customer.txt",false);
-
-            for (int i=0;i<store.size();i++) {
-                mywriter.write(store.get(i).id + "\n");
-                mywriter.write(store.get(i).name + "\n");
-                mywriter.write(store.get(i).email + "\n");
-                mywriter.write(store.get(i).password + "\n");
-                mywriter.write(store.get(i).paymentMethod + "\n");
-                mywriter.write(store.get(i).creditno + "\n");
-                mywriter.write(store.get(i).wallet + "\n");
-                mywriter.write(store.get(i).city + "\n");
-                mywriter.write(store.get(i).area + "\n");
-                mywriter.write(store.get(i).Favourite.size() + "\n");
-                for (int j = 0; j < store.get(i).Favourite.size(); j++) {
-                    mywriter.write(store.get(i).Favourite.get(j) + "\n");
-                }
-
-
-
-            }
-            mywriter.close();
-            if (check)
-                return true;
-            else
-                return false;
-        } catch (IOException e) {
-            // System.out.print("Error in storing customer in filling\n");
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-
-    public CustomerModel get_customer(int id) {
-        File myobj=new File("Customer.txt");
-
-
-
-        try {
-            Scanner myReader = new Scanner(myobj);
-            while(myReader.hasNext()) {
-
-                int id_n = myReader.nextInt();
-                myReader.nextLine();
-                String name = myReader.nextLine();
-                String email = myReader.nextLine();
-                String password = myReader.nextLine();
-                String payment=myReader.nextLine();
-                String credit_no=myReader.nextLine();
-                float wallet = myReader.nextFloat();
-                myReader.nextLine();
-                String city = myReader.nextLine();
-                String area = myReader.nextLine();
-                int size = myReader.nextInt();
-                myReader.nextLine();
-                ArrayList<Integer> favourite = new ArrayList<Integer>();
-
-                for (int i = 0; i < size; i++) {
-                    favourite.add(myReader.nextInt());
-                    myReader.nextLine();
-                }
-
-                if (id == id_n) {
-                    CustomerModel ret=new CustomerModel();
-                    ret.Favourite=new ArrayList<Integer>();
-                    ret.id=id_n;
-                    ret.name=name;
-                    ret.email=email;
-                    ret.password=password;
-                    ret.paymentMethod=payment;
-                    ret.creditno=credit_no;
-                    ret.wallet=wallet;
-                    ret.city=city;
-                    ret.area=area;
-                    for (int i=0;i<favourite.size();i++) {
-                        int temp=favourite.get(i);
-                        //if (temp!=null)
-                        ret.Favourite.add(temp);
-                    }
-                        /*
-                        System.out.print(id_n+"\n");
-                        System.out.print(name+"\n");
-                        System.out.print(email+"\n");
-                        System.out.print(password+"\n");
-                        System.out.print(payment+"\n");
-                        System.out.print(wallet+"\n");
-                        System.out.print(city+"\n");
-                        System.out.print(area+"\n");
-                        System.out.print(size+"\n");
-                        System.out.print(favourite+"\n");
-                        */
-
-                    return ret;
-                }
-            }
-        } catch (FileNotFoundException e) {
-            //  System.out.print("Error in reading a file\n");
-            e.printStackTrace();
-        }
-        // System.out.print("ID not found\n");
-
-
-        return null;
-    }
-
-
-    public boolean store_worker( String name, String email, String password, float average_rating, float hourly_rate, String city, String area, String speciality) {
-        int id=0;
-        File myo=new File("CountWorker.txt");
-        try {
-            Scanner myr = new Scanner(myo);
-            id=myr.nextInt();
-        } catch (FileNotFoundException e) {
-            id=0;
-        }
-
-        id++;
-        try {
-            FileWriter myw=new FileWriter("CountWorker.txt",false);
-            myw.write(id+"\n");
-            myw.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-
-
-        try {
-            FileWriter mywriter=new FileWriter("Worker.txt",true);
-            mywriter.write(id+"\n");
-            mywriter.write(name+"\n");
-            mywriter.write(email+"\n");
-            mywriter.write(password+"\n");
-            mywriter.write(average_rating+"\n");
-            mywriter.write(hourly_rate+"\n");
-            mywriter.write(city+"\n");
-            mywriter.write(area+"\n");
-            mywriter.write(speciality+"\n");
-            /*
-            mywriter.write(rating.size()+"\n");
-            for (int i=0;i<rating.size();i++)
-            {
-                mywriter.write(rating.get(i)+"\n");
-            }
-            */
-
-            mywriter.close();
-
-            //System.out.print("Filling done\n");
-            return true;
-        } catch (IOException e) {
-            // System.out.print("Error in storing customer in filling\n");
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-
-    public WorkerModel get_worker(int id) {
-        File myobj=new File("Worker.txt");
-
-
-
-        try {
-            Scanner myReader = new Scanner(myobj);
-            while(myReader.hasNext()) {
-
-                int id_n = myReader.nextInt();
-                myReader.nextLine();
-                String name = myReader.nextLine();
-                String email = myReader.nextLine();
-                String password = myReader.nextLine();
-                float average_rating=myReader.nextFloat();
-                myReader.nextLine();
-                float hourly_rate=myReader.nextFloat();
-                myReader.nextLine();
-                String city = myReader.nextLine();
-                String area = myReader.nextLine();
-                String speciality=myReader.nextLine();
-                /*
-                int size = myReader.nextInt();
-                myReader.nextLine();
-                ArrayList<Integer> rating = new ArrayList<Integer>();
-
-                for (int i = 0; i < size; i++) {
-                    rating.add(myReader.nextInt());
-                    myReader.nextLine();
-                }
-*/
-                if (id == id_n) {
-                    WorkerModel ret=new WorkerModel();
-                    ret.id=id_n;
-                    ret.name=name;
-                    ret.email=email;
-                    ret.password=password;
-                    ret.avgRating=average_rating;
-                    ret.hourlyRate=hourly_rate;
-                    ret.city=city;
-                    ret.area=area;
-                    ret.speciality=speciality;
-                    // ret.rating=rating;
-                    return ret;
-                }
-            }
-        } catch (FileNotFoundException e) {
-            //  System.out.print("Error in reading a file\n");
-            e.printStackTrace();
-        }
-        // System.out.print("ID not found\n");
-
-
-        return null;
-    }
-
-
-    public int does_worker_exist(String email, String password) {
-        File myobj=new File("Worker.txt");
-
-
-
-        try {
-            Scanner myReader = new Scanner(myobj);
-            while(myReader.hasNext()) {
-
-                int id_n = myReader.nextInt();
-                myReader.nextLine();
-                String name = myReader.nextLine();
-                String email_n = myReader.nextLine();
-                String password_n = myReader.nextLine();
-                float average_rating=myReader.nextFloat();
-                myReader.nextLine();
-                float hourly_rate=myReader.nextFloat();
-                myReader.nextLine();
-                String city = myReader.nextLine();
-                String area = myReader.nextLine();
-                String speciality=myReader.nextLine();
-                /*
-                int size = myReader.nextInt();
-                myReader.nextLine();
-                ArrayList<Integer> rating = new ArrayList<Integer>();
-
-                for (int i = 0; i < size; i++) {
-                    rating.add(myReader.nextInt());
-                    myReader.nextLine();
-                }
-                */
-
-
-                if (email_n.equals(email)&&password_n.equals(password)) {
-
-                    return id_n;
-                }
-            }
-        } catch (FileNotFoundException e) {
-            //  System.out.print("Error in reading a file\n");
-            e.printStackTrace();
-        }
-        // System.out.print("ID not found\n");
-
-
-        return -1;
-    }
-
-
-    public boolean does_worker_exist(int id) {
-        File myobj=new File("Worker.txt");
-
-
-
-        try {
-            Scanner myReader = new Scanner(myobj);
-            while(myReader.hasNext()) {
-
-                int id_n = myReader.nextInt();
-                myReader.nextLine();
-                String name = myReader.nextLine();
-                String email_n = myReader.nextLine();
-                String password_n = myReader.nextLine();
-                float average_rating=myReader.nextFloat();
-                myReader.nextLine();
-                float hourly_rate=myReader.nextFloat();
-                myReader.nextLine();
-                String city = myReader.nextLine();
-                String area = myReader.nextLine();
-                String speciality=myReader.nextLine();
-                /*
-                int size = myReader.nextInt();
-                myReader.nextLine();
-                ArrayList<Integer> rating = new ArrayList<Integer>();
-
-                for (int i = 0; i < size; i++) {
-                    rating.add(myReader.nextInt());
-                    myReader.nextLine();
-                }
-                */
-
-
-                if (id_n==id) {
-
-                    return true;
-                }
-            }
-        } catch (FileNotFoundException e) {
-            //  System.out.print("Error in reading a file\n");
-            e.printStackTrace();
-        }
-        // System.out.print("ID not found\n");
-
-
-        return false;
-    }
-
-
-    public ArrayList<WorkerModel> get_worker(String city, String area) {
-        File myobj=new File("Worker.txt");
-        ArrayList<WorkerModel> ret=new ArrayList<WorkerModel>();
-
-
-
-        try {
-            Scanner myReader = new Scanner(myobj);
-            while(myReader.hasNext()) {
-                WorkerModel temp=new WorkerModel();
-
-                temp.id = myReader.nextInt();
-                myReader.nextLine();
-                temp.name = myReader.nextLine();
-                temp.email = myReader.nextLine();
-                temp.password = myReader.nextLine();
-                temp.avgRating=myReader.nextFloat();
-                myReader.nextLine();
-                temp.hourlyRate=myReader.nextFloat();
-                myReader.nextLine();
-                temp.city = myReader.nextLine();
-                temp.area = myReader.nextLine();
-                temp.speciality=myReader.nextLine();
-                /*
-                int size = myReader.nextInt();
-                myReader.nextLine();
-                ArrayList<Integer> rating = new ArrayList<Integer>();
-
-                for (int i = 0; i < size; i++) {
-                    rating.add(myReader.nextInt());
-                    myReader.nextLine();
-                }
-                temp.rating=rating;
-
-                 */
-
-                if (temp.city.equals(city)&&temp.area.equals(area)) {
-
-                    ret.add(temp);
-                }
-            }
-        } catch (FileNotFoundException e) {
-            //  System.out.print("Error in reading a file\n");
-            e.printStackTrace();
-        }
-        // System.out.print("ID not found\n");
-
-
-        return ret;
-    }
-
-
-    public ArrayList<WorkerModel> get_all_worker() {
-        File myobj=new File("Worker.txt");
-        ArrayList<WorkerModel> ret=new ArrayList<WorkerModel>();
-
-
-
-        try {
-            Scanner myReader = new Scanner(myobj);
-            while(myReader.hasNext()) {
-                WorkerModel temp=new WorkerModel();
-
-                temp.id = myReader.nextInt();
-                myReader.nextLine();
-                temp.name = myReader.nextLine();
-                temp.email = myReader.nextLine();
-                temp.password = myReader.nextLine();
-                temp.avgRating=myReader.nextFloat();
-                myReader.nextLine();
-                temp.hourlyRate=myReader.nextFloat();
-                myReader.nextLine();
-                temp.city = myReader.nextLine();
-                temp.area = myReader.nextLine();
-                temp.speciality=myReader.nextLine();
-                /*
-                int size = myReader.nextInt();
-                myReader.nextLine();
-                ArrayList<Integer> rating = new ArrayList<Integer>();
-
-                for (int i = 0; i < size; i++) {
-                    rating.add(myReader.nextInt());
-                    myReader.nextLine();
-                }
-                temp.rating=rating;
-
-                 */
-                ret.add(temp);
-
-
-
-            }
-        } catch (FileNotFoundException e) {
-            //  System.out.print("Error in reading a file\n");
-            e.printStackTrace();
-        }
-        // System.out.print("ID not found\n");
-
-
-        return ret;
-    }
-
-
-    public boolean update_Worker_city(int id, String city) {
-
-        File myobj=new File("Worker.txt");
-        ArrayList<WorkerModel> store=new ArrayList<WorkerModel>();
-        boolean check=false;
-
-
-
-        try {
-            Scanner myReader = new Scanner(myobj);
-            while(myReader.hasNext()) {
-                WorkerModel temp=new WorkerModel();
-
-                temp.id = myReader.nextInt();
-                myReader.nextLine();
-                temp.name = myReader.nextLine();
-                temp.email = myReader.nextLine();
-                temp.password = myReader.nextLine();
-                temp.avgRating=myReader.nextFloat();
-                myReader.nextLine();
-                temp.hourlyRate=myReader.nextFloat();
-                myReader.nextLine();
-                temp.city = myReader.nextLine();
-                temp.area = myReader.nextLine();
-                temp.speciality=myReader.nextLine();
-                /*
-                int size = myReader.nextInt();
-                myReader.nextLine();
-                ArrayList<Integer> rating = new ArrayList<Integer>();
-
-                for (int i = 0; i < size; i++) {
-                    rating.add(myReader.nextInt());
-                    myReader.nextLine();
-                }
-                temp.rating=rating;
-
-                 */
-
-                if (temp.id==id) {
-                    temp.city=city;
-                    check=true;
-                }
-                store.add(temp);
-            }
-        } catch (FileNotFoundException e) {
-            //  System.out.print("Error in reading a file\n");
-            e.printStackTrace();
-        }
-        // System.out.print("ID not found\n");
-
-
-        try {
-            FileWriter mywriter=new FileWriter("Worker.txt",false);
-
-            for (int i=0;i<store.size();i++) {
-                mywriter.write(store.get(i).id + "\n");
-                mywriter.write(store.get(i).name + "\n");
-                mywriter.write(store.get(i).email + "\n");
-                mywriter.write(store.get(i).password + "\n");
-                mywriter.write(store.get(i).avgRating + "\n");
-                mywriter.write(store.get(i).hourlyRate + "\n");
-                mywriter.write(store.get(i).city + "\n");
-                mywriter.write(store.get(i).area + "\n");
-                mywriter.write(store.get(i).speciality + "\n");
-                /*
-                mywriter.write(store.get(i).rating.size() + "\n");
-                for (int j = 0; j < store.get(i).rating.size(); j++) {
-                    mywriter.write(store.get(i).rating.get(j) + "\n");
-                }
-
-                 */
-            }
-            mywriter.close();
-            if (check)
-                return true;
-            else
-                return false;
-
-            //System.out.print("Filling done\n");
-        } catch (IOException e) {
-            // System.out.print("Error in storing customer in filling\n");
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-
-    public boolean update_Worker_area(int id, String area) {
-        File myobj=new File("Worker.txt");
-        ArrayList<WorkerModel> store=new ArrayList<WorkerModel>();
-        boolean check=false;
-
-
-
-        try {
-            Scanner myReader = new Scanner(myobj);
-            while(myReader.hasNext()) {
-                WorkerModel temp=new WorkerModel();
-
-                temp.id = myReader.nextInt();
-                myReader.nextLine();
-                temp.name = myReader.nextLine();
-                temp.email = myReader.nextLine();
-                temp.password = myReader.nextLine();
-                temp.avgRating=myReader.nextFloat();
-                myReader.nextLine();
-                temp.hourlyRate=myReader.nextFloat();
-                myReader.nextLine();
-                temp.city = myReader.nextLine();
-                temp.area = myReader.nextLine();
-                temp.speciality=myReader.nextLine();
-                /*
-                int size = myReader.nextInt();
-                myReader.nextLine();
-                ArrayList<Integer> rating = new ArrayList<Integer>();
-
-                for (int i = 0; i < size; i++) {
-                    rating.add(myReader.nextInt());
-                    myReader.nextLine();
-                }
-                temp.rating=rating;
-
-                 */
-
-                if (temp.id==id) {
-                    temp.area=area;
-                    check=true;
-                }
-                store.add(temp);
-            }
-        } catch (FileNotFoundException e) {
-            //  System.out.print("Error in reading a file\n");
-            e.printStackTrace();
-        }
-        // System.out.print("ID not found\n");
-
-
-        try {
-            FileWriter mywriter=new FileWriter("Worker.txt",false);
-
-            for (int i=0;i<store.size();i++) {
-                mywriter.write(store.get(i).id + "\n");
-                mywriter.write(store.get(i).name + "\n");
-                mywriter.write(store.get(i).email + "\n");
-                mywriter.write(store.get(i).password + "\n");
-                mywriter.write(store.get(i).avgRating + "\n");
-                mywriter.write(store.get(i).hourlyRate + "\n");
-                mywriter.write(store.get(i).city + "\n");
-                mywriter.write(store.get(i).area + "\n");
-                mywriter.write(store.get(i).speciality + "\n");
-                /*
-                mywriter.write(store.get(i).rating.size() + "\n");
-                for (int j = 0; j < store.get(i).rating.size(); j++) {
-                    mywriter.write(store.get(i).rating.get(j) + "\n");
-                }
-
-                 */
-            }
-            mywriter.close();
-            if (check)
-                return true;
-            else
-                return false;
-
-            //System.out.print("Filling done\n");
-        } catch (IOException e) {
-            // System.out.print("Error in storing customer in filling\n");
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-
-
-    public boolean update_hourly_rate(int id, float rate) {
-        File myobj=new File("Worker.txt");
-        ArrayList<WorkerModel> store=new ArrayList<WorkerModel>();
-        boolean check=false;
-
-
-
-        try {
-            Scanner myReader = new Scanner(myobj);
-            while(myReader.hasNext()) {
-                WorkerModel temp=new WorkerModel();
-
-                temp.id = myReader.nextInt();
-                myReader.nextLine();
-                temp.name = myReader.nextLine();
-                temp.email = myReader.nextLine();
-                temp.password = myReader.nextLine();
-                temp.avgRating=myReader.nextFloat();
-                myReader.nextLine();
-                temp.hourlyRate=myReader.nextFloat();
-                myReader.nextLine();
-                temp.city = myReader.nextLine();
-                temp.area = myReader.nextLine();
-                temp.speciality=myReader.nextLine();
-                /*
-                int size = myReader.nextInt();
-                myReader.nextLine();
-                ArrayList<Integer> rating = new ArrayList<Integer>();
-
-                for (int i = 0; i < size; i++) {
-                    rating.add(myReader.nextInt());
-                    myReader.nextLine();
-                }
-                temp.rating=rating;
-
-                 */
-
-                if (temp.id==id) {
-                    temp.hourlyRate=rate;
-                    check=true;
-                }
-                store.add(temp);
-            }
-        } catch (FileNotFoundException e) {
-            //  System.out.print("Error in reading a file\n");
-            e.printStackTrace();
-        }
-        // System.out.print("ID not found\n");
-
-
-        try {
-            FileWriter mywriter=new FileWriter("Worker.txt",false);
-
-            for (int i=0;i<store.size();i++) {
-                mywriter.write(store.get(i).id + "\n");
-                mywriter.write(store.get(i).name + "\n");
-                mywriter.write(store.get(i).email + "\n");
-                mywriter.write(store.get(i).password + "\n");
-                mywriter.write(store.get(i).avgRating + "\n");
-                mywriter.write(store.get(i).hourlyRate + "\n");
-                mywriter.write(store.get(i).city + "\n");
-                mywriter.write(store.get(i).area + "\n");
-                mywriter.write(store.get(i).speciality + "\n");
-                /*
-                mywriter.write(store.get(i).rating.size() + "\n");
-                for (int j = 0; j < store.get(i).rating.size(); j++) {
-                    mywriter.write(store.get(i).rating.get(j) + "\n");
-                }
-
-                 */
-            }
-            mywriter.close();
-            if (check)
-                return true;
-            else
-                return false;
-
-            //System.out.print("Filling done\n");
-        } catch (IOException e) {
-            // System.out.print("Error in storing customer in filling\n");
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-
-    public boolean store_booking(int customer_id, int worker_id, String text, String status, LocalDateTime start_time, LocalDateTime end_time, ArrayList<Integer> spareParts)
+    public boolean does_customer_exist(int id)//done
     {
-
-        int bid=0;
-        File myo=new File("CountBooking.txt");
         try {
-            Scanner myr = new Scanner(myo);
-            bid=myr.nextInt();
-        } catch (FileNotFoundException e) {
-            bid=0;
-        }
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
 
-        bid++;
-        try {
-            FileWriter myw=new FileWriter("CountBooking.txt",false);
-            myw.write(bid+"\n");
-            myw.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-
-        try {
-            FileWriter mywriter=new FileWriter("Booking.txt",true);
-
-
-            mywriter.write(bid + "\n");
-            mywriter.write(customer_id + "\n");
-            mywriter.write(worker_id + "\n");
-            mywriter.write(text + "\n");
-            mywriter.write(status + "\n");
-            mywriter.write(start_time + "\n");
-            mywriter.write(end_time + "\n");
-            mywriter.write(spareParts.size()+"\n");
-            for (int i=0;i<spareParts.size();i++)
+            ResultSet rs = mystmt.executeQuery("select * from customers where id = "+id);
+            if(!rs.next())
             {
-                mywriter.write(spareParts.get(i)+"\n");
+                return false;
             }
 
-
-            mywriter.close();
-
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-            return false;
+        }catch (Exception e) {
+            e.printStackTrace();
         }
-
         return true;
     }
 
-
-
-
-    public ArrayList<BookingModel> get_booking_of_worker(int worker_id, String status) {
-        File myobj=new File(currentPath+ "Booking.txt");
-
-        ArrayList<BookingModel> give=new ArrayList<BookingModel>();
-
-
+    public int does_customer_exist(String email,String password)//done
+    {
         try {
-            Scanner myReader = new Scanner(myobj);
-            while(myReader.hasNext()) {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
 
-                int bid = myReader.nextInt();
-                myReader.nextLine();
-                int cid = myReader.nextInt();
-                myReader.nextLine();
-                int wid = myReader.nextInt();
-                myReader.nextLine();
-                String text = myReader.nextLine();
-                String status_n = myReader.nextLine();
-                LocalDateTime start = LocalDateTime.parse(myReader.next());
-                LocalDateTime end= LocalDateTime.parse(myReader.next());
-                int size=myReader.nextInt();
-                myReader.nextLine();
-                ArrayList<Integer> spare=new ArrayList<Integer>();
+            ResultSet rs = mystmt.executeQuery("select * from customers where email = '" + email + "' and password = '" + password + "' ");
 
-                for (int i=0;i<size;i++)
-                {
-                    spare.add(myReader.nextInt());
-                    myReader.nextLine();
 
-                }
-                if (wid == worker_id&& status_n.equals(status)) {
-                    BookingModel ret=new BookingModel();
-                    ret.spareParts=new ArrayList<Integer>();
-
-                    ret.id=bid;
-                    ret.cid=(cid);
-                    ret.wid=(wid);
-                    ret.text=text;
-                    ret.status=status;
-                    ret.startTime=start;
-                    ret.endTime=end;
-
-                    for (int i=0;i<spare.size();i++) {
-                        //if (temp!=null)
-                        ret.spareParts.add(spare.get(i));
-                    }
-                    /*
-                        System.out.print(bid+"\n");
-                    System.out.print(cid+"\n");
-                    System.out.print(wid+"\n");
-                    System.out.print(text+"\n");
-                    System.out.print(status+"\n");
-                    System.out.print(start+"\n");
-                    System.out.print(end+"\n");
-*/
-                    give.add(ret);
-                }
+            if(!rs.next())
+            {
+                return -1;
             }
-        } catch (FileNotFoundException e) {
-            //  System.out.print("Error in reading a file\n");
+
+            while (rs.next())
+            {
+                System.out.println( rs.getInt("id"));
+                return rs.getInt("id");
+
+            }
+
+
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
-        // System.out.print("ID not found\n");
-
-
-        return give;
+        return 0;
     }
 
-
-
-    public ArrayList<BookingModel> get_booking_of_customer(int customer_id, String status) {
-        File myobj=new File(currentPath+"Booking.txt");
-
-        ArrayList<BookingModel> give=new ArrayList<BookingModel>();
-
-
+    public boolean store_customer(String name, String email, String password, String credit_no, float wallet, String city, String area, ArrayList<Integer> favourite)//done
+    {
         try {
-            Scanner myReader = new Scanner(myobj);
-            while(myReader.hasNext()) {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
 
-                int bid = myReader.nextInt();
-                myReader.nextLine();
-                int cid = myReader.nextInt();
-                myReader.nextLine();
-                int wid = myReader.nextInt();
-                myReader.nextLine();
-                String text = myReader.nextLine();
-                String status_n = myReader.nextLine();
-                LocalDateTime start = LocalDateTime.parse(myReader.next());
-                LocalDateTime end= LocalDateTime.parse(myReader.next());
-                int size=myReader.nextInt();
-                myReader.nextLine();
-                ArrayList<Integer> spare=new ArrayList<Integer>();
+            String sql = "INSERT INTO customers(name,email,password,credit_no,wallet,city,area) " + "VALUES(?,?,?,?,?,?,?)";
+            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setString(1, name);
+            pstmt.setString(2,email);
+            pstmt.setString(3,password);
+            pstmt.setString(4,credit_no);
+            pstmt.setFloat(5,wallet);
+            pstmt.setString(6,city);
+            pstmt.setString(7,area);
 
-                for (int i=0;i<size;i++)
+            int rowAffected = pstmt.executeUpdate();
+            if(rowAffected == 1)
+            {
+                String sql2 = "INSERT INTO favorite(id,favourite) " + "VALUES(?,?)";
+                PreparedStatement pstmt2 = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                ArrayList<Integer> a;
+                int iid=does_customer_exist(email,password);
+                for(int i=0;i<favourite.size();i++)
                 {
-                    spare.add(myReader.nextInt());
-                    myReader.nextLine();
 
-                }
-                if (cid == customer_id&& status_n.equals(status)) {
-                    BookingModel ret=new BookingModel();
-                    ret.spareParts=new ArrayList<Integer>();
-
-                    ret.id=bid;
-                    ret.cid=(cid);
-                    ret.wid=(wid);
-                    ret.text=text;
-                    ret.status=status;
-                    ret.startTime=start;
-                    ret.endTime=end;
-
-                    for (int i=0;i<spare.size();i++) {
-                        //if (temp!=null)
-                        ret.spareParts.add(spare.get(i));
-                    }
-                    /*
-                        System.out.print(bid+"\n");
-                    System.out.print(cid+"\n");
-                    System.out.print(wid+"\n");
-                    System.out.print(text+"\n");
-                    System.out.print(status+"\n");
-                    System.out.print(start+"\n");
-                    System.out.print(end+"\n");
-*/
-                    give.add(ret);
-                }
-            }
-        } catch (FileNotFoundException e) {
-            //  System.out.print("Error in reading a file\n");
-            e.printStackTrace();
-        }
-        // System.out.print("ID not found\n");
-
-
-        return give;
-    }
-
-
-
-    public  ArrayList<BookingModel> get_booking_of_worker(int worker_id){
-        File myobj=new File(currentPath+"Booking.txt");
-
-        ArrayList<BookingModel> give=new ArrayList<BookingModel>();
-
-
-        try {
-            Scanner myReader = new Scanner(myobj);
-            while(myReader.hasNext()) {
-
-                int bid = myReader.nextInt();
-                myReader.nextLine();
-                int cid = myReader.nextInt();
-                myReader.nextLine();
-                int wid = myReader.nextInt();
-                myReader.nextLine();
-                String text = myReader.nextLine();
-                String status = myReader.nextLine();
-                LocalDateTime start = LocalDateTime.parse(myReader.next());
-                LocalDateTime end= LocalDateTime.parse(myReader.next());
-                int size=myReader.nextInt();
-                myReader.nextLine();
-                ArrayList<Integer> spare=new ArrayList<Integer>();
-
-                for (int i=0;i<size;i++)
-                {
-                    spare.add(myReader.nextInt());
-                    myReader.nextLine();
-
-                }
-                if (wid == worker_id) {
-                    BookingModel ret=new BookingModel();
-                    ret.spareParts=new ArrayList<Integer>();
-
-                    ret.id=bid;
-                    ret.cid=cid;
-                    ret.wid=wid;
-                    ret.text=text;
-                    ret.status=status;
-                    ret.startTime=start;
-                    ret.endTime=end;
-                    ret.spareParts= new ArrayList<Integer>();
-
-                    for (int i=0;i<spare.size();i++) {
-                        //if (temp!=null)
-                        ret.spareParts.add(spare.get(i));
-                    }
-                    /*
-                        System.out.print(bid+"\n");
-                    System.out.print(cid+"\n");
-                    System.out.print(wid+"\n");
-                    System.out.print(text+"\n");
-                    System.out.print(status+"\n");
-                    System.out.print(start+"\n");
-                    System.out.print(end+"\n");
-*/
-                    give.add(ret);
-                }
-            }
-        } catch (FileNotFoundException e) {
-            //  System.out.print("Error in reading a file\n");
-            e.printStackTrace();
-        }
-        // System.out.print("ID not found\n");
-
-
-        return give;
-    }
-
-
-
-    public ArrayList<BookingModel> get_booking_of_customer(int customer_id) {
-        File myobj=new File(currentPath+"Booking.txt");
-
-        ArrayList<BookingModel> give=new ArrayList<BookingModel>();
-
-
-        try {
-            Scanner myReader = new Scanner(myobj);
-            while(myReader.hasNext()) {
-
-                int bid = myReader.nextInt();
-                myReader.nextLine();
-                int cid = myReader.nextInt();
-                myReader.nextLine();
-                int wid = myReader.nextInt();
-                myReader.nextLine();
-                String text = myReader.nextLine();
-                String status = myReader.nextLine();
-                LocalDateTime start = LocalDateTime.parse(myReader.next());
-                LocalDateTime end= LocalDateTime.parse(myReader.next());
-                int size=myReader.nextInt();
-                myReader.nextLine();
-                ArrayList<Integer> spare=new ArrayList<Integer>();
-
-                for (int i=0;i<size;i++)
-                {
-                    spare.add(myReader.nextInt());
-                    myReader.nextLine();
-
-                }
-                if (cid == customer_id) {
-                    BookingModel ret=new BookingModel();
-                    ret.spareParts=new ArrayList<Integer>();
-
-                    ret.id=bid;
-                    ret.cid=cid;
-                    ret.wid=wid;
-                    ret.text=text;
-                    ret.status=status;
-                    ret.startTime=start;
-                    ret.endTime=end;
-                    ret.spareParts= new ArrayList<Integer>();
-
-                    for (int i=0;i<spare.size();i++) {
-                        //if (temp!=null)
-                            ret.spareParts.add(spare.get(i));
-                    }
-                    /*
-                        System.out.print(bid+"\n");
-                    System.out.print(cid+"\n");
-                    System.out.print(wid+"\n");
-                    System.out.print(text+"\n");
-                    System.out.print(status+"\n");
-                    System.out.print(start+"\n");
-                    System.out.print(end+"\n");
-*/
-                    give.add(ret);
-                }
-            }
-        } catch (FileNotFoundException e) {
-            //  System.out.print("Error in reading a file\n");
-            e.printStackTrace();
-        }
-        // System.out.print("ID not found\n");
-
-
-        return give;
-    }
-
-
-
-
-    public boolean update_booking_status(int booking_id, String status) {
-        File myobj=new File(currentPath+"Booking.txt");
-
-        ArrayList<BookingModel> give=new ArrayList<BookingModel>();
-        boolean check=false;
-
-
-        try {
-            Scanner myReader = new Scanner(myobj);
-            int gi=0;
-            while(myReader.hasNext()) {
-                BookingModel ret=new BookingModel();
-                ret.spareParts=new ArrayList<Integer>();
-
-                int bid = myReader.nextInt();
-                myReader.nextLine();
-                int cid = myReader.nextInt();
-                myReader.nextLine();
-                int wid = myReader.nextInt();
-                myReader.nextLine();
-                String text = myReader.nextLine();
-                String status_n = myReader.nextLine();
-                LocalDateTime start = LocalDateTime.parse(myReader.next());
-                LocalDateTime end= LocalDateTime.parse(myReader.next());
-                int size=myReader.nextInt();
-                myReader.nextLine();
-                ArrayList<Integer> spare=new ArrayList<Integer>();
-
-                for (int i=0;i<size;i++)
-                {
-                    spare.add(myReader.nextInt());
-                    myReader.nextLine();
-
+                    pstmt2.setInt(1, iid);
+                    pstmt2.setInt(2,favourite.get(i));
+                    int rowAffected2 = pstmt2.executeUpdate();
                 }
 
 
 
-                ret.id=bid;
-                ret.cid=(cid);
-                ret.wid=(wid);
-                ret.text=text;
-                ret.status=status_n;
-                ret.startTime=start;
-                ret.endTime=end;
-
-                for (int i=0;i<spare.size();i++) {
-                    //SparePartModel temp=new SparePartModel();
-                    //temp=get_spare_part();
-                    //if (temp!=null)
-                        ret.spareParts.add(spare.get(i));
-
-
-                }
-                if (bid==booking_id) {
-                    ret.status=status;
-                    check=true;
-                }
-                give.add(ret);
-                //give.get(gi).spareParts=new ArrayList<SparePartModel>();
-                gi++;
-
-
-            }
-        }
-        catch (FileNotFoundException e) {
-            //  System.out.print("Error in reading a file\n");
-            e.printStackTrace();
-            return false;
-        }
-        // System.out.print("ID not found\n");
-
-
-        try {
-            FileWriter mywriter = new FileWriter(currentPath+"Booking.txt", false);
-
-
-            for (int i = 0; i < give.size(); i++) {
-                mywriter.write(give.get(i).id + "\n");
-                if (give.get(i) !=null)
-                    mywriter.write(give.get(i).cid + "\n");
-                else
-                    mywriter.write(0 + "\n");
-                if (give.get(i) !=null)
-                    mywriter.write(give.get(i).wid + "\n");
-                else
-                    mywriter.write(0 + "\n");
-                mywriter.write(give.get(i).text + "\n");
-                mywriter.write(give.get(i).status + "\n");
-                mywriter.write(give.get(i).startTime + "\n");
-                mywriter.write(give.get(i).endTime + "\n");
-                mywriter.write(give.get(i).spareParts.size() + "\n");
-                for (int j = 0; j < give.get(i).spareParts.size(); j++) {
-                    mywriter.write(give.get(i).spareParts.get(j) + "\n");
-                }
-
-
-
-
-            }
-            mywriter.close();
-            if (check)
                 return true;
-            else
-                return false;
+            }
 
-        } catch (IOException e) {
+
+
+
+
+        }
+        catch (Exception e) {
             e.printStackTrace();
-            return false;
+        }
+        return false;
+    }//id given by default by DB
+
+
+
+    public boolean update_customer_city(int id,String city)//done
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            String sql = "update customers set city = ? where id = ?" ;
+            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            pstmt.setString(1,city);
+            pstmt.setInt(2,id);
+            int rowAffected2 = pstmt.executeUpdate();
+            return true;
+
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
         }
 
-
-    }
-
-
-    public boolean store_spare_holder(int booking_id, int spare_id, int quantity) {
         return false;
     }
 
+    public boolean update_customer_area(int id,String area)//done
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            String sql = "update customers set area = ? where id = ?" ;
+            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            pstmt.setString(1,area);
+            pstmt.setInt(2,id);
+            int rowAffected2 = pstmt.executeUpdate();
+            return true;
+
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public boolean update_customerPayment(int id,String payment)//done
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            String sql = "update customers set credit_no = ? where id = ?" ;
+            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            pstmt.setString(1,payment);
+            pstmt.setInt(2,id);
+            int rowAffected2 = pstmt.executeUpdate();
+            return true;
+
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+
+    public CustomerModel get_customer(int id)//done
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            ResultSet rs = mystmt.executeQuery("select * from customers where id = "+ id);
+
+            CustomerModel c1=new CustomerModel();
+            while (rs.next()) {
+
+                c1.id=id;
+                c1.name=rs.getString("name");
+                c1.email=rs.getString("email");
+                c1.password=rs.getString("password");
+                c1.creditno=rs.getString("credit_no");
+                c1.wallet=rs.getFloat("wallet");
+                c1.city=rs.getString("city");
+                c1.area=rs.getString("area");
+
+            }
+
+            Statement mystmt2 = conn.createStatement();
+
+            ResultSet rs2 = mystmt2.executeQuery("select * from favorite where id = "+id  );
+            int workerid;
+
+            int j=0;
+            c1.Favourite=new ArrayList<Integer>();
+            while (rs2.next())
+            {
+                workerid=rs2.getInt("favourite");
+
+                c1.Favourite.add(workerid);// get funtion
+            }
+
+            return c1;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    public boolean store_worker(String name,String email,String password,float average_rating,float hourly_rate,String city,String area,String speciality)//done
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            String sql = "INSERT INTO worker(name,email,password,average_rating,hourly_rate,city,area,speciality) " + "VALUES(?,?,?,?,?,?,?,?)";
+            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setString(1, name);
+            pstmt.setString(2,email);
+            pstmt.setString(3,password);
+            pstmt.setFloat(4,average_rating);
+            pstmt.setFloat(5,hourly_rate);
+            pstmt.setString(6,city);
+            pstmt.setString(7,area);
+            pstmt.setString(8,speciality);
+
+            int rowAffected = pstmt.executeUpdate();
+            if(rowAffected == 1)
+            {
+
+                return true;
+            }
+
+
+
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+
+    }//id given by default by DB
+
+
+
+    public WorkerModel get_worker(int id)//done
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            ResultSet rs = mystmt.executeQuery("select * from worker where wid = "+ id);
+            WorkerModel c1=new WorkerModel();
+
+            while (rs.next()) {
+
+                c1.id=id;
+                c1.name=rs.getString("name");
+                c1.email=rs.getString("email");
+                c1.password=rs.getString("password");
+                c1.avgRating=rs.getFloat("average_rating");
+                c1.hourlyRate=rs.getFloat("hourly_rate");
+                c1.city=rs.getString("city");
+                c1.area=rs.getString("area");
+                c1.speciality=rs.getString("speciality");
+
+
+            }
+            return c1;
+
+
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    public int does_worker_exist(String email,String password)//done
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            ResultSet rs = mystmt.executeQuery("select * from worker where email = '"+email+"' and password = '"+password+"'");
+            if(!rs.next())
+            {
+                return -1;
+            }
+            else {
+                while (rs.next()) {
+                    return rs.getInt("wid");
+                }
+
+            }
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+    public boolean does_worker_exist(int id)//done
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            ResultSet rs = mystmt.executeQuery("select * from worker where wid = "+id);
+            if(!rs.next())
+            {
+                return false;
+            }
+            else return true;
+
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return true;
+
+    }
+
+
+    public ArrayList<WorkerModel> get_worker(String city,String area)//done
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            ResultSet rs = mystmt.executeQuery("select * from worker where city = '"+ city + "' and area = '"+area + "'");
+            //WorkerModel c1=new WorkerModel();
+            ArrayList<WorkerModel> c1=new ArrayList<WorkerModel>();
+            WorkerModel c2=new WorkerModel();
+
+            int i=0;
+            while (rs.next()) {
+
+                c2.id= rs.getInt("wid");
+
+                System.out.println("id "+c2.id);
+                c2.name=rs.getString("name");
+                c2.email=rs.getString("email");
+                c2.password=rs.getString("password");
+                c2.avgRating=rs.getFloat("average_rating");
+                c2.hourlyRate=rs.getFloat("hourly_rate");
+                c2.city=rs.getString("city");
+                c2.area=rs.getString("area");
+                c2.speciality=rs.getString("speciality");
+                c1.add(c2);
+                System.out.println(c1.get(i).id);
+                //i++;
+
+
+            }
+            return c1;
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+
+    public ArrayList<WorkerModel> get_all_worker()
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            ResultSet rs = mystmt.executeQuery("select * from worker ");
+            //WorkerModel c1=new WorkerModel();
+            ArrayList<WorkerModel> c1=new ArrayList<WorkerModel>();
+            int i=0;
+            while (rs.next()) {
+                System.out.println("wid  "+rs.getInt("id"));
+                c1.get(i).id= rs.getInt("wid");
+                c1.get(i).name=rs.getString("name");
+                c1.get(i).email=rs.getString("email");
+                c1.get(i).password=rs.getString("password");
+                c1.get(i).avgRating=rs.getFloat("average_rating");
+                c1.get(i).hourlyRate=rs.getFloat("wallet");
+                c1.get(i).city=rs.getString("city");
+                c1.get(i).area=rs.getString("area");
+                c1.get(i).speciality=rs.getString("speciality");
+                i++;
+
+
+            }
+            return c1;
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+
+
+    public boolean update_Worker_city(int id,String city)//done
+    {
+
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            String sql = "update worker set city = ? where wid = ?" ;
+            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            pstmt.setString(1,city);
+            pstmt.setInt(2,id);
+            int rowAffected2 = pstmt.executeUpdate();
+            return true;
+
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+
+    }
+    public boolean update_Worker_area(int id,String area)//done
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            String sql = "update worker set area = ? where wid = ?" ;
+            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            pstmt.setString(1,area);
+            pstmt.setInt(2,id);
+            int rowAffected2 = pstmt.executeUpdate();
+            return true;
+
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+    public boolean update_hourly_rate(int id,float rate)//done
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            String sql = "update worker set hourly_rate = ? where wid = ?" ;
+            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            pstmt.setFloat(1,rate);
+            pstmt.setInt(2,id);
+            int rowAffected2 = pstmt.executeUpdate();
+            return true;
+
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+
+    public int get_bid(int customer_id, int worker_id, String text)//done
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            ResultSet rs = mystmt.executeQuery("select * from booking where customer_id = '" + customer_id+"'" + "and worker_id = '" + worker_id +"'" );
+            if(rs.next())
+            {
+                return rs.getInt("bid");
+            }
+            if(!rs.next())
+            {
+                return -1;
+            }
+            else {
+                System.out.println("else");
+                while (rs.next()) {
+                    System.out.println("while loop");
+                    return rs.getInt("bid");
+                }
+
+            }
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
+    public boolean store_booking(int customer_id, int worker_id, String text, String status, LocalDateTime start_time, LocalDateTime end_time, ArrayList<Integer> spareParts)//done
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            String sql = "INSERT INTO booking(customer_id,worker_id,booking_text,booking_status,start_time,end_time,start_date,end_date) " + "VALUES(?,?,?,?,?,?,?,?)";
+            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setInt(1, customer_id);
+            pstmt.setInt(2,worker_id);
+            pstmt.setString(3,text);
+            pstmt.setString(4,status);
+            pstmt.setTime(5, Time.valueOf(start_time.toLocalTime()));
+            pstmt.setTime(6, Time.valueOf(end_time.toLocalTime()));
+            pstmt.setDate(7, Date.valueOf(start_time.toLocalDate()));
+            pstmt.setDate(8, Date.valueOf(end_time.toLocalDate()));
+
+
+
+
+
+            int rowAffected = pstmt.executeUpdate();
+            if(rowAffected == 1)
+            {
+                String sql2 = "INSERT INTO spare_booking(bid,part_id) " + "VALUES(?,?)";
+                PreparedStatement pstmt2 = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                ArrayList<Integer> a;
+                int iid=get_bid(customer_id,worker_id,text);
+
+                for(int i=0;i<spareParts.size();i++)
+                {
+
+                    pstmt2.setInt(1, iid);
+                    pstmt2.setInt(2,spareParts.get(i));
+                    int rowAffected2 = pstmt2.executeUpdate();
+                }
+                return true;
+            }
+
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+
+    }//bid given by default by DB
+
+
+    public  ArrayList<BookingModel> get_booking(int customer_id)
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            ResultSet rs = mystmt.executeQuery("select * from booking where customer_id = "+ customer_id );
+            //WorkerModel c1=new WorkerModel();
+            ArrayList<BookingModel> c1=new ArrayList<BookingModel>();
+            BookingModel c2=new BookingModel();
+
+            int i=0;
+            while (rs.next()) {
+
+                c2.id= rs.getInt("bid");
+                c2.cid=rs.getInt("customer_id");
+                c2.wid=rs.getInt("worker_id");
+                c2.text=rs.getString("booking_text");
+                c2.status=rs.getString("booking_status");
+
+                Time st=rs.getTime("start_time");
+                Time et=rs.getTime("end_time");
+                Date sd=rs.getDate("start_date");
+                Date ed=rs.getDate("end_date");
+                String ss= String.valueOf(sd)+String.valueOf(st);
+
+
+
+
+                //c2.startTime= LocalDateTime.from(sd.toLocalDate());
+                //c2.endTime= sd;
+
+
+                //c2.startTime=rs.getTimestamp("start_time");
+                //c2.endTime=rs.getTimestamp("end_time");
+                c1.add(c2);
+
+                //i++;
+
+                Statement mystmt2 = conn.createStatement();
+
+                ResultSet rs2 = mystmt2.executeQuery("select * from booking_spareparts where bid = "+rs.getInt("bid")  );
+
+                //SparePartModel s1=new SparePartModel();
+                int partid;
+
+
+                c2.spareParts=new ArrayList<Integer>();
+                while (rs2.next())
+                {
+                    partid=rs2.getInt("part_id");
+
+                    //c1.get(i).spareParts.add(get_spare_part(partid));// get spare part function
+                    c2.spareParts.add(partid);
+                    c1.add(c2);
+                }
+
+
+
+
+            }
+            return c1;
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public boolean add_favourite(int customer_id,int worker_id)//done
+    {
+        try {
+
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            String sql = "INSERT INTO favorite(id,favourite) " + "VALUES(?,?)";
+            PreparedStatement pstmt2 = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+
+            pstmt2.setInt(1, customer_id);
+            pstmt2.setInt(2,worker_id);
+            int rowAffected2 = pstmt2.executeUpdate();
+
+
+            return true;
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
+
+    public boolean remove_favourite(int customer_id,int worker_id)//done
+    {
+
+        try {
+
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            String sql = "DELETE FROM favorite where id = ? and favourite = ?";
+            PreparedStatement pstmt2 = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            pstmt2.setInt(1, customer_id);
+            pstmt2.setInt(2,worker_id);
+            int rowAffected2 = pstmt2.executeUpdate();
+
+
+            return true;
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
+
+    public ArrayList<BookingModel> get_booking(int customer_id,String status)
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            ResultSet rs = mystmt.executeQuery("select * from booking where customer_id = "+ customer_id + "and status = " + status);
+            //WorkerModel c1=new WorkerModel();
+            ArrayList<BookingModel> c1=new ArrayList<BookingModel>();
+            BookingModel c2=new BookingModel();
+
+            int i=0;
+            while (rs.next()) {
+
+                c2.id= rs.getInt("bid");
+                c2.cid=rs.getInt("customer_id");
+                c2.wid=rs.getInt("worker_id");
+                c2.text=rs.getString("booking_text");
+                c2.status=rs.getString("booking_status");
+
+                Time st=rs.getTime("start_time");
+                Time et=rs.getTime("end_time");
+                Date sd=rs.getDate("start_date");
+                Date ed=rs.getDate("end_date");
+                LocalDateTime ss= LocalDateTime.from(st.toLocalTime());
+
+
+
+                //c2.startTime=rs.getTimestamp("start_time");
+                //c2.endTime=rs.getTimestamp("end_time");
+                c2.startTime= LocalDateTime.from(sd.toLocalDate());
+                c2.endTime= LocalDateTime.from(sd.toLocalDate());
+                c1.add(c2);
+
+                //i++;
+
+                Statement mystmt2 = conn.createStatement();
+
+                ResultSet rs2 = mystmt2.executeQuery("select * from booking_spareparts where bid = "+rs.getInt("bid")  );
+
+                //SparePartModel s1=new SparePartModel();
+                int partid;
+
+
+                c2.spareParts=new ArrayList<Integer>();
+
+                while (rs2.next())
+                {
+                    partid=rs2.getInt("part_id");
+
+                    //c1.get(i).spareParts.add(get_spare_part(partid));// get spare part function
+                    c2.spareParts.add(partid);
+                    c1.add(c2);
+                }
+
+
+
+
+            }
+            return c1;
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public boolean store_customer_billing(int booking_id,int worker_id,int cost)//done
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            String sql = "INSERT INTO billing(bid,totalcost) " + "VALUES(?,?)";
+            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setInt(1, booking_id);
+            pstmt.setInt(2,cost);
+
+            int rowAffected = pstmt.executeUpdate();
+            if(rowAffected == 1)
+            {
+
+                return true;
+            }
+
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+
+
+    }//int billing_id, given by DB
+
+
+    public ArrayList<BillingModel> get_customer_billing(int booking_id)
+    {
+
+        /*try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            ResultSet rs = mystmt.executeQuery("select * from billing where bid = "+ booking_id );
+
+            ArrayList<BillingModel> c1=new ArrayList<BillingModel>();
+
+            int i=0;
+            while (rs.next()) {
+
+                c1.get(i).id= rs.getInt("id");
+                c1.get(i).bid=rs.getInt("bid");
+                c1.get(i).totalCost=rs.getInt("totalcost");
+
+                i++;
+
+            }
+            return c1;
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;*/
+        return null;
+
+    }
+
+
+    public boolean store_complaint(int customer_id,int worker_id,String complain_text)//done
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            String sql = "INSERT INTO complain(cid,wid,complain_text) " + "VALUES(?,?,?)";
+            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setInt(1, customer_id);
+            pstmt.setInt(2,worker_id);
+            pstmt.setString(3,complain_text);
+
+            int rowAffected = pstmt.executeUpdate();
+            if(rowAffected == 1)
+            {
+
+                return true;
+            }
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+
+    }//int complain_id, given by DB
+
+
+    public  ComplainModel get_complaint(int complaint_id)//done
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            ResultSet rs = mystmt.executeQuery("select * from complain where id = "+ complaint_id );
+
+            //ArrayList<ComplainModel> c1=new ArrayList<ComplainModel>();
+            ComplainModel c1=new ComplainModel();
+
+
+            while (rs.next()) {
+
+                c1.id= rs.getInt("id");
+                c1.cid=rs.getInt("cid");
+                c1.wid=rs.getInt("wid");
+                c1.text=rs.getString("complain_text");
+
+
+            }
+            return c1;
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public ArrayList<ComplainModel> show_all_complaint(int customer_id)
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            ResultSet rs = mystmt.executeQuery("select * from complain where cid = "+ customer_id );
+
+            ArrayList<ComplainModel> c1=new ArrayList<ComplainModel>();
+
+            int i=0;
+            while (rs.next()) {
+
+                c1.get(i).id= rs.getInt("id");
+                c1.get(i).cid=rs.getInt("cid");
+                c1.get(i).wid=rs.getInt("wid");
+                c1.get(i).text=rs.getString("complain_text");
+
+                i++;
+
+            }
+            return c1;
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    public boolean store_spar_parts(String name,float cost,int quantity)//done
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            String sql = "INSERT INTO sparepart(part_name,cost,quantity) " + "VALUES(?,?,?)";
+            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setString(1, name);
+            pstmt.setFloat(2,cost);
+            pstmt.setInt(3,quantity);
+
+            int rowAffected = pstmt.executeUpdate();
+            if(rowAffected == 1)
+            {
+
+                return true;
+            }
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+
+    }//int spare_id, given by DB
+
+
+
+    public static Connection getconnection() throws Exception
+    {
+        try {
+            String driver = "com.mysql.jdbc.Driver";
+            String url = "jdbc:mysql://localhost:3306/easyfix";
+            String username = "root";
+            String password = "elektra";
+
+            Connection conn = DriverManager.getConnection(url, username, password);
+            System.out.println("connected");
+            return conn;
+
+        } catch (Exception e){ System.out.println(e); }
+
+
+
+
+        return null;
+    }
+
+    public  SparePartModel get_spare_part(int part_id)//done
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            ResultSet rs = mystmt.executeQuery("select * from sparepart where id = "+ part_id );
+
+            //ArrayList<ComplainModel> c1=new ArrayList<ComplainModel>();
+            SparePartModel c1=new SparePartModel();
+
+
+            while (rs.next()) {
+
+                c1.id= rs.getInt("id");
+                c1.name=rs.getString("part_name");
+                c1.cost=rs.getFloat("cost");
+                c1.quantity=rs.getInt("quantity");
+
+
+            }
+            return c1;
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    public ArrayList<SparePartModel> get_all_parts()//done
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            ResultSet rs = mystmt.executeQuery("select * from sparepart where quantity > 0 " );
+
+            ArrayList<SparePartModel> c1=new ArrayList<SparePartModel>();
+            SparePartModel c2=new SparePartModel();
+
+            int i=0;
+            while (rs.next()) {
+
+                c2.id= rs.getInt("id");
+
+                c2.name=rs.getString("part_name");
+                c2.cost=rs.getFloat("cost");
+                c2.quantity=rs.getInt("quantity");
+                c1.add(c2);
+
+
+            }
+            return c1;
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }//for quantity>0
+
+    public boolean deduct_part(int spare_id,int quantity)//done
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            String sql = "update sparepart set quantity = quantity - ? where id = ?" ;
+            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            pstmt.setInt(1,quantity);
+            pstmt.setInt(2,spare_id);
+            int rowAffected2 = pstmt.executeUpdate();
+            return true;
+
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+
+    }
+
+
+    public boolean store_rating(int customer_id,int worker_id,int rating) //done
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            String sql = "INSERT INTO rating(cid,wid,rate) " + "VALUES(?,?,?)";
+            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setInt(1, customer_id);
+            pstmt.setInt(2,worker_id);
+            pstmt.setInt(3,rating);
+
+            int rowAffected = pstmt.executeUpdate();
+            if(rowAffected == 1)
+            {
+
+                return true;
+            }
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public float get_avg_rating(int worker_id)//done
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            ResultSet rs = mystmt.executeQuery("select avg(rate) from rating where wid = "+ worker_id );
+
+
+            float i=0;
+            if(rs.next())
+            {
+                return rs.getFloat(1);
+            }
+            while (rs.next()) {
+
+                i= rs.getFloat(0);
+
+            }
+            return i;
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
+
+    }
+
+
+    public ArrayList<RatingModel> getAllRatings(int customer_id)//done
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            ResultSet rs = mystmt.executeQuery("select * from rating where cid = "+ customer_id );
+
+            ArrayList<RatingModel> c1=new ArrayList<RatingModel>();
+            RatingModel c2=new RatingModel();
+
+            int i=0;
+            while (rs.next()) {
+
+
+                c2.cid=rs.getInt("cid");
+                c2.wid=rs.getInt("wid");
+                c2.rating=rs.getInt("rate");
+                c1.add(c2);
+
+
+            }
+            return c1;
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    public  boolean store_chat( int senderId, int receiverId, String senderName, String receiverName, String message)//done
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            String sql = "INSERT INTO chat(senderId,receiverId,senderName,receiverName,message) " + "VALUES(?,?,?,?,?)";
+            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setInt(1, senderId);
+            pstmt.setInt(2,receiverId);
+            pstmt.setString(3,senderName);
+            pstmt.setString(4,receiverName);
+            pstmt.setString(5,message);
+
+            int rowAffected = pstmt.executeUpdate();
+            if(rowAffected == 1)
+            {
+
+                return true;
+            }
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    public ArrayList<ChatMessageModel> get_chat_history(int customer_id,int worker_id)//done
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            ResultSet rs = mystmt.executeQuery("select * from chat where senderId = "+ customer_id +"and receiverId = "+worker_id);
+
+            ArrayList<ChatMessageModel> c1=new ArrayList<ChatMessageModel>();
+            ChatMessageModel c2=new ChatMessageModel();
+
+            int i=0;
+            while (rs.next()) {
+
+
+                c2.senderId=rs.getInt("senderId");
+                c2.receiverId=rs.getInt("receiverId");
+                c2.senderName=rs.getString("senderName");
+                c2.receiverName=rs.getString("receiverName");
+                c2.message=rs.getString("message");
+                c1.add(c2);
+
+            }
+            return c1;
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    public boolean change_billing_status(int booking_id, String status)//done
+    {
+
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            String sql = "update booking set booking_status = ? where bid = ?" ;
+            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            pstmt.setString(1,status);
+            pstmt.setInt(2,booking_id);
+            int rowAffected2 = pstmt.executeUpdate();
+            return true;
+
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+
+    }
+
+    public ArrayList<WorkerModel> get_favourites_workers(int customer_id)
+    {
+        return null;
+    }
+
+    public boolean update_customerWallet(int id, Float money) {
+        return false;
+    }
+
+    public ArrayList<BookingModel> get_booking_of_customer(int customer_id) {
+        return null;
+    }
+
+    public ArrayList<BookingModel> get_booking_of_worker(int worker_id) {
+        return null;
+    }
+
+    public ArrayList<BookingModel> get_booking_of_customer(int customer_id, String status) {
+        return null;
+    }
+
+    public ArrayList<BookingModel> get_booking_of_worker(int worker_id, String status) {
+        return null;
+    }
+
+    public ArrayList<Integer> get_favourites(int customer_id) {
+        return null;
+    }
 
     public ArrayList<SparePartModel> get_all_spare_parts_booking(int booking_id) {
         return null;
     }
 
-
-    public boolean add_favourite(int customer_id, int worker_id) {
-
-        File myobj=new File("Customer.txt");
-        ArrayList<CustomerModel> store=new ArrayList<CustomerModel>();
-        boolean check=false;
-
-
-
-        try {
-            Scanner myReader = new Scanner(myobj);
-            while(myReader.hasNext()) {
-                CustomerModel temp=new CustomerModel();
-                temp.Favourite=new ArrayList<Integer>();
-
-                temp.id = myReader.nextInt();
-                myReader.nextLine();
-                temp.name = myReader.nextLine();
-                temp.email = myReader.nextLine();
-                temp.password = myReader.nextLine();
-                temp.paymentMethod=myReader.nextLine();
-                temp.creditno=myReader.nextLine();
-                temp.wallet = myReader.nextFloat();
-                myReader.nextLine();
-                temp.city = myReader.nextLine();
-                temp.area = myReader.nextLine();
-                int size = myReader.nextInt();
-                myReader.nextLine();
-                ArrayList<Integer> favourite = new ArrayList<Integer>();
-
-                boolean present=false;
-                for (int i = 0; i < size; i++) {
-                    favourite.add(myReader.nextInt());
-                    myReader.nextLine();
-
-                    if (favourite.get(i)==worker_id)
-                        present=true;
-                }
-                if (customer_id == temp.id&&!present) {
-                    favourite.add(worker_id);
-                    check=true;
-                }
-
-
-                for (int i=0;i<favourite.size();i++) {
-                    int tempp=favourite.get(i);
-                    //if (tempp != null)
-                        temp.Favourite.add(tempp);
-                }
-
-
-                store.add(temp);
-
-
-            }
-        } catch (FileNotFoundException e) {
-            //  System.out.print("Error in reading a file\n");
-            e.printStackTrace();
-        }
-
-
-
-
-        try {
-            FileWriter mywriter=new FileWriter("Customer.txt",false);
-
-            for (int i=0;i<store.size();i++) {
-                mywriter.write(store.get(i).id + "\n");
-                mywriter.write(store.get(i).name + "\n");
-                mywriter.write(store.get(i).email + "\n");
-                mywriter.write(store.get(i).password + "\n");
-                mywriter.write(store.get(i).paymentMethod + "\n");
-                mywriter.write(store.get(i).creditno + "\n");
-                mywriter.write(store.get(i).wallet + "\n");
-                mywriter.write(store.get(i).city + "\n");
-                mywriter.write(store.get(i).area + "\n");
-                mywriter.write(store.get(i).Favourite.size() + "\n");
-                for (int j = 0; j < store.get(i).Favourite.size(); j++) {
-                    mywriter.write(store.get(i).Favourite.get(j) + "\n");
-                }
-
-
-
-            }
-            mywriter.close();
-            if (check)
-                return true;
-            else
-                return false;
-        } catch (IOException e) {
-            // System.out.print("Error in storing customer in filling\n");
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-
-    public boolean remove_favourite(int customer_id, int worker_id) {
-
-
-        File myobj = new File("Customer.txt");
-        ArrayList<CustomerModel> store = new ArrayList<CustomerModel>();
-        boolean check = false;
-
-
-        try {
-            Scanner myReader = new Scanner(myobj);
-            while (myReader.hasNext()) {
-                CustomerModel temp = new CustomerModel();
-                temp.Favourite = new ArrayList<Integer>();
-
-                temp.id = myReader.nextInt();
-                myReader.nextLine();
-                temp.name = myReader.nextLine();
-                temp.email = myReader.nextLine();
-                temp.password = myReader.nextLine();
-                temp.paymentMethod = myReader.nextLine();
-                temp.creditno = myReader.nextLine();
-                temp.wallet = myReader.nextFloat();
-                myReader.nextLine();
-                temp.city = myReader.nextLine();
-                temp.area = myReader.nextLine();
-                int size = myReader.nextInt();
-                myReader.nextLine();
-                ArrayList<Integer> favourite = new ArrayList<Integer>();
-
-                boolean present = false;
-                for (int i = 0; i < size; i++) {
-                    favourite.add(myReader.nextInt());
-                    myReader.nextLine();
-
-                    if (favourite.get(i) == worker_id)
-                        present = true;
-                }
-                if (customer_id == temp.id && present) {
-                    favourite.remove(new Integer(worker_id));
-                    check = true;
-                }
-
-
-                for (int i = 0; i < favourite.size(); i++) {
-                    int tempp = favourite.get(i);
-                    //if (tempp != null)
-                        temp.Favourite.add(tempp);
-                }
-
-
-                store.add(temp);
-
-
-            }
-        } catch (FileNotFoundException e) {
-            //  System.out.print("Error in reading a file\n");
-            e.printStackTrace();
-        }
-
-
-        try {
-            FileWriter mywriter = new FileWriter("Customer.txt", false);
-
-            for (int i = 0; i < store.size(); i++) {
-                mywriter.write(store.get(i).id + "\n");
-                mywriter.write(store.get(i).name + "\n");
-                mywriter.write(store.get(i).email + "\n");
-                mywriter.write(store.get(i).password + "\n");
-                mywriter.write(store.get(i).paymentMethod + "\n");
-                mywriter.write(store.get(i).creditno + "\n");
-                mywriter.write(store.get(i).wallet + "\n");
-                mywriter.write(store.get(i).city + "\n");
-                mywriter.write(store.get(i).area + "\n");
-                mywriter.write(store.get(i).Favourite.size() + "\n");
-                for (int j = 0; j < store.get(i).Favourite.size(); j++) {
-                    mywriter.write(store.get(i).Favourite.get(j) + "\n");
-                }
-
-
-            }
-            mywriter.close();
-            if (check)
-                return true;
-            else
-                return false;
-        } catch (IOException e) {
-            // System.out.print("Error in storing customer in filling\n");
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    //not needed
-
-    public ArrayList<Integer> get_favourites(int customer_id) {
-        return null;
-    }
-    //------------
-
-
-    public boolean store_customer_billing( int booking_id,String title,String customerName,String workerName,String status,Float totalCost)//give int billing_id by db
-    {
-        try {
-            FileWriter myWriter=new FileWriter("Billing.txt",true);
-            myWriter.write(booking_id+"\n");
-            myWriter.write(title+"\n");
-            myWriter.write(customerName+"\n");
-            myWriter.write(workerName+"\n");
-            myWriter.write(status+"\n");
-            myWriter.write(totalCost+"\n");
-            myWriter.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-
-
-
-        return true;
-    }
-
-
     public BillingModel get_bill(int booking_id) {
-        File obj=new File("Billing.txt");
-
-        try {
-            Scanner myReader = new Scanner(obj);
-            while (myReader.hasNext())
-            {
-                BillingModel ret=new BillingModel();
-                ret.bookingId=myReader.nextInt();
-                myReader.nextLine();
-                ret.title=myReader.nextLine();
-                ret.customerName=myReader.nextLine();
-                ret.workerName=myReader.nextLine();
-                ret.status=myReader.nextLine();
-                ret.totalCost=myReader.nextFloat();
-                myReader.nextLine();
-                if (ret.bookingId==booking_id)
-                    return ret;
-
-
-            }
-
-
-
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return null;
-        }
-
         return null;
     }
 
-
-    public boolean change_billing_status(int booking_id, String status) {
-        File obj=new File("Billing.txt");
-        ArrayList<BillingModel> store=new ArrayList<BillingModel>();
-
-        try {
-            Scanner myReader = new Scanner(obj);
-            while (myReader.hasNext())
-            {
-                BillingModel ret=new BillingModel();
-                ret.bookingId=myReader.nextInt();
-                myReader.nextLine();
-                ret.title=myReader.nextLine();
-                ret.customerName=myReader.nextLine();
-                ret.workerName=myReader.nextLine();
-                ret.status=myReader.nextLine();
-                ret.totalCost=myReader.nextFloat();
-                myReader.nextLine();
-                if (ret.bookingId==booking_id) {
-                    ret.status = status;
-
-                }
-                store.add(ret);
-            }
-
-
-
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return false;
-        }
-        try {
-            FileWriter myWriter=new FileWriter("Billing.txt",false);
-            for (int i=0;i<store.size();i++) {
-                myWriter.write(store.get(i).bookingId + "\n");
-                myWriter.write(store.get(i).title + "\n");
-                myWriter.write(store.get(i).customerName + "\n");
-                myWriter.write(store.get(i).workerName + "\n");
-                myWriter.write(store.get(i).status + "\n");
-                myWriter.write(store.get(i).totalCost + "\n");
-            }
-            myWriter.close();
-            return true;
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-
-
-    public boolean store_complaint( int customer_id, int worker_id, String complain_text)//give int complain_id by DB
-    {
-        int id=0;
-        File myo=new File("CountComplaint.txt");
-        try {
-            Scanner myr = new Scanner(myo);
-            id=myr.nextInt();
-        } catch (FileNotFoundException e) {
-            id=0;
-        }
-
-        id++;
-        try {
-            FileWriter myw=new FileWriter("CountComplaint.txt",false);
-            myw.write(id+"\n");
-            myw.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-        try {
-            FileWriter myWriter=new FileWriter("Complaint.txt",true);
-            myWriter.write(id+"\n");
-            myWriter.write(customer_id+"\n");
-            myWriter.write(worker_id+"\n");
-            myWriter.write(complain_text+"\n");
-            myWriter.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-        return true;
-
-
-    }
-
-
-    public ComplainModel get_complaint(int complaint_id) {
-        File obj=new File("Complaint.txt");
-
-        try {
-            Scanner myReader = new Scanner(obj);
-            while (myReader.hasNext())
-            {
-                ComplainModel ret=new ComplainModel();
-                ret.id=myReader.nextInt();
-                myReader.nextLine();
-                ret.cid=myReader.nextInt();
-                myReader.nextLine();
-                ret.wid=myReader.nextInt();
-                myReader.nextLine();
-                ret.text=myReader.nextLine();
-                if (ret.id==complaint_id)
-                    return ret;
-
-
-            }
-
-
-
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return null;
-        }
-
-        return null;
-    }
-
-
-    public ArrayList<ComplainModel> show_all_complaint(int customer_id) {
-        File obj=new File("Complaint.txt");
-        ArrayList<ComplainModel> store=new ArrayList<ComplainModel>();
-
-        try {
-            Scanner myReader = new Scanner(obj);
-            while (myReader.hasNext())
-            {
-                ComplainModel ret=new ComplainModel();
-                ret.id=myReader.nextInt();
-                myReader.nextLine();
-                ret.cid=myReader.nextInt();
-                myReader.nextLine();
-                ret.wid=myReader.nextInt();
-                myReader.nextLine();
-                ret.text=myReader.nextLine();
-                if (ret.cid==customer_id)
-                {
-                    store.add(ret);
-                }
-
-
-            }
-
-
-            return store;
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return null;
-        }
-
-    }
-
-
-    public boolean store_spar_parts( String name, float cost, int quantity) // give int spare_id
-    {
-        int id=0;
-        File myo=new File("CountSpare.txt");
-        try {
-            Scanner myr = new Scanner(myo);
-            id=myr.nextInt();
-        } catch (FileNotFoundException e) {
-            id=0;
-        }
-
-        id++;
-        try {
-            FileWriter myw=new FileWriter("CountSpare.txt",false);
-            myw.write(id+"\n");
-            myw.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-        try {
-            FileWriter myWriter=new FileWriter("spareParts.txt",true);
-            myWriter.write(id+"\n");
-            myWriter.write(name+"\n");
-            myWriter.write(cost+"\n");
-            myWriter.write(quantity+"\n");
-            myWriter.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-
-
-
-        return true;
-    }
-
-
-    public SparePartModel get_spare_part(int part_id) {
-
-        File obj=new File("spareParts.txt");
-
-        try {
-            Scanner myReader = new Scanner(obj);
-            while (myReader.hasNext())
-            {
-                SparePartModel ret=new SparePartModel();
-                ret.id=myReader.nextInt();
-                myReader.nextLine();
-                ret.name=myReader.nextLine();
-                ret.cost=myReader.nextFloat();
-                myReader.nextLine();
-                ret.quantity=myReader.nextInt();
-                myReader.nextLine();
-                if (ret.id==part_id)
-                    return ret;
-
-
-            }
-
-
-
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-
-    public ArrayList<SparePartModel> get_all_parts() {
-
-        File obj=new File("spareParts.txt");
-        ArrayList<SparePartModel> give=new ArrayList<SparePartModel>();
-
-        try {
-            Scanner myReader = new Scanner(obj);
-            while (myReader.hasNext())
-            {
-                SparePartModel ret=new SparePartModel();
-                ret.id=myReader.nextInt();
-                myReader.nextLine();
-                ret.name=myReader.nextLine();
-                ret.cost=myReader.nextFloat();
-                myReader.nextLine();
-                ret.quantity=myReader.nextInt();
-                myReader.nextLine();
-
-                give.add(ret);
-
-
-            }
-            return give;
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-
-    public boolean deduct_part(int spare_id, int quantity) {
-        File obj=new File("spareParts.txt");
-        ArrayList<SparePartModel> give=new ArrayList<SparePartModel>();
-        boolean check=false;
-
-        try {
-            Scanner myReader = new Scanner(obj);
-            while (myReader.hasNext())
-            {
-                SparePartModel ret=new SparePartModel();
-                ret.id=myReader.nextInt();
-                myReader.nextLine();
-                ret.name=myReader.nextLine();
-                ret.cost=myReader.nextFloat();
-                myReader.nextLine();
-                ret.quantity=myReader.nextInt();
-                myReader.nextLine();
-                if (ret.id==spare_id)
-                {
-                    if ((ret.quantity-quantity)>=0)
-                    {
-                        ret.quantity= ret.quantity-quantity;
-                        check=true;
-
-                    }
-                    else
-                        return false;
-                }
-
-
-                give.add(ret);
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-
-        try {
-            FileWriter myWriter=new FileWriter("spareParts.txt",false);
-
-            for (int i=0;i<give.size();i++) {
-                myWriter.write(give.get(i).id + "\n");
-                myWriter.write(give.get(i).name + "\n");
-                myWriter.write(give.get(i).cost + "\n");
-                myWriter.write(give.get(i).quantity + "\n");
-            }
-            myWriter.close();
-
-            if (check)
-                return true;
-            else
-                return false;
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return false;
-
-    }
-
-
-    public boolean store_rating(int customer_id, int worker_id, int rating) {
-        try {
-            FileWriter myWriter=new FileWriter("Rating.txt",true);
-
-
-            myWriter.write(customer_id + "\n");
-            myWriter.write(worker_id + "\n");
-            myWriter.write(rating + "\n");
-
-
-            myWriter.close();
-
-            return true;
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+    public boolean update_booking_status(int booking_id, String status) {
         return false;
     }
 
-
-    public float get_avg_rating(int worker_id) {
-        File obj=new File("Rating.txt");
-        ArrayList<RatingModel> store =new ArrayList<RatingModel>();
-
-        try {
-            Scanner myReader = new Scanner(obj);
-            while (myReader.hasNext())
-            {
-                RatingModel ret=new RatingModel();
-                ret.cid=myReader.nextInt();
-                myReader.nextLine();
-                ret.wid=myReader.nextInt();
-                myReader.nextLine();
-                ret.rating=myReader.nextInt();
-                myReader.nextLine();
-                if (ret.wid==worker_id)
-                {
-                    store.add(ret);
-                }
-
-
-
-            }
-
-            float rat=0f;
-            int sum=0;
-            for (int i=0;i<store.size();i++)
-            {
-                sum=sum+store.get(i).rating;
-
-            }
-            rat=sum/store.size();
-
-            return rat;
-
-
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return 0f;
-    }
-
-
-    public ArrayList<RatingModel> getAllRatings(int customer_id) {
-        File obj=new File("Rating.txt");
-        ArrayList<RatingModel> store =new ArrayList<RatingModel>();
-
-        try {
-            Scanner myReader = new Scanner(obj);
-            while (myReader.hasNext())
-            {
-                RatingModel ret=new RatingModel();
-                ret.cid=myReader.nextInt();
-                myReader.nextLine();
-                ret.wid=myReader.nextInt();
-                myReader.nextLine();
-                ret.rating=myReader.nextInt();
-                myReader.nextLine();
-                if (ret.cid==customer_id)
-                {
-                    store.add(ret);
-                }
-
-
-
-            }
-
-
-
-            return store;
-
-
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-
-    public boolean store_chat(int sender_id,int reciever_id,String sender_name,String receiver_name,String text) {
-        try {
-            FileWriter myWriter=new FileWriter("Rating.txt",true);
-
-
-            myWriter.write(sender_id + "\n");
-            myWriter.write(reciever_id + "\n");
-            myWriter.write(sender_name + "\n");
-            myWriter.write(receiver_name + "\n");
-            myWriter.write(text + "\n");
-
-
-            myWriter.close();
-
-            return true;
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+    public boolean updateFinishTime(int booking_id, LocalDateTime finishTime) {
         return false;
     }
 
+    public boolean store_spare_holder(int booking_id, int spare_id, int quantity) {
+        return false;
+    }
 
-    public ArrayList<ChatMessageModel> get_chat_history(int customer_id, int worker_id) {
-        File obj=new File("Rating.txt");
-        ArrayList<ChatMessageModel> store =new ArrayList<ChatMessageModel>();
-
-        try {
-            Scanner myReader = new Scanner(obj);
-            while (myReader.hasNext())
-            {
-                ChatMessageModel ret=new ChatMessageModel();
-                ret.senderId=myReader.nextInt();
-                myReader.nextLine();
-                ret.receiverId=myReader.nextInt();
-                myReader.nextLine();
-                ret.senderName=myReader.nextLine();
-                ret.receiverName=myReader.nextLine();
-                ret.message=myReader.nextLine();
-                if (ret.senderId==customer_id&&ret.receiverId==worker_id)
-                {
-                    store.add(ret);
-                }
-
-
-
-            }
-
-
-
-            return store;
-
-
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return null;
+    public boolean store_customer_billing(int booking_id, String title, String customerName, String workerName, String status, Float totalCost) {
+        return false;
     }
 }

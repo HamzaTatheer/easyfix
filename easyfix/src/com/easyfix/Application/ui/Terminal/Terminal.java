@@ -45,7 +45,8 @@ public class Terminal extends UI {
 
     public void loginCustomer(){
                 int choice2 = -1;
-                ArrayList<Integer> arr = new ArrayList<Integer>();
+                Scanner sc = new Scanner(System.in);
+                System.out.println("Enter Choice : ");
                 System.out.println("Enter Email :");
                 String email = sc.nextLine();
                 System.out.println("Enter Password :");
@@ -69,12 +70,13 @@ public class Terminal extends UI {
 
 
                 if (cid != -2)
-                    customerMenu(cid);
+                    customerMenu();
     }
 
 
 
-    loginWorker(){
+    public void loginWorker(){
+                    Scanner sc = new Scanner(System.in);
                     System.out.println("Enter Email :");
                     String wemail = sc.nextLine();
                     System.out.println("Enter Password :");
@@ -93,6 +95,7 @@ public class Terminal extends UI {
 
 
     public void registerCustomer(){
+                    Scanner sc = new Scanner(System.in);
                     System.out.println("Enter Name :");
                     String name = sc.nextLine();
                     System.out.println("Enter Email :");
