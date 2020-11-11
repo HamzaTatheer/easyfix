@@ -1657,12 +1657,25 @@ public class DB_Text implements DB_interface {
 
     @Override
     public boolean store_spare_holder(int booking_id, int spare_id, int quantity) {
-        return false;
+        try {
+            FileWriter myWriter=new FileWriter("Spareholder.txt",true);
+            myWriter.write(booking_id+"\n");
+            myWriter.write(spare_id+"\n");
+            myWriter.write(quantity+"\n");
+            myWriter.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        return true;
+
     }
 
     @Override
     public ArrayList<SparePartModel> get_all_spare_parts_booking(int booking_id) {
-        File myobj=new File("Booking.txt");
+        File myobj=new File("Spareholder.txt");
 
         ArrayList<SparePartModel> give=new ArrayList<SparePartModel>();
 
@@ -1671,45 +1684,17 @@ public class DB_Text implements DB_interface {
             Scanner myReader = new Scanner(myobj);
             while(myReader.hasNext()) {
 
-                int bid = myReader.nextInt();
+                int bookingId = myReader.nextInt();
                 myReader.nextLine();
-                int cid = myReader.nextInt();
+                int spareId = myReader.nextInt();
                 myReader.nextLine();
-                int wid = myReader.nextInt();
+                int quantity = myReader.nextInt();
                 myReader.nextLine();
-                String text = myReader.nextLine();
-                String status_n = myReader.nextLine();
-                LocalDateTime start = LocalDateTime.parse(myReader.next());
-                LocalDateTime end= LocalDateTime.parse(myReader.next());
-                int size=myReader.nextInt();
-                myReader.nextLine();
-                ArrayList<Integer> spare=new ArrayList<Integer>();
-
-                for (int i=0;i<size;i++)
-                {
-                    spare.add(myReader.nextInt());
-                    myReader.nextLine();
-
-                }
-                if (bid == booking_id) {
-
-
-
-                    for (int i=0;i<spare.size();i++) {
-                        SparePartModel temp=new SparePartModel();
-                        temp=get_spare_part(spare.get(i));
+                if (bookingId == booking_id) {
+                     SparePartModel temp=new SparePartModel();
+                        temp=get_spare_part(spareId);
                         if (temp!=null)
                             give.add(temp);
-                    }
-                    /*
-                        System.out.print(bid+"\n");
-                    System.out.print(cid+"\n");
-                    System.out.print(wid+"\n");
-                    System.out.print(text+"\n");
-                    System.out.print(status+"\n");
-                    System.out.print(start+"\n");
-                    System.out.print(end+"\n");
-*/
 
                 }
             }

@@ -35,17 +35,16 @@ public interface DB_interface {
     public boolean updateFinishTime(int booking_id,LocalDateTime finishTime);
 
 
-    //these not needed maybe see them
+
     public boolean store_spare_holder(int booking_id,int spare_id,int quantity);
     public ArrayList<SparePartModel> get_all_spare_parts_booking(int booking_id);//part id,quantity returned
-//------------------------------------
+
 
 
     public boolean add_favourite(int customer_id,int worker_id);
     public boolean remove_favourite(int customer_id,int worker_id);
-    //this not needed
     public ArrayList<Integer> get_favourites(int customer_id);
-//----------------------------------------
+
 
 
     public boolean store_customer_billing(int booking_id,String title,String customerName,String workerName,String status,Float totalCost);//int billing_id, given by DB
