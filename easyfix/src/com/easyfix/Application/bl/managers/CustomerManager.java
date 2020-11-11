@@ -1,9 +1,11 @@
 package com.easyfix.Application.bl.managers;
+import com.easyfix.Application.bl.classes.Booking;
 import com.easyfix.Application.bl.classes.Customer;
 import com.easyfix.Application.bl.services.CustomerService;
 import com.easyfix.Application.bl.services.RatingService;
 import com.easyfix.Application.db.dbProviders;
 import com.easyfix.Application.db.services.DbService;
+import com.easyfix.Application.models.BookingModel;
 import com.easyfix.Application.models.CustomerModel;
 import com.easyfix.Application.models.WorkerModel;
 
@@ -31,17 +33,17 @@ public class CustomerManager implements CustomerService {
     }
 
     //return id
-    public int register(String name,String email,String password,String city,String area) throws Exception{
+    public int register(String name,String email,String password,String credit,String city,String area) throws Exception{
         int userid = 0;
-
         if(password.length() <= 5){
             throw new Exception("Password length must be greater than 5");
         }
-        //userid = custdbservice.storeUser(...)
+
         if(userid < -1){
             throw new Exception("User can not be registered. Please try again");
         }
 
+        dbService.store_customer(name,email,password,credit,200,city,area,new ArrayList<Integer> ());
         return 1;
     }
 
@@ -55,30 +57,30 @@ public class CustomerManager implements CustomerService {
     }
 
     public ArrayList<WorkerModel> getFavourites(int cid){
-        ArrayList<WorkerModel> w = dbService.get_favourites_workers(cid);
-        return w;
+        ArrayList<Integer> w = dbService.get_favourites(cid);
+        ArrayList<WorkerModel> workers = new ArrayList<WorkerModel>();
+
+        for(int i=0;i<w.size();i++){
+            WorkerModel worker = dbService.get_worker(w.get(i));
+            workers.add(worker);
+        }
+        return workers;
     }
 
     public boolean addToFavourite(int cid,int wid) throws Exception {
         DbService db = dbProviders.getDbService();
-        try{
         if((db.does_worker_exist(wid)==true)&&(db.does_customer_exist(cid) == true)){
-
             ArrayList<Integer> customerFavourites = db.get_favourites(cid);
             if(customerFavourites.contains(wid) == true){
                 throw new Exception("You have already added this worker to favourites");
             }
-
             return db.add_favourite(cid,wid);
         }
         else{
-            return false;
-        }
-        }
-        catch (Exception e){
-            return false;
+            throw new Exception("Invalid Ids entered");
         }
     }
+
 
 
     public ArrayList<WorkerModel> getWorkersCloseBy(int cid){
@@ -96,12 +98,29 @@ public class CustomerManager implements CustomerService {
 
     public boolean changeCity(int cid,String newCity){
         Customer c = new Customer(dbService.get_customer(cid));
-
-        return (c.changeCity(newCity) != true);
+        return (c.changeCity(newCity));
     }
 
-    public Exception giveRating(int cid, int wid){
-        return new Exception("Rating still to be done by roqiah in ratingManager");
+    public boolean giveRating(int cid, int wid,int rating) throws Exception {
+        ArrayList<BookingModel> bookings = dbService.get_booking_of_customer(cid);
+        boolean hiredWorker = false;
+        for (BookingModel booking : bookings) {
+            if(booking.wid == wid){
+                hiredWorker = true;
+            }
+        }
+
+        if(hiredWorker == true) {
+            try {
+                dbService.store_rating(cid, wid, rating);
+                return true;
+            }
+            catch (Exception e){
+                throw new Exception("Db Error");
+            }
+        }else{
+            throw new Exception("You have to book appointment before giving rating to a worker");
+        }
     }
 
     public boolean changeArea(int cid,String newArea){

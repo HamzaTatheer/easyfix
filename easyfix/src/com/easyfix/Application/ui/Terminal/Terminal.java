@@ -22,6 +22,12 @@ public class Terminal extends UI {
         super();
     }
 
+    public void showWorkers(){
+        ArrayList<WorkerModel> workers = new ArrayList<WorkerModel>();
+        workers = workerService.getAllWorkers();
+        workers.forEach(w->System.out.println("id:"+w.id+ "  Worker Name: "+w.name+" Speciality:"+ w.speciality+" Rating: "+ w.avgRating+ "  hourly Rate:" + w.hourlyRate));
+    }
+
 
     public int getChoice(int start,int end) throws Exception{
         Scanner sc = new Scanner(System.in);
@@ -123,12 +129,14 @@ public class Terminal extends UI {
                     String remail = sc.nextLine();
                     System.out.println("Enter Password :");
                     String rpassword = sc.nextLine();
+                    System.out.println("Enter credit no to use with account");
+                    String creditno = sc.nextLine();
                     System.out.println("Enter City :");
                     String city = sc.nextLine();
                     System.out.println("Enter Area :");
                     String area = sc.nextLine();
                     try {
-                        int id = customerService.register(name, remail, rpassword, city, area);
+                        int id = customerService.register(name, remail, rpassword,creditno, city, area);
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
@@ -144,9 +152,10 @@ public class Terminal extends UI {
             System.out.println("5-Change Payment method");
             System.out.println("6-Give Rating");
             System.out.println("7-Show Workers By Area");
-            System.out.println("8-Show Active Bookings");
-            System.out.println("9-Show Finished Bookings");
-            System.out.println("10-Logout\n");
+            System.out.println("8-Show Pending Bookings");
+            System.out.println("9-Show Active Bookings");
+            System.out.println("10-Show Finished Bookings");
+            System.out.println("11-Logout\n");
 
 
             Scanner sc=new Scanner(System.in);
@@ -205,10 +214,13 @@ public class Terminal extends UI {
                 else
                     System.out.println("Error!!!!");
             } else if (choice2 == 6) {
+                showWorkers();
                 System.out.println("Enter worker id : ");
                 int workerid = sc.nextInt();
+                System.out.println("How much do you want to rate him ? ");
+                int rating = sc.nextInt();
                 try {
-                    customerService.giveRating(cid, workerid);
+                    customerService.giveRating(cid, workerid,rating);
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
@@ -246,7 +258,26 @@ public class Terminal extends UI {
                     System.out.println("Error: " + e.getMessage());
                 }
 
-            } else if (choice2 == 10) {
+            }
+            else if(choice2 == 8){
+                ArrayList<BookingModel> b =  bookingService.showPendingBookingsOfCustomer(cid);
+                for (BookingModel bookingModel : b) {
+                    System.out.println(bookingModel.text+"    "+bookingModel.status + " Start Time: "+bookingModel.startTime);
+                }
+            }
+            else if(choice2 == 9){
+                ArrayList<BookingModel> b = bookingService.showActiveBookingOfWorker(cid);
+                for (BookingModel bookingModel : b) {
+                    System.out.println(bookingModel.text+"    "+bookingModel.status + " Start Time: "+bookingModel.startTime);
+                }
+            }
+            else if(choice2 == 10){
+                ArrayList<BookingModel> b = bookingService.showFinishedBookingOfCustomer(cid);
+                for (BookingModel bookingModel : b) {
+                    System.out.println(bookingModel.text+"    "+bookingModel.status + " Start Time: "+bookingModel.startTime);
+                }
+            }
+            else if (choice2 == 11) {
                  break;
             }
        }

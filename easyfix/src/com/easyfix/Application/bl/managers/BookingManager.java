@@ -37,6 +37,10 @@ public class BookingManager implements BookingService {
             if(workerBookings.get(i).hasSameStartTime(mybooking))
                 throw new Exception("Another Booking of The worker also has same time. Please try again.");
         }
+
+        if((c.getArea() != w.getArea()) || (c.getCity() != w.getCity())){
+            throw new Exception("you can not book appointment with a worker who is not in your area");
+        }
         //if it does return false
         //if it does not create booking
         return db.store_booking(mybooking.getCustomer().getId(),mybooking.getWorker().getId(),mybooking.getText(),mybooking.getStatus(),mybooking.getStartTime(),mybooking.getEndTime(),new ArrayList<Integer>());

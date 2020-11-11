@@ -1,15 +1,22 @@
 package com.easyfix.Application.bl.managers;
 
 import com.easyfix.Application.bl.classes.Complain;
+import com.easyfix.Application.bl.services.ComplainService;
 import com.easyfix.Application.db.dbProviders;
 import com.easyfix.Application.db.services.DbService;
 import com.easyfix.Application.models.ComplainModel;
 
-public class ComplainManager {
+import java.util.ArrayList;
+
+public class ComplainManager implements ComplainService {
+
+    private DbService dbService;
+
+    ComplainManager(){
+        dbService = dbProviders.getDbService();
+    }
 
     public Boolean giveComplain(int _id,int _wid,int _cid, String _text)throws Exception{
-
-        DbService dbService = dbProviders.getDbService();
 
 
         //if((dbService.does_customer_exist(_wid)&& (dbService.does_worker_exist(_cid)))){
@@ -26,21 +33,21 @@ public class ComplainManager {
             Complain complainObj = new Complain(c);//convert model to class
             updated = complainObj.checkTextlength(_text); //update in class
 
-            if(updated){
-                //get updated model and store in db
-                c = complainObj.getComplainModel(); //get model
-                //store in db
-                // if(complainDbService.store_complaint(_id,_wid,_cid,_text))
-                //{
+            if(updated == true){
+                dbService.store_complaint(_cid,_wid,_text);
                 return true;
-                //}
-                //else
-                //throw new Exception("You already have given complain\n");
             }
-            else
+            else {
                 throw new Exception("Invalid Complain text length");
+            }
 
         }
         //else
             //throw new Exception("One of the user doesn't exist. Please try again\n");
-    }
+        public ArrayList<ComplainModel> showAllComplains(int _cid){
+            return null;
+        }
+
+
+}
+

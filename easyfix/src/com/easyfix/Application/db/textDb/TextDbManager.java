@@ -16,12 +16,10 @@ public class TextDbManager implements DbService {
 
     private static String currentPath = "./src/com/easyfix/Application/db/textDb/";
 
-
-
     @Override
     public boolean does_customer_exist(int id) {
 
-        File myobj=new File("Customer.txt");
+        File myobj=new  File(currentPath+"Customer.txt");
 
 
 
@@ -65,7 +63,7 @@ public class TextDbManager implements DbService {
     @Override
     public int does_customer_exist(String email, String password) {
 
-        File myobj=new File("Customer.txt");
+        File myobj=new  File(currentPath+"Customer.txt");
 
 
 
@@ -109,7 +107,7 @@ public class TextDbManager implements DbService {
     @Override
     public boolean store_customer(String name, String email, String password,String credit_no, float wallet, String city,String area, ArrayList<Integer> favourite) {
         int id=0;
-        File myo=new File("CountCustomer.txt");
+        File myo=new  File(currentPath+"CountCustomer.txt");
         try {
             Scanner myr = new Scanner(myo);
             id=myr.nextInt();
@@ -119,7 +117,7 @@ public class TextDbManager implements DbService {
 
         id++;
         try {
-            FileWriter myw=new FileWriter("CountCustomer.txt",false);
+            FileWriter myw=new  FileWriter(currentPath+"CountCustomer.txt",false);
             myw.write(id+"\n");
             myw.close();
 
@@ -129,7 +127,7 @@ public class TextDbManager implements DbService {
 
 
         try {
-            FileWriter mywriter=new FileWriter("Customer.txt",true);
+            FileWriter mywriter=new  FileWriter(currentPath+"Customer.txt",true);
             mywriter.write(id+"\n");
             mywriter.write(name+"\n");
             mywriter.write(email+"\n");
@@ -161,7 +159,7 @@ public class TextDbManager implements DbService {
     @Override
     public boolean update_customer_city(int id, String city) {
 
-        File myobj=new File("Customer.txt");
+        File myobj=new  File(currentPath+"Customer.txt");
         ArrayList<CustomerModel> store=new ArrayList<CustomerModel>();
         boolean check=false;
 
@@ -215,7 +213,7 @@ public class TextDbManager implements DbService {
 
 
         try {
-            FileWriter mywriter=new FileWriter("Customer.txt",false);
+            FileWriter mywriter=new  FileWriter(currentPath+"Customer.txt",false);
 
             for (int i=0;i<store.size();i++) {
                 mywriter.write(store.get(i).id + "\n");
@@ -250,7 +248,7 @@ public class TextDbManager implements DbService {
 
     @Override
     public boolean update_customer_area(int id, String area) {
-        File myobj=new File("Customer.txt");
+        File myobj=new  File(currentPath+"Customer.txt");
         ArrayList<CustomerModel> store=new ArrayList<CustomerModel>();
         boolean check=false;
 
@@ -300,7 +298,7 @@ public class TextDbManager implements DbService {
 
 
         try {
-            FileWriter mywriter=new FileWriter("Customer.txt",false);
+            FileWriter mywriter=new  FileWriter(currentPath+"Customer.txt",false);
 
             for (int i=0;i<store.size();i++) {
                 mywriter.write(store.get(i).id + "\n");
@@ -334,7 +332,7 @@ public class TextDbManager implements DbService {
 
     @Override
     public boolean update_customerPayment(int id, String payment) {
-        File myobj=new File("Customer.txt");
+        File myobj=new  File(currentPath+"Customer.txt");
         ArrayList<CustomerModel> store=new ArrayList<CustomerModel>();
         boolean check=false;
 
@@ -382,7 +380,7 @@ public class TextDbManager implements DbService {
 
 
         try {
-            FileWriter mywriter=new FileWriter("Customer.txt",false);
+            FileWriter mywriter=new  FileWriter(currentPath+"Customer.txt",false);
 
             for (int i=0;i<store.size();i++) {
                 mywriter.write(store.get(i).id + "\n");
@@ -416,7 +414,7 @@ public class TextDbManager implements DbService {
 
     @Override
     public boolean update_customerWallet(int id, Float money) {
-        File myobj=new File("Customer.txt");
+        File myobj=new  File(currentPath+"Customer.txt");
         ArrayList<CustomerModel> store=new ArrayList<CustomerModel>();
         boolean check=false;
 
@@ -466,7 +464,7 @@ public class TextDbManager implements DbService {
 
 
         try {
-            FileWriter mywriter=new FileWriter("Customer.txt",false);
+            FileWriter mywriter=new  FileWriter(currentPath+"Customer.txt",false);
 
             for (int i=0;i<store.size();i++) {
                 mywriter.write(store.get(i).id + "\n");
@@ -500,7 +498,7 @@ public class TextDbManager implements DbService {
 
     @Override
     public CustomerModel get_customer(int id) {
-        File myobj=new File("Customer.txt");
+        File myobj=new  File(currentPath+"Customer.txt");
 
 
 
@@ -570,7 +568,7 @@ public class TextDbManager implements DbService {
     @Override
     public boolean store_worker( String name, String email, String password, float average_rating, float hourly_rate, String city, String area, String speciality) {
         int id=0;
-        File myo=new File("CountWorker.txt");
+        File myo=new  File(currentPath+"CountWorker.txt");
         try {
             Scanner myr = new Scanner(myo);
             id=myr.nextInt();
@@ -580,7 +578,7 @@ public class TextDbManager implements DbService {
 
         id++;
         try {
-            FileWriter myw=new FileWriter("CountWorker.txt",false);
+            FileWriter myw=new  FileWriter(currentPath+"CountWorker.txt",false);
             myw.write(id+"\n");
             myw.close();
 
@@ -592,7 +590,7 @@ public class TextDbManager implements DbService {
 
 
         try {
-            FileWriter mywriter=new FileWriter("Worker.txt",true);
+            FileWriter mywriter=new  FileWriter(currentPath+"Worker.txt",true);
             mywriter.write(id+"\n");
             mywriter.write(name+"\n");
             mywriter.write(email+"\n");
@@ -623,7 +621,7 @@ public class TextDbManager implements DbService {
 
     @Override
     public WorkerModel get_worker(int id) {
-        File myobj=new File("Worker.txt");
+        File myobj=new  File(currentPath+"Worker.txt");
 
 
 
@@ -680,7 +678,7 @@ public class TextDbManager implements DbService {
 
     @Override
     public int does_worker_exist(String email, String password) {
-        File myobj=new File("Worker.txt");
+        File myobj=new  File(currentPath+"Worker.txt");
 
 
 
@@ -729,7 +727,7 @@ public class TextDbManager implements DbService {
 
     @Override
     public boolean does_worker_exist(int id) {
-        File myobj=new File("Worker.txt");
+        File myobj=new  File(currentPath+"Worker.txt");
 
 
 
@@ -778,7 +776,7 @@ public class TextDbManager implements DbService {
 
     @Override
     public ArrayList<WorkerModel> get_worker(String city, String area) {
-        File myobj=new File("Worker.txt");
+        File myobj=new  File(currentPath+"Worker.txt");
         ArrayList<WorkerModel> ret=new ArrayList<WorkerModel>();
 
 
@@ -830,7 +828,7 @@ public class TextDbManager implements DbService {
 
     @Override
     public ArrayList<WorkerModel> get_all_worker() {
-        File myobj=new File("Worker.txt");
+        File myobj=new  File(currentPath+"Worker.txt");
         ArrayList<WorkerModel> ret=new ArrayList<WorkerModel>();
 
 
@@ -882,7 +880,7 @@ public class TextDbManager implements DbService {
     @Override
     public boolean update_Worker_city(int id, String city) {
 
-        File myobj=new File("Worker.txt");
+        File myobj=new  File(currentPath+"Worker.txt");
         ArrayList<WorkerModel> store=new ArrayList<WorkerModel>();
         boolean check=false;
 
@@ -932,7 +930,7 @@ public class TextDbManager implements DbService {
 
 
         try {
-            FileWriter mywriter=new FileWriter("Worker.txt",false);
+            FileWriter mywriter=new  FileWriter(currentPath+"Worker.txt",false);
 
             for (int i=0;i<store.size();i++) {
                 mywriter.write(store.get(i).id + "\n");
@@ -968,7 +966,7 @@ public class TextDbManager implements DbService {
 
     @Override
     public boolean update_Worker_area(int id, String area) {
-        File myobj=new File("Worker.txt");
+        File myobj=new  File(currentPath+"Worker.txt");
         ArrayList<WorkerModel> store=new ArrayList<WorkerModel>();
         boolean check=false;
 
@@ -1018,7 +1016,7 @@ public class TextDbManager implements DbService {
 
 
         try {
-            FileWriter mywriter=new FileWriter("Worker.txt",false);
+            FileWriter mywriter=new  FileWriter(currentPath+"Worker.txt",false);
 
             for (int i=0;i<store.size();i++) {
                 mywriter.write(store.get(i).id + "\n");
@@ -1055,7 +1053,7 @@ public class TextDbManager implements DbService {
 
     @Override
     public boolean update_hourly_rate(int id, float rate) {
-        File myobj=new File("Worker.txt");
+        File myobj=new  File(currentPath+"Worker.txt");
         ArrayList<WorkerModel> store=new ArrayList<WorkerModel>();
         boolean check=false;
 
@@ -1105,7 +1103,7 @@ public class TextDbManager implements DbService {
 
 
         try {
-            FileWriter mywriter=new FileWriter("Worker.txt",false);
+            FileWriter mywriter=new  FileWriter(currentPath+"Worker.txt",false);
 
             for (int i=0;i<store.size();i++) {
                 mywriter.write(store.get(i).id + "\n");
@@ -1144,7 +1142,7 @@ public class TextDbManager implements DbService {
     {
 
         int bid=0;
-        File myo=new File("CountBooking.txt");
+        File myo=new  File(currentPath+"CountBooking.txt");
         try {
             Scanner myr = new Scanner(myo);
             bid=myr.nextInt();
@@ -1154,7 +1152,7 @@ public class TextDbManager implements DbService {
 
         bid++;
         try {
-            FileWriter myw=new FileWriter("CountBooking.txt",false);
+            FileWriter myw=new  FileWriter(currentPath+"CountBooking.txt",false);
             myw.write(bid+"\n");
             myw.close();
 
@@ -1165,7 +1163,7 @@ public class TextDbManager implements DbService {
 
 
         try {
-            FileWriter mywriter=new FileWriter("Booking.txt",true);
+            FileWriter mywriter=new  FileWriter(currentPath+"Booking.txt",true);
 
 
             mywriter.write(bid + "\n");
@@ -1196,7 +1194,7 @@ public class TextDbManager implements DbService {
 
     @Override
     public ArrayList<BookingModel> get_booking_of_customer(int customer_id) {
-        File myobj=new File("Booking.txt");
+        File myobj=new  File(currentPath+"Booking.txt");
 
         ArrayList<BookingModel> give=new ArrayList<BookingModel>();
 
@@ -1263,7 +1261,7 @@ public class TextDbManager implements DbService {
 
     @Override
     public ArrayList<BookingModel> get_booking_of_worker(int worker_id) {
-        File myobj=new File("Booking.txt");
+        File myobj=new  File(currentPath+"Booking.txt");
 
         ArrayList<BookingModel> give=new ArrayList<BookingModel>();
 
@@ -1330,7 +1328,7 @@ public class TextDbManager implements DbService {
 
     @Override
     public ArrayList<BookingModel> get_booking_of_worker(int worker_id, String status) {
-        File myobj=new File("Booking.txt");
+        File myobj=new  File(currentPath+"Booking.txt");
 
         ArrayList<BookingModel> give=new ArrayList<BookingModel>();
 
@@ -1395,7 +1393,7 @@ public class TextDbManager implements DbService {
 
     @Override
     public ArrayList<BookingModel> get_booking_of_customer(int customer_id, String status) {
-        File myobj=new File("Booking.txt");
+        File myobj=new  File(currentPath+"Booking.txt");
 
         ArrayList<BookingModel> give=new ArrayList<BookingModel>();
 
@@ -1460,7 +1458,7 @@ public class TextDbManager implements DbService {
 
     @Override
     public boolean update_booking_status(int booking_id, String status) {
-        File myobj=new File("Booking.txt");
+        File myobj=new  File(currentPath+"Booking.txt");
 
         ArrayList<BookingModel> give=new ArrayList<BookingModel>();
         boolean check=false;
@@ -1525,7 +1523,7 @@ public class TextDbManager implements DbService {
 
 
         try {
-            FileWriter mywriter = new FileWriter("Booking.txt", false);
+            FileWriter mywriter = new  FileWriter(currentPath+"Booking.txt", false);
 
 
             for (int i = 0; i < give.size(); i++) {
@@ -1561,7 +1559,7 @@ public class TextDbManager implements DbService {
 
     @Override
     public boolean updateFinishTime(int booking_id, LocalDateTime finishTime) {
-        File myobj=new File("Booking.txt");
+        File myobj=new  File(currentPath+"Booking.txt");
 
         ArrayList<BookingModel> give=new ArrayList<BookingModel>();
         boolean check=false;
@@ -1627,7 +1625,7 @@ public class TextDbManager implements DbService {
 
 
         try {
-            FileWriter mywriter = new FileWriter("Booking.txt", false);
+            FileWriter mywriter = new FileWriter(currentPath+"Booking.txt", false);
 
 
             for (int i = 0; i < give.size(); i++) {
@@ -1673,7 +1671,7 @@ public class TextDbManager implements DbService {
     @Override
     public boolean add_favourite(int customer_id, int worker_id) {
 
-        File myobj=new File("Customer.txt");
+        File myobj=new  File(currentPath+"Customer.txt");
         ArrayList<CustomerModel> store=new ArrayList<CustomerModel>();
         boolean check=false;
 
@@ -1730,7 +1728,7 @@ public class TextDbManager implements DbService {
 
 
         try {
-            FileWriter mywriter=new FileWriter("Customer.txt",false);
+            FileWriter mywriter=new FileWriter(currentPath+"Customer.txt",false);
 
             for (int i=0;i<store.size();i++) {
                 mywriter.write(store.get(i).id + "\n");
@@ -1766,7 +1764,7 @@ public class TextDbManager implements DbService {
     public boolean remove_favourite(int customer_id, int worker_id) {
 
 
-        File myobj = new File("Customer.txt");
+        File myobj = new  File(currentPath+"Customer.txt");
         ArrayList<CustomerModel> store = new ArrayList<CustomerModel>();
         boolean check = false;
 
@@ -1819,7 +1817,7 @@ public class TextDbManager implements DbService {
 
 
         try {
-            FileWriter mywriter = new FileWriter("Customer.txt", false);
+            FileWriter mywriter = new  FileWriter(currentPath+"Customer.txt", false);
 
             for (int i = 0; i < store.size(); i++) {
                 mywriter.write(store.get(i).id + "\n");
@@ -1854,7 +1852,7 @@ public class TextDbManager implements DbService {
     @Override
     public ArrayList<Integer> get_favourites(int customer_id) {
 
-        File myobj=new File("Customer.txt");
+        File myobj=new  File(currentPath+"Customer.txt");
 
 
 
@@ -1926,7 +1924,7 @@ public class TextDbManager implements DbService {
     public boolean store_customer_billing( int booking_id,String title,String customerName,String workerName,String status,Float totalCost)//give int billing_id by db
     {
         try {
-            FileWriter myWriter=new FileWriter("Billing.txt",true);
+            FileWriter myWriter=new  FileWriter(currentPath+"Billing.txt",true);
             myWriter.write(booking_id+"\n");
             myWriter.write(title+"\n");
             myWriter.write(customerName+"\n");
@@ -1948,7 +1946,7 @@ public class TextDbManager implements DbService {
 
     @Override
     public BillingModel get_bill(int booking_id) {
-        File obj=new File("Billing.txt");
+        File obj=new  File(currentPath+"Billing.txt");
 
         try {
             Scanner myReader = new Scanner(obj);
@@ -1982,7 +1980,7 @@ public class TextDbManager implements DbService {
 
     @Override
     public boolean change_billing_status(int booking_id, String status) {
-        File obj=new File("Billing.txt");
+        File obj=new  File(currentPath+"Billing.txt");
         ArrayList<BillingModel> store=new ArrayList<BillingModel>();
 
         try {
@@ -2013,7 +2011,7 @@ public class TextDbManager implements DbService {
             return false;
         }
         try {
-            FileWriter myWriter=new FileWriter("Billing.txt",false);
+            FileWriter myWriter=new  FileWriter(currentPath+"Billing.txt",false);
             for (int i=0;i<store.size();i++) {
                 myWriter.write(store.get(i).bookingId + "\n");
                 myWriter.write(store.get(i).title + "\n");
@@ -2036,7 +2034,7 @@ public class TextDbManager implements DbService {
     public boolean store_complaint( int customer_id, int worker_id, String complain_text)//give int complain_id by DB
     {
         int id=0;
-        File myo=new File("CountComplaint.txt");
+        File myo=new  File(currentPath+"CountComplaint.txt");
         try {
             Scanner myr = new Scanner(myo);
             id=myr.nextInt();
@@ -2046,7 +2044,7 @@ public class TextDbManager implements DbService {
 
         id++;
         try {
-            FileWriter myw=new FileWriter("CountComplaint.txt",false);
+            FileWriter myw=new  FileWriter(currentPath+"CountComplaint.txt",false);
             myw.write(id+"\n");
             myw.close();
 
@@ -2056,7 +2054,7 @@ public class TextDbManager implements DbService {
 
 
         try {
-            FileWriter myWriter=new FileWriter("Complaint.txt",true);
+            FileWriter myWriter=new  FileWriter(currentPath+"Complaint.txt",true);
             myWriter.write(id+"\n");
             myWriter.write(customer_id+"\n");
             myWriter.write(worker_id+"\n");
@@ -2075,7 +2073,7 @@ public class TextDbManager implements DbService {
 
     @Override
     public ComplainModel get_complaint(int complaint_id) {
-        File obj=new File("Complaint.txt");
+        File obj=new  File(currentPath+"Complaint.txt");
 
         try {
             Scanner myReader = new Scanner(obj);
@@ -2108,7 +2106,7 @@ public class TextDbManager implements DbService {
 
     @Override
     public ArrayList<ComplainModel> show_all_complaint(int customer_id) {
-        File obj=new File("Complaint.txt");
+        File obj=new  File(currentPath+"Complaint.txt");
         ArrayList<ComplainModel> store=new ArrayList<ComplainModel>();
 
         try {
@@ -2145,7 +2143,7 @@ public class TextDbManager implements DbService {
     public boolean store_spar_parts( String name, float cost, int quantity) // give int spare_id
     {
         int id=0;
-        File myo=new File("CountSpare.txt");
+        File myo=new  File(currentPath+"CountSpare.txt");
         try {
             Scanner myr = new Scanner(myo);
             id=myr.nextInt();
@@ -2155,7 +2153,7 @@ public class TextDbManager implements DbService {
 
         id++;
         try {
-            FileWriter myw=new FileWriter("CountSpare.txt",false);
+            FileWriter myw=new  FileWriter(currentPath+"CountSpare.txt",false);
             myw.write(id+"\n");
             myw.close();
 
@@ -2165,7 +2163,7 @@ public class TextDbManager implements DbService {
 
 
         try {
-            FileWriter myWriter=new FileWriter("spareParts.txt",true);
+            FileWriter myWriter=new  FileWriter(currentPath+"spareParts.txt",true);
             myWriter.write(id+"\n");
             myWriter.write(name+"\n");
             myWriter.write(cost+"\n");
@@ -2186,7 +2184,7 @@ public class TextDbManager implements DbService {
     @Override
     public SparePartModel get_spare_part(int part_id) {
 
-        File obj=new File("spareParts.txt");
+        File obj=new  File(currentPath+"spareParts.txt");
 
         try {
             Scanner myReader = new Scanner(obj);
@@ -2219,7 +2217,7 @@ public class TextDbManager implements DbService {
     @Override
     public ArrayList<SparePartModel> get_all_parts() {
 
-        File obj=new File("spareParts.txt");
+        File obj=new  File(currentPath+"spareParts.txt");
         ArrayList<SparePartModel> give=new ArrayList<SparePartModel>();
 
         try {
@@ -2250,7 +2248,7 @@ public class TextDbManager implements DbService {
 
     @Override
     public boolean deduct_part(int spare_id, int quantity) {
-        File obj=new File("spareParts.txt");
+        File obj=new  File(currentPath+"spareParts.txt");
         ArrayList<SparePartModel> give=new ArrayList<SparePartModel>();
         boolean check=false;
 
@@ -2287,7 +2285,7 @@ public class TextDbManager implements DbService {
 
 
         try {
-            FileWriter myWriter=new FileWriter("spareParts.txt",false);
+            FileWriter myWriter=new  FileWriter(currentPath+"spareParts.txt",false);
 
             for (int i=0;i<give.size();i++) {
                 myWriter.write(give.get(i).id + "\n");
@@ -2314,7 +2312,7 @@ public class TextDbManager implements DbService {
     @Override
     public boolean store_rating(int customer_id, int worker_id, int rating) {
         try {
-            FileWriter myWriter=new FileWriter("Rating.txt",true);
+            FileWriter myWriter=new  FileWriter(currentPath+"Rating.txt",true);
 
 
             myWriter.write(customer_id + "\n");
@@ -2336,7 +2334,7 @@ public class TextDbManager implements DbService {
 
     @Override
     public float get_avg_rating(int worker_id) {
-        File obj=new File("Rating.txt");
+        File obj=new  File(currentPath+"Rating.txt");
         ArrayList<RatingModel> store =new ArrayList<RatingModel>();
 
         try {
@@ -2381,7 +2379,7 @@ public class TextDbManager implements DbService {
 
     @Override
     public ArrayList<RatingModel> getAllRatings(int customer_id) {
-        File obj=new File("Rating.txt");
+        File obj=new  File(currentPath+"Rating.txt");
         ArrayList<RatingModel> store =new ArrayList<RatingModel>();
 
         try {
@@ -2420,7 +2418,7 @@ public class TextDbManager implements DbService {
     @Override
     public boolean store_chat(int sender_id,int reciever_id,String sender_name,String receiver_name,String text) {
         try {
-            FileWriter myWriter=new FileWriter("Rating.txt",true);
+            FileWriter myWriter=new  FileWriter(currentPath+"Rating.txt",true);
 
 
             myWriter.write(sender_id + "\n");
@@ -2444,7 +2442,7 @@ public class TextDbManager implements DbService {
 
     @Override
     public ArrayList<ChatMessageModel> get_chat_history(int customer_id, int worker_id) {
-        File obj=new File("Rating.txt");
+        File obj=new  File(currentPath+"Rating.txt");
         ArrayList<ChatMessageModel> store =new ArrayList<ChatMessageModel>();
 
         try {
