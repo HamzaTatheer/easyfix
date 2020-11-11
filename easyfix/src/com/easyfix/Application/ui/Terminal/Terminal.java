@@ -22,15 +22,36 @@ public class Terminal extends UI {
         super();
     }
 
+
+    public int getChoice(int start,int end) throws Exception{
+        Scanner sc = new Scanner(System.in);
+        int choice =-1;
+        try {
+            choice = sc.nextInt();
+        }
+        catch (Exception e){
+            throw new Exception("Invalid Choice");
+        }
+
+        if(choice < start || choice > end)
+        throw new Exception("Please Enter from the choices given in Menu");
+
+        return choice;
+    }
+
     public void start() {
         while (true) {
             System.out.println("1-Login as Customer");
             System.out.println("2-Login as Worker");
             System.out.println("3-Register Customer\n");
-            Scanner sc1 = new Scanner(System.in);
-            System.out.println("Enter Choice : ");
-            int choice = sc1.nextInt();
-            Scanner sc = new Scanner(System.in);
+            int choice = 0;
+            try {
+                choice = getChoice(1, 3);
+            }
+            catch (Exception e){
+                System.out.println(e.getMessage());
+            }
+
             if (choice == 1) {
                 loginCustomer();
             }
@@ -139,6 +160,14 @@ public class Terminal extends UI {
                     System.out.println("id: " + favourites.get(i).id + " " + favourites.get(i).name + " speciality: " + favourites.get(i).speciality);
                 }
             } else if (choice2 == 2) {
+
+                ArrayList<WorkerModel> workers = new ArrayList<WorkerModel>();
+                workers = workerService.getAllWorkers();
+
+                workers.forEach(w->System.out.println("id:"+w.id+ "  Worker Name: "+w.name+" Speciality:"+ w.speciality+" Rating: "+ w.avgRating+ "  hourly Rate:" + w.hourlyRate));
+
+                System.out.println();
+
                 System.out.println("Enter worker id :");
                 int wid = sc.nextInt();
                 boolean fav = false;

@@ -16,14 +16,12 @@ public class TextDbManager implements DbService {
 
     private static String currentPath = "./src/com/easyfix/Application/db/textDb/";
 
-    public boolean updateFinishTime(int booking_id,LocalDateTime finishTime){
-        return false;
-    }
 
 
+    @Override
     public boolean does_customer_exist(int id) {
 
-        File myobj=new File(currentPath+"Customer.txt");
+        File myobj=new File("Customer.txt");
 
 
 
@@ -64,10 +62,13 @@ public class TextDbManager implements DbService {
 
     }
 
-
+    @Override
     public int does_customer_exist(String email, String password) {
 
-        File myobj=new File(currentPath+"Customer.txt");
+        File myobj=new File("Customer.txt");
+
+
+
         try {
             Scanner myReader = new Scanner(myobj);
             while(myReader.hasNext()) {
@@ -105,10 +106,10 @@ public class TextDbManager implements DbService {
 
     }
 
-
+    @Override
     public boolean store_customer(String name, String email, String password,String credit_no, float wallet, String city,String area, ArrayList<Integer> favourite) {
         int id=0;
-        File myo=new File(currentPath+"CountCustomer.txt");
+        File myo=new File("CountCustomer.txt");
         try {
             Scanner myr = new Scanner(myo);
             id=myr.nextInt();
@@ -128,7 +129,7 @@ public class TextDbManager implements DbService {
 
 
         try {
-            FileWriter mywriter=new FileWriter(currentPath+"Customer.txt",true);
+            FileWriter mywriter=new FileWriter("Customer.txt",true);
             mywriter.write(id+"\n");
             mywriter.write(name+"\n");
             mywriter.write(email+"\n");
@@ -157,7 +158,7 @@ public class TextDbManager implements DbService {
 
     }
 
-
+    @Override
     public boolean update_customer_city(int id, String city) {
 
         File myobj=new File("Customer.txt");
@@ -170,7 +171,7 @@ public class TextDbManager implements DbService {
             Scanner myReader = new Scanner(myobj);
             while(myReader.hasNext()) {
                 CustomerModel temp=new CustomerModel();
-                temp.Favourite=new ArrayList<Integer>();
+
 
                 temp.id = myReader.nextInt();
                 myReader.nextLine();
@@ -185,11 +186,16 @@ public class TextDbManager implements DbService {
                 temp.area = myReader.nextLine();
                 int size = myReader.nextInt();
                 myReader.nextLine();
+                ArrayList<Integer> favourite = new ArrayList<Integer>();
 
                 for (int i = 0; i < size; i++) {
-                    temp.Favourite.add(myReader.nextInt());
+                    favourite.add(myReader.nextInt());
                     myReader.nextLine();
                 }
+                temp.Favourite=favourite;
+
+
+
 
 
                 if (id == temp.id) {
@@ -197,6 +203,8 @@ public class TextDbManager implements DbService {
                     check=true;
                 }
                 store.add(temp);
+
+
             }
         } catch (FileNotFoundException e) {
             //  System.out.print("Error in reading a file\n");
@@ -221,7 +229,7 @@ public class TextDbManager implements DbService {
                 mywriter.write(store.get(i).area + "\n");
                 mywriter.write(store.get(i).Favourite.size() + "\n");
                 for (int j = 0; j < store.get(i).Favourite.size(); j++) {
-                    mywriter.write(store.get(i).Favourite + "\n");
+                    mywriter.write(store.get(i).Favourite.get(j) + "\n");
                 }
 
 
@@ -240,7 +248,7 @@ public class TextDbManager implements DbService {
 
     }
 
-
+    @Override
     public boolean update_customer_area(int id, String area) {
         File myobj=new File("Customer.txt");
         ArrayList<CustomerModel> store=new ArrayList<CustomerModel>();
@@ -252,6 +260,7 @@ public class TextDbManager implements DbService {
             Scanner myReader = new Scanner(myobj);
             while(myReader.hasNext()) {
                 CustomerModel temp=new CustomerModel();
+
 
                 temp.id = myReader.nextInt();
                 myReader.nextLine();
@@ -269,9 +278,10 @@ public class TextDbManager implements DbService {
                 ArrayList<Integer> favourite = new ArrayList<Integer>();
 
                 for (int i = 0; i < size; i++) {
-                    temp.Favourite.add(myReader.nextInt());
+                    favourite.add(myReader.nextInt());
                     myReader.nextLine();
                 }
+                temp.Favourite=favourite;
 
                 if (id == temp.id) {
                     temp.area=area;
@@ -304,7 +314,7 @@ public class TextDbManager implements DbService {
                 mywriter.write(store.get(i).area + "\n");
                 mywriter.write(store.get(i).Favourite.size() + "\n");
                 for (int j = 0; j < store.get(i).Favourite.size(); j++) {
-                    mywriter.write(store.get(i).Favourite + "\n");
+                    mywriter.write(store.get(i).Favourite.get(j) + "\n");
                 }
 
 
@@ -322,7 +332,7 @@ public class TextDbManager implements DbService {
         }
     }
 
-
+    @Override
     public boolean update_customerPayment(int id, String payment) {
         File myobj=new File("Customer.txt");
         ArrayList<CustomerModel> store=new ArrayList<CustomerModel>();
@@ -334,7 +344,6 @@ public class TextDbManager implements DbService {
             Scanner myReader = new Scanner(myobj);
             while(myReader.hasNext()) {
                 CustomerModel temp=new CustomerModel();
-                temp.Favourite=new ArrayList<Integer>();
 
                 temp.id = myReader.nextInt();
                 myReader.nextLine();
@@ -352,9 +361,10 @@ public class TextDbManager implements DbService {
                 ArrayList<Integer> favourite = new ArrayList<Integer>();
 
                 for (int i = 0; i < size; i++) {
-                    temp.Favourite.add(myReader.nextInt());
+                    favourite.add(myReader.nextInt());
                     myReader.nextLine();
                 }
+                temp.Favourite=favourite;
                 if (id == temp.id) {
                     temp.paymentMethod=payment;
                     check=true;
@@ -404,7 +414,7 @@ public class TextDbManager implements DbService {
         }
     }
 
-
+    @Override
     public boolean update_customerWallet(int id, Float money) {
         File myobj=new File("Customer.txt");
         ArrayList<CustomerModel> store=new ArrayList<CustomerModel>();
@@ -416,6 +426,7 @@ public class TextDbManager implements DbService {
             Scanner myReader = new Scanner(myobj);
             while(myReader.hasNext()) {
                 CustomerModel temp=new CustomerModel();
+
 
                 temp.id = myReader.nextInt();
                 myReader.nextLine();
@@ -433,10 +444,11 @@ public class TextDbManager implements DbService {
                 ArrayList<Integer> favourite = new ArrayList<Integer>();
 
                 for (int i = 0; i < size; i++) {
-                    temp.Favourite.add(myReader.nextInt());
+                    favourite.add(myReader.nextInt());
                     myReader.nextLine();
                 }
 
+                temp.Favourite=favourite;
                 if (id == temp.id) {
                     temp.wallet=money;
                     check=true;
@@ -468,7 +480,7 @@ public class TextDbManager implements DbService {
                 mywriter.write(store.get(i).area + "\n");
                 mywriter.write(store.get(i).Favourite.size() + "\n");
                 for (int j = 0; j < store.get(i).Favourite.size(); j++) {
-                    mywriter.write(store.get(i).Favourite.get(j) + "\n");
+                    mywriter.write(store.get(i).Favourite.get(j)+ "\n");
                 }
 
 
@@ -486,9 +498,9 @@ public class TextDbManager implements DbService {
         }
     }
 
-
+    @Override
     public CustomerModel get_customer(int id) {
-        File myobj=new File(currentPath+"Customer.txt");
+        File myobj=new File("Customer.txt");
 
 
 
@@ -518,7 +530,7 @@ public class TextDbManager implements DbService {
 
                 if (id == id_n) {
                     CustomerModel ret=new CustomerModel();
-                    ret.Favourite=new ArrayList<Integer>();
+
                     ret.id=id_n;
                     ret.name=name;
                     ret.email=email;
@@ -528,11 +540,7 @@ public class TextDbManager implements DbService {
                     ret.wallet=wallet;
                     ret.city=city;
                     ret.area=area;
-                    for (int i=0;i<favourite.size();i++) {
-                        int temp=favourite.get(i);
-                        //if (temp!=null)
-                        ret.Favourite.add(temp);
-                    }
+                    ret.Favourite=favourite;
                         /*
                         System.out.print(id_n+"\n");
                         System.out.print(name+"\n");
@@ -559,7 +567,7 @@ public class TextDbManager implements DbService {
         return null;
     }
 
-
+    @Override
     public boolean store_worker( String name, String email, String password, float average_rating, float hourly_rate, String city, String area, String speciality) {
         int id=0;
         File myo=new File("CountWorker.txt");
@@ -613,9 +621,9 @@ public class TextDbManager implements DbService {
         }
     }
 
-
+    @Override
     public WorkerModel get_worker(int id) {
-        File myobj=new File(currentPath+"Worker.txt");
+        File myobj=new File("Worker.txt");
 
 
 
@@ -670,9 +678,9 @@ public class TextDbManager implements DbService {
         return null;
     }
 
-
+    @Override
     public int does_worker_exist(String email, String password) {
-        File myobj=new File(currentPath+"Worker.txt");
+        File myobj=new File("Worker.txt");
 
 
 
@@ -719,9 +727,9 @@ public class TextDbManager implements DbService {
         return -1;
     }
 
-
+    @Override
     public boolean does_worker_exist(int id) {
-        File myobj=new File(currentPath+"Worker.txt");
+        File myobj=new File("Worker.txt");
 
 
 
@@ -768,10 +776,12 @@ public class TextDbManager implements DbService {
         return false;
     }
 
-
+    @Override
     public ArrayList<WorkerModel> get_worker(String city, String area) {
-        File myobj=new File(currentPath+"Worker.txt");
+        File myobj=new File("Worker.txt");
         ArrayList<WorkerModel> ret=new ArrayList<WorkerModel>();
+
+
 
         try {
             Scanner myReader = new Scanner(myobj);
@@ -818,10 +828,11 @@ public class TextDbManager implements DbService {
         return ret;
     }
 
-
+    @Override
     public ArrayList<WorkerModel> get_all_worker() {
-        File myobj=new File(currentPath+"Worker.txt");
+        File myobj=new File("Worker.txt");
         ArrayList<WorkerModel> ret=new ArrayList<WorkerModel>();
+
 
 
         try {
@@ -868,7 +879,7 @@ public class TextDbManager implements DbService {
         return ret;
     }
 
-
+    @Override
     public boolean update_Worker_city(int id, String city) {
 
         File myobj=new File("Worker.txt");
@@ -955,7 +966,7 @@ public class TextDbManager implements DbService {
         }
     }
 
-
+    @Override
     public boolean update_Worker_area(int id, String area) {
         File myobj=new File("Worker.txt");
         ArrayList<WorkerModel> store=new ArrayList<WorkerModel>();
@@ -1042,7 +1053,7 @@ public class TextDbManager implements DbService {
     }
 
 
-
+    @Override
     public boolean update_hourly_rate(int id, float rate) {
         File myobj=new File("Worker.txt");
         ArrayList<WorkerModel> store=new ArrayList<WorkerModel>();
@@ -1128,12 +1139,12 @@ public class TextDbManager implements DbService {
         }
     }
 
-
+    @Override
     public boolean store_booking(int customer_id, int worker_id, String text, String status, LocalDateTime start_time, LocalDateTime end_time, ArrayList<Integer> spareParts)
     {
 
         int bid=0;
-        File myo=new File(currentPath+"CountBooking.txt");
+        File myo=new File("CountBooking.txt");
         try {
             Scanner myr = new Scanner(myo);
             bid=myr.nextInt();
@@ -1143,7 +1154,7 @@ public class TextDbManager implements DbService {
 
         bid++;
         try {
-            FileWriter myw=new FileWriter(currentPath+"CountBooking.txt",false);
+            FileWriter myw=new FileWriter("CountBooking.txt",false);
             myw.write(bid+"\n");
             myw.close();
 
@@ -1154,7 +1165,7 @@ public class TextDbManager implements DbService {
 
 
         try {
-            FileWriter mywriter=new FileWriter(currentPath+"Booking.txt",true);
+            FileWriter mywriter=new FileWriter("Booking.txt",true);
 
 
             mywriter.write(bid + "\n");
@@ -1181,219 +1192,11 @@ public class TextDbManager implements DbService {
         return true;
     }
 
-    public ArrayList<BookingModel> get_booking_of_worker(int worker_id, String status) {
-        File myobj=new File(currentPath+"Booking.txt");
-
-        ArrayList<BookingModel> give=new ArrayList<BookingModel>();
 
 
-        try {
-            Scanner myReader = new Scanner(myobj);
-            while(myReader.hasNext()) {
-
-                int bid = myReader.nextInt();
-                myReader.nextLine();
-                int cid = myReader.nextInt();
-                myReader.nextLine();
-                int wid = myReader.nextInt();
-                myReader.nextLine();
-                String text = myReader.nextLine();
-                String status_n = myReader.nextLine();
-                LocalDateTime start = LocalDateTime.parse(myReader.next());
-                LocalDateTime end= LocalDateTime.parse(myReader.next());
-                int size=myReader.nextInt();
-                myReader.nextLine();
-                ArrayList<Integer> spare=new ArrayList<Integer>();
-
-                for (int i=0;i<size;i++)
-                {
-                    spare.add(myReader.nextInt());
-                    myReader.nextLine();
-
-                }
-                if (wid == worker_id&& status_n.equals(status)) {
-                    BookingModel ret=new BookingModel();
-                    ret.spareParts=new ArrayList<Integer>();
-
-                    ret.id=bid;
-                    ret.cid=(cid);
-                    ret.wid=(wid);
-                    ret.text=text;
-                    ret.status=status;
-                    ret.startTime=start;
-                    ret.endTime=end;
-
-                    for (int i=0;i<spare.size();i++) {
-                        //if (temp!=null)
-                        ret.spareParts.add(spare.get(i));
-                    }
-                    /*
-                        System.out.print(bid+"\n");
-                    System.out.print(cid+"\n");
-                    System.out.print(wid+"\n");
-                    System.out.print(text+"\n");
-                    System.out.print(status+"\n");
-                    System.out.print(start+"\n");
-                    System.out.print(end+"\n");
-*/
-                    give.add(ret);
-                }
-            }
-        } catch (FileNotFoundException e) {
-            //  System.out.print("Error in reading a file\n");
-            e.printStackTrace();
-        }
-        // System.out.print("ID not found\n");
-
-
-        return give;
-    }
-
-
-
-    public ArrayList<BookingModel> get_booking_of_customer(int customer_id, String status) {
-        File myobj=new File(currentPath+"Booking.txt");
-
-        ArrayList<BookingModel> give=new ArrayList<BookingModel>();
-
-
-        try {
-            Scanner myReader = new Scanner(myobj);
-            while(myReader.hasNext()) {
-
-                int bid = myReader.nextInt();
-                myReader.nextLine();
-                int cid = myReader.nextInt();
-                myReader.nextLine();
-                int wid = myReader.nextInt();
-                myReader.nextLine();
-                String text = myReader.nextLine();
-                String status_n = myReader.nextLine();
-                LocalDateTime start = LocalDateTime.parse(myReader.next());
-                LocalDateTime end= LocalDateTime.parse(myReader.next());
-                int size=myReader.nextInt();
-                myReader.nextLine();
-                ArrayList<Integer> spare=new ArrayList<Integer>();
-
-                for (int i=0;i<size;i++)
-                {
-                    spare.add(myReader.nextInt());
-                    myReader.nextLine();
-
-                }
-                if (cid == customer_id&& status_n.equals(status)) {
-                    BookingModel ret=new BookingModel();
-                    ret.spareParts=new ArrayList<Integer>();
-
-                    ret.id=bid;
-                    ret.cid=(cid);
-                    ret.wid=(wid);
-                    ret.text=text;
-                    ret.status=status;
-                    ret.startTime=start;
-                    ret.endTime=end;
-
-                    for (int i=0;i<spare.size();i++) {
-                        //if (temp!=null)
-                        ret.spareParts.add(spare.get(i));
-                    }
-                    /*
-                        System.out.print(bid+"\n");
-                    System.out.print(cid+"\n");
-                    System.out.print(wid+"\n");
-                    System.out.print(text+"\n");
-                    System.out.print(status+"\n");
-                    System.out.print(start+"\n");
-                    System.out.print(end+"\n");
-*/
-                    give.add(ret);
-                }
-            }
-        } catch (FileNotFoundException e) {
-            //  System.out.print("Error in reading a file\n");
-            e.printStackTrace();
-        }
-        // System.out.print("ID not found\n");
-
-
-        return give;
-    }
-
-
-
-    public  ArrayList<BookingModel> get_booking_of_worker(int worker_id){
-        File myobj=new File(currentPath+"Booking.txt");
-
-        ArrayList<BookingModel> give=new ArrayList<BookingModel>();
-
-
-        try {
-            Scanner myReader = new Scanner(myobj);
-            while(myReader.hasNext()) {
-
-                int bid = myReader.nextInt();
-                myReader.nextLine();
-                int cid = myReader.nextInt();
-                myReader.nextLine();
-                int wid = myReader.nextInt();
-                myReader.nextLine();
-                String text = myReader.nextLine();
-                String status = myReader.nextLine();
-                LocalDateTime start = LocalDateTime.parse(myReader.next());
-                LocalDateTime end= LocalDateTime.parse(myReader.next());
-                int size=myReader.nextInt();
-                myReader.nextLine();
-                ArrayList<Integer> spare=new ArrayList<Integer>();
-
-                for (int i=0;i<size;i++)
-                {
-                    spare.add(myReader.nextInt());
-                    myReader.nextLine();
-
-                }
-                if (wid == worker_id) {
-                    BookingModel ret=new BookingModel();
-                    ret.spareParts=new ArrayList<Integer>();
-
-                    ret.id=bid;
-                    ret.cid=cid;
-                    ret.wid=wid;
-                    ret.text=text;
-                    ret.status=status;
-                    ret.startTime=start;
-                    ret.endTime=end;
-                    ret.spareParts= new ArrayList<Integer>();
-
-                    for (int i=0;i<spare.size();i++) {
-                        //if (temp!=null)
-                        ret.spareParts.add(spare.get(i));
-                    }
-                    /*
-                        System.out.print(bid+"\n");
-                    System.out.print(cid+"\n");
-                    System.out.print(wid+"\n");
-                    System.out.print(text+"\n");
-                    System.out.print(status+"\n");
-                    System.out.print(start+"\n");
-                    System.out.print(end+"\n");
-*/
-                    give.add(ret);
-                }
-            }
-        } catch (FileNotFoundException e) {
-            //  System.out.print("Error in reading a file\n");
-            e.printStackTrace();
-        }
-        // System.out.print("ID not found\n");
-
-
-        return give;
-    }
-
-
-
+    @Override
     public ArrayList<BookingModel> get_booking_of_customer(int customer_id) {
-        File myobj=new File(currentPath+"Booking.txt");
+        File myobj=new File("Booking.txt");
 
         ArrayList<BookingModel> give=new ArrayList<BookingModel>();
 
@@ -1424,7 +1227,7 @@ public class TextDbManager implements DbService {
                 }
                 if (cid == customer_id) {
                     BookingModel ret=new BookingModel();
-                    ret.spareParts=new ArrayList<Integer>();
+
 
                     ret.id=bid;
                     ret.cid=cid;
@@ -1433,12 +1236,9 @@ public class TextDbManager implements DbService {
                     ret.status=status;
                     ret.startTime=start;
                     ret.endTime=end;
-                    ret.spareParts= new ArrayList<Integer>();
+                    ret.spareParts=spare;
 
-                    for (int i=0;i<spare.size();i++) {
-                        //if (temp!=null)
-                        ret.spareParts.add(spare.get(i));
-                    }
+
                     /*
                         System.out.print(bid+"\n");
                     System.out.print(cid+"\n");
@@ -1461,7 +1261,204 @@ public class TextDbManager implements DbService {
         return give;
     }
 
+    @Override
+    public ArrayList<BookingModel> get_booking_of_worker(int worker_id) {
+        File myobj=new File("Booking.txt");
 
+        ArrayList<BookingModel> give=new ArrayList<BookingModel>();
+
+
+        try {
+            Scanner myReader = new Scanner(myobj);
+            while(myReader.hasNext()) {
+
+                int bid = myReader.nextInt();
+                myReader.nextLine();
+                int cid = myReader.nextInt();
+                myReader.nextLine();
+                int wid = myReader.nextInt();
+                myReader.nextLine();
+                String text = myReader.nextLine();
+                String status = myReader.nextLine();
+                LocalDateTime start = LocalDateTime.parse(myReader.next());
+                LocalDateTime end= LocalDateTime.parse(myReader.next());
+                int size=myReader.nextInt();
+                myReader.nextLine();
+                ArrayList<Integer> spare=new ArrayList<Integer>();
+
+                for (int i=0;i<size;i++)
+                {
+                    spare.add(myReader.nextInt());
+                    myReader.nextLine();
+
+                }
+                if (wid == worker_id) {
+                    BookingModel ret=new BookingModel();
+
+
+                    ret.id=bid;
+                    ret.cid=cid;
+                    ret.wid=wid;
+                    ret.text=text;
+                    ret.status=status;
+                    ret.startTime=start;
+                    ret.endTime=end;
+                    ret.spareParts=spare;
+
+
+                    /*
+                        System.out.print(bid+"\n");
+                    System.out.print(cid+"\n");
+                    System.out.print(wid+"\n");
+                    System.out.print(text+"\n");
+                    System.out.print(status+"\n");
+                    System.out.print(start+"\n");
+                    System.out.print(end+"\n");
+*/
+                    give.add(ret);
+                }
+            }
+        } catch (FileNotFoundException e) {
+            //  System.out.print("Error in reading a file\n");
+            e.printStackTrace();
+        }
+        // System.out.print("ID not found\n");
+
+
+        return give;
+    }
+
+    @Override
+    public ArrayList<BookingModel> get_booking_of_worker(int worker_id, String status) {
+        File myobj=new File("Booking.txt");
+
+        ArrayList<BookingModel> give=new ArrayList<BookingModel>();
+
+
+        try {
+            Scanner myReader = new Scanner(myobj);
+            while(myReader.hasNext()) {
+
+                int bid = myReader.nextInt();
+                myReader.nextLine();
+                int cid = myReader.nextInt();
+                myReader.nextLine();
+                int wid = myReader.nextInt();
+                myReader.nextLine();
+                String text = myReader.nextLine();
+                String status_n = myReader.nextLine();
+                LocalDateTime start = LocalDateTime.parse(myReader.next());
+                LocalDateTime end= LocalDateTime.parse(myReader.next());
+                int size=myReader.nextInt();
+                myReader.nextLine();
+                ArrayList<Integer> spare=new ArrayList<Integer>();
+
+                for (int i=0;i<size;i++)
+                {
+                    spare.add(myReader.nextInt());
+                    myReader.nextLine();
+
+                }
+                if (wid == worker_id&& status_n.equals(status)) {
+                    BookingModel ret=new BookingModel();
+
+
+                    ret.id=bid;
+                    ret.cid=cid;
+                    ret.wid=wid;
+                    ret.text=text;
+                    ret.status=status;
+                    ret.startTime=start;
+                    ret.endTime=end;
+                    ret.spareParts=spare;
+                    /*
+                        System.out.print(bid+"\n");
+                    System.out.print(cid+"\n");
+                    System.out.print(wid+"\n");
+                    System.out.print(text+"\n");
+                    System.out.print(status+"\n");
+                    System.out.print(start+"\n");
+                    System.out.print(end+"\n");
+*/
+                    give.add(ret);
+                }
+            }
+        } catch (FileNotFoundException e) {
+            //  System.out.print("Error in reading a file\n");
+            e.printStackTrace();
+        }
+        // System.out.print("ID not found\n");
+
+
+        return give;
+    }
+
+    @Override
+    public ArrayList<BookingModel> get_booking_of_customer(int customer_id, String status) {
+        File myobj=new File("Booking.txt");
+
+        ArrayList<BookingModel> give=new ArrayList<BookingModel>();
+
+
+        try {
+            Scanner myReader = new Scanner(myobj);
+            while(myReader.hasNext()) {
+
+                int bid = myReader.nextInt();
+                myReader.nextLine();
+                int cid = myReader.nextInt();
+                myReader.nextLine();
+                int wid = myReader.nextInt();
+                myReader.nextLine();
+                String text = myReader.nextLine();
+                String status_n = myReader.nextLine();
+                LocalDateTime start = LocalDateTime.parse(myReader.next());
+                LocalDateTime end= LocalDateTime.parse(myReader.next());
+                int size=myReader.nextInt();
+                myReader.nextLine();
+                ArrayList<Integer> spare=new ArrayList<Integer>();
+
+                for (int i=0;i<size;i++)
+                {
+                    spare.add(myReader.nextInt());
+                    myReader.nextLine();
+
+                }
+                if (cid == customer_id&& status_n.equals(status)) {
+                    BookingModel ret=new BookingModel();
+
+
+                    ret.id=bid;
+                    ret.cid=cid;
+                    ret.wid=wid;
+                    ret.text=text;
+                    ret.status=status;
+                    ret.startTime=start;
+                    ret.endTime=end;
+                    ret.spareParts=spare;
+                    /*
+                        System.out.print(bid+"\n");
+                    System.out.print(cid+"\n");
+                    System.out.print(wid+"\n");
+                    System.out.print(text+"\n");
+                    System.out.print(status+"\n");
+                    System.out.print(start+"\n");
+                    System.out.print(end+"\n");
+*/
+                    give.add(ret);
+                }
+            }
+        } catch (FileNotFoundException e) {
+            //  System.out.print("Error in reading a file\n");
+            e.printStackTrace();
+        }
+        // System.out.print("ID not found\n");
+
+
+        return give;
+    }
+
+    @Override
     public boolean update_booking_status(int booking_id, String status) {
         File myobj=new File("Booking.txt");
 
@@ -1474,7 +1471,7 @@ public class TextDbManager implements DbService {
             int gi=0;
             while(myReader.hasNext()) {
                 BookingModel ret=new BookingModel();
-                ret.spareParts=new ArrayList<Integer>();
+
 
                 int bid = myReader.nextInt();
                 myReader.nextLine();
@@ -1500,21 +1497,14 @@ public class TextDbManager implements DbService {
 
 
                 ret.id=bid;
-                ret.cid=(cid);
-                ret.wid=(wid);
+                ret.cid=cid;
+                ret.wid=wid;
                 ret.text=text;
                 ret.status=status_n;
                 ret.startTime=start;
                 ret.endTime=end;
 
-                for (int i=0;i<spare.size();i++) {
-                    //SparePartModel temp=new SparePartModel();
-                    //temp=get_spare_part();
-                    //if (temp!=null)
-                    ret.spareParts.add(spare.get(i));
-
-
-                }
+                ret.spareParts=spare;
                 if (bid==booking_id) {
                     ret.status=status;
                     check=true;
@@ -1540,14 +1530,8 @@ public class TextDbManager implements DbService {
 
             for (int i = 0; i < give.size(); i++) {
                 mywriter.write(give.get(i).id + "\n");
-                if (give.get(i) !=null)
-                    mywriter.write(give.get(i).cid + "\n");
-                else
-                    mywriter.write(0 + "\n");
-                if (give.get(i) !=null)
-                    mywriter.write(give.get(i).wid + "\n");
-                else
-                    mywriter.write(0 + "\n");
+                mywriter.write(give.get(i).cid + "\n");
+                mywriter.write(give.get(i).wid + "\n");
                 mywriter.write(give.get(i).text + "\n");
                 mywriter.write(give.get(i).status + "\n");
                 mywriter.write(give.get(i).startTime + "\n");
@@ -1575,86 +1559,121 @@ public class TextDbManager implements DbService {
 
     }
 
+    @Override
+    public boolean updateFinishTime(int booking_id, LocalDateTime finishTime) {
+        File myobj=new File("Booking.txt");
 
+        ArrayList<BookingModel> give=new ArrayList<BookingModel>();
+        boolean check=false;
+
+
+        try {
+            Scanner myReader = new Scanner(myobj);
+            int gi=0;
+            while(myReader.hasNext()) {
+                BookingModel ret=new BookingModel();
+
+
+                int bid = myReader.nextInt();
+                myReader.nextLine();
+                int cid = myReader.nextInt();
+                myReader.nextLine();
+                int wid = myReader.nextInt();
+                myReader.nextLine();
+                String text = myReader.nextLine();
+                String status_n = myReader.nextLine();
+                LocalDateTime start = LocalDateTime.parse(myReader.next());
+                LocalDateTime end= LocalDateTime.parse(myReader.next());
+                int size=myReader.nextInt();
+                myReader.nextLine();
+                ArrayList<Integer> spare=new ArrayList<Integer>();
+
+                for (int i=0;i<size;i++)
+                {
+                    spare.add(myReader.nextInt());
+                    myReader.nextLine();
+
+                }
+
+
+
+                ret.id=bid;
+                ret.cid=cid;
+                ret.wid=wid;
+                ret.text=text;
+                ret.status=status_n;
+                ret.startTime=start;
+                ret.endTime=end;
+                ret.spareParts=spare;
+
+
+                if (bid==booking_id) {
+                    ret.endTime=finishTime;
+                    check=true;
+                }
+                give.add(ret);
+                //give.get(gi).spareParts=new ArrayList<SparePartModel>();
+                gi++;
+
+
+            }
+        }
+        catch (FileNotFoundException e) {
+            //  System.out.print("Error in reading a file\n");
+            e.printStackTrace();
+            return false;
+        }
+        // System.out.print("ID not found\n");
+
+
+        try {
+            FileWriter mywriter = new FileWriter("Booking.txt", false);
+
+
+            for (int i = 0; i < give.size(); i++) {
+                mywriter.write(give.get(i).id + "\n");
+                mywriter.write(give.get(i).cid + "\n");
+                mywriter.write(give.get(i).wid + "\n");
+                mywriter.write(give.get(i).text + "\n");
+                mywriter.write(give.get(i).status + "\n");
+                mywriter.write(give.get(i).startTime + "\n");
+                mywriter.write(give.get(i).endTime + "\n");
+                mywriter.write(give.get(i).spareParts.size() + "\n");
+                for (int j = 0; j < give.get(i).spareParts.size(); j++) {
+                    mywriter.write(give.get(i).spareParts.get(j)+ "\n");
+                }
+
+
+
+
+            }
+            mywriter.close();
+            if (check)
+                return true;
+            else
+                return false;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
+    @Override
     public boolean store_spare_holder(int booking_id, int spare_id, int quantity) {
         return false;
     }
 
-
+    @Override
     public ArrayList<SparePartModel> get_all_spare_parts_booking(int booking_id) {
         return null;
     }
 
-
-    public ArrayList<WorkerModel> get_favourites_workers(int customer_id){
-            File myobj=new File(currentPath+"Customer.txt");
-            ArrayList<CustomerModel> store=new ArrayList<CustomerModel>();
-            boolean check=false;
-
-
-            try {
-                Scanner myReader = new Scanner(myobj);
-                while(myReader.hasNext()) {
-                    CustomerModel temp=new CustomerModel();
-                    temp.Favourite=new ArrayList<Integer>();
-
-                    temp.id = myReader.nextInt();
-                    myReader.nextLine();
-                    temp.name = myReader.nextLine();
-                    temp.email = myReader.nextLine();
-                    temp.password = myReader.nextLine();
-                    temp.paymentMethod=myReader.nextLine();
-                    temp.creditno=myReader.nextLine();
-                    temp.wallet = myReader.nextFloat();
-                    myReader.nextLine();
-                    temp.city = myReader.nextLine();
-                    temp.area = myReader.nextLine();
-                    int size = myReader.nextInt();
-                    myReader.nextLine();
-
-                    boolean present=false;
-                    for (int i = 0; i < size; i++) {
-                        temp.Favourite.add(myReader.nextInt());
-                        myReader.nextLine();
-
-                    }
-                    store.add(temp);
-                }
-
-                int index = -1;
-                for(int i = 0;i<store.size();i++){
-                    if(store.get(i).id == customer_id){
-                            index = i;
-                            i=store.size()+1;
-                    }
-                }
-
-                if(index != -1) {
-                    ArrayList<Integer> myfav = store.get(index).Favourite;
-                    ArrayList<WorkerModel> tt = new ArrayList<WorkerModel>();
-                    for (int i = 0; i < myfav.size(); i++) {
-                        tt.add(get_worker(myfav.get(i)));
-                    }
-                    return tt;
-                }
-                else
-                    return new ArrayList<WorkerModel>();
-
-            } catch (FileNotFoundException e) {
-                System.out.print("Error in reading a file\n");
-                e.printStackTrace();
-                System.out.println(e.getMessage());
-                return new ArrayList<WorkerModel>();
-            }
-
-    }
-
-
-
-
+    @Override
     public boolean add_favourite(int customer_id, int worker_id) {
 
-        File myobj=new File(currentPath+"Customer.txt");
+        File myobj=new File("Customer.txt");
         ArrayList<CustomerModel> store=new ArrayList<CustomerModel>();
         boolean check=false;
 
@@ -1664,7 +1683,7 @@ public class TextDbManager implements DbService {
             Scanner myReader = new Scanner(myobj);
             while(myReader.hasNext()) {
                 CustomerModel temp=new CustomerModel();
-                temp.Favourite=new ArrayList<Integer>();
+
 
                 temp.id = myReader.nextInt();
                 myReader.nextLine();
@@ -1695,11 +1714,7 @@ public class TextDbManager implements DbService {
                 }
 
 
-                for (int i=0;i<favourite.size();i++) {
-                    int tempp=favourite.get(i);
-                    //if (tempp != null)
-                    temp.Favourite.add(tempp);
-                }
+                temp.Favourite=favourite;
 
 
                 store.add(temp);
@@ -1707,7 +1722,7 @@ public class TextDbManager implements DbService {
 
             }
         } catch (FileNotFoundException e) {
-            System.out.print("Error in reading a file\n");
+            //  System.out.print("Error in reading a file\n");
             e.printStackTrace();
         }
 
@@ -1715,7 +1730,7 @@ public class TextDbManager implements DbService {
 
 
         try {
-            FileWriter mywriter=new FileWriter(currentPath+ "Customer.txt",false);
+            FileWriter mywriter=new FileWriter("Customer.txt",false);
 
             for (int i=0;i<store.size();i++) {
                 mywriter.write(store.get(i).id + "\n");
@@ -1747,7 +1762,7 @@ public class TextDbManager implements DbService {
         }
     }
 
-
+    @Override
     public boolean remove_favourite(int customer_id, int worker_id) {
 
 
@@ -1760,7 +1775,7 @@ public class TextDbManager implements DbService {
             Scanner myReader = new Scanner(myobj);
             while (myReader.hasNext()) {
                 CustomerModel temp = new CustomerModel();
-                temp.Favourite = new ArrayList<Integer>();
+
 
                 temp.id = myReader.nextInt();
                 myReader.nextLine();
@@ -1791,12 +1806,7 @@ public class TextDbManager implements DbService {
                 }
 
 
-                for (int i = 0; i < favourite.size(); i++) {
-                    int tempp = favourite.get(i);
-                    //if (tempp != null)
-                    temp.Favourite.add(tempp);
-                }
-
+                temp.Favourite=favourite;
 
                 store.add(temp);
 
@@ -1841,13 +1851,78 @@ public class TextDbManager implements DbService {
     }
 
     //not needed
-
+    @Override
     public ArrayList<Integer> get_favourites(int customer_id) {
+
+        File myobj=new File("Customer.txt");
+
+
+
+        try {
+            Scanner myReader = new Scanner(myobj);
+            while(myReader.hasNext()) {
+
+                int id_n = myReader.nextInt();
+                myReader.nextLine();
+                String name = myReader.nextLine();
+                String email = myReader.nextLine();
+                String password = myReader.nextLine();
+                String payment=myReader.nextLine();
+                String credit_no=myReader.nextLine();
+                float wallet = myReader.nextFloat();
+                myReader.nextLine();
+                String city = myReader.nextLine();
+                String area = myReader.nextLine();
+                int size = myReader.nextInt();
+                myReader.nextLine();
+                ArrayList<Integer> favourite = new ArrayList<Integer>();
+
+                for (int i = 0; i < size; i++) {
+                    favourite.add(myReader.nextInt());
+                    myReader.nextLine();
+                }
+
+                if (customer_id== id_n) {
+                    CustomerModel ret=new CustomerModel();
+                    ArrayList<Integer> back=new ArrayList<Integer>();
+                    ret.id=id_n;
+                    ret.name=name;
+                    ret.email=email;
+                    ret.password=password;
+                    ret.paymentMethod=payment;
+                    ret.creditno=credit_no;
+                    ret.wallet=wallet;
+                    ret.city=city;
+                    ret.area=area;
+                    for (int i=0;i<favourite.size();i++) {
+                        back.add(favourite.get(i));
+                    }
+                        /*
+                        System.out.print(id_n+"\n");
+                        System.out.print(name+"\n");
+                        System.out.print(email+"\n");
+                        System.out.print(password+"\n");
+                        System.out.print(payment+"\n");
+                        System.out.print(wallet+"\n");
+                        System.out.print(city+"\n");
+                        System.out.print(area+"\n");
+                        System.out.print(size+"\n");
+                        System.out.print(favourite+"\n");
+                        */
+
+                    return back;
+                }
+            }
+        } catch (FileNotFoundException e) {
+            //  System.out.print("Error in reading a file\n");
+            e.printStackTrace();
+        }
+        // System.out.print("ID not found\n");
         return null;
     }
     //------------
 
-
+    @Override
     public boolean store_customer_billing( int booking_id,String title,String customerName,String workerName,String status,Float totalCost)//give int billing_id by db
     {
         try {
@@ -1871,7 +1946,7 @@ public class TextDbManager implements DbService {
         return true;
     }
 
-
+    @Override
     public BillingModel get_bill(int booking_id) {
         File obj=new File("Billing.txt");
 
@@ -1905,7 +1980,7 @@ public class TextDbManager implements DbService {
         return null;
     }
 
-
+    @Override
     public boolean change_billing_status(int booking_id, String status) {
         File obj=new File("Billing.txt");
         ArrayList<BillingModel> store=new ArrayList<BillingModel>();
@@ -1957,7 +2032,7 @@ public class TextDbManager implements DbService {
     }
 
 
-
+    @Override
     public boolean store_complaint( int customer_id, int worker_id, String complain_text)//give int complain_id by DB
     {
         int id=0;
@@ -1998,7 +2073,7 @@ public class TextDbManager implements DbService {
 
     }
 
-
+    @Override
     public ComplainModel get_complaint(int complaint_id) {
         File obj=new File("Complaint.txt");
 
@@ -2031,7 +2106,7 @@ public class TextDbManager implements DbService {
         return null;
     }
 
-
+    @Override
     public ArrayList<ComplainModel> show_all_complaint(int customer_id) {
         File obj=new File("Complaint.txt");
         ArrayList<ComplainModel> store=new ArrayList<ComplainModel>();
@@ -2066,7 +2141,7 @@ public class TextDbManager implements DbService {
 
     }
 
-
+    @Override
     public boolean store_spar_parts( String name, float cost, int quantity) // give int spare_id
     {
         int id=0;
@@ -2108,7 +2183,7 @@ public class TextDbManager implements DbService {
         return true;
     }
 
-
+    @Override
     public SparePartModel get_spare_part(int part_id) {
 
         File obj=new File("spareParts.txt");
@@ -2141,7 +2216,7 @@ public class TextDbManager implements DbService {
         return null;
     }
 
-
+    @Override
     public ArrayList<SparePartModel> get_all_parts() {
 
         File obj=new File("spareParts.txt");
@@ -2173,7 +2248,7 @@ public class TextDbManager implements DbService {
         return null;
     }
 
-
+    @Override
     public boolean deduct_part(int spare_id, int quantity) {
         File obj=new File("spareParts.txt");
         ArrayList<SparePartModel> give=new ArrayList<SparePartModel>();
@@ -2236,7 +2311,7 @@ public class TextDbManager implements DbService {
 
     }
 
-
+    @Override
     public boolean store_rating(int customer_id, int worker_id, int rating) {
         try {
             FileWriter myWriter=new FileWriter("Rating.txt",true);
@@ -2259,7 +2334,7 @@ public class TextDbManager implements DbService {
         return false;
     }
 
-
+    @Override
     public float get_avg_rating(int worker_id) {
         File obj=new File("Rating.txt");
         ArrayList<RatingModel> store =new ArrayList<RatingModel>();
@@ -2304,7 +2379,7 @@ public class TextDbManager implements DbService {
         return 0f;
     }
 
-
+    @Override
     public ArrayList<RatingModel> getAllRatings(int customer_id) {
         File obj=new File("Rating.txt");
         ArrayList<RatingModel> store =new ArrayList<RatingModel>();
@@ -2342,7 +2417,7 @@ public class TextDbManager implements DbService {
         return null;
     }
 
-
+    @Override
     public boolean store_chat(int sender_id,int reciever_id,String sender_name,String receiver_name,String text) {
         try {
             FileWriter myWriter=new FileWriter("Rating.txt",true);
@@ -2367,7 +2442,7 @@ public class TextDbManager implements DbService {
         return false;
     }
 
-
+    @Override
     public ArrayList<ChatMessageModel> get_chat_history(int customer_id, int worker_id) {
         File obj=new File("Rating.txt");
         ArrayList<ChatMessageModel> store =new ArrayList<ChatMessageModel>();
@@ -2405,4 +2480,8 @@ public class TextDbManager implements DbService {
 
         return null;
     }
+
+
+
+
 }

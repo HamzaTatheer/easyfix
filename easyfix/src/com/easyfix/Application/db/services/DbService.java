@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import com.easyfix.Application.models.*;
 
 public interface DbService {
-    public ArrayList<WorkerModel> get_favourites_workers(int customer_id);
-
 
 public boolean does_customer_exist(int id);
 public int does_customer_exist(String email,String password); //id returned

@@ -63,6 +63,12 @@ public class CustomerManager implements CustomerService {
         DbService db = dbProviders.getDbService();
         try{
         if((db.does_worker_exist(wid)==true)&&(db.does_customer_exist(cid) == true)){
+
+            ArrayList<Integer> customerFavourites = db.get_favourites(cid);
+            if(customerFavourites.contains(wid) == true){
+                throw new Exception("You have already added this worker to favourites");
+            }
+
             return db.add_favourite(cid,wid);
         }
         else{
