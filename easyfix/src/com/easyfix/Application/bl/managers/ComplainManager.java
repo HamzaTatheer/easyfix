@@ -45,7 +45,7 @@ public class ComplainManager implements ComplainService {
         //else
             //throw new Exception("One of the user doesn't exist. Please try again\n");
         public ArrayList<ComplainModel> showAllComplains(int _cid){
-            return null;.
+            return null;
         }
 
 
