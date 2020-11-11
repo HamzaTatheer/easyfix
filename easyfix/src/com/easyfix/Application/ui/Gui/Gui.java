@@ -1,5 +1,5 @@
-package com.easyfix.Application.ui.Gui;/*
 package com.easyfix.Application.ui.Gui;
+
 import com.easyfix.Application.bl.serviceProviders;
 import com.easyfix.Application.bl.services.BookingService;
 import com.easyfix.Application.models.WorkerModel;
@@ -9,6 +9,8 @@ import javafx.event.ActionEvent;
 import com.easyfix.Application.models.WorkerModel;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import com.easyfix.Application.bl.classes.SparePart;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
@@ -18,7 +20,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 import com.easyfix.Application.bl.services.CustomerService;
 import com.easyfix.Application.bl.serviceProviders;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Reflection;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.geometry.Insets;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Gui extends Application {
@@ -29,14 +41,20 @@ public class Gui extends Application {
     Scene scene3;
     Scene scene4;
     Scene scene5;
+    Scene scene6;
+    Scene favouritescene;
+    private ArrayList<Label> names ;
+    private ArrayList<Label> emails;
     static int userid;
+    static int workerid;
     public CustomerService customerService;
     public BookingService bookingService;
 
     public Gui(){
         super();
         customerService = serviceProviders.getCustomerService();
-
+        names = new ArrayList<Label>();
+        emails = new ArrayList<Label>();
     }
 
     @Override
@@ -71,8 +89,48 @@ public class Gui extends Application {
         VBox vbox = new VBox();
         vbox.setAlignment(Pos.TOP_LEFT);
 
-        VBox root = new VBox();
-        root.setAlignment(Pos.TOP_LEFT);
+        ///////////////////////////
+        //VBox root = new VBox();
+        //root.setAlignment(Pos.TOP_LEFT);
+        GridPane gp=new GridPane();
+        gp.setPadding(new Insets(20,20,20,20));
+        gp.setHgap(5);
+        gp.setVgap(5);
+
+        BorderPane bp = new BorderPane();
+        bp.setPadding(new Insets(10,50,50,50));
+
+        //Adding HBox
+        HBox hb = new HBox();
+        hb.setPadding(new Insets(20,20,20,30));
+
+        //Reflection for gridPane
+        Reflection r = new Reflection();
+        r.setFraction(0.7f);
+        gp.setEffect(r);
+
+        //DropShadow effect
+        DropShadow dropShadow = new DropShadow();
+        dropShadow.setOffsetX(5);
+        dropShadow.setOffsetY(5);
+
+        //Adding text and DropShadow effect to it
+        Text text = new Text("EasyFix Login");
+        text.setFont(Font.font("Courier New", FontWeight.BOLD, 28));
+        text.setEffect(dropShadow);
+
+        //Adding text to HBox
+        hb.getChildren().add(text);
+
+        //Add ID's to Nodes
+        bp.setId("bp");
+        gp.setId("root");
+        btn.setId("btnLogin");
+        text.setId("text");
+
+        //Add HBox and GridPane layout to BorderPane Layout
+        bp.setTop(hb);
+        bp.setCenter(gp);
 
         Label name = new Label("Name");
         TextField namee = new TextField();
@@ -83,7 +141,6 @@ public class Gui extends Application {
         Label area = new Label("Area");
         TextField areaa = new TextField();
        // GridPane.setConstraints(btn3,4,6);
-
 
         btn.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -131,18 +188,34 @@ public class Gui extends Application {
             }
 
         });
+
+
         Button Getfavourite = new Button("Getfavourite");
         Getfavourite.setOnAction(new EventHandler<ActionEvent>() {
-
+            
             @Override
             public void handle(ActionEvent event) {
 
+
+                getFav();
+                primaryStage.setScene(favouritescene);
+            }
+            Label nam,email123;
+            private void getFav() {
+                //String fav = favourites.toString();
                 ArrayList<WorkerModel> favourites = customerService.getFavourites(userid);
-                String fav = favourites.toString();
-                System.out.println(fav);
+                //System.out.println(favourites.size());
+                for (WorkerModel fav : favourites)
+                {
+                    nam = new Label(fav.name);
+                    names.add(nam);
+                    email123 = new Label(fav.email);
+                    emails.add(email123);
+                }
             }
 
         });
+        System.out.println(names.size());
         Button EditProfile = new Button("Edit Profile");
         EditProfile.setOnAction(e -> primaryStage.setScene(scene4));
 
@@ -196,17 +269,90 @@ public class Gui extends Application {
             }
 
         });
+        Label three = new Label("saqib");
+        Label four = new Label("saqib@gmail.com");
+        //root.getChildren().addAll(email2,emaill2,pass2,passw2,btn,btn2);
+        scene = new Scene(bp);
+        ////////////////////////////////////////
+        scene.getStylesheets().add(getClass().getResource("Login.css").toExternalForm());
+        //Creating title
 
-        root.getChildren().addAll(email2,emaill2,pass2,passw2,btn,btn2);
-        scene = new Scene(root, 500, 300);
+        gp.addRow(2, email2,emaill2);
+        gp.addRow(3, pass2,passw2);
+        gp.addRow(5, btn);
+        gp.addRow(7, btn2);
 
+        //   scene2.getStylesheets().add(getClass().getResource("signup.css").toExternalForm());
+     //   scene3.getStylesheets().add(getClass().getResource("signup.css").toExternalForm());
+     //   scene4.getStylesheets().add(getClass().getResource("signup.css").toExternalForm());
+     //   scene5.getStylesheets().add(getClass().getResource("signup.css").toExternalForm());
+     //   scene6.getStylesheets().add(getClass().getResource("signup.css").toExternalForm());
+     //   favouritescene.getStylesheets().add(getClass().getResource("signup.css").toExternalForm());
+
+        Label one = new Label("mufa");
+        Label two = new Label("mufa@gmail.com");
+        //String workerss = workers.toString();
+       // Label ww = new Label(workerss);
+
+
+        ArrayList<Label> workersname = new ArrayList<Label>();
+        ArrayList<Label> workersid = new ArrayList<Label>();
+        ArrayList<Label> workersemail = new ArrayList<Label>();workersname.add(one);workersname.add(three);
+        workersemail.add(two);workersemail.add(four);
         vbox.getChildren().addAll(name,namee,email,emaill,pass,passw,city,cityy,area,areaa,btn3);
         scene2 = new Scene(vbox, 500, 300);
         Button addbooking = new Button("Book Worker");
         addbooking.setOnAction(e -> primaryStage.setScene(scene5));
         VBox bookworker = new VBox();
         bookworker.setAlignment(Pos.BASELINE_LEFT);
+        Button booktop = new Button("Book Top worker");
+        ArrayList<Integer> spare = new ArrayList<Integer>();String text1= "Booking your wotker";
+        booktop.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                LocalDateTime time = LocalDateTime.now();
+                try {
+                    bookingService.makeBooking(userid,workerid,text1,time,spare);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+                primaryStage.setScene(scene6);
+            }
+
+        });
+        VBox bookingdone = new VBox();
+        scene6 = new Scene(bookingdone,500,300);
+        Label done = new Label("Booking Successfull");
+        bookingdone.getChildren().add(done);
         scene5 = new Scene(bookworker,500,300);
+        bookworker.getChildren().addAll(workersname);
+        bookworker.getChildren().addAll(workersemail);
+        bookworker.getChildren().add(booktop);
+        addbooking.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                getcloseby();
+                primaryStage.setScene(scene5);
+            }
+            Label n,e;
+            private void getcloseby() {
+                ArrayList<WorkerModel> workers = customerService.getWorkersCloseBy(userid);
+
+                for(WorkerModel work : workers)
+                {
+
+                    n = new Label(work.name);
+                    //workersid.add(work.id.);
+                    workersname.add(n);
+                    e = new Label(work.email);
+                    workersemail.add(e);
+                }
+
+            }
+
+        });
         VBox homepage = new VBox();
         homepage.setAlignment(Pos.BASELINE_CENTER);
         homepage.getChildren().addAll(Getfavourite,EditProfile,addbooking);
@@ -217,6 +363,11 @@ public class Gui extends Application {
         EditProfilee.getChildren().addAll(ccity,ccityy,changecity,carea,careaa,changearea,cpaymethod,cpaymethodd,changepaymethod);
         scene4 = new Scene(EditProfilee,500,300);
 
+        VBox showfav = new VBox();names.add(one);emails.add(two);
+        showfav.setAlignment(Pos.BASELINE_LEFT);
+        showfav.getChildren().addAll(names);
+        showfav.getChildren().addAll(emails);
+        favouritescene = new Scene(showfav,500,300);
         primaryStage.setTitle("EasyFix");
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -232,15 +383,3 @@ public class Gui extends Application {
 
 }
 
-
-*/
-
-
-public class Gui{
-    public Gui(){
-
-    }
-    public static void start(){
-        System.out.println("Fake gui");
-    }
-}
