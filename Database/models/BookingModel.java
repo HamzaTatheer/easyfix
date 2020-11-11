@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 public class BookingModel {
     public int id;
-    public int WorkerName;
-    public int customerName;
+    public int wid;
+    public int cid;
     public String text;
     public String status;
     public LocalDateTime startTime;
