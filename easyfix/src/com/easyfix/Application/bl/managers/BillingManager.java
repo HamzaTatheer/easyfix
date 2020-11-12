@@ -14,7 +14,7 @@ public class BillingManager implements BillingService {
 
     public DbService db;
 
-    BillingManager(){
+    public BillingManager(){
         db = dbProviders.getDbService();
     }
 

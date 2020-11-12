@@ -14,11 +14,11 @@ import java.util.Scanner;
 
 public class TextDbManager implements DbService {
 
-    private static String currentPath = "./src/com/easyfix/Application/db/textDb/";
+    private static String currentPath = "./easyfix/src/com/easyfix/Application/db/textDb/";
+    //private static String currentPath = "./";
 
     @Override
     public boolean does_customer_exist(int id) {
-
         File myobj=new  File(currentPath+"Customer.txt");
 
 
@@ -62,7 +62,6 @@ public class TextDbManager implements DbService {
 
     @Override
     public int does_customer_exist(String email, String password) {
-
         File myobj=new  File(currentPath+"Customer.txt");
 
 
