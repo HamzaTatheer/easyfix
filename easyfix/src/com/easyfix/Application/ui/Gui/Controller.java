@@ -1,5 +1,5 @@
 package com.easyfix.Application.ui.Gui;
-import java.awt.event.ActionEvent;
+//import java.awt.event.ActionEvent;
 import java.io.IOException;
 import com.easyfix.Application.models.*;
 import java.net.URL;
@@ -53,17 +53,22 @@ public class Controller extends UI{
     @FXML
     private TextField name,email,pass,city,area,choice;
 
+    String Choice;
 
     @FXML
     private void handleLoginAction(ActionEvent event) throws Exception{
 
-      //  String Choice=choice.getText();
+
         try {
             System.out.println(email.getText()+ pass.getText());
-            if(Choice == "customer")
+
+            System.out.println("cc "+Choice);
+            if(Choice.equals("customer"))
                 userid = customerService.login(email.getText(),pass.getText());
-            else if(Choice == "worker")
+
+            else if(Choice.equals("worker"))
                 workerid = workerService.login(email.getText(),pass.getText());
+            System.out.println(userid);
             System.out.println("Login Successful");
 
         } catch (Exception e) {
@@ -95,10 +100,10 @@ public class Controller extends UI{
     }
 
     @FXML
-    private void handleRegisterAction(ActionEvent e) throws Exception{
+    private void handleRegisterAction(ActionEvent event) throws Exception{
         int cid=0;
         try {
-            cid = customerService.register(name.getText(),email.getText(),pass.getText(),city.getText(),area.getText());
+            cid = customerService.register(name.getText(),email.getText(),pass.getText(),"123",city.getText(),area.getText());
             System.out.println("Signup successful");
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -116,8 +121,14 @@ public class Controller extends UI{
         }
 
     }
-    @FXML
+    public void transferMessage(String message) {
+        //Display the message
+        Choice=message;
+    }
+  /*  @FXML
     private void handleMainAction(ActionEvent event) throws Exception{
+        Choice=choice.getText();
+        System.out.println(Choice);
         Parent root;
         Stage stage;
 
@@ -128,7 +139,7 @@ public class Controller extends UI{
         stage.setScene(scene);
         stage.show();
 
-    }
+    }*/
     //@Override
     public void initialize(URL url, ResourceBundle resources) {
         // Initialization code can go here.

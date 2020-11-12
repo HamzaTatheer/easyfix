@@ -56,6 +56,7 @@ public class CustomerManager implements CustomerService {
         }
     }
 
+
     public ArrayList<WorkerModel> getFavourites(int cid){
         ArrayList<Integer> w = dbService.get_favourites(cid);
         ArrayList<WorkerModel> workers = new ArrayList<WorkerModel>();
