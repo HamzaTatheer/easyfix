@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.999-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easyfix.Application.ui.Gui.Controller">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easyfix.Application.ui.Gui.BookWorkerController">
     <children>
         <Pane prefHeight="381.0" prefWidth="600.0" styleClass="linear-grade" stylesheets="@test.css">
             <children>
-                <ImageView fitHeight="99.0" fitWidth="152.0" layoutX="14.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="49.0" fitWidth="39.0" layoutX="547.0" layoutY="330.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@Daco_1849574.png" />
                     </image>
                 </ImageView>
+            <ScrollPane layoutX="400.0" prefHeight="200.0" prefWidth="200.0" />
             </children>
         </Pane>
     </children>
