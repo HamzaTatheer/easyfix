@@ -582,13 +582,13 @@ public class SqlDbManager implements DbService {
     }//bid given by default by DB
 
 
-    public  ArrayList<BookingModel> get_booking(int customer_id)
+    public  ArrayList<BookingModel> get_booking(int bid)
     {
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
             Statement mystmt = conn.createStatement();
 
-            ResultSet rs = mystmt.executeQuery("select * from booking where customer_id = "+ customer_id );
+            ResultSet rs = mystmt.executeQuery("select * from booking where booking_id = "+ bid );
             //WorkerModel c1=new WorkerModel();
             ArrayList<BookingModel> c1=new ArrayList<BookingModel>();
             BookingModel c2=new BookingModel();
@@ -706,7 +706,7 @@ public class SqlDbManager implements DbService {
 
 
 
-    public ArrayList<BookingModel> get_booking(int customer_id,String status)
+    public ArrayList<BookingModel> get_booking(int customer_id, String status)
     {
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");

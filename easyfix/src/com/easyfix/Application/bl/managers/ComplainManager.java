@@ -44,8 +44,13 @@ public class ComplainManager implements ComplainService {
         }
         //else
             //throw new Exception("One of the user doesn't exist. Please try again\n");
-        public ArrayList<ComplainModel> showAllComplains(int _cid){
-            return null;
+        public ArrayList<ComplainModel> showAllComplains(int _cid) throws Exception {
+            if(dbService.does_customer_exist(_cid) == true) {
+                return dbService.show_all_complaint(_cid);
+            }
+            else{
+                throw new Exception("Customer Does Not Exist");
+            }
         }
 
 

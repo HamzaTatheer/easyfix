@@ -1,4 +1,5 @@
 package com.easyfix.Application.bl.classes;
+import java.time.Duration;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import com.easyfix.Application.models.BookingModel;
@@ -27,6 +28,29 @@ public class Booking {
         spareParts = _spareparts;
         customer = _customer;
         worker = _worker;
+    }
+
+
+    public float calculateCost(){
+        Duration duration = Duration.between(startTime,endTime);
+        float totalHours = ((duration.getSeconds()/60)/60);
+        int totalCost = 0;
+        for(int i=0;i<spareParts.size();i++){
+            totalCost += spareParts.get(i).getQuantity() * spareParts.get(i).getCost();
+        }
+
+        totalCost += totalHours * worker.getHourlyRate();
+
+        return totalCost;
+    }
+
+    public boolean isBookingFinished(){
+        if(status=="finished"){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
 /*
@@ -93,10 +117,14 @@ public class Booking {
         this.text = text;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public boolean setStatus(String status) {
+        if (status == "pending" || status == "active" || status == "finished") {
+            this.status = status;
+            return true;
+        } else {
+            return false;
+        }
     }
-
     public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }

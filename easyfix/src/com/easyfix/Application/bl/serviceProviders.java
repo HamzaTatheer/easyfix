@@ -11,4 +11,5 @@ public class serviceProviders{
     public static UserService getUserService() {return new UserManager(); }
     public static WorkerService getWorkerService(){return new WorkerManager();}
     public static BookingService getBookingService(){return new BookingManager();}
+    public static SparePartService getSparePartService(){return new SparePartManager();}
 }

@@ -32,6 +32,13 @@ public class Worker extends  User{
         return w;
     }
 
+    public static boolean isRatingCorrect(float value){
+        if((value >=0)&&(value <=5))
+            return true;
+        else
+            return false;
+    }
+
     public Float getAvgRate(){
         return avgRating;
     }
