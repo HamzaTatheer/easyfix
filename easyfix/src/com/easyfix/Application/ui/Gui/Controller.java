@@ -1,62 +1,35 @@
 package com.easyfix.Application.ui.Gui;
 //import java.awt.event.ActionEvent;
-import java.io.IOException;
-import com.easyfix.Application.models.*;
-import java.net.URL;
-import java.util.ResourceBundle;
+import com.easyfix.Application.ui.UI;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-
-import com.easyfix.Application.bl.serviceProviders;
-import com.easyfix.Application.bl.services.BookingService;
-import com.easyfix.Application.models.WorkerModel;
-import com.easyfix.Application.ui.UI;
-import javafx.application.Application;
-import com.easyfix.Application.models.WorkerModel;
-import javafx.event.EventHandler;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
-import com.easyfix.Application.bl.classes.SparePart;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import javafx.scene.control.TextField;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.Label;
-import com.easyfix.Application.bl.services.CustomerService;
-//import com.easyfix.Application.bl.serviceProviders;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.Reflection;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-import javafx.geometry.Insets;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
-import javax.swing.*;
+import java.net.URL;
+import java.util.ResourceBundle;
 
+//import com.easyfix.Application.bl.serviceProviders;
+//Key: controller for login (login.fxml)/register(signup.fxml)
 public class Controller extends UI{
 
-    int userid=0,workerid=0;
+    int userid=-1,workerid=-1;
     @FXML
     private Label label;
     @FXML
-    private Button signup,register,login,next;
+    private Button signup,register,login;
     @FXML
-    private TextField name,email,pass,city,area,choice;
+    private TextField name,email,pass,city,area;
 
     String Choice;
 
     @FXML
-    private void handleLoginAction(ActionEvent event) throws Exception{
+    private void handleLoginAction(ActionEvent event) throws Exception{ //login Button action performed
 
 
         try {
@@ -73,7 +46,7 @@ public class Controller extends UI{
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        if(userid>0 || workerid>0){
+        if(userid>0){ //for now HomePage for Customer
             Parent root;
             Stage stage;
 
@@ -86,7 +59,7 @@ public class Controller extends UI{
         }
     }
     @FXML
-    private void handleSignupAction(ActionEvent e) throws Exception{
+    private void handleSignupAction(ActionEvent e) throws Exception{ //Don't have an account Button action performed
         Parent root;
         Stage stage;
 
@@ -99,7 +72,7 @@ public class Controller extends UI{
     }
 
     @FXML
-    private void handleRegisterAction(ActionEvent event) throws Exception{
+    private void handleRegisterAction(ActionEvent event) throws Exception{ //Signup button action performed
         int cid=0;
         try {
             cid = customerService.register(name.getText(),email.getText(),pass.getText(),"123",city.getText(),area.getText());
@@ -120,7 +93,7 @@ public class Controller extends UI{
         }
 
     }
-    public void transferMessage(String message) {
+    public void transferMessage(String message) { //Communication: pass user's choice from Controller1 (Main.fxml) to Controller (Multiple fxml files)
         //Display the message
         Choice=message;
     }
