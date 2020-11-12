@@ -37,11 +37,18 @@ public class MasterController implements Initializable {
             Path currentRelativePath = Paths.get("");
             String s = currentRelativePath.toAbsolutePath().toString();
             System.out.println("Current relative path is: " + s);
-            Parent loader = FXMLLoader.load(getClass().getResource("LoginCustomerXML.fxml"));
-            Stage mainStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene mainScene = new Scene(loader);
-            mainStage.setScene(mainScene);
-            mainStage.show();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginCustomerXML.fxml"));
+            Parent root = loader.load();
+            //Get controller of scene2
+            //LoginCustomerController scene2Controller = loader.getController();
+            //Pass whatever data you want. You can have multiple method calls here
+            //scene2Controller.transferMessage(inputField.getText());
+
+            //Show scene 2 in new window
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Second Window");
+            stage.show();
         }
         else
             JOptionPane.showMessageDialog(null,"Invalid Input!!!!!!!!!!! Please Enter Worker or Customer");
