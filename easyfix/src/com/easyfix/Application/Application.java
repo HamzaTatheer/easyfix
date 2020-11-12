@@ -3,8 +3,6 @@ package com.easyfix.Application;
 //import com.easyfix.Application.ui.Gui.Gui;
 import com.easyfix.Application.ui.Gui.Gui;
 import com.easyfix.Application.ui.Terminal.Terminal;
-import com.easyfix.Application.ui.UI;
-import com.sun.java.accessibility.util.GUIInitializedListener;
 
 public class Application {
     public static void start() throws Exception {
