@@ -35,7 +35,8 @@ public class controller1 extends UI{
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();
-        } catch (IOException ex) {
+        }
+        catch (IOException ex) {
             System.err.println(ex);
         }
     }

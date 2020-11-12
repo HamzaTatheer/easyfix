@@ -7,7 +7,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -18,13 +17,20 @@ import java.util.ResourceBundle;
 //Key: controller for login (login.fxml)/register(signup.fxml)
 public class Controller extends UI{
 
-    int userid=-1,workerid=-1;
-    @FXML
-    private Label label;
+    private int userid=-1,workerid=-1;
     @FXML
     private Button signup,register,login;
     @FXML
-    private TextField name,email,pass,city,area;
+    private TextField name;
+    @FXML
+    private TextField email;
+    @FXML
+    private TextField pass;
+    @FXML
+    private TextField city;
+    @FXML
+    private TextField area;
+
 
     String Choice;
 
@@ -47,15 +53,22 @@ public class Controller extends UI{
             System.out.println(e.getMessage());
         }
         if(userid>0){ //for now HomePage for Customer
-            Parent root;
-            Stage stage;
 
-            stage = (Stage) login.getScene().getWindow();
-            root = FXMLLoader.load(getClass().getResource("homepage.fxml"));
 
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
+            //Load second scene
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("homepage.fxml"));
+            Parent root = loader.load();
+
+            //Get controller of scene2
+            controllerHomePage scene2Controller = loader.getController();
+            //Pass whatever data you want. You can have multiple method calls here
+            scene2Controller.transferId(userid);
+
+            //Show scene 2 in new window
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
             stage.show();
+
         }
     }
     @FXML
@@ -90,6 +103,23 @@ public class Controller extends UI{
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
+            /*
+            //Load second scene
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("homepage.fxml"));
+            Parent root = loader.load();
+
+            //Get controller of scene2
+            controllerHomePage scene2Controller = loader.getController();
+            //Pass whatever data you want. You can have multiple method calls here
+            scene2Controller.transferId(userid);
+
+            //Show scene 2 in new window
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+             */
+
+
         }
 
     }
@@ -117,5 +147,6 @@ public class Controller extends UI{
         // Initialization code can go here.
         // The parameters url and resources can be omitted if they are not needed
     }
+
 
 }
