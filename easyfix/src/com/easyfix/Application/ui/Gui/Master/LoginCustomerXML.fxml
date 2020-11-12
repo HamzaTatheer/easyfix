@@ -32,7 +32,7 @@
                         <Glow />
                     </effect>
                 </Line>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="WELCOME WORKER!" textAlignment="CENTER" wrappingWidth="260.490234375">
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="WELCOME CUSTOMER!" textAlignment="CENTER" wrappingWidth="260.490234375">
                     <font>
                         <Font size="18.0" />
                     </font>

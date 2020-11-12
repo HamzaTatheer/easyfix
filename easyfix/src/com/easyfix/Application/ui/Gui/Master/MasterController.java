@@ -1,10 +1,11 @@
 package com.easyfix.Application.ui.Gui.Master;
 
-import com.easyfix.Application.ui.Gui.Master.LoginCustomer.*;
+//import com.easyfix.Application.ui.Gui.Master.LoginCustomer.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
@@ -29,18 +30,18 @@ public class MasterController implements Initializable {
         if(message.equalsIgnoreCase("Worker")){
             JOptionPane.showMessageDialog(null,"Worker Successful");
             //Parent fxml= FXMLLoader.load(getClass().getResource("MasterXML.fxml"));
-            Path currentRelativePath = Paths.get("");
-            String s = currentRelativePath.toAbsolutePath().toString();
-            System.out.println("Current relative path is: " + s);
-            FXMLLoader loader = FXMLLoader.load(getClass().getClassLoader().getResource("./src/com/easyfix/Application/ui/Gui/Master/LoginCustomer/LoginCustomerXML.fxml"));
-            Parent root=loader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Second Window");
-            stage.show();
+
         }
         else if(message.equalsIgnoreCase("Customer")){
             JOptionPane.showMessageDialog(null,"Customer Successful");
+            Path currentRelativePath = Paths.get("");
+            String s = currentRelativePath.toAbsolutePath().toString();
+            System.out.println("Current relative path is: " + s);
+            Parent loader = FXMLLoader.load(getClass().getResource("LoginCustomerXML.fxml"));
+            Stage mainStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene mainScene = new Scene(loader);
+            mainStage.setScene(mainScene);
+            mainStage.show();
         }
         else
             JOptionPane.showMessageDialog(null,"Invalid Input!!!!!!!!!!! Please Enter Worker or Customer");
