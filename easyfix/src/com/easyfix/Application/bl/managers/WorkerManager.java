@@ -14,7 +14,8 @@ public class WorkerManager implements WorkerService {
     //return id
     public int login(String email, String password) throws Exception {
         DbService dbservice = dbProviders.getDbService();
-        int userid = -1;
+        int userid = dbservice.does_worker_exist(email,password);
+        //int userid = -1;
 
         if(userid >=0){
             return userid;

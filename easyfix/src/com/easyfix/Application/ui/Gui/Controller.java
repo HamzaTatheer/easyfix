@@ -68,7 +68,6 @@ public class Controller extends UI{
 
             else if(Choice.equals("worker"))
                 workerid = workerService.login(email.getText(),pass.getText());
-            System.out.println(userid);
             System.out.println("Login Successful");
 
         } catch (Exception e) {
