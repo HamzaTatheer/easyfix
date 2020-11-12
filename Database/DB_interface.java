@@ -47,7 +47,7 @@ public interface DB_interface {
 
 
 
-    public boolean store_customer_billing(int booking_id,String title,String customerName,String workerName,String status,Float totalCost);//int billing_id, given by DB
+    public boolean store_customer_billing(int booking_id,String title,int cid,int wid,String status,Float totalCost);//int billing_id, given by DB
     public  BillingModel get_bill(int booking_id);
     public boolean change_billing_status(int booking_id,String status);
 

@@ -2,7 +2,6 @@ package Classes;
 
 import models.*;
 
-import javax.swing.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.io.File;
@@ -1973,14 +1972,14 @@ public class DB_Text implements DB_interface {
     //------------
 
     @Override
-    public boolean store_customer_billing( int booking_id,String title,String customerName,String workerName,String status,Float totalCost)//give int billing_id by db
+    public boolean store_customer_billing(int booking_id, String title, int cid, int wid, String status, Float totalCost)//give int billing_id by db
     {
         try {
             FileWriter myWriter=new FileWriter("Billing.txt",true);
             myWriter.write(booking_id+"\n");
             myWriter.write(title+"\n");
-            myWriter.write(customerName+"\n");
-            myWriter.write(workerName+"\n");
+            myWriter.write(cid +"\n");
+            myWriter.write(wid +"\n");
             myWriter.write(status+"\n");
             myWriter.write(totalCost+"\n");
             myWriter.close();
