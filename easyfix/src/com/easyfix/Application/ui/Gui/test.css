@@ -6,7 +6,7 @@
 -fx-text-fill: #ffffff;
 }
 .button:hover{
--fx-text-fill: #6F4CBB;
+-fx-text-fill: #c45f6e;
 }
 .button:pressed{
 -fx-text-fill: #80AFF5;
