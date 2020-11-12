@@ -1,4 +1,6 @@
 package com.easyfix.Application.ui.Gui;
 
-public class BookWorkerController {
+import com.easyfix.Application.ui.UI;
+
+public class BookWorkerController extends UI {
 }
