@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<Pane id="gp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="628.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easyfix.Application.ui.Gui.Controller">
+   <children>
+      <TextField fx:id="email" layoutX="356.0" layoutY="142.0" prefHeight="33.0" prefWidth="180.0" promptText="Email" />
+      <Button fx:id="login" layoutX="464.0" layoutY="257.0" mnemonicParsing="false" onAction="#handleLoginAction" prefHeight="33.0" prefWidth="72.0" stylesheets="@test.css" text="Login" />
+      <Button fx:id="signup" layoutX="356.0" layoutY="326.0" mnemonicParsing="false" onAction="#handleSignupAction" prefHeight="33.0" prefWidth="189.0" styleClass="button2" stylesheets="@test.css" text="Don'thave an account? Sign up" />
+      <Label layoutX="33.0" layoutY="42.0" prefHeight="51.0" prefWidth="171.0" text="EasyFix">
+         <font>
+            <Font size="43.0" />
+         </font>
+         <textFill>
+            <RadialGradient centerX="0.4866666581895616" centerY="0.40458015267175573" radius="0.5">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.9605262875556946" green="0.030238792300224304" blue="0.076753169298172" opacity="0.9399999976158142" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </Stop>
+               </stops>
+            </RadialGradient>
+         </textFill>
+      </Label>
+      <PasswordField fx:id="pass" layoutX="356.0" layoutY="200.0" prefHeight="33.0" prefWidth="180.0" promptText="Password" />
+      <Pane prefHeight="400.0" prefWidth="233.0" styleClass="linear-grade" stylesheets="@test.css">
+         <children>
+            <ImageView fitHeight="108.0" fitWidth="134.0" layoutX="49.0" layoutY="235.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Daco_1849574.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="39.0" layoutY="53.0" prefHeight="50.0" prefWidth="180.0" text="EasyFix">
+               <font>
+                  <Font size="42.0" />
+               </font>
+               <textFill>
+                  <RadialGradient centerX="0.5366666581895617" centerY="0.5229008143184749" radius="0.5">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.928947389125824" green="0.029244638979434967" blue="0.029244638979434967" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.9710526466369629" green="0.9656578898429871" blue="0.9656578898429871" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </RadialGradient>
+               </textFill>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</Pane>

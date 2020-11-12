@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="363.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easyfix.Application.ui.Gui.Controller">
+   <children>
+      <Pane prefHeight="363.0" prefWidth="218.0" styleClass="linear-grade" stylesheets="@test.css">
+         <children>
+            <ImageView fitHeight="120.0" fitWidth="142.0" layoutX="37.0" layoutY="189.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Daco_1849574.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="33.0" layoutY="42.0" prefHeight="51.0" prefWidth="171.0" text="EasyFix">
+               <font>
+                  <Font size="43.0" />
+               </font>
+               <textFill>
+                  <RadialGradient centerX="0.4866666581895616" centerY="0.40458015267175573" radius="0.5">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.9605262875556946" green="0.030238792300224304" blue="0.076753169298172" opacity="0.9399999976158142" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </RadialGradient>
+               </textFill>
+            </Label>
+         </children></Pane>
+      <Button fx:id="register" onAction="#handleRegisterAction" layoutX="496.0" layoutY="318.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="70.0" stylesheets="@test.css" text="Signup" />
+      <TextField fx:id="name" layoutX="315.0" layoutY="66.0" prefHeight="25.0" prefWidth="162.0" promptText="Name" />
+      <TextField fx:id="email" layoutX="315.0" layoutY="119.0" prefHeight="25.0" prefWidth="162.0" promptText="Email" />
+      <TextField fx:id="city" layoutX="315.0" layoutY="223.0" prefHeight="25.0" prefWidth="162.0" promptText="City" />
+      <TextField fx:id="area" layoutX="315.0" layoutY="267.0" prefHeight="25.0" prefWidth="162.0" promptText="Area" />
+      <PasswordField fx:id="pass" layoutX="315.0" layoutY="169.0" prefHeight="25.0" prefWidth="162.0" promptText="Password" />
+   </children>
+</Pane>
