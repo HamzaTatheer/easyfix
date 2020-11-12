@@ -1,6 +1,6 @@
 package com.easyfix.Application.ui.Gui.Master;
 
-//import com.easyfix.Application.ui.Gui.Master.LoginCustomer.*;
+//import com.easyfix.Application.ui.Gui.LoginCustomer.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,32 +26,56 @@ public class MasterController implements Initializable {
 
     @FXML
     void checkWCLogin(ActionEvent event) throws IOException {
-        String message=txt_1.getText();
-        if(message.equalsIgnoreCase("Worker")){
-            JOptionPane.showMessageDialog(null,"Worker Successful");
-            //Parent fxml= FXMLLoader.load(getClass().getResource("MasterXML.fxml"));
+        try {
+            String message = txt_1.getText();
+            if (message.equalsIgnoreCase("Worker")) {
+                JOptionPane.showMessageDialog(null, "Worker Successful");
+                //Path currentRelativePath = Paths.get("");
+                //String s = currentRelativePath.toAbsolutePath().toString();
+                //System.out.println("Current relative path is: " + s);
+                final Node source = (Node) event.getSource();
+                final Stage stage = (Stage) source.getScene().getWindow();
+                stage.close();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginWorker\\LoginWorkerXML.fxml"));
+                Parent root = loader.load();
+                //Get controller of scene2
+                //LoginCustomerController scene2Controller = loader.getController();
+                //Pass whatever data you want. You can have multiple method calls here
+                //scene2Controller.transferMessage(inputField.getText());
 
-        }
-        else if(message.equalsIgnoreCase("Customer")){
-            JOptionPane.showMessageDialog(null,"Customer Successful");
-            Path currentRelativePath = Paths.get("");
-            String s = currentRelativePath.toAbsolutePath().toString();
-            System.out.println("Current relative path is: " + s);
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginCustomerXML.fxml"));
-            Parent root = loader.load();
-            //Get controller of scene2
-            //LoginCustomerController scene2Controller = loader.getController();
-            //Pass whatever data you want. You can have multiple method calls here
-            //scene2Controller.transferMessage(inputField.getText());
+                //Show scene 2 in new window
+                Stage stage1 = new Stage();
+                stage1.setScene(new Scene(root));
+                stage1.setTitle("EasyFix|LoginWorker");
+                stage1.show();
 
-            //Show scene 2 in new window
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Second Window");
-            stage.show();
+            }
+            else if (message.equalsIgnoreCase("Customer")) {
+                JOptionPane.showMessageDialog(null, "Customer Successful");
+                Path currentRelativePath = Paths.get("");
+                //String s = currentRelativePath.toAbsolutePath().toString();
+                //System.out.println("Current relative path is: " + s);
+                final Node source = (Node) event.getSource();
+                final Stage stage = (Stage) source.getScene().getWindow();
+                stage.close();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginCustomer\\LoginCustomerXML.fxml"));
+                Parent root = loader.load();
+                //Get controller of scene2
+                //LoginCustomerController scene2Controller = loader.getController();
+                //Pass whatever data you want. You can have multiple method calls here
+                //scene2Controller.transferMessage(inputField.getText());
+
+                //Show scene 2 in new window
+                Stage stage1 = new Stage();
+                stage1.setScene(new Scene(root));
+                stage1.setTitle("EasyFix|LoginCustomer");
+                stage1.show();
+            } else
+                JOptionPane.showMessageDialog(null, "Invalid Input!!!!!!!!!!! Please Enter Worker or Customer");
         }
-        else
-            JOptionPane.showMessageDialog(null,"Invalid Input!!!!!!!!!!! Please Enter Worker or Customer");
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

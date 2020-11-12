@@ -15,7 +15,7 @@ public class MasterMainApp extends Application {
     @Override
     public void start(Stage primaryStage)throws Exception {
         Parent fxml= FXMLLoader.load(getClass().getResource("MasterXML.fxml"));
-        primaryStage.setTitle("EasyFix");
+        primaryStage.setTitle("EasyFix|MainPage");
         Scene scene=new Scene(fxml);
         primaryStage.setScene(scene);
         primaryStage.show();

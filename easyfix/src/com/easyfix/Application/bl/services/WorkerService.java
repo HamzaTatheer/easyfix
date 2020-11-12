@@ -6,7 +6,7 @@ import com.easyfix.Application.models.WorkerModel;
 import java.util.ArrayList;
 
 public interface WorkerService {
-    public int login(String email,String password) throws Exception;
+    public int login(String email,String password) throws Exception; //done
     public WorkerModel getWorker(int id) throws Exception;
     public ArrayList<WorkerModel> getAllWorkers();
     public ArrayList<WorkerModel> getWorkers(String city,String area);
