@@ -198,22 +198,20 @@ public class dbsql implements DB_interface {
                 c1.city=rs.getString("city");
                 c1.area=rs.getString("area");
 
-
             }
 
             Statement mystmt2 = conn.createStatement();
 
             ResultSet rs2 = mystmt2.executeQuery("select * from favorite where id = "+id  );
-
             int workerid;
 
-
             int j=0;
+            c1.Favourite=new ArrayList<Integer>();
             while (rs2.next())
             {
                 workerid=rs2.getInt("favourite");
 
-                c1.Favourite.add(2);// get funtion
+                c1.Favourite.add(workerid);// get funtion
             }
 
             return c1;
@@ -619,13 +617,13 @@ public class dbsql implements DB_interface {
 
                 Statement mystmt2 = conn.createStatement();
 
-                ResultSet rs2 = mystmt2.executeQuery("select * from booking_sparepart where bid = "+rs.getInt("bid")  );
+                ResultSet rs2 = mystmt2.executeQuery("select * from booking_spareparts where bid = "+rs.getInt("bid")  );
 
-                SparePartModel s1=new SparePartModel();
+                //SparePartModel s1=new SparePartModel();
                 int partid;
 
 
-                int j=0;
+                c2.spareParts=new ArrayList<Integer>();
                 while (rs2.next())
                 {
                     partid=rs2.getInt("part_id");
@@ -729,9 +727,8 @@ public class dbsql implements DB_interface {
                 LocalDateTime ss= LocalDateTime.from(st.toLocalTime());
 
 
-
-                //c2.startTime=rs.getTimestamp("start_time");
-                //c2.endTime=rs.getTimestamp("end_time");
+                String s11=sd.toString()+st.toString();
+                System.out.println("s11  "+s11);
                 c2.startTime= LocalDateTime.from(sd.toLocalDate());
                 c2.endTime= LocalDateTime.from(sd.toLocalDate());
                 c1.add(c2);
@@ -740,13 +737,14 @@ public class dbsql implements DB_interface {
 
                 Statement mystmt2 = conn.createStatement();
 
-                ResultSet rs2 = mystmt2.executeQuery("select * from booking_sparepart where bid = "+rs.getInt("bid")  );
+                ResultSet rs2 = mystmt2.executeQuery("select * from booking_spareparts where bid = "+rs.getInt("bid")  );
 
-                SparePartModel s1=new SparePartModel();
+                //SparePartModel s1=new SparePartModel();
                 int partid;
 
 
-                int j=0;
+                c2.spareParts=new ArrayList<Integer>();
+
                 while (rs2.next())
                 {
                     partid=rs2.getInt("part_id");
@@ -809,15 +807,15 @@ public class dbsql implements DB_interface {
             ResultSet rs = mystmt.executeQuery("select * from billing where bid = "+ booking_id );
 
             ArrayList<BillingModel> c1=new ArrayList<BillingModel>();
+            BillingModel c2=new BillingModel();
 
             int i=0;
             while (rs.next()) {
 
-                c1.get(i).id= rs.getInt("id");
-                c1.get(i).bid=rs.getInt("bid");
-                c1.get(i).totalCost=rs.getInt("totalcost");
-
-                i++;
+                c2.id= rs.getInt("id");
+                c2.bid=rs.getInt("bid");
+                c2.totalCost=rs.getInt("totalcost");
+                c1.add(c2);
 
             }
             return c1;
@@ -1005,7 +1003,7 @@ public class dbsql implements DB_interface {
     }
 
 
-    public ArrayList<SparePartModel> get_all_parts()
+    public ArrayList<SparePartModel> get_all_parts()//done
     {
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
@@ -1014,18 +1012,18 @@ public class dbsql implements DB_interface {
             ResultSet rs = mystmt.executeQuery("select * from sparepart where quantity > 0 " );
 
             ArrayList<SparePartModel> c1=new ArrayList<SparePartModel>();
+            SparePartModel c2=new SparePartModel();
 
             int i=0;
             while (rs.next()) {
 
-                c1.get(i).id= rs.getInt("id");
+                c2.id= rs.getInt("id");
 
-                c1.get(i).name=rs.getString("part_name");
-                c1.get(i).cost=rs.getFloat("cost");
-                c1.get(i).quantity=rs.getInt("quantity");
+                c2.name=rs.getString("part_name");
+                c2.cost=rs.getFloat("cost");
+                c2.quantity=rs.getInt("quantity");
+                c1.add(c2);
 
-
-                i++;
 
             }
             return c1;
@@ -1091,7 +1089,7 @@ public class dbsql implements DB_interface {
         return false;
     }
 
-    public float get_avg_rating(int worker_id)
+    public float get_avg_rating(int worker_id)//done
     {
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
@@ -1122,7 +1120,7 @@ public class dbsql implements DB_interface {
     }
 
 
-    public ArrayList<RatingModel> getAllRatings(int customer_id)
+    public ArrayList<RatingModel> getAllRatings(int customer_id)//done
     {
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
@@ -1131,16 +1129,17 @@ public class dbsql implements DB_interface {
             ResultSet rs = mystmt.executeQuery("select * from rating where cid = "+ customer_id );
 
             ArrayList<RatingModel> c1=new ArrayList<RatingModel>();
+            RatingModel c2=new RatingModel();
 
             int i=0;
             while (rs.next()) {
 
 
-                c1.get(i).cid=rs.getInt("cid");
-                c1.get(i).wid=rs.getInt("wid");
-                c1.get(i).rating=rs.getInt("rate");
+                c2.cid=rs.getInt("cid");
+                c2.wid=rs.getInt("wid");
+                c2.rating=rs.getInt("rate");
+                c1.add(c2);
 
-                i++;
 
             }
             return c1;
@@ -1154,13 +1153,13 @@ public class dbsql implements DB_interface {
     }
 
 
-    public  boolean store_chat( int senderId, int receiverId, String senderName, String receiverName, String message)
+    public  boolean store_chat( int senderId, int receiverId, String senderName, String receiverName, String message)//done
     {
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
             Statement mystmt = conn.createStatement();
 
-            String sql = "INSERT INTO char(senderId,receiverId,senderName,receiverName,message) " + "VALUES(?,?,?,?,?)";
+            String sql = "INSERT INTO chat(senderId,receiverId,senderName,receiverName,message) " + "VALUES(?,?,?,?,?)";
             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, senderId);
             pstmt.setInt(2,receiverId);
@@ -1182,7 +1181,7 @@ public class dbsql implements DB_interface {
         }
         return false;
     }
-    public ArrayList<ChatMessageModel> get_chat_history(int customer_id,int worker_id)
+    public ArrayList<ChatMessageModel> get_chat_history(int customer_id,int worker_id)//done
     {
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
@@ -1191,18 +1190,18 @@ public class dbsql implements DB_interface {
             ResultSet rs = mystmt.executeQuery("select * from chat where senderId = "+ customer_id +"and receiverId = "+worker_id);
 
             ArrayList<ChatMessageModel> c1=new ArrayList<ChatMessageModel>();
+            ChatMessageModel c2=new ChatMessageModel();
 
             int i=0;
             while (rs.next()) {
 
 
-                c1.get(i).senderId=rs.getInt("senderId");
-                c1.get(i).receiverId=rs.getInt("receiverId");
-                c1.get(i).senderName=rs.getString("senderName");
-                c1.get(i).receiverName=rs.getString("receiverName");
-                c1.get(i).message=rs.getString("message");
-
-                i++;
+                c2.senderId=rs.getInt("senderId");
+                c2.receiverId=rs.getInt("receiverId");
+                c2.senderName=rs.getString("senderName");
+                c2.receiverName=rs.getString("receiverName");
+                c2.message=rs.getString("message");
+                c1.add(c2);
 
             }
             return c1;
@@ -1216,6 +1215,105 @@ public class dbsql implements DB_interface {
     }
 
 
+    public boolean change_billing_status(int booking_id, String status)//done
+    {
+
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            String sql = "update booking set booking_status = ? where bid = ?" ;
+            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            pstmt.setString(1,status);
+            pstmt.setInt(2,booking_id);
+            int rowAffected2 = pstmt.executeUpdate();
+            return true;
+
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+
+    }
+
+
+
+    public boolean update_customerWallet(int id, Float money)
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            String sql = "update customers set wallet = wallet + ? where id = ?" ;
+            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            pstmt.setFloat(1,money);
+            pstmt.setInt(2,id);
+            int rowAffected2 = pstmt.executeUpdate();
+            return true;
+
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+
+
+    public ArrayList<WorkerModel> get_favourites_workers(int customer_id)
+    {
+        return null;
+    }
+    public ArrayList<BookingModel> get_booking_of_customer(int customer_id) {
+        return null;
+    }
+
+    public ArrayList<BookingModel> get_booking_of_worker(int worker_id) {
+        return null;
+    }
+
+    public ArrayList<BookingModel> get_booking_of_customer(int customer_id, String status) {
+        return null;
+    }
+
+    public ArrayList<BookingModel> get_booking_of_worker(int worker_id, String status) {
+        return null;
+    }
+
+    public ArrayList<Integer> get_favourites(int customer_id) {
+        return null;
+    }
+
+    public ArrayList<SparePartModel> get_all_spare_parts_booking(int booking_id) {
+        return null;
+    }
+
+    public BillingModel get_bill(int booking_id) {
+        return null;
+    }
+
+
+
+    public boolean updateFinishTime(int booking_id, LocalDateTime finishTime) {
+        return false;
+    }
+
+    public boolean store_spare_holder(int booking_id, int spare_id, int quantity) {
+        return false;
+    }
+
+    public boolean store_customer_billing(int booking_id, String title, String customerName, String workerName, String status, Float totalCost) {
+        return false;
+    }
 
 
 }
