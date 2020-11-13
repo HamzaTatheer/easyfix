@@ -1,4 +1,5 @@
 package com.easyfix.Application.ui.Gui;
+
 import com.easyfix.Application.models.WorkerModel;
 import com.easyfix.Application.ui.UI;
 import javafx.collections.FXCollections;
@@ -26,17 +27,29 @@ public class BookWorkerController extends UI {
     @FXML
     private TableColumn<WorkerJAVAFX, Float> _Rating;
 
+    @FXML
+    private TableColumn<WorkerJAVAFX, Float> _HourlyRate;
+
+    @FXML
+    private TableColumn<WorkerJAVAFX, String> _Speciality;
+
     public void initializeWorkerArrayList(ArrayList<WorkerModel> W,int c){
         getWorkers=new ArrayList<WorkerModel>(W);
         c_id=c;
+        //setSpacing(5);
+        TableView.setStyle( "-fx-alignment: Centre;");
+
         _Id.setCellValueFactory(new PropertyValueFactory<WorkerJAVAFX,Integer>("_Id"));
         _Name.setCellValueFactory(new PropertyValueFactory<WorkerJAVAFX,String>("_Name"));
         _Rating.setCellValueFactory(new PropertyValueFactory<WorkerJAVAFX, Float>("_Rating"));
-        list= FXCollections.observableArrayList(
-            new WorkerJAVAFX(1, "ali", (float) 2.0)
-        
-        );
+        _HourlyRate.setCellValueFactory(new PropertyValueFactory<WorkerJAVAFX, Float>("_HourlyRate"));
+        _Speciality.setCellValueFactory(new PropertyValueFactory<WorkerJAVAFX,String>("_Speciality"));
+        list= FXCollections.observableArrayList();
+        for (WorkerModel workerModel : getWorkers) {
+            list.add(new WorkerJAVAFX(workerModel.id,workerModel.name,workerModel.avgRating,workerModel.hourlyRate,workerModel.speciality));
+        }
         TableView.setItems(list);
+
     }
 
 

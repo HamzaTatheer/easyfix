@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="522.0" prefWidth="659.0" xmlns="http://javafx.com/javafx/8.0.999-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easyfix.Application.ui.Gui.BookWorkerController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="522.0" prefWidth="659.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easyfix.Application.ui.Gui.BookWorkerController">
     <children>
         <Pane prefHeight="522.0" prefWidth="659.0" styleClass="linear-grade" stylesheets="@test.css">
             <children>
@@ -15,16 +21,33 @@
                         <Image url="@Daco_1849574.png" />
                     </image>
                 </ImageView>
-            <TableView fx:id="TableView" layoutX="1.0" layoutY="47.0" prefHeight="200.0" prefWidth="659.0">
-              <columns>
-                <TableColumn fx:id="_Id" prefWidth="75.0" text="Id" />
-                <TableColumn fx:id="_Name" prefWidth="75.0" text="Name" />
-                  <TableColumn fx:id="_Rating" prefWidth="75.0" text="Rating" />
-              </columns>
-               <columnResizePolicy>
-                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-               </columnResizePolicy>
-            </TableView>
+            <ScrollPane fitToWidth="true" layoutX="-1.0" layoutY="69.0" prefHeight="182.0" prefWidth="659.0">
+               <content>
+                  <TableView fx:id="TableView" nodeOrientation="LEFT_TO_RIGHT" opacity="0.91" prefHeight="182.0" prefWidth="644.0" style="-fx-background-color: pink;">
+                    <columns>
+                      <TableColumn fx:id="_Id" editable="false" prefWidth="100.0" style="-fx-alignment: CENTER;" text="Id" />
+                      <TableColumn fx:id="_Name" editable="false" prefWidth="150.0" style="-fx-alignment: CENTER;" text="Name" />
+                        <TableColumn fx:id="_Rating" editable="false" prefWidth="100.0" style="-fx-alignment: CENTER;" text="Rating" />
+                        <TableColumn fx:id="_HourlyRate" editable="false" prefWidth="150.0" style="-fx-alignment: CENTER;" text="HourlyRate" />
+                        <TableColumn fx:id="_Speciality" editable="false" prefWidth="150.0" style="-fx-alignment: CENTER;" text="Speciality" />
+                    </columns>
+                     <effect>
+                        <ColorAdjust brightness="0.02" contrast="0.36" saturation="0.17" />
+                     </effect>
+                     <cursor>
+                        <Cursor fx:constant="CLOSED_HAND" />
+                     </cursor>
+                     <opaqueInsets>
+                        <Insets bottom="33.0" right="33.0" top="23.0" />
+                     </opaqueInsets>
+                  </TableView>
+               </content>
+            </ScrollPane>
+            <Text layoutX="14.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Worker Details" wrappingWidth="346.13671875">
+               <font>
+                  <Font name="Algerian" size="36.0" />
+               </font>
+            </Text>
             </children>
         </Pane>
     </children>
