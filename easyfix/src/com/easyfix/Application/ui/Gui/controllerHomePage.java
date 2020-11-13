@@ -1,6 +1,7 @@
 package com.easyfix.Application.ui.Gui;
 
 import com.easyfix.Application.bl.classes.Customer;
+import com.easyfix.Application.models.BookingModel;
 import com.easyfix.Application.models.WorkerModel;
 import com.easyfix.Application.ui.UI;
 import javafx.event.ActionEvent;
@@ -39,7 +40,7 @@ public class controllerHomePage extends UI {
     private Button EditProfile1;
 
     @FXML
-    private Button gotoChangeCity,gotoChangeArea,gotoChangePayment,home,profile;
+    private Button gotoChangeCity,gotoChangeArea,gotoChangePayment,home,profile,finishedbooking;
 
     @FXML
     public void handleBookWorkerAction(ActionEvent event) throws IOException {
@@ -134,8 +135,33 @@ public class controllerHomePage extends UI {
     }
 
     @FXML
-    public void handleShowFinishedBooking(ActionEvent event) {
+    public void handleShowFinishedBooking(ActionEvent event)throws Exception {
 
+        System.out.println("ID "+Cust_id);
+            ArrayList<BookingModel> getBook = bookingService.showFinishedBookingOfCustomer(Cust_id);
+              /*  for (BookingModel bookingModel : getBook) {
+                    System.out.print(bookingModel.id + ".");
+                    System.out.print(bookingModel.wid + ".");
+                    System.out.print(bookingModel.cid + ".");
+                    System.out.print(bookingModel.text);
+                    System.out.print("-");
+                    System.out.println(" " + bookingModel.status);
+                }*/
+
+            //Load second scene
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("showfinishedbooking.fxml"));
+            Parent root = loader.load();
+
+            //Get controller of scene2
+            controllerFinishedBooking scene2Controller = loader.getController();
+            //Pass whatever data you want. You can have multiple method calls here
+
+            scene2Controller.initializeBookingArrayList(getBook,Cust_id);
+
+            //Show scene 2 in new window
+            Stage stage = (Stage) finishedbooking.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
     }
 
     @FXML
@@ -149,8 +175,8 @@ public class controllerHomePage extends UI {
         stage = (Stage) btn.getScene().getWindow();
         root = FXMLLoader.load(getClass().getResource(file));
 
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
+        stage = (Stage) btn.getScene().getWindow();
+        stage.setScene(new Scene(root));
         stage.show();
     }
     @FXML
@@ -165,7 +191,7 @@ public class controllerHomePage extends UI {
         scene2Controller.transferId(Cust_id);
 
         //Show scene 2 in new window
-        Stage stage=(Stage) profile.getScene().getWindow();;
+        Stage stage=(Stage) profile.getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
 
