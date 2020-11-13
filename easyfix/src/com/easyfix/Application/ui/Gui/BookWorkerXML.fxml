@@ -64,7 +64,13 @@
                   <Font name="Bodoni MT" size="24.0" />
                </font>
             </Text>
-            <Button layoutX="305.0" layoutY="409.0" mnemonicParsing="false" text="BOOK" />
+            <Button layoutX="277.0" layoutY="446.0" mnemonicParsing="false" text=" BOOK WORKER" />
+            <Text layoutX="86.0" layoutY="406.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter Worker ID" wrappingWidth="202.13671875">
+               <font>
+                  <Font name="Bodoni MT" size="24.0" />
+               </font>
+            </Text>
+            <TextField layoutX="294.0" layoutY="386.0" prefHeight="25.0" prefWidth="72.0" promptText="ID" />
             </children>
         </Pane>
     </children>
