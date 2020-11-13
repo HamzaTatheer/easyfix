@@ -47,6 +47,9 @@ public class BillingManager implements BillingService {
         ArrayList<SparePart> spareParts = new ArrayList<>();
         ArrayList<SparePartModel> sparePartModels = db.get_all_spare_parts_booking(bid);
 
+        if(sparePartModels == null)
+            sparePartModels = new ArrayList<SparePartModel>();
+
         for(int i=0;i<sparePartModels.size();i++){
             spareParts.add(new SparePart(sparePartModels.get(i)));
         }

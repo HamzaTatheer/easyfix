@@ -34,6 +34,9 @@ public class Booking {
     public float calculateCost(){
         Duration duration = Duration.between(startTime,endTime);
         float totalHours = ((duration.getSeconds()/60)/60);
+        if(totalHours == 0)
+            totalHours +=1;
+
         int totalCost = 0;
         for(int i=0;i<spareParts.size();i++){
             totalCost += spareParts.get(i).getQuantity() * spareParts.get(i).getCost();

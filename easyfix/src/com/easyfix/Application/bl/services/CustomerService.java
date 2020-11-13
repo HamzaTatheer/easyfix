@@ -11,6 +11,7 @@ public interface CustomerService{
     public ArrayList<WorkerModel> getFavourites(int cid);
     public boolean addToFavourite(int cid,int wid) throws Exception;
     public boolean changePaymentMethod(int cid,String newMethod);
+    public boolean payMoney(int cid,float amount);
     public ArrayList<WorkerModel> getWorkersCloseBy(int cid);
     public boolean changeCity(int cid,String newCity);
     public boolean changeArea(int cid,String newArea);

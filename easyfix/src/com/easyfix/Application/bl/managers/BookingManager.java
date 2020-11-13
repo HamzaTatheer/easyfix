@@ -7,6 +7,7 @@ import com.easyfix.Application.bl.classes.Worker;
 import com.easyfix.Application.bl.services.BookingService;
 import com.easyfix.Application.db.dbProviders;
 import com.easyfix.Application.db.services.DbService;
+import com.easyfix.Application.models.BillingModel;
 import com.easyfix.Application.models.BookingModel;
 
 import java.time.LocalDateTime;
@@ -51,6 +52,26 @@ public class BookingManager implements BookingService {
         //if it does return false
         //if it does not create booking
         return db.store_booking(mybooking.getCustomer().getId(),mybooking.getWorker().getId(),mybooking.getText(),mybooking.getStatus(),mybooking.getStartTime(),mybooking.getEndTime(),_sparePart);
+    }
+
+    public boolean payForBooking(int cid,int bid) throws Exception {
+        CustomerManager customerManager = new CustomerManager();
+        BillingManager billManager = new BillingManager();
+        BillingModel bill;
+        try {
+            bill = billManager.showBill(bid);
+        } catch (Exception e) {
+            throw new Exception(e);
+        }
+
+        try {
+            customerManager.payMoney(cid, bill.totalCost);
+            finishBooking(bid);
+            return true;
+        }
+        catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
     }
 
     public Boolean acceptBooking(int _bid){

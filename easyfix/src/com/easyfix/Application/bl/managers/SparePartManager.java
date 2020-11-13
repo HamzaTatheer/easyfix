@@ -20,4 +20,8 @@ public class SparePartManager implements SparePartService {
     public ArrayList<SparePartModel> showAllSpareParts(){
         return db.get_all_parts();
     }
+
+    public boolean addSparePartsToBooking(int bid,int pid,int quantity){
+        return db.store_spare_holder(bid,pid,quantity);
+    }
 }
