@@ -23,12 +23,12 @@
                 </Button>
             </children>
         </Pane>
-        <Label layoutX="37.0" layoutY="161.0" prefHeight="36.0" prefWidth="161.0" text="Change City" textFill="#0606a4">
+        <Label layoutX="37.0" layoutY="161.0" prefHeight="36.0" prefWidth="161.0" text="Change Area" textFill="#0606a4">
             <font>
                 <Font name="System Bold" size="25.0" />
             </font>
         </Label>
         <TextField fx:id="getarea" layoutX="198.0" layoutY="226.0" prefHeight="36.0" prefWidth="195.0" promptText="Enter Area" />
-        <Button fx:id="changearea" onAction="#handleChangeCityAction" layoutX="324.0" layoutY="281.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" stylesheets="@test.css" text="Change" />
+        <Button fx:id="changearea" onAction="#handleChangeAreaAction" layoutX="324.0" layoutY="281.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" stylesheets="@test.css" text="Change" />
     </children>
 </Pane>
