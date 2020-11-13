@@ -34,7 +34,7 @@ public class BookWorkerController extends UI {
 
     @FXML
     private TableColumn<WorkerJAVAFX, String> _Speciality;
-    public void initializeWorkerArrayList(ArrayList<WorkerModel> W, int c) {
+   /* public void initializeWorkerArrayList(ArrayList<WorkerModel> W, int c) {
         getWorkers = new ArrayList<WorkerModel>(W);
         c_id = c;
         //setSpacing(5);
@@ -48,7 +48,9 @@ public class BookWorkerController extends UI {
         list = FXCollections.observableArrayList();
         for (WorkerModel workerModel : getWorkers) {
             list.add(new WorkerJAVAFX(workerModel.id, workerModel.name, workerModel.avgRating, workerModel.hourlyRate, workerModel.speciality));
-            public void initializeWorkerArrayList (ArrayList < WorkerModel > W,int c){
+        }
+    }*/
+            public void initializeWorkerArrayList(ArrayList < WorkerModel > W,int c){
                 getWorkers = new ArrayList<WorkerModel>(W);
                 c_id = c;
                 //setSpacing(5);
@@ -74,4 +76,3 @@ public class BookWorkerController extends UI {
             public void HandleActionAddToSparePart (ActionEvent actionEvent){
             }
         }
-    }

@@ -14,22 +14,22 @@
                   <Image url="@PngItem_1468479.png" />
                </image>
             </ImageView>
-            <Button fx:id="gotoChangeCity" onAction="#handlegotoChangeCityAction" layoutX="138.0" layoutY="78.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Change City" textFill="WHITE">
+            <Button fx:id="gotoChangeCity" onAction="#handleEditProfile1Action" layoutX="138.0" layoutY="78.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Change City" textFill="WHITE">
                <effect>
                   <InnerShadow />
                </effect>
             </Button>
-            <Button fx:id="gotoChangeArea" layoutX="233.0" layoutY="78.0" mnemonicParsing="false" text="Change Area">
+            <Button fx:id="gotoChangeArea" onAction="#handleEditProfile1Action" layoutX="233.0" layoutY="78.0" mnemonicParsing="false" text="Change Area">
                <effect>
                   <InnerShadow />
                </effect>
             </Button>
-            <Button fx:id="gotoChangePayment" layoutX="328.0" layoutY="78.0" mnemonicParsing="false" text="Change Payment Method">
+            <Button fx:id="gotoChangePayment" onAction="#handleEditProfile1Action" layoutX="328.0" layoutY="78.0" mnemonicParsing="false" text="Change Payment Method">
                <effect>
                   <InnerShadow />
                </effect>
             </Button>
-            <Button fx:id="home" onAction="#handleHomeAction" layoutX="39.0" layoutY="78.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="84.0" text="Home">
+            <Button fx:id="home" onAction="#handleEditProfile1Action" layoutX="39.0" layoutY="78.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="84.0" text="Home">
                <effect>
                   <InnerShadow />
                </effect>

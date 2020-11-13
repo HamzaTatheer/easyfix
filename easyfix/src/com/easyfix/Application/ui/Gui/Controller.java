@@ -49,7 +49,7 @@ public class Controller extends UI{
     @FXML
     private Label label;
     @FXML
-    private Button signup,register,login,next,gotochangecity,changecity;
+    private Button signup,register,login,next,gotochangecity,changecity,profile;
     @FXML
     private TextField name,email,pass,city,area,choice,getcity;
 
@@ -74,14 +74,19 @@ public class Controller extends UI{
             System.out.println(e.getMessage());
         }
         if(userid>0 || workerid>0){
-            Parent root;
-            Stage stage;
 
-            stage = (Stage) login.getScene().getWindow();
-            root = FXMLLoader.load(getClass().getResource("homepage.fxml"));
+            //Load second scene
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("homepage.fxml"));
+            Parent root = loader.load();
 
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
+            //Get controller of scene2
+            controllerHomePage scene2Controller = loader.getController();
+            //Pass whatever data you want. You can have multiple method calls here
+            scene2Controller.transferId(userid);
+
+            //Show scene 2 in new window
+            Stage stage=(Stage) login.getScene().getWindow();;
+            stage.setScene(new Scene(root));
             stage.show();
         }
     }
@@ -137,6 +142,7 @@ public class Controller extends UI{
         stage.show();
 
     }
+
     //@Override
     public void initialize(URL url, ResourceBundle resources) {
         // Initialization code can go here.

@@ -32,7 +32,7 @@ public class controller1 extends UI{
             scene2Controller.transferMessage(choice.getText());
 
             //Show scene 2 in new window
-            Stage stage = new Stage();
+            Stage stage =(Stage) next.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
         }
