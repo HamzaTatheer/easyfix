@@ -7,7 +7,7 @@
 <?import javafx.scene.text.*?>
 
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="376.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easyfix.Application.ui.Gui.Controller">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="376.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easyfix.Application.ui.Gui.controllerHomePage">
    <children>
       <Pane prefHeight="130.0" prefWidth="600.0" styleClass="linear-grade" stylesheets="@test.css">
          <children>
@@ -16,7 +16,7 @@
                   <Image url="@PngItem_1468479.png" />
                </image>
             </ImageView>
-            <Button fx:id="home" onAction="#handleHomeAction" layoutX="48.0" layoutY="91.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" text="Home">
+            <Button fx:id="home" onAction="#handleChangeCityAction" layoutX="48.0" layoutY="91.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" text="Home">
                <effect>
                   <InnerShadow />
                </effect>

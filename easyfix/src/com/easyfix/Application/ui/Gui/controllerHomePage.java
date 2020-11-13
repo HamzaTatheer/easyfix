@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -104,6 +105,16 @@ public class controllerHomePage extends UI {
 
     }
 
+    @FXML
+    public void handleChangeCityAction(ActionEvent event)throws Exception{
+        if(event.getSource()==changecity){
+            customerService.changeCity(Cust_id,getcity.getText());
+            changeScene("profile.fxml",changecity);
+        }
+        else (event.getSource()==changecity){
+            changeScene("homepage.fxml",home);
+        }
+    }
     @FXML
     public void handleLogout(ActionEvent event) {
 

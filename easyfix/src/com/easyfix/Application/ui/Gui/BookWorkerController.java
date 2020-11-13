@@ -13,9 +13,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.util.ArrayList;
 
 public class BookWorkerController extends UI {
-    private ArrayList<WorkerModel> getWorkers;
+    private ArrayList<WorkerModel>getWorkers;
     private int c_id;
-    ObservableList<WorkerJAVAFX> list;
+    ObservableList<WorkerJAVAFX>list;
+
     @FXML
     private TableView<WorkerJAVAFX> TableView;
 
@@ -33,7 +34,6 @@ public class BookWorkerController extends UI {
 
     @FXML
     private TableColumn<WorkerJAVAFX, String> _Speciality;
-
     public void initializeWorkerArrayList(ArrayList<WorkerModel> W, int c) {
         getWorkers = new ArrayList<WorkerModel>(W);
         c_id = c;
@@ -48,15 +48,30 @@ public class BookWorkerController extends UI {
         list = FXCollections.observableArrayList();
         for (WorkerModel workerModel : getWorkers) {
             list.add(new WorkerJAVAFX(workerModel.id, workerModel.name, workerModel.avgRating, workerModel.hourlyRate, workerModel.speciality));
+            public void initializeWorkerArrayList (ArrayList < WorkerModel > W,int c){
+                getWorkers = new ArrayList<WorkerModel>(W);
+                c_id = c;
+                //setSpacing(5);
+                TableView.setStyle("-fx-alignment: Centre;");
+
+                _Id.setCellValueFactory(new PropertyValueFactory<WorkerJAVAFX, Integer>("_Id"));
+                _Name.setCellValueFactory(new PropertyValueFactory<WorkerJAVAFX, String>("_Name"));
+                _Rating.setCellValueFactory(new PropertyValueFactory<WorkerJAVAFX, Float>("_Rating"));
+                _HourlyRate.setCellValueFactory(new PropertyValueFactory<WorkerJAVAFX, Float>("_HourlyRate"));
+                _Speciality.setCellValueFactory(new PropertyValueFactory<WorkerJAVAFX, String>("_Speciality"));
+                list = FXCollections.observableArrayList();
+                for (WorkerModel workerModel : getWorkers) {
+                    list.add(new WorkerJAVAFX(workerModel.id, workerModel.name, workerModel.avgRating, workerModel.hourlyRate, workerModel.speciality));
+
+                }
+                TableView.setItems(list);
+
+            }
+
+            public void HandleActionBookWorker (ActionEvent actionEvent){
+            }
+
+            public void HandleActionAddToSparePart (ActionEvent actionEvent){
+            }
         }
-        TableView.setItems(list);
-
     }
-    
-    public void HandleActionBookWorker(ActionEvent actionEvent) {
-    }
-
-    public void HandleActionAddToSparePart(ActionEvent actionEvent) {
-    }
-}
-
