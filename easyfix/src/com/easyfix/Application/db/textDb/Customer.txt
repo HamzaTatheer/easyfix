@@ -72,3 +72,13 @@ cash
 multan
 valencia
 0
+8
+Talha
+talha@gmail.com
+123456
+cash
+123
+200.0
+Lahore
+DHA
+0

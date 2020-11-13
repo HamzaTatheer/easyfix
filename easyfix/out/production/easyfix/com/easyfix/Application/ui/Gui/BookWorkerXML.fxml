@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="522.0" prefWidth="659.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easyfix.Application.ui.Gui.BookWorkerController">
+    <children>
+        <Pane prefHeight="522.0" prefWidth="659.0" styleClass="linear-grade" stylesheets="@test.css">
+            <children>
+                <ImageView fitHeight="49.0" fitWidth="39.0" layoutX="606.0" layoutY="471.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@Daco_1849574.png" />
+                    </image>
+                </ImageView>
+            <ScrollPane fitToWidth="true" layoutX="-1.0" layoutY="69.0" prefHeight="182.0" prefWidth="659.0">
+               <content>
+                  <TableView fx:id="TableView" nodeOrientation="LEFT_TO_RIGHT" opacity="0.91" prefHeight="182.0" prefWidth="644.0" style="-fx-background-color: pink;">
+                    <columns>
+                      <TableColumn fx:id="_Id" editable="false" prefWidth="100.0" style="-fx-alignment: CENTER;" text="Id" />
+                      <TableColumn fx:id="_Name" editable="false" prefWidth="150.0" style="-fx-alignment: CENTER;" text="Name" />
+                        <TableColumn fx:id="_Rating" editable="false" prefWidth="100.0" style="-fx-alignment: CENTER;" text="Rating" />
+                        <TableColumn fx:id="_HourlyRate" editable="false" prefWidth="150.0" style="-fx-alignment: CENTER;" text="HourlyRate" />
+                        <TableColumn fx:id="_Speciality" editable="false" prefWidth="150.0" style="-fx-alignment: CENTER;" text="Speciality" />
+                    </columns>
+                     <effect>
+                        <ColorAdjust brightness="0.02" contrast="0.36" saturation="0.17" />
+                     </effect>
+                     <cursor>
+                        <Cursor fx:constant="CLOSED_HAND" />
+                     </cursor>
+                     <opaqueInsets>
+                        <Insets bottom="33.0" right="33.0" top="23.0" />
+                     </opaqueInsets>
+                  </TableView>
+               </content>
+            </ScrollPane>
+            <Text layoutX="14.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Worker Details" wrappingWidth="346.13671875">
+               <font>
+                  <Font name="Bodoni MT" size="36.0" />
+               </font>
+            </Text>
+            <DatePicker layoutX="293.0" layoutY="279.0" promptText="Select Date" />
+            <Text layoutX="143.0" layoutY="299.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select Date" wrappingWidth="138.13671875">
+               <font>
+                  <Font name="Bodoni MT" size="24.0" />
+               </font>
+            </Text>
+            <TextField layoutX="293.0" layoutY="336.0" prefHeight="25.0" prefWidth="72.0" promptText="Hour" />
+            <TextField layoutX="395.0" layoutY="336.0" prefHeight="25.0" prefWidth="72.0" promptText="Minute" />
+            <Text layoutX="143.0" layoutY="356.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter Time" wrappingWidth="138.13671875">
+               <font>
+                  <Font name="Bodoni MT" size="24.0" />
+               </font>
+            </Text>
+            <Button layoutX="277.0" layoutY="446.0" mnemonicParsing="false" text=" BOOK WORKER" />
+            <Text layoutX="86.0" layoutY="406.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter Worker ID" wrappingWidth="202.13671875">
+               <font>
+                  <Font name="Bodoni MT" size="24.0" />
+               </font>
+            </Text>
+            <TextField layoutX="294.0" layoutY="386.0" prefHeight="25.0" prefWidth="72.0" promptText="ID" />
+            </children>
+        </Pane>
+    </children>
+</Pane>

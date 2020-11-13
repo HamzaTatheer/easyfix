@@ -6,7 +6,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="365.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easyfix.Application.ui.Gui.Controller">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="365.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easyfix.Application.ui.Gui.controller1">
    <children>
       <Pane prefHeight="365.0" prefWidth="221.0" styleClass="linear-grade" stylesheets="@test.css">
          <children>
