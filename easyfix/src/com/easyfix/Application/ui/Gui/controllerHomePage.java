@@ -39,16 +39,35 @@ public class controllerHomePage extends UI {
         try {
             try {
                 ArrayList<WorkerModel> getWork = customerService.getWorkersCloseBy(Cust_id);//get all workers by cust_id
-                for (int i=0;i<getWork.size();i++){
-                    
-                }
-                Parent root;
+                /*for (WorkerModel workerModel : getWork) {
+                    System.out.print(workerModel.id + ".");
+                    System.out.print(workerModel.name);
+                    System.out.print("-");
+                    System.out.println(" " + workerModel.speciality);
+                }*/
+
+                /*Parent root;
                 Stage stage;
                 stage = (Stage) BookWorker.getScene().getWindow();
                 root = FXMLLoader.load(getClass().getResource("BookWorkerXML.fxml"));
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
                 stage.show();
+                */
+                //Load second scene
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("BookWorkerXML.fxml"));
+                Parent root = loader.load();
+
+                //Get controller of scene2
+                BookWorkerController scene2Controller = loader.getController();
+                //Pass whatever data you want. You can have multiple method calls here
+                scene2Controller.initializeWorkerArrayList(getWork,Cust_id);
+
+                //Show scene 2 in new window
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.show();
+
             }
             catch (Exception E){
                 E.getMessage();
@@ -84,7 +103,7 @@ public class controllerHomePage extends UI {
     public void handleshowActiveBooking(ActionEvent event) {
 
     }
-    public void transferId(int _Cust_id) { //Communication: pass user's choice from Controller1 (Main.fxml) to Controller (Multiple fxml files)
+    public void transferId(int _Cust_id) { //Communication: pass user's id from Controller (Multiple fxml files) to handlebookAction
         //Display the message
         Cust_id=_Cust_id;
     }
