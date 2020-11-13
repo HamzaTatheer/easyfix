@@ -35,6 +35,10 @@ public class Customer extends User{
         return c;
     }
     */
+
+
+
+
     public Boolean addToWallet(Float newAmount){
         wallet += newAmount;
         return true;

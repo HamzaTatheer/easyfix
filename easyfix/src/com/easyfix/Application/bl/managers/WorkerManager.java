@@ -1,5 +1,6 @@
 package com.easyfix.Application.bl.managers;
 
+import com.easyfix.Application.bl.classes.Customer;
 import com.easyfix.Application.bl.classes.Worker;
 import com.easyfix.Application.bl.services.WorkerService;
 import com.easyfix.Application.db.dbProviders;
@@ -96,50 +97,14 @@ public class WorkerManager implements WorkerService {
         return updated;
     }
     public boolean changeCity(int id,String newCity){
-        WorkerModel w = new WorkerModel();
-        w.id = 2;
-        w.name = "ali";
-        w.email = "ali@gmail.com";
-        w.password = "1234567";
-        w.city = "lahore";
-        w.area = "faisaltown";
-        w.speciality = "plumber";
-        w.hourlyRate = 10f;
-        w.avgRating = 2.4f;
-
-        //w is model
-        boolean updated =false;
-        Worker workerObj = new Worker(w); //convert model to  class
-        updated = workerObj.changeCity(newCity); //update in class
-        //get updated model and store in db
-        w = workerObj.getWorkerModel(); // convert class to model
-        //store in db
-
-        return updated;
+        DbService db = dbProviders.getDbService();
+        Worker w = new Worker(db.get_worker(id));
+        return (w.changeCity(newCity));
     }
     public boolean changeArea(int id,String newArea){
-
-        WorkerModel w = new WorkerModel();
-        w.id = 2;
-        w.name = "ali";
-        w.email = "ali@gmail.com";
-        w.password = "1234567";
-        w.city = "lahore";
-        w.area = "faisaltown";
-        w.speciality = "plumber";
-        w.hourlyRate = 10f;
-        w.avgRating = 2.4f;
-
-        //w is model
-        boolean updated =false;
-        Worker workerObj = new Worker(w);//convert model to class
-        updated = workerObj.changeArea(newArea); //update in class
-        //get updated model and store in db
-        w = workerObj.getWorkerModel(); //get model
-        //store in db
-
-        return updated;
-
+        DbService db = dbProviders.getDbService();
+        Worker w = new Worker(db.get_worker(id));
+        return (w.changeArea(newArea));
     }
 
 

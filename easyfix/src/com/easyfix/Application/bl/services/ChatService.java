@@ -5,6 +5,6 @@ import java.util.ArrayList;
 
 
 public interface ChatService {
-    public boolean sendMessage(int senderId,int receiverId,String message);
-    public ArrayList<ChatMessageModel> loadMessageHistory(int senderId, int receiverId);
+    public boolean sendMessage(int senderId,int receiverId,String message) throws Exception;
+    public ArrayList<ChatMessageModel> loadMessageHistory(int senderId, int receiverId) throws Exception;
 }

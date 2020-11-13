@@ -1,9 +1,11 @@
 package com.easyfix.Application.ui.Terminal;
+import com.easyfix.Application.bl.classes.SparePart;
 import com.easyfix.Application.bl.services.BookingService;
 import com.easyfix.Application.bl.services.WorkerService;
 import com.easyfix.Application.models.*;
 import com.easyfix.Application.bl.services.CustomerService;
 import com.easyfix.Application.ui.UI;
+import com.easyfix.Application.utils.Arrayfuncs;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -87,6 +89,7 @@ public class Terminal extends UI {
                     System.out.println("Name           : " + c.name);
                     System.out.println("City           : " + c.city);
                     System.out.println("Area           : " + c.area);
+                    System.out.println("Wallet         : "+c.wallet);
                     System.out.println("Payment method : " + c.paymentMethod);
 
 
@@ -142,6 +145,66 @@ public class Terminal extends UI {
                     }
     }
 
+    public void chatScreen(int wid){
+
+        WorkerModel workerDetails;
+        try {
+            workerDetails = workerService.getWorker(wid);
+        }
+        catch (Exception e){
+            return;
+        }
+
+        Scanner sc = new Scanner(System.in);
+
+        String workerName = workerDetails.name;
+        System.out.println("Chatting with "+ workerName);
+        System.out.println("=============================================");
+        String action = "nothing";
+        while(action != "exit") {
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
+            try {
+                ArrayList<ChatMessageModel> c = chatService.loadMessageHistory(cid, wid);
+                for(int i=0;i<c.size();i++){
+                    System.out.println(c.get(i).senderName +": " + c.get(i).message);
+                }
+
+                System.out.println("Enter Message (type exit to exit chat and refresh to refresh chat): ");
+                String message = sc.nextLine();
+                if(message == "exit"){
+                    return;
+                }
+                else if(message != "refresh"){
+                    chatService.sendMessage(cid,wid,message);
+                }
+
+            }
+            catch (Exception e){
+                System.out.println("New Chat");
+            }
+        }
+    }
+
+
+    public void billScreen(){
+        Scanner sc= new Scanner(System.in);
+        System.out.println("Enter Booking id to show its bill");
+        int bill_id = sc.nextInt();
+
+        try {
+            BillingModel b = billingService.showBill(bill_id);
+            System.out.println("id: "+ b.bookingId +" title: "+ b.title+ " Worker: " + b.workerName + " Cost: "+ b.totalCost + " status: "+b.status);
+            if(b.status != "paid") {
+                 if(bookingService.payForBooking(cid,b.bookingId)==true)
+                     System.out.println("Payment Successful!");
+            }
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+
     public void customerMenu(){
         while (true) {
             System.out.println("------------------------------------------------");
@@ -191,23 +254,27 @@ public class Terminal extends UI {
                     System.out.println("Error!!!!");
             } else if (choice2 == 3) {
                 System.out.println("Enter area :");
-                String area = sc.nextLine();
+                Scanner sss = new Scanner(System.in);
+                String area = sss.nextLine();
                 boolean changearea = customerService.changeArea(cid, area);
                 if (changearea == true)
                     System.out.println("Area changed successfully");
                 else
                     System.out.println("Error!!!!");
             } else if (choice2 == 4) {
+
                 System.out.println("Enter city :");
-                String city = sc.nextLine();
+                Scanner sss = new Scanner(System.in);
+                String city = sss.nextLine();
                 boolean changecity = customerService.changeCity(cid, city);
                 if (changecity == true)
                     System.out.println("City changed successfully");
                 else
                     System.out.println("Error!!!!");
             } else if (choice2 == 5) {
-                System.out.println("Enter payment method :");
-                String paymethod = sc.nextLine();
+                System.out.println("Enter payment method (credit or wallet) :");
+                Scanner input = new Scanner(System.in);
+                String paymethod = input.nextLine();
                 boolean method = customerService.changePaymentMethod(cid, paymethod);
                 if (method == true)
                     System.out.println("Payment method updated successfully");
@@ -233,49 +300,118 @@ public class Terminal extends UI {
                     System.out.print("-");
                     System.out.println(" " + workerModel.speciality);
                 }
-                System.out.println("Select a worker to Book (enter number): ");
+                System.out.println("Select a worker to Book (enter number. enter -1 to go back): ");
                 int selected_worker = sc.nextInt();
-                BookingModel b = new BookingModel();
-                System.out.println("Select day");
-                int bDay = sc.nextInt();
-                System.out.println("Select month");
-                int bMonth = sc.nextInt();
-                //leaving year
-                System.out.println("Select Hour (24 hour clock) ");
-                int bHour = sc.nextInt();
-                System.out.println("Select Minute");
-                int bMinute = sc.nextInt();
-                b.startTime = LocalDateTime.of(LocalDate.of(2020, bMonth, bDay), LocalTime.of(bHour, bMinute));
-                System.out.println("Select Title");
-                Scanner scc = new Scanner(System.in);//sc was skipping text
-                b.text = scc.nextLine();
-                b.cid = cid;
-                b.wid = selected_worker;
-                b.spareParts = new ArrayList<Integer>();
-                try {
-                    bookingService.makeBooking(b.cid, b.wid, b.text, b.startTime, b.spareParts);
-                } catch (Exception e) {
-                    System.out.println("Error: " + e.getMessage());
-                }
+                                if(selected_worker != -1) {
+                                    BookingModel b = new BookingModel();
+                                    System.out.println("Select day");
+                                    int bDay = sc.nextInt();
+                                    System.out.println("Select month");
+                                    int bMonth = sc.nextInt();
+                                    //leaving year
+                                    System.out.println("Select Hour (24 hour clock) ");
+                                    int bHour = sc.nextInt();
+                                    System.out.println("Select Minute");
+                                    int bMinute = sc.nextInt();
+                                    b.startTime = LocalDateTime.of(LocalDate.of(2020, bMonth, bDay), LocalTime.of(bHour, bMinute));
+                                    System.out.println("Select Title");
+                                    Scanner scc = new Scanner(System.in);//sc was skipping text
+                                    b.text = scc.nextLine();
+                                    b.cid = cid;
+                                    b.wid = selected_worker;
+                                    b.spareParts = new ArrayList<Integer>();
 
+                                    try {
+                                        bookingService.makeBooking(b.cid, b.wid, b.text, b.startTime, b.spareParts);
+                                        ArrayList<SparePartModel> sp = sparePartService.showAllSpareParts();
+                                        for (int i = 0; i < sp.size(); i++) {
+                                            System.out.println("id: " + sp.get(i).id + "  name: " + sp.get(i).name + "  " + (sp.get(i).quantity > 0 ? "Available" : "Not Available"));
+                                        }
+
+                                        String done = "yes";
+                                        ArrayList<SparePartModel> myspareparts = new ArrayList<>();
+                                        while (done == "yes") {
+                                            SparePartModel temp = new SparePartModel();
+                                            System.out.println("Enter Part ID: ");
+                                            temp.id = sc.nextInt();
+                                            System.out.println("Enter Quantity to Add:");
+                                            temp.quantity = sc.nextInt();
+                                            myspareparts.add(temp);
+                                            System.out.println("Do you want to add any more items");
+                                            done = sc.nextLine();
+                                        }
+
+                                        for (int i = 0; i < myspareparts.size(); i++) {
+                                            sparePartService.addSparePartsToBooking(b.id, myspareparts.get(i).id, myspareparts.get(i).quantity);
+                                        }
+                                    } catch (Exception e) {
+                                        System.out.println("Error: " + e.getMessage());
+                                    }
+                                }
             }
             else if(choice2 == 8){
                 ArrayList<BookingModel> b =  bookingService.showPendingBookingsOfCustomer(cid);
                 for (BookingModel bookingModel : b) {
-                    System.out.println(bookingModel.text+"    "+bookingModel.status + " Start Time: "+bookingModel.startTime);
+                    System.out.println("id: "+ bookingModel.id + " Title: " + bookingModel.text+"    "+bookingModel.status + " Start Time: "+bookingModel.startTime);
+                    try {
+                        WorkerModel workerDetails = workerService.getWorker(bookingModel.id);
+                        System.out.println("By Worker: "+ workerDetails.name + " id: "+workerDetails.id);
+                    }
+                    catch (Exception e){
+                        System.out.println("By Worker: ...");
+                    }
                 }
+
+                System.out.println("Enter a Booking to cancel (-1 to go back)");
+                int mychoice = sc.nextInt();
+                if(mychoice != -1){
+                    System.out.println("Cancelling Booking...");
+                    bookingService.rejectBooking(mychoice);
+                }
+
             }
             else if(choice2 == 9){
                 ArrayList<BookingModel> b = bookingService.showActiveBookingOfWorker(cid);
                 for (BookingModel bookingModel : b) {
-                    System.out.println(bookingModel.text+"    "+bookingModel.status + " Start Time: "+bookingModel.startTime);
+                    System.out.println("id: "+ bookingModel.id + " Title: " + bookingModel.text+"    "+bookingModel.status + " Start Time: "+bookingModel.startTime);
+                    try {
+                        WorkerModel workerDetails = workerService.getWorker(bookingModel.id);
+                        System.out.println("By Worker: "+ workerDetails.name + " id: "+workerDetails.id);
+                    }
+                    catch (Exception e){
+                        System.out.println("By Worker: ...");
+                    }
                 }
+
+                System.out.println("Want to Chat with a worker ? yes or no");
+                String answer = sc.nextLine();
+                if(answer == "yes"){
+                    int chatWith = sc.nextInt();
+                    chatScreen(chatWith);
+                }
+
             }
             else if(choice2 == 10){
                 ArrayList<BookingModel> b = bookingService.showFinishedBookingOfCustomer(cid);
                 for (BookingModel bookingModel : b) {
-                    System.out.println(bookingModel.text+"    "+bookingModel.status + " Start Time: "+bookingModel.startTime);
+                    System.out.println("id: "+ bookingModel.id + " Title: " + bookingModel.text+"    "+bookingModel.status + " Start Time: "+bookingModel.startTime);
+                    try {
+                        WorkerModel workerDetails = workerService.getWorker(bookingModel.id);
+                        System.out.println("By Worker: "+ workerDetails.name + " id: "+workerDetails.id);
+                    }
+                    catch (Exception e){
+                        System.out.println("By Worker: ...");
+                    }
                 }
+
+                System.out.println("Want to select and pay Bill ? (yes or no)");
+                Scanner myscanner = new Scanner(System.in);
+                String answer = myscanner.nextLine();
+                if(answer.equals("yes")){
+                    billScreen();
+                }
+
+
             }
             else if (choice2 == 11) {
                  break;
@@ -302,13 +438,15 @@ public class Terminal extends UI {
                 }
             } else if (wchoice == 2) {
                 System.out.println("Enter area :");
-                String area = sc.nextLine();
+                Scanner sss = new Scanner(System.in);
+                String area = sss.nextLine();
                 boolean b = workerService.changeArea(wid, area);
                 if (b == true)
                     System.out.println("Area updated successfully");
             } else if (wchoice == 3) {
                 System.out.println("Enter city :");
-                String city = sc.nextLine();
+                Scanner sss = new Scanner(System.in);
+                String city = sss.nextLine();
                 boolean b = workerService.changeArea(wid, city);
                 if (b == true)
                     System.out.println("City updated successfully");

@@ -12,7 +12,7 @@ public class User {
     //constructors
     User(int _id,String _name,String _email,String _password){
         id=_id;
-        name=_email;
+        name=_name;
         email=_email;
         password=_password;
     }

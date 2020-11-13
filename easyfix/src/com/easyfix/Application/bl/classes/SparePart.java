@@ -9,7 +9,7 @@ public class SparePart {
     private float cost;
 
     //constructors
-    SparePart(SparePartModel S){
+    public SparePart(SparePartModel S){
         id=S.id;
         name=S.name;
         quantity=S.quantity;

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easyfix.Application.ui.Gui.controllerHomePage">
+   <children>
+      <Label layoutX="226.0" layoutY="168.0" prefHeight="40.0" prefWidth="299.0" text="Welcome to Homepage">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <Pane prefHeight="375.0" prefWidth="182.0" styleClass="linear-grade" stylesheets="@test.css">
+         <children>
+            <Button id="book" fx:id="BookWorker" layoutX="19.0" layoutY="166.0" mnemonicParsing="false" onAction="#handleBookWorkerAction" text="Book Worker" />
+            <Button id="favourite" fx:id="ShowFavourites" layoutX="16.0" layoutY="210.0" mnemonicParsing="false" onAction="#handleShowFavouritesAction" text="Show Favourites" />
+            <Button id="finishedbooking" fx:id="showFinishedBooking" layoutX="13.0" layoutY="256.0" mnemonicParsing="false" onAction="#handleShowFinishedBooking" text="Show Finished Booking" />
+            <Button id="activebooking" fx:id="showActiveBooking" layoutX="13.0" layoutY="297.0" mnemonicParsing="false" onAction="#handleshowActiveBooking" prefHeight="25.0" prefWidth="129.0" text="Show Active Booking" />
+            <Button id="logout" fx:id="logout" layoutX="14.0" layoutY="342.0" mnemonicParsing="false" onAction="#handleLogout" text="Logout" />
+            <Button id="profile" fx:id="EditProfile1" layoutX="18.0" layoutY="124.0" mnemonicParsing="false" onAction="#handleEditProfile1Action" text="Edit Profile" />
+            <ImageView fitHeight="99.0" fitWidth="152.0" layoutX="14.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Daco_1849574.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+   </children>
+</Pane>

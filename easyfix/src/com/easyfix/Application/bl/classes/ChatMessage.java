@@ -5,16 +5,21 @@ import com.easyfix.Application.models.ChatMessageModel;
 public class ChatMessage {
     private int senderId;
     private int receiverId;
-    private String senderName;
-    private String receiverName;
+
     private String message;
+
+
+    public ChatMessage(int _senderId, int _recieverId, String _message){
+        senderId = _senderId;
+        receiverId = _recieverId;
+        message= _message;
+        hideAbusiveWords();
+    }
 
     //Constructors
     ChatMessage(ChatMessageModel model){
         senderId = model.senderId;
         receiverId = model.receiverId;
-        senderName=model.senderName;
-        receiverName=model.receiverName;
         message = model.message;
     }
     //member functions
@@ -27,7 +32,7 @@ public class ChatMessage {
         temp.message=message;
         return temp;
     }
-    public void hideAbusiveWords(){
+    private void hideAbusiveWords(){
         String filteredMessage= message.replaceAll("pagal","HIDDEN");
         filteredMessage= message.replaceAll("stupid","HIDDEN");
         filteredMessage= message.replaceAll("chawal","HIDDEN");
@@ -42,13 +47,6 @@ public class ChatMessage {
         return receiverId;
     }
 
-    public String getSenderName() {
-        return senderName;
-    }
-
-    public String getReceiverName() {
-        return receiverName;
-    }
 
     public String getMessage() {
         return message;
@@ -63,13 +61,6 @@ public class ChatMessage {
         this.receiverId = receiverId;
     }
 
-    public void setSenderName(String senderName) {
-        this.senderName = senderName;
-    }
-
-    public void setReceiverName(String receiverName) {
-        this.receiverName = receiverName;
-    }
 
     public void setMessage(String message) {
         this.message = message;
