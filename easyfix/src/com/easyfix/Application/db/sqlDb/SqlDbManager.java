@@ -1,20 +1,30 @@
 package com.easyfix.Application.db.sqlDb;
-import com.easyfix.Application.db.services.DbService;
+
 import com.easyfix.Application.models.*;
+import com.easyfix.Application.db.services.DbService;
 
-import javax.swing.*;
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.io.File;
-import java.io.FileWriter;   // Import the FileWriter class
-import java.io.IOException;  // Import the IOException class to handle errors
-import java.io.FileNotFoundException;  // Import this class to handle errors
-import java.util.Scanner; // Import the Scanner class to read text files
-
 
 
 public class SqlDbManager implements DbService {
+
+
+    @Override
+    public ArrayList<BookingModel> get_booking(int bid) {
+        return null;
+    }
+
+
+    @Override
+    public boolean update_average_rating(int id, float rate) {
+        return false;
+    }
+
     public boolean does_customer_exist(int id)//done
     {
         try {
@@ -310,6 +320,12 @@ public class SqlDbManager implements DbService {
             Statement mystmt = conn.createStatement();
 
             ResultSet rs = mystmt.executeQuery("select * from worker where email = '"+email+"' and password = '"+password+"'");
+
+            if (rs.next()) {
+                return rs.getInt("wid");
+            }
+
+
             if(!rs.next())
             {
                 return -1;
@@ -399,19 +415,24 @@ public class SqlDbManager implements DbService {
             ResultSet rs = mystmt.executeQuery("select * from worker ");
             //WorkerModel c1=new WorkerModel();
             ArrayList<WorkerModel> c1=new ArrayList<WorkerModel>();
+            WorkerModel c2=new WorkerModel();
             int i=0;
             while (rs.next()) {
-                System.out.println("wid  "+rs.getInt("id"));
-                c1.get(i).id= rs.getInt("wid");
-                c1.get(i).name=rs.getString("name");
-                c1.get(i).email=rs.getString("email");
-                c1.get(i).password=rs.getString("password");
-                c1.get(i).avgRating=rs.getFloat("average_rating");
-                c1.get(i).hourlyRate=rs.getFloat("wallet");
-                c1.get(i).city=rs.getString("city");
-                c1.get(i).area=rs.getString("area");
-                c1.get(i).speciality=rs.getString("speciality");
-                i++;
+
+                //System.out.println("id "+c2.id);
+                c2.id=rs.getInt("wid");
+                c2.name=rs.getString("name");
+                c2.email=rs.getString("email");
+                c2.password=rs.getString("password");
+                c2.avgRating=rs.getFloat("average_rating");
+                c2.hourlyRate=rs.getFloat("hourly_rate");
+                c2.city=rs.getString("city");
+                c2.area=rs.getString("area");
+                c2.speciality=rs.getString("speciality");
+                c1.add(c2);
+                //System.out.println(c1.get(i).id);
+                //i++;
+
 
 
             }
@@ -506,7 +527,7 @@ public class SqlDbManager implements DbService {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
             Statement mystmt = conn.createStatement();
 
-            ResultSet rs = mystmt.executeQuery("select * from booking where customer_id = '" + customer_id+"'" + "and worker_id = '" + worker_id +"'" );
+            ResultSet rs = mystmt.executeQuery("select * from booking where customer_id = '" + customer_id+"'" + "and worker_id = '" + worker_id +" ' and booking_text = '"+text+"'" );
             if(rs.next())
             {
                 return rs.getInt("bid");
@@ -532,7 +553,7 @@ public class SqlDbManager implements DbService {
         return 0;
     }
 
-    public boolean store_booking(int customer_id, int worker_id, String text, String status, LocalDateTime start_time, LocalDateTime end_time, ArrayList<Integer> spareParts)//done
+    public int store_booking(int customer_id, int worker_id, String text, String status, LocalDateTime start_time, LocalDateTime end_time, ArrayList<Integer> spareParts)//done
     {
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
@@ -550,9 +571,6 @@ public class SqlDbManager implements DbService {
             pstmt.setDate(8, Date.valueOf(end_time.toLocalDate()));
 
 
-
-
-
             int rowAffected = pstmt.executeUpdate();
             if(rowAffected == 1)
             {
@@ -568,27 +586,26 @@ public class SqlDbManager implements DbService {
                     pstmt2.setInt(2,spareParts.get(i));
                     int rowAffected2 = pstmt2.executeUpdate();
                 }
-                return true;
+                return get_bid(customer_id,worker_id,text);
             }
-
 
 
         }
         catch (Exception e) {
             e.printStackTrace();
         }
-        return false;
+        return -1;
 
     }//bid given by default by DB
 
 
-    public  ArrayList<BookingModel> get_booking(int bid)
+    public ArrayList<BookingModel> get_booking_of_customer(int customer_id)
     {
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
             Statement mystmt = conn.createStatement();
 
-            ResultSet rs = mystmt.executeQuery("select * from booking where booking_id = "+ bid );
+            ResultSet rs = mystmt.executeQuery("select * from booking where customer_id = "+ customer_id );
             //WorkerModel c1=new WorkerModel();
             ArrayList<BookingModel> c1=new ArrayList<BookingModel>();
             BookingModel c2=new BookingModel();
@@ -606,17 +623,15 @@ public class SqlDbManager implements DbService {
                 Time et=rs.getTime("end_time");
                 Date sd=rs.getDate("start_date");
                 Date ed=rs.getDate("end_date");
-                String ss= String.valueOf(sd)+String.valueOf(st);
+                String ss= String.valueOf(sd)+" "+String.valueOf(st);
+                String ee= String.valueOf(ed)+" "+String.valueOf(et);
 
 
+                DateTimeFormatter formator=DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                c2.startTime=LocalDateTime.parse(ss,formator);
+                c2.endTime=LocalDateTime.parse(ee,formator);
 
 
-                //c2.startTime= LocalDateTime.from(sd.toLocalDate());
-                //c2.endTime= sd;
-
-
-                //c2.startTime=rs.getTimestamp("start_time");
-                //c2.endTime=rs.getTimestamp("end_time");
                 c1.add(c2);
 
                 //i++;
@@ -652,6 +667,211 @@ public class SqlDbManager implements DbService {
         }
         return null;
     }
+
+    public ArrayList<BookingModel> get_booking_of_customer(int customer_id,String status)
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            ResultSet rs = mystmt.executeQuery("select * from booking where customer_id = "+ customer_id + "and status = " + status);
+            //WorkerModel c1=new WorkerModel();
+            ArrayList<BookingModel> c1=new ArrayList<BookingModel>();
+            BookingModel c2=new BookingModel();
+
+            int i=0;
+            while (rs.next()) {
+
+                c2.id= rs.getInt("bid");
+                c2.cid=rs.getInt("customer_id");
+                c2.wid=rs.getInt("worker_id");
+                c2.text=rs.getString("booking_text");
+                c2.status=rs.getString("booking_status");
+
+                Time st=rs.getTime("start_time");
+                Time et=rs.getTime("end_time");
+                Date sd=rs.getDate("start_date");
+                Date ed=rs.getDate("end_date");
+                String ss= String.valueOf(sd)+" "+String.valueOf(st);
+                String ee= String.valueOf(ed)+" "+String.valueOf(et);
+
+
+                DateTimeFormatter formator=DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                c2.startTime=LocalDateTime.parse(ss,formator);
+                c2.endTime=LocalDateTime.parse(ee,formator);
+                c1.add(c2);
+
+                //i++;
+
+                Statement mystmt2 = conn.createStatement();
+
+                ResultSet rs2 = mystmt2.executeQuery("select * from booking_spareparts where bid = "+rs.getInt("bid")  );
+
+                //SparePartModel s1=new SparePartModel();
+                int partid;
+
+
+                c2.spareParts=new ArrayList<Integer>();
+
+                while (rs2.next())
+                {
+                    partid=rs2.getInt("part_id");
+
+                    //c1.get(i).spareParts.add(get_spare_part(partid));// get spare part function
+                    c2.spareParts.add(partid);
+                    c1.add(c2);
+                }
+
+
+
+
+            }
+
+            return c1;
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public ArrayList<BookingModel> get_booking_of_worker(int worker_id)
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            ResultSet rs = mystmt.executeQuery("select * from booking where worker_id = "+ worker_id );
+            //WorkerModel c1=new WorkerModel();
+            ArrayList<BookingModel> c1=new ArrayList<BookingModel>();
+            BookingModel c2=new BookingModel();
+
+            int i=0;
+            while (rs.next()) {
+
+                c2.id= rs.getInt("bid");
+                c2.cid=rs.getInt("customer_id");
+                c2.wid=rs.getInt("worker_id");
+                c2.text=rs.getString("booking_text");
+                c2.status=rs.getString("booking_status");
+
+                Time st=rs.getTime("start_time");
+                Time et=rs.getTime("end_time");
+                Date sd=rs.getDate("start_date");
+                Date ed=rs.getDate("end_date");
+                String ss= String.valueOf(sd)+" "+String.valueOf(st);
+                String ee= String.valueOf(ed)+" "+String.valueOf(et);
+
+
+                DateTimeFormatter formator=DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                c2.startTime=LocalDateTime.parse(ss,formator);
+                c2.endTime=LocalDateTime.parse(ee,formator);
+                c1.add(c2);
+
+                //i++;
+
+                Statement mystmt2 = conn.createStatement();
+
+                ResultSet rs2 = mystmt2.executeQuery("select * from booking_spareparts where bid = "+rs.getInt("bid")  );
+
+                //SparePartModel s1=new SparePartModel();
+                int partid;
+
+
+                c2.spareParts=new ArrayList<Integer>();
+                while (rs2.next())
+                {
+                    partid=rs2.getInt("part_id");
+
+                    //c1.get(i).spareParts.add(get_spare_part(partid));// get spare part function
+                    c2.spareParts.add(partid);
+                    c1.add(c2);
+                }
+
+
+
+
+            }
+            return c1;
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public ArrayList<BookingModel> get_booking_of_worker(int worker_id, String status)
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            ResultSet rs = mystmt.executeQuery("select * from booking where worker_id = "+ worker_id + "and status = " + status);
+            //WorkerModel c1=new WorkerModel();
+            ArrayList<BookingModel> c1=new ArrayList<BookingModel>();
+            BookingModel c2=new BookingModel();
+
+            int i=0;
+            while (rs.next()) {
+
+                c2.id= rs.getInt("bid");
+                c2.cid=rs.getInt("customer_id");
+                c2.wid=rs.getInt("worker_id");
+                c2.text=rs.getString("booking_text");
+                c2.status=rs.getString("booking_status");
+
+                Time st=rs.getTime("start_time");
+                Time et=rs.getTime("end_time");
+                Date sd=rs.getDate("start_date");
+                Date ed=rs.getDate("end_date");
+                String ss= String.valueOf(sd)+" "+String.valueOf(st);
+                String ee= String.valueOf(ed)+" "+String.valueOf(et);
+
+
+                DateTimeFormatter formator=DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                c2.startTime=LocalDateTime.parse(ss,formator);
+                c2.endTime=LocalDateTime.parse(ee,formator);
+                c1.add(c2);
+
+                //i++;
+
+                Statement mystmt2 = conn.createStatement();
+
+                ResultSet rs2 = mystmt2.executeQuery("select * from booking_spareparts where bid = "+rs.getInt("bid")  );
+
+                //SparePartModel s1=new SparePartModel();
+                int partid;
+
+
+                c2.spareParts=new ArrayList<Integer>();
+
+                while (rs2.next())
+                {
+                    partid=rs2.getInt("part_id");
+
+                    //c1.get(i).spareParts.add(get_spare_part(partid));// get spare part function
+                    c2.spareParts.add(partid);
+                    c1.add(c2);
+                }
+
+
+
+
+            }
+            return c1;
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     public boolean add_favourite(int customer_id,int worker_id)//done
     {
@@ -706,85 +926,22 @@ public class SqlDbManager implements DbService {
 
 
 
-    public ArrayList<BookingModel> get_booking(int customer_id, String status)
+
+    public boolean store_customer_billing(int booking_id,String title,int cid,int wid,String status,Float totalCost)//done
     {
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
             Statement mystmt = conn.createStatement();
 
-            ResultSet rs = mystmt.executeQuery("select * from booking where customer_id = "+ customer_id + "and status = " + status);
-            //WorkerModel c1=new WorkerModel();
-            ArrayList<BookingModel> c1=new ArrayList<BookingModel>();
-            BookingModel c2=new BookingModel();
-
-            int i=0;
-            while (rs.next()) {
-
-                c2.id= rs.getInt("bid");
-                c2.cid=rs.getInt("customer_id");
-                c2.wid=rs.getInt("worker_id");
-                c2.text=rs.getString("booking_text");
-                c2.status=rs.getString("booking_status");
-
-                Time st=rs.getTime("start_time");
-                Time et=rs.getTime("end_time");
-                Date sd=rs.getDate("start_date");
-                Date ed=rs.getDate("end_date");
-                LocalDateTime ss= LocalDateTime.from(st.toLocalTime());
-
-
-
-                //c2.startTime=rs.getTimestamp("start_time");
-                //c2.endTime=rs.getTimestamp("end_time");
-                c2.startTime= LocalDateTime.from(sd.toLocalDate());
-                c2.endTime= LocalDateTime.from(sd.toLocalDate());
-                c1.add(c2);
-
-                //i++;
-
-                Statement mystmt2 = conn.createStatement();
-
-                ResultSet rs2 = mystmt2.executeQuery("select * from booking_spareparts where bid = "+rs.getInt("bid")  );
-
-                //SparePartModel s1=new SparePartModel();
-                int partid;
-
-
-                c2.spareParts=new ArrayList<Integer>();
-
-                while (rs2.next())
-                {
-                    partid=rs2.getInt("part_id");
-
-                    //c1.get(i).spareParts.add(get_spare_part(partid));// get spare part function
-                    c2.spareParts.add(partid);
-                    c1.add(c2);
-                }
-
-
-
-
-            }
-            return c1;
-
-
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public boolean store_customer_billing(int booking_id,int worker_id,int cost)//done
-    {
-        try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
-            Statement mystmt = conn.createStatement();
-
-            String sql = "INSERT INTO billing(bid,totalcost) " + "VALUES(?,?)";
+            String sql = "INSERT INTO billing(bid,title,cid,wid,status,totalcost) " + "VALUES(?,?,?,?,?,?)";
             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, booking_id);
-            pstmt.setInt(2,cost);
+            pstmt.setString(2,title);
+            pstmt.setInt(3, cid);
+            pstmt.setInt(4,wid);
+            pstmt.setString(5,status);
+            pstmt.setFloat(6,totalCost);
+
 
             int rowAffected = pstmt.executeUpdate();
             if(rowAffected == 1)
@@ -807,23 +964,25 @@ public class SqlDbManager implements DbService {
 
     public ArrayList<BillingModel> get_customer_billing(int booking_id)
     {
-
-        /*try {
+        try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
             Statement mystmt = conn.createStatement();
 
             ResultSet rs = mystmt.executeQuery("select * from billing where bid = "+ booking_id );
 
             ArrayList<BillingModel> c1=new ArrayList<BillingModel>();
+            BillingModel c2=new BillingModel();
 
             int i=0;
             while (rs.next()) {
 
-                c1.get(i).id= rs.getInt("id");
-                c1.get(i).bid=rs.getInt("bid");
-                c1.get(i).totalCost=rs.getInt("totalcost");
-
-                i++;
+                c2.bookingId= rs.getInt("bid");
+                c2.title=rs.getString("title");
+                c2.cid= rs.getInt("cid");
+                c2.wid= rs.getInt("wid");
+                c2.status=rs.getString("status");
+                c2.totalCost=rs.getFloat("totalcost");
+                c1.add(c2);
 
             }
             return c1;
@@ -833,11 +992,43 @@ public class SqlDbManager implements DbService {
         catch (Exception e) {
             e.printStackTrace();
         }
-        return null;*/
         return null;
 
     }
 
+
+    public  BillingModel get_bill(int booking_id)
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            ResultSet rs = mystmt.executeQuery("select * from billing where bid = "+ booking_id );
+
+            //ArrayList<BillingModel> c1=new ArrayList<BillingModel>();
+            BillingModel c2=new BillingModel();
+
+            int i=0;
+            while (rs.next()) {
+
+                c2.bookingId= rs.getInt("bid");
+                c2.title=rs.getString("title");
+                c2.cid= rs.getInt("cid");
+                c2.wid= rs.getInt("wid");
+                c2.status=rs.getString("status");
+                c2.totalCost=rs.getFloat("totalcost");
+                //c1.add(c2);
+
+            }
+            return c2;
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public boolean store_complaint(int customer_id,int worker_id,String complain_text)//done
     {
@@ -1231,7 +1422,7 @@ public class SqlDbManager implements DbService {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
             Statement mystmt = conn.createStatement();
 
-            String sql = "update booking set booking_status = ? where bid = ?" ;
+            String sql = "update billing set status = ? where bid = ?" ;
             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             pstmt.setString(1,status);
@@ -1250,56 +1441,167 @@ public class SqlDbManager implements DbService {
 
     }
 
+
+
+    public boolean update_customerWallet(int id, Float money)//done
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            String sql = "update customers set wallet = wallet + ? where id = ?" ;
+            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            pstmt.setFloat(1,money);
+            pstmt.setInt(2,id);
+            int rowAffected2 = pstmt.executeUpdate();
+            return true;
+
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public boolean update_booking_status(int booking_id,String status)//done
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            String sql = "update booking set booking_status = ? where bid = ?" ;
+            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            pstmt.setString(1,status);
+            pstmt.setInt(2,booking_id);
+            int rowAffected2 = pstmt.executeUpdate();
+            return true;
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+
     public ArrayList<WorkerModel> get_favourites_workers(int customer_id)
     {
         return null;
     }
 
-    public boolean update_customerWallet(int id, Float money) {
-        return false;
-    }
 
-    public ArrayList<BookingModel> get_booking_of_customer(int customer_id) {
-        return null;
-    }
-
-    public ArrayList<BookingModel> get_booking_of_worker(int worker_id) {
-        return null;
-    }
-
-    public ArrayList<BookingModel> get_booking_of_customer(int customer_id, String status) {
-        return null;
-    }
-
-    public ArrayList<BookingModel> get_booking_of_worker(int worker_id, String status) {
-        return null;
-    }
 
     public ArrayList<Integer> get_favourites(int customer_id) {
         return null;
     }
 
-    public ArrayList<SparePartModel> get_all_spare_parts_booking(int booking_id) {
+    public ArrayList<SparePartModel> get_all_spare_parts_booking(int booking_id)
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            ResultSet rs = mystmt.executeQuery("select * from spareparts_holder where bid = "+booking_id );
+
+            ArrayList<SparePartModel> c1=new ArrayList<SparePartModel>();
+            SparePartModel c2=new SparePartModel();
+
+            int i=0;
+            while (rs.next()) {
+
+                //c2.id= rs.getInt("part_id");
+                c2=get_spare_part(rs.getInt("part_id"));
+
+                c2.quantity=rs.getInt("quantity");
+                c1.add(c2);
+
+
+            }
+            return c1;
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
-    public BillingModel get_bill(int booking_id) {
-        return null;
-    }
 
-    public boolean update_booking_status(int booking_id, String status) {
+    public boolean updateFinishTime(int booking_id, LocalDateTime finishTime)//done
+    {
+
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+
+            LocalDate ld=finishTime.toLocalDate();
+            LocalTime lt=finishTime.toLocalTime();
+            Date finishdate = java.sql.Date.valueOf(ld);
+            Time finishtime =Time.valueOf(lt);
+
+
+            String sql = "update booking set end_date = ? where bid = ?" ;
+            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            pstmt.setDate(1,finishdate);
+            pstmt.setInt(2,booking_id);
+            int rowAffected2 = pstmt.executeUpdate();
+
+            String sql2 = "update booking set end_time = ? where bid = ?" ;
+            PreparedStatement pstmt2 = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            pstmt2.setTime(1,finishtime);
+            pstmt2.setInt(2,booking_id);
+            int rowAffected22 = pstmt.executeUpdate();
+
+            return true;
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return false;
     }
 
-    public boolean updateFinishTime(int booking_id, LocalDateTime finishTime) {
+    public boolean store_spare_holder(int booking_id, int spare_id, int quantity)//done
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            String sql = "INSERT INTO spareparts_holder(bid ,part_id,quantity) " + "VALUES(?,?,?)";
+            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setInt(1, booking_id);
+            pstmt.setInt(2,spare_id);
+            pstmt.setInt(3,quantity);
+
+            int rowAffected = pstmt.executeUpdate();
+            if(rowAffected == 1)
+            {
+
+                return true;
+            }
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
         return false;
     }
 
-    public boolean store_spare_holder(int booking_id, int spare_id, int quantity) {
-        return false;
-    }
 
-    public boolean store_customer_billing(int booking_id, String title, String customerName, String workerName, String status, Float totalCost) {
-        return false;
-    }
+
+
 }

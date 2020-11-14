@@ -62,7 +62,7 @@ public class BillingManager implements BillingService {
         float totalCost;
         try {
             totalCost = b.calculateCost();
-            db.store_customer_billing(bid, b.getText(), c.getName(), w.getName(), "unpaid", totalCost);
+            db.store_customer_billing(bid, b.getText(), c.getId(), w.getId(), "unpaid", totalCost);
             db.change_billing_status(bid,b.getStatus());
         }
         catch (Exception e){
@@ -75,8 +75,8 @@ public class BillingManager implements BillingService {
         BillingModel mybill = new BillingModel();
         mybill.bookingId = bid;
         mybill.title = b.getText();
-        mybill.customerName = c.getName();
-        mybill.workerName = w.getName();
+        mybill.cid = c.getId();
+        mybill.wid = w.getId();
         mybill.status = "unpaid";
         mybill.totalCost = totalCost;
         return mybill;

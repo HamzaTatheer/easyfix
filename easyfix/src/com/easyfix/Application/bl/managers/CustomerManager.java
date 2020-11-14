@@ -47,6 +47,18 @@ public class CustomerManager implements CustomerService {
         return 1;
     }
 
+    public boolean addToWallet(int cid,float amount) throws Exception {
+        //contact external api to get certain amount from Bank through use of cid or some other way like verification code etc
+        //we dont know how credit card works actually..
+
+        if(amount<=0){
+            throw new Exception("Invalid amount");
+        }
+
+        CustomerModel customer = dbService.get_customer(cid);
+        return dbService.update_customerWallet(cid,customer.wallet+amount);
+    }
+
     public CustomerModel getCustomerDetails(int cid) throws Exception {
         if(dbService.does_customer_exist(cid) == true){
             return dbService.get_customer(cid);

@@ -9,6 +9,7 @@ import com.easyfix.Application.db.dbProviders;
 import com.easyfix.Application.db.services.DbService;
 import com.easyfix.Application.models.BillingModel;
 import com.easyfix.Application.models.BookingModel;
+import com.easyfix.Application.models.SparePartModel;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class BookingManager implements BookingService {
     }
 
 
-    public Boolean makeBooking(int _cid, int _wid, String _text, LocalDateTime _startTime,ArrayList<Integer>_sparePart) throws Exception {
+    public Boolean makeBooking(int _cid, int _wid, String _text, LocalDateTime _startTime,ArrayList<SparePartModel>_sparePart) throws Exception {
         //get all bookings of the required worker (a)
         ArrayList<BookingModel> workerBookingsModel = db.get_booking_of_worker(_wid);
         //Convert bookingModel to booking
@@ -46,12 +47,20 @@ public class BookingManager implements BookingService {
                 throw new Exception("Another Booking of The worker also has same time. Please try again.");
         }
 
-        if((c.getArea() != w.getArea()) || (c.getCity() != w.getCity())){
+
+        if(!c.getCity().equals(w.getCity())){
+            throw new Exception("you can not book appointment with a worker who is not in your city");
+        }
+
+
+        if(!c.getArea().equals(w.getArea())){
             throw new Exception("you can not book appointment with a worker who is not in your area");
         }
-        //if it does return false
-        //if it does not create booking
-        return db.store_booking(mybooking.getCustomer().getId(),mybooking.getWorker().getId(),mybooking.getText(),mybooking.getStatus(),mybooking.getStartTime(),mybooking.getEndTime(),_sparePart);
+
+
+
+        db.store_booking(mybooking.getCustomer().getId(),mybooking.getWorker().getId(),mybooking.getText(),mybooking.getStatus(),mybooking.getStartTime(),mybooking.getEndTime(),new ArrayList<Integer>());
+        return true;
     }
 
     public boolean payForBooking(int cid,int bid) throws Exception {

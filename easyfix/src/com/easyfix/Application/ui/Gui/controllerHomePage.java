@@ -119,6 +119,36 @@ public class controllerHomePage extends UI {
 
     @FXML
     public void handleShowFavouritesAction(ActionEvent event) {
+        try {
+            try {
+                ArrayList<WorkerModel> getWork = customerService.getFavourites(Cust_id);//get all workers by cust_id
+                //Load second scene
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("FavouritesXML.fxml"));
+                Parent root = loader.load();
+
+                //Get controller of scene2
+                FavouritesController scene2Controller = loader.getController();
+                //Pass whatever data you want. You can have multiple method calls here
+                scene2Controller.initializeFavouritesArrayList(getWork,Cust_id);
+
+                //close window
+                final Node source = (Node) event.getSource();
+                final Stage hide = (Stage) source.getScene().getWindow();
+                hide.close();
+                //Show scene 2 in new window
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.show();
+
+            }
+            catch (Exception E){
+                E.getMessage();
+            }
+
+        }
+        catch (Exception E){
+            E.getMessage();
+        }
 
     }
 

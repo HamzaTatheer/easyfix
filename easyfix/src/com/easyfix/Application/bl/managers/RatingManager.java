@@ -32,6 +32,8 @@ public class RatingManager implements RatingService {
 
             if(Worker.isRatingCorrect(workerRating)){
                 dbService.store_rating(giverID,receiverID,workerRating);
+                float newRating = dbService.get_avg_rating(receiverID);
+                dbService.update_average_rating(receiverID,newRating);
             }
             else{
                 throw new Exception("Rating is Incorrect. Please give rating between 0-5");

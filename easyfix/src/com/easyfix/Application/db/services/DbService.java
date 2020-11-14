@@ -26,7 +26,7 @@ public boolean update_Worker_city(int id,String city);
 public boolean update_Worker_area(int id,String area);
 public boolean update_hourly_rate(int id,float rate);
 
-public boolean store_booking( int customer_id, int worker_id, String text, String status, LocalDateTime start_time,LocalDateTime end_time,ArrayList<Integer> spareParts);//bid given by default by DB
+public int store_booking( int customer_id, int worker_id, String text, String status, LocalDateTime start_time,LocalDateTime end_time,ArrayList<Integer> spareParts);//bid given by default by DB
     public  ArrayList<BookingModel> get_booking(int bid);
     public  ArrayList<BookingModel> get_booking_of_customer(int customer_id);
 public  ArrayList<BookingModel> get_booking_of_worker(int worker_id);
@@ -48,9 +48,8 @@ public boolean remove_favourite(int customer_id,int worker_id);
 public ArrayList<Integer> get_favourites(int customer_id);
 //----------------------------------------
 
-
-public boolean store_customer_billing(int booking_id,String title,String customerName,String workerName,String status,Float totalCost);//int billing_id, given by DB
-public  BillingModel get_bill(int booking_id);
+    public boolean store_customer_billing(int booking_id,String title,int cid,int wid,String status,Float totalCost);
+    public  BillingModel get_bill(int booking_id);
 public boolean change_billing_status(int booking_id,String status);
 
 public boolean store_complaint(int customer_id,int worker_id,String complain_text);//int complain_id, given by DB
@@ -63,6 +62,7 @@ public ArrayList<SparePartModel> get_all_parts();//for quantity>0
 public boolean deduct_part(int spare_id,int quantity);
 
 public boolean store_rating(int customer_id,int worker_id,int rating);
+public boolean update_average_rating(int id, float rate);
 public float get_avg_rating(int worker_id);
 public ArrayList<RatingModel> getAllRatings(int customer_id);
 
