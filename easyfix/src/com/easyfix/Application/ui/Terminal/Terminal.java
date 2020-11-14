@@ -322,7 +322,7 @@ public class Terminal extends UI {
                                     b.spareParts = new ArrayList<Integer>();
 
                                     try {
-                                        bookingService.makeBooking(b.cid, b.wid, b.text, b.startTime, b.spareParts);
+                                        bookingService.makeBooking(b.cid, b.wid, b.text, b.startTime, new ArrayList<SparePartModel>());
                                         ArrayList<SparePartModel> sp = sparePartService.showAllSpareParts();
                                         for (int i = 0; i < sp.size(); i++) {
                                             System.out.println("id: " + sp.get(i).id + "  name: " + sp.get(i).name + "  " + (sp.get(i).quantity > 0 ? "Available" : "Not Available"));
