@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="372.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easyfix.Application.ui.Gui.controllerGiveRating">
+   <children>
+      <Pane prefHeight="128.0" prefWidth="600.0" styleClass="linear-grade" stylesheets="@test.css">
+         <children>
+            <ImageView fitHeight="117.0" fitWidth="113.0" layoutX="487.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Daco_1849574.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="home" onAction="#handleRatingAction" layoutX="46.0" layoutY="89.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="64.0" text="Home" />
+         </children>
+      </Pane>
+      <Label layoutX="103.0" layoutY="171.0" prefHeight="31.0" prefWidth="171.0" text="Rate Worker" textFill="#6f0fca">
+         <font>
+            <Font size="24.0" />
+         </font>
+         <effect>
+            <DropShadow height="35.3" radius="16.555" width="32.92" />
+         </effect>
+      </Label>
+      <TextField fx:id="rating" layoutX="169.0" layoutY="232.0" prefHeight="27.0" prefWidth="165.0" promptText="Enter Rating" />
+      <Button fx:id="ratingbtn" onAction="#handleRatingAction" layoutX="270.0" layoutY="276.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="64.0" stylesheets="@test.css" text="Rate" />
+   </children>
+</Pane>

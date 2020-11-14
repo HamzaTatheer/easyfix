@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 public class TextDbManager implements DbService {
 
-    private static String currentPath = "E:\\easyfix\\easyfix\\src\\com\\easyfix\\Application\\db\\textDb\\";
+    private static String currentPath = "C:\\Users\\Fahad\\Documents\\easyfix\\easyfix\\src\\com\\easyfix\\Application\\db\\textDb\\";
     //private static String currentPath = "./";
 
     @Override

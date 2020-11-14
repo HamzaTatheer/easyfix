@@ -17,7 +17,7 @@ public class BookingJAVAFX {
     public Button giveRating;
     public Button showBill;
 
-    public BookingJAVAFX(int id, int wid, int cid, String bookingtext, String status, LocalDateTime startTime, LocalDateTime endTime, ArrayList<Integer> spareParts) {
+    public BookingJAVAFX(int id, int wid, int cid, String bookingtext, String status, LocalDateTime startTime, LocalDateTime endTime, ArrayList<Integer> spareParts,Button complain,Button addtoFavourite,Button showBill,Button giveRating) {
         this.id = id;
         this.wid = wid;
         this.cid = cid;
@@ -26,10 +26,14 @@ public class BookingJAVAFX {
         this.startTime = startTime;
         this.endTime = endTime;
         this.spareParts = spareParts;
-        this.complain=new Button("Complain");
-        this.addtoFavourite=new Button("Add to Favourite");
-        this.giveRating=new Button("Give Rating");
-        this.showBill=new Button("Show Bill");
+        this.complain=complain;
+        this.complain.setText("Complain");
+        this.addtoFavourite=addtoFavourite;
+        this.addtoFavourite.setText("Add to Favourite");
+        this.giveRating=giveRating;
+        this.giveRating.setText("Give Rating");
+        this.showBill=showBill;
+        this.showBill.setText("Show Bill");
     }
 
     public int getId() {
