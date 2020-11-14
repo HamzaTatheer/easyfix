@@ -25,8 +25,9 @@ public interface DB_interface {
     public boolean update_Worker_city(int id,String city);
     public boolean update_Worker_area(int id,String area);
     public boolean update_hourly_rate(int id,float rate);
+    public boolean update_average_rating(int id,float rate);
 
-    public boolean store_booking( int customer_id, int worker_id, String text, String status, LocalDateTime start_time,LocalDateTime end_time,ArrayList<Integer> spareParts);//bid given by default by DB
+    public int store_booking( int customer_id, int worker_id, String text, String status, LocalDateTime start_time,LocalDateTime end_time,ArrayList<Integer> spareParts);//bid given by default by DB
     public  ArrayList<BookingModel> get_booking_of_customer(int customer_id);
     public  ArrayList<BookingModel> get_booking_of_worker(int worker_id);
     public ArrayList<BookingModel> get_booking_of_customer(int customer_id,String status);
