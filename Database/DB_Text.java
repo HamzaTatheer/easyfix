@@ -1136,7 +1136,7 @@ public class DB_Text implements DB_interface {
     }
 
     @Override
-    public boolean store_booking(int customer_id, int worker_id, String text, String status, LocalDateTime start_time, LocalDateTime end_time, ArrayList<Integer> spareParts)
+    public int store_booking(int customer_id, int worker_id, String text, String status, LocalDateTime start_time, LocalDateTime end_time, ArrayList<Integer> spareParts)
     {
 
         int bid=0;
@@ -1182,10 +1182,10 @@ public class DB_Text implements DB_interface {
 
             } catch (IOException ioException) {
             ioException.printStackTrace();
-            return false;
+            return -1;
         }
 
-        return true;
+        return bid;
     }
 
     @Override
