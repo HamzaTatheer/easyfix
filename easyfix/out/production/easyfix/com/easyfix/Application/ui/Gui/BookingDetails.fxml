@@ -77,7 +77,7 @@
                   <Glow />
                </effect>
                <cursor>
-                  <Cursor fx:constant="NONE" />
+                  <Cursor fx:constant="DEFAULT" />
                </cursor>
             </Text>
             <Button fx:id="FinalBook" layoutX="294.0" layoutY="399.0" mnemonicParsing="false" onAction="#HandleFinalBookAction" prefHeight="39.0" prefWidth="96.0" text="Book">

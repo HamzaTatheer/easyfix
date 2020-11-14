@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="368.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easyfix.Application.ui.Gui.controllerComplain">
+   <children>
+      <Pane prefHeight="109.0" prefWidth="600.0" styleClass="linear-grade" stylesheets="@test.css">
+         <children>
+            <Button fx:id="home" layoutX="43.0" layoutY="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Home" />
+            <ImageView fitHeight="93.0" fitWidth="120.0" layoutX="480.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Daco_1849574.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Label layoutX="33.0" layoutY="122.0" prefHeight="28.0" prefWidth="168.0" text="Complain" textFill="#6121b8">
+         <font>
+            <Font size="21.0" />
+         </font>
+         <effect>
+            <DropShadow height="42.45" radius="15.3625" />
+         </effect>
+      </Label>
+      <TextArea fx:id="complaintext" layoutX="172.0" layoutY="153.0" prefHeight="170.0" prefWidth="200.0" />
+      <Button fx:id="Complain" onAction="#handleComplainAction" layoutX="389.0" layoutY="323.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" stylesheets="@test.css" text="Complain" />
+   </children>
+</Pane>

@@ -16,8 +16,9 @@ import java.util.Scanner; // Import the Scanner class to read text files
 
 
 public class TextDbManager implements DbService {
-
-    private static String currentPath = "./easyfix/src/com/easyfix/Application/db/textDb/";
+    
+    private static String currentPath = "C:\\Users\\Fahad\\Documents\\easyfix\\easyfix\\src\\com\\easyfix\\Application\\db\\textDb\\";
+    //private static String currentPath = "./";
 
     @Override
     public boolean does_customer_exist(int id) {
