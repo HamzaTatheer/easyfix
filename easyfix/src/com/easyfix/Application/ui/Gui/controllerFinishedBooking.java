@@ -11,6 +11,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.Node;
+
+//import java.awt.*;
+//import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -33,7 +36,7 @@ public class controllerFinishedBooking extends UI {
     int selected_WID;
 
     @FXML
-    private Button Complain;
+    private Button Complain,home;
     @FXML
     private TableView<BookingJAVAFX> tableview;
 
@@ -234,12 +237,25 @@ public class controllerFinishedBooking extends UI {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("showbill.fxml"));
         Parent root = loader.load();
 
+        String cname=null,wname=null;
         //Get controller of scene2
+        try {
+            cname = customerService.getCustomerDetails(bill.cid).name;
+        }
+        catch(Exception e){
+            e.getMessage();
+        }
+        try {
+            wname = workerService.getWorker(bill.wid).name;
+        }
+        catch(Exception e){
+            e.getMessage();
+        }
         controllerShowBill scene2Controller = loader.getController();
         scene2Controller.setLabelid(bill.bookingId);
         scene2Controller.setLabeltitle(bill.title);
-        scene2Controller.setLabelcustomer(bill.customerName);
-        scene2Controller.setLabelworker(bill.workerName);
+        scene2Controller.setLabelcustomer(cname);
+        scene2Controller.setLabelworker(wname);
         scene2Controller.setLabelstatus(bill.status);
         scene2Controller.setLabelcost(bill.totalCost);
 
@@ -251,9 +267,20 @@ public class controllerFinishedBooking extends UI {
         stage.setScene(new Scene(root));
         stage.show();
     }
-   /* @FXML
-    public void handleGiveRatingAction(ActionEvent event)throws Exception{
-        BookingJAVAFX b=tableview.getSelectionModel().getSelectedItem();
-        System.out.println("text "+b.bookingtext);
-    }*/
+    public void handleHomeAction(ActionEvent event)throws Exception{
+        //Load second scene
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("homepage.fxml"));
+        Parent root = loader.load();
+
+        //Get controller of scene2
+        controllerHomePage scene2Controller = loader.getController();
+        //Pass whatever data you want. You can have multiple method calls here
+
+        scene2Controller.transferId(c_id);
+
+        //Show scene 2 in new window
+        Stage stage = (Stage) home.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
 }

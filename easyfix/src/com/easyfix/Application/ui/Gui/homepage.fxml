@@ -21,7 +21,7 @@
             <Button fx:id="favourite" layoutX="16.0" layoutY="210.0" mnemonicParsing="false" onAction="#handleShowFavouritesAction" prefHeight="25.0" prefWidth="139.0" stylesheets="@test.css" text="Show Favourites" />
             <Button fx:id="finishedbooking" layoutX="13.0" layoutY="256.0" mnemonicParsing="false" onAction="#handleShowFinishedBooking" text="Show Finished Booking" />
             <Button fx:id="activebooking" layoutX="13.0" layoutY="297.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="139.0" text="Show Active Booking" />
-            <Button fx:id="logout" layoutX="14.0" layoutY="342.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="139.0" text="Logout" />
+            <Button fx:id="logout" onAction="#handleLogoutAction" layoutX="14.0" layoutY="342.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="139.0" text="Logout" />
             <Button fx:id="profile" layoutX="18.0" layoutY="124.0" mnemonicParsing="false" onAction="#handlegotoProfileAction" prefHeight="25.0" prefWidth="139.0" stylesheets="@test.css" text="Edit Profile" />
             <ImageView fitHeight="99.0" fitWidth="152.0" layoutX="32.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
                <image>
