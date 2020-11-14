@@ -1,6 +1,5 @@
 package com.easyfix.Application.db.textDb;
 
-import com.easyfix.Application.bl.classes.Worker;
 import com.easyfix.Application.db.services.DbService;
 import com.easyfix.Application.models.*;
 
@@ -14,7 +13,12 @@ import java.util.Scanner;
 
 public class TextDbManager implements DbService {
 
+<<<<<<< Updated upstream
     private static String currentPath = "./src/com/easyfix/Application/db/textDb/";
+=======
+    private static String currentPath = "E:\\easyfix\\easyfix\\src\\com\\easyfix\\Application\\db\\textDb\\";
+    //private static String currentPath = "./";
+>>>>>>> Stashed changes
 
     @Override
     public boolean does_customer_exist(int id) {

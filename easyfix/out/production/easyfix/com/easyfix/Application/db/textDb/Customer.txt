@@ -2,11 +2,11 @@
 Bilal
 bilal@gmail.com
 12345
-cash
+wallet
 554433
-7000.0
-lahore
-valencia
+5400.0
+islamabad
+blue
 4
 2
 3
