@@ -6,16 +6,16 @@ import com.easyfix.Application.models.BookingModel;
 public class Billing {
     private int bookingId;
     private String title;
-    private String customerName;
-    private String workerName;
+    private int cid;
+    private int wid;
     private String status;
     private Float totalCost;
     //constructors
-    public Billing(int _bookingId, String _title, String _customerName, String _workerName, String _status, Float _TotalCost){
+    public Billing(int _bookingId, String _title, int _cid, int _wid, String _status, Float _TotalCost){
         bookingId = _bookingId;
         title = _title;
-        customerName = _customerName;
-        workerName = _workerName;
+        cid = _cid;
+        wid = _wid;
         status = _status;
         totalCost = _TotalCost;
     }
@@ -23,8 +23,8 @@ public class Billing {
     BillingModel getBillingModel(){
         BillingModel b = new BillingModel();
         b.bookingId = bookingId;
-        b.workerName = workerName;
-        b.customerName = customerName;
+        b.wid =wid;
+        b.cid = cid;
         b.title = title;
         b.status = status;
         return b;
@@ -55,12 +55,12 @@ public class Billing {
         return title;
     }
 
-    public String getCustomerName() {
-        return customerName;
+    public int getCustomerId() {
+        return cid;
     }
 
-    public String getWorkerName() {
-        return workerName;
+    public int getWorkerId() {
+        return wid;
     }
 
     public String getStatus() {
@@ -81,12 +81,12 @@ public class Billing {
         this.title = title;
     }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
+    public void setCustomerId(int _id) {
+        this.cid = _id;
     }
 
-    public void setWorkerName(String workerName) {
-        this.workerName = workerName;
+    public void setWorkerName(int _wid) {
+        this.wid = _wid;
     }
 
     public void setStatus(String status) {
