@@ -2559,7 +2559,7 @@ return false;
     @Override
     public boolean store_chat(int sender_id,int reciever_id,String sender_name,String receiver_name,String text) {
         try {
-            FileWriter myWriter=new FileWriter("Rating.txt",true);
+            FileWriter myWriter=new FileWriter("Chat.txt",true);
 
 
             myWriter.write(sender_id + "\n");
@@ -2583,7 +2583,7 @@ return false;
 
     @Override
     public ArrayList<ChatMessageModel> get_chat_history(int customer_id, int worker_id) {
-        File obj=new File("Rating.txt");
+        File obj=new File("Chat.txt");
         ArrayList<ChatMessageModel> store =new ArrayList<ChatMessageModel>();
 
         try {
