@@ -183,6 +183,36 @@ public class controllerHomePage extends UI {
 
     @FXML
     public void handleshowActiveBooking(ActionEvent event) {
+        try {
+            try {
+                ArrayList<BookingModel> getBook = bookingService.showActiveBookingOfWorker(Cust_id);//get all active bookings by cust_id
+                //Load second scene
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("ShowActiveXML.fxml"));
+                Parent root = loader.load();
+
+                //Get controller of scene2
+                ShowActiveController scene2Controller = loader.getController();
+                //Pass whatever data you want. You can have multiple method calls here
+                scene2Controller.initializeActiveBookings(getBook,Cust_id);
+
+                //close window
+                final Node source = (Node) event.getSource();
+                final Stage hide = (Stage) source.getScene().getWindow();
+                hide.close();
+                //Show scene 2 in new window
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.show();
+
+            }
+            catch (Exception E){
+                E.getMessage();
+            }
+
+        }
+        catch (Exception E){
+            E.getMessage();
+        }
 
     }
     public void changeScene(String file,Button btn)throws Exception{

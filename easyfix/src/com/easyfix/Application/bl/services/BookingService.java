@@ -1,10 +1,6 @@
 package com.easyfix.Application.bl.services;
-import com.easyfix.Application.bl.managers.BillingManager;
-import com.easyfix.Application.bl.managers.BookingManager;
-import com.easyfix.Application.bl.managers.CustomerManager;
-import com.easyfix.Application.models.BillingModel;
 import com.easyfix.Application.models.BookingModel;
-import com.easyfix.Application.models.SparePartModel;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 public interface BookingService {

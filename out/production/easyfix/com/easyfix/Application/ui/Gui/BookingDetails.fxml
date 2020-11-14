@@ -42,13 +42,13 @@
                     <effect>
                         <ColorAdjust brightness="-0.07" />
                     </effect>
-                    <children>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="502.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@images.png" />
-                            </image>
-                        </ImageView>
-                    </children>
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="509.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@6eb28c8ea93febd971943f5a73364b2f.png" />
+                     </image>
+                  </ImageView>
+               </children>
                 </Pane>
                 <Text fill="#f8f8f8" layoutX="164.0" layoutY="186.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please ! Enter Booking Details." textAlignment="CENTER" wrappingWidth="330.13671875">
                     <font>

@@ -1,21 +1,25 @@
 package com.easyfix.Application.ui.Gui;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
 public class BookingJAVAFX {
-    public int id;
-    public int wid;
-    public int cid;
-    public String bookingtext;
-    public String status;
-    public LocalDateTime startTime;
-    public LocalDateTime endTime;
-    public ArrayList<Integer> spareParts;
-    public Button complain;
-    public Button addtoFavourite;
-    public Button giveRating;
-    public Button showBill;
+    private int id;
+    private int wid;
+    private int cid;
+    private String bookingtext;
+    private String status;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
+    private ArrayList<Integer> spareParts;
+    private Button complain;
+    private Button addtoFavourite;
+    private Button giveRating;
+    private Button showBill;
+    private Button chat;
 
     public BookingJAVAFX(int id, int wid, int cid, String bookingtext, String status, LocalDateTime startTime, LocalDateTime endTime, ArrayList<Integer> spareParts) {
         this.id = id;
@@ -31,7 +35,15 @@ public class BookingJAVAFX {
         this.giveRating=new Button("Give Rating");
         this.showBill=new Button("Show Bill");
     }
-
+    public BookingJAVAFX(int _wid,String _text,LocalDateTime _startTime,LocalDateTime _endTime,Button _button){
+        wid=_wid;
+        bookingtext=_text;
+        startTime=_startTime;
+        endTime=_endTime;
+        chat=_button;
+        chat.setText("Chat");
+        chat.setAlignment(Pos.CENTER);
+    }
     public int getId() {
         return id;
     }
@@ -127,4 +139,13 @@ public class BookingJAVAFX {
     public void setShowBill(Button showBill) {
         this.showBill = showBill;
     }
+
+    public Button getChat() {
+        return chat;
+    }
+
+    public void setChat(Button chat) {
+        this.chat = chat;
+    }
+
 }
