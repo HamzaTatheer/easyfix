@@ -1,19 +1,12 @@
 package com.easyfix.Application.ui.Terminal;
-import com.easyfix.Application.bl.classes.SparePart;
-import com.easyfix.Application.bl.services.BookingService;
-import com.easyfix.Application.bl.services.WorkerService;
 import com.easyfix.Application.models.*;
-import com.easyfix.Application.bl.services.CustomerService;
 import com.easyfix.Application.ui.UI;
-import com.easyfix.Application.utils.Arrayfuncs;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.*;
-
-import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Terminal extends UI {
 
@@ -323,7 +316,7 @@ public class Terminal extends UI {
 
                                     try {
                                         bookingService.makeBooking(b.cid, b.wid, b.text, b.startTime, b.spareParts);
-                                        ArrayList<SparePartModel> sp = sparePartService.showAllSpareParts();
+                                         ArrayList<SparePartModel> sp = sparePartService.showAllSpareParts();
                                         for (int i = 0; i < sp.size(); i++) {
                                             System.out.println("id: " + sp.get(i).id + "  name: " + sp.get(i).name + "  " + (sp.get(i).quantity > 0 ? "Available" : "Not Available"));
                                         }
