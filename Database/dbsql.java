@@ -1,11 +1,11 @@
 package com.company;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.sql.Connection;
-import java.sql.DriverManager;
 
 
 public class dbsql implements DB_interface {
@@ -1493,17 +1493,77 @@ public class dbsql implements DB_interface {
 
     public ArrayList<SparePartModel> get_all_spare_parts_booking(int booking_id)
     {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            ResultSet rs = mystmt.executeQuery("select * from spareparts_holder where bid = "+booking_id );
+
+            ArrayList<SparePartModel> c1=new ArrayList<SparePartModel>();
+            SparePartModel c2=new SparePartModel();
+
+            int i=0;
+            while (rs.next()) {
+
+                //c2.id= rs.getInt("part_id");
+                c2=get_spare_part(rs.getInt("part_id"));
+
+                c2.quantity=rs.getInt("quantity");
+                c1.add(c2);
+
+
+            }
+            return c1;
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
 
-    public boolean updateFinishTime(int booking_id, LocalDateTime finishTime)
+    public boolean updateFinishTime(int booking_id, LocalDateTime finishTime)//done
     {
+
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+
+            LocalDate ld=finishTime.toLocalDate();
+            LocalTime lt=finishTime.toLocalTime();
+            Date finishdate = java.sql.Date.valueOf(ld);
+            Time finishtime =Time.valueOf(lt);
+
+
+            String sql = "update booking set end_date = ? where bid = ?" ;
+            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            pstmt.setDate(1,finishdate);
+            pstmt.setInt(2,booking_id);
+            int rowAffected2 = pstmt.executeUpdate();
+
+            String sql2 = "update booking set end_time = ? where bid = ?" ;
+            PreparedStatement pstmt2 = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            pstmt2.setTime(1,finishtime);
+            pstmt2.setInt(2,booking_id);
+            int rowAffected22 = pstmt.executeUpdate();
+
+            return true;
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return false;
     }
 
-    public boolean store_spare_holder(int booking_id, int spare_id, int quantity)
+    public boolean store_spare_holder(int booking_id, int spare_id, int quantity)//done
     {
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
