@@ -47,21 +47,6 @@ public class controllerHomePage extends UI {
         try {
             try {
                 ArrayList<WorkerModel> getWork = customerService.getWorkersCloseBy(Cust_id);//get all workers by cust_id
-                /*for (WorkerModel workerModel : getWork) {
-                    System.out.print(workerModel.id + ".");
-                    System.out.print(workerModel.name);
-                    System.out.print("-");
-                    System.out.println(" " + workerModel.speciality);
-                }*/
-
-                /*Parent root;
-                Stage stage;
-                stage = (Stage) BookWorker.getScene().getWindow();
-                root = FXMLLoader.load(getClass().getResource("BookWorkerXML.fxml"));
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-                stage.show();
-                */
                 //Load second scene
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("BookWorkerXML.fxml"));
                 Parent root = loader.load();

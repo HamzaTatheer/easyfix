@@ -71,7 +71,7 @@
                   </ImageView>
                </children>
             </Pane>
-            <Text fill="#f8f8f8" layoutX="245.0" layoutY="202.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose Worker" textAlignment="CENTER" wrappingWidth="169.13671875">
+            <Text fill="#f8f8f8" layoutX="199.0" layoutY="199.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please ! Choose Worker." textAlignment="CENTER" wrappingWidth="260.13671875">
                <font>
                   <Font size="24.0" />
                </font>

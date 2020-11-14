@@ -6,21 +6,25 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class BookWorkerController extends UI {
     private ArrayList<WorkerModel>getWorkers;
     private int c_id;
-    ObservableList<WorkerJAVAFX>list;
-    Button []buttonsArr;
-    int selected_WID;
+    private ObservableList<WorkerJAVAFX>list;
+    private Button []buttonsArr;
+    private int selected_WID;
     @FXML
     private TableView<WorkerJAVAFX> TableView;
 
@@ -55,7 +59,13 @@ public class BookWorkerController extends UI {
         list= FXCollections.observableArrayList();
         for (int i=0;i<buttonsArr.length;i++){
             buttonsArr[i]=new Button();
-            buttonsArr[i].setOnAction(this::handleButtonAction);
+            buttonsArr[i].setOnAction(actionEvent -> {
+                try {
+                    handleButtonAction(actionEvent);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
         }
         int i=0;
         for (WorkerModel workerModel : getWorkers) {
@@ -66,7 +76,7 @@ public class BookWorkerController extends UI {
 
     }
 
-    private void handleButtonAction(ActionEvent actionEvent) {
+    private void handleButtonAction(ActionEvent actionEvent) throws IOException {
         int size=getWorkers.size();
         for(int i=0;i<size;i++) {
             if (actionEvent.getSource() == buttonsArr[i]) {
@@ -79,6 +89,21 @@ public class BookWorkerController extends UI {
         final Node source = (Node) actionEvent.getSource();
         final Stage hide = (Stage) source.getScene().getWindow();
         hide.close();
+
+
+        //Load second scene
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("BookingDetails.fxml"));
+        Parent root = loader.load();
+
+        //Get controller of scene2
+        BookingDetailsController scene2Controller = loader.getController();
+        //Pass whatever data you want. You can have multiple method calls here
+        scene2Controller.recieveData(c_id,selected_WID);
+
         //Show scene 2 in new window
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
+
 }
