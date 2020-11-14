@@ -512,7 +512,7 @@ public class dbsql implements DB_interface {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
             Statement mystmt = conn.createStatement();
 
-            ResultSet rs = mystmt.executeQuery("select * from booking where customer_id = '" + customer_id+"'" + "and worker_id = '" + worker_id +"'" );
+            ResultSet rs = mystmt.executeQuery("select * from booking where customer_id = '" + customer_id+"'" + "and worker_id = '" + worker_id +" ' and booking_text = '"+text+"'" );
             if(rs.next())
             {
                 return rs.getInt("bid");
@@ -538,7 +538,7 @@ public class dbsql implements DB_interface {
         return 0;
     }
 
-    public boolean store_booking(int customer_id, int worker_id, String text, String status, LocalDateTime start_time, LocalDateTime end_time, ArrayList<Integer> spareParts)//done
+    public int store_booking(int customer_id, int worker_id, String text, String status, LocalDateTime start_time, LocalDateTime end_time, ArrayList<Integer> spareParts)//done
     {
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
@@ -556,9 +556,6 @@ public class dbsql implements DB_interface {
             pstmt.setDate(8, Date.valueOf(end_time.toLocalDate()));
 
 
-
-
-
             int rowAffected = pstmt.executeUpdate();
             if(rowAffected == 1)
             {
@@ -574,16 +571,15 @@ public class dbsql implements DB_interface {
                     pstmt2.setInt(2,spareParts.get(i));
                     int rowAffected2 = pstmt2.executeUpdate();
                 }
-                return true;
+                return get_bid(customer_id,worker_id,text);
             }
-
 
 
         }
         catch (Exception e) {
             e.printStackTrace();
         }
-        return false;
+        return -1;
 
     }//bid given by default by DB
 

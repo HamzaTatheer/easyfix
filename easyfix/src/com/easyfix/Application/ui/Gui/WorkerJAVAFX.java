@@ -23,6 +23,13 @@ public class WorkerJAVAFX {
         button.setText("SELECT");
         button.setAlignment(Pos.CENTER);
     }
+    public WorkerJAVAFX(Integer _Id, String _Name, float _Rating,float _HourlyRate,String _Speciality) {
+        this._Id=_Id;
+        this._Name=_Name;
+        this._Rating=_Rating;
+        this._HourlyRate=_HourlyRate;
+        this._Speciality=_Speciality;
+    }
 
     public Float get_Rating() {
         return _Rating;
