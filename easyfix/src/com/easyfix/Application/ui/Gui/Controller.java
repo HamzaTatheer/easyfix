@@ -1,41 +1,62 @@
 package com.easyfix.Application.ui.Gui;
 //import java.awt.event.ActionEvent;
-import com.easyfix.Application.ui.UI;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-
+import java.io.IOException;
+import com.easyfix.Application.models.*;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 
+import com.easyfix.Application.bl.serviceProviders;
+import com.easyfix.Application.bl.services.BookingService;
+import com.easyfix.Application.models.WorkerModel;
+import com.easyfix.Application.ui.UI;
+import javafx.application.Application;
+import com.easyfix.Application.models.WorkerModel;
+import javafx.event.EventHandler;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
+import com.easyfix.Application.bl.classes.SparePart;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.scene.control.TextField;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.Label;
+import com.easyfix.Application.bl.services.CustomerService;
 //import com.easyfix.Application.bl.serviceProviders;
-//Key: controller for login (login.fxml)/register(signup.fxml)
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Reflection;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.geometry.Insets;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+
+import javax.swing.*;
+
 public class Controller extends UI{
 
-    private int userid=-1,workerid=-1;
+    int userid=0,workerid=0;
     @FXML
-    private Button signup,register,login;
+    private Label label;
     @FXML
-    private TextField name;
+    private Button signup,register,login,next,gotochangecity,changecity,profile;
     @FXML
-    private TextField email;
-    @FXML
-    private TextField pass;
-    @FXML
-    private TextField city;
-    @FXML
-    private TextField area;
-
+    private TextField name,email,pass,city,area,choice,getcity;
 
     String Choice;
 
     @FXML
-    private void handleLoginAction(ActionEvent event) throws Exception{ //login Button action performed
+    private void handleLoginAction(ActionEvent event) throws Exception{
 
 
         try {
@@ -52,8 +73,7 @@ public class Controller extends UI{
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        if(userid>0){ //for now HomePage for Customer
-
+        if(userid>0 || workerid>0){
 
             //Load second scene
             FXMLLoader loader = new FXMLLoader(getClass().getResource("homepage.fxml"));
@@ -65,14 +85,13 @@ public class Controller extends UI{
             scene2Controller.transferId(userid);
 
             //Show scene 2 in new window
-            Stage stage = new Stage();
+            Stage stage=(Stage) login.getScene().getWindow();;
             stage.setScene(new Scene(root));
             stage.show();
-
         }
     }
     @FXML
-    private void handleSignupAction(ActionEvent e) throws Exception{ //Don't have an account Button action performed
+    private void handleSignupAction(ActionEvent e) throws Exception{
         Parent root;
         Stage stage;
 
@@ -85,7 +104,7 @@ public class Controller extends UI{
     }
 
     @FXML
-    private void handleRegisterAction(ActionEvent event) throws Exception{ //Signup button action performed
+    private void handleRegisterAction(ActionEvent event) throws Exception{
         int cid=0;
         try {
             cid = customerService.register(name.getText(),email.getText(),pass.getText(),"123",city.getText(),area.getText());
@@ -103,50 +122,31 @@ public class Controller extends UI{
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
-            /*
-            //Load second scene
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("homepage.fxml"));
-            Parent root = loader.load();
-
-            //Get controller of scene2
-            controllerHomePage scene2Controller = loader.getController();
-            //Pass whatever data you want. You can have multiple method calls here
-            scene2Controller.transferId(userid);
-
-            //Show scene 2 in new window
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
-             */
-
-
         }
 
     }
-    public void transferMessage(String message) { //Communication: pass user's choice from Controller1 (Main.fxml) to Controller (Multiple fxml files)
+    public void transferMessage(String message) {
         //Display the message
         Choice=message;
     }
-  /*  @FXML
-    private void handleMainAction(ActionEvent event) throws Exception{
-        Choice=choice.getText();
-        System.out.println(Choice);
+    @FXML
+    private void handleHomeAction(ActionEvent event)throws  Exception{
         Parent root;
         Stage stage;
 
-        stage = (Stage) next.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("login.fxml"));
+        stage = (Stage) changecity.getScene().getWindow();
+        root = FXMLLoader.load(getClass().getResource("homepage.fxml"));
 
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
 
-    }*/
+    }
+
     //@Override
     public void initialize(URL url, ResourceBundle resources) {
         // Initialization code can go here.
         // The parameters url and resources can be omitted if they are not needed
     }
-
 
 }

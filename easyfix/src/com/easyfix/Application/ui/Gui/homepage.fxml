@@ -14,15 +14,16 @@
             <Font size="25.0" />
          </font>
       </Label>
-      <Pane prefHeight="375.0" prefWidth="182.0" styleClass="linear-grade" stylesheets="@test.css">
+      <Button blendMode="LIGHTEN" layoutX="264.0" layoutY="134.0" mnemonicParsing="false" stylesheets="@test.css" text="Button" textFill="#f2ecec" />
+      <Pane prefHeight="381.0" prefWidth="182.0" styleClass="linear-grade" stylesheets="@test.css">
          <children>
-            <Button id="book" fx:id="BookWorker" layoutX="19.0" layoutY="166.0" mnemonicParsing="false" onAction="#handleBookWorkerAction" text="Book Worker" />
-            <Button id="favourite" fx:id="ShowFavourites" layoutX="16.0" layoutY="210.0" mnemonicParsing="false" onAction="#handleShowFavouritesAction" text="Show Favourites" />
-            <Button id="finishedbooking" fx:id="showFinishedBooking" layoutX="13.0" layoutY="256.0" mnemonicParsing="false" onAction="#handleShowFinishedBooking" text="Show Finished Booking" />
-            <Button id="activebooking" fx:id="showActiveBooking" layoutX="13.0" layoutY="297.0" mnemonicParsing="false" onAction="#handleshowActiveBooking" prefHeight="25.0" prefWidth="129.0" text="Show Active Booking" />
-            <Button id="logout" fx:id="logout" layoutX="14.0" layoutY="342.0" mnemonicParsing="false" onAction="#handleLogout" text="Logout" />
-            <Button id="profile" fx:id="EditProfile1" layoutX="18.0" layoutY="124.0" mnemonicParsing="false" onAction="#handleEditProfile1Action" text="Edit Profile" />
-            <ImageView fitHeight="99.0" fitWidth="152.0" layoutX="14.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+            <Button fx:id="book" layoutX="19.0" layoutY="166.0" mnemonicParsing="false" onAction="#handleBookWorkerAction" prefHeight="25.0" prefWidth="139.0" stylesheets="@test.css" text="Book Worker" />
+            <Button fx:id="favourite" layoutX="16.0" layoutY="210.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="139.0" stylesheets="@test.css" text="Show Favourites" />
+            <Button fx:id="finishedbooking" layoutX="13.0" layoutY="256.0" mnemonicParsing="false" onAction="#handleShowFinishedBooking" text="Show Finished Booking" />
+            <Button fx:id="activebooking" layoutX="13.0" layoutY="297.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="139.0" text="Show Active Booking" />
+            <Button fx:id="logout" layoutX="14.0" layoutY="342.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="139.0" text="Logout" />
+            <Button fx:id="profile" layoutX="18.0" layoutY="124.0" mnemonicParsing="false" onAction="#handlegotoProfileAction" prefHeight="25.0" prefWidth="139.0" stylesheets="@test.css" text="Edit Profile" />
+            <ImageView fitHeight="99.0" fitWidth="152.0" layoutX="32.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@Daco_1849574.png" />
                </image>

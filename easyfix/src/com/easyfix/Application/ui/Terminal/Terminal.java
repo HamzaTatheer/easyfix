@@ -1,19 +1,12 @@
 package com.easyfix.Application.ui.Terminal;
-import com.easyfix.Application.bl.classes.SparePart;
-import com.easyfix.Application.bl.services.BookingService;
-import com.easyfix.Application.bl.services.WorkerService;
 import com.easyfix.Application.models.*;
-import com.easyfix.Application.bl.services.CustomerService;
 import com.easyfix.Application.ui.UI;
-import com.easyfix.Application.utils.Arrayfuncs;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.*;
-
-import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Terminal extends UI {
 
@@ -226,11 +219,11 @@ public class Terminal extends UI {
             int choice2 = sc.nextInt();
 
             if (choice2 == 1) {
-                ArrayList<WorkerModel> favourites = customerService.getFavourites(cid);
+                /*ArrayList<WorkerModel> favourites = customerService.getFavourites(cid);
                 System.out.println("Your Favourites: ");
                 for (int i = 0; i < favourites.size(); i++) {
                     System.out.println("id: " + favourites.get(i).id + " " + favourites.get(i).name + " speciality: " + favourites.get(i).speciality);
-                }
+                }*/
             } else if (choice2 == 2) {
 
                 ArrayList<WorkerModel> workers = new ArrayList<WorkerModel>();
