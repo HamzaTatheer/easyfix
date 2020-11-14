@@ -18,7 +18,7 @@
       <Pane prefHeight="381.0" prefWidth="182.0" styleClass="linear-grade" stylesheets="@test.css">
          <children>
             <Button fx:id="book" layoutX="19.0" layoutY="166.0" mnemonicParsing="false" onAction="#handleBookWorkerAction" prefHeight="25.0" prefWidth="139.0" stylesheets="@test.css" text="Book Worker" />
-            <Button fx:id="favourite" layoutX="16.0" layoutY="210.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="139.0" stylesheets="@test.css" text="Show Favourites" />
+            <Button fx:id="favourite" layoutX="16.0" layoutY="210.0" mnemonicParsing="false" onAction="#handleShowFavouritesAction" prefHeight="25.0" prefWidth="139.0" stylesheets="@test.css" text="Show Favourites" />
             <Button fx:id="finishedbooking" layoutX="13.0" layoutY="256.0" mnemonicParsing="false" onAction="#handleShowFinishedBooking" text="Show Finished Booking" />
             <Button fx:id="activebooking" layoutX="13.0" layoutY="297.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="139.0" text="Show Active Booking" />
             <Button fx:id="logout" layoutX="14.0" layoutY="342.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="139.0" text="Logout" />
