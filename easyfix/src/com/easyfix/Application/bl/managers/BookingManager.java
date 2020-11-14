@@ -84,7 +84,7 @@ public class BookingManager implements BookingService {
 
         try {
             customerManager.payMoney(cid, bill.totalCost);
-            finishBooking(bid);
+            db.change_billing_status(bid,"paid");
             return true;
         }
         catch (Exception e){
