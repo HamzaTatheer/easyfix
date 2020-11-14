@@ -155,16 +155,7 @@ public class controllerHomePage extends UI {
     @FXML
     public void handleShowFinishedBooking(ActionEvent event)throws Exception {
 
-        System.out.println("ID "+Cust_id);
             ArrayList<BookingModel> getBook = bookingService.showFinishedBookingOfCustomer(Cust_id);
-              /*  for (BookingModel bookingModel : getBook) {
-                    System.out.print(bookingModel.id + ".");
-                    System.out.print(bookingModel.wid + ".");
-                    System.out.print(bookingModel.cid + ".");
-                    System.out.print(bookingModel.text);
-                    System.out.print("-");
-                    System.out.println(" " + bookingModel.status);
-                }*/
 
             //Load second scene
             FXMLLoader loader = new FXMLLoader(getClass().getResource("showfinishedbooking.fxml"));
@@ -228,6 +219,10 @@ public class controllerHomePage extends UI {
         Stage stage=(Stage) btn.getScene().getWindow();;
         stage.setScene(new Scene(root));
         stage.show();
+    }
+    @FXML
+    public void handleLogoutAction(ActionEvent event)throws Exception{
+        changeScene("main.fxml",logout);
     }
     public void transferId(int _Cust_id) { //Communication: pass user's id from Controller (Multiple fxml files) to handlebookAction
         //Display the message

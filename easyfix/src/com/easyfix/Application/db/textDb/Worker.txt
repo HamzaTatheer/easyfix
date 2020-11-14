@@ -11,7 +11,7 @@ plumber
 Nawaz
 nawaz@gmail.com
 1234567
-0.0
+3.0
 400.0
 islamabad
 blue

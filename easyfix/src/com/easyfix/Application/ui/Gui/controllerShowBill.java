@@ -36,20 +36,25 @@ public class controllerShowBill extends UI {
             if(b == true)
             {
                 System.out.println("Bill payed successfully");
-                changeBScene("homepage.fxml",paybill);
+                populateTableViewfromBill();
             }
             else if(event.getSource()==home)
-                changeBScene("homepage.fxml",home);
+                changeBScene();
         }
     }
-    public void changeBScene(String file, Button btn)throws Exception{
-        Parent root;
-        Stage stage;
+    public void changeBScene()throws Exception{
+        //Load second scene
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("homepage.fxml"));
+        Parent root = loader.load();
 
-        stage = (Stage) btn.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource(file));
+        //Get controller of scene2
+        controllerHomePage scene2Controller = loader.getController();
+        //Pass whatever data you want. You can have multiple method calls here
 
-        stage = (Stage) btn.getScene().getWindow();
+        scene2Controller.transferId(Cid);
+
+        //Show scene 2 in new window
+        Stage stage = (Stage) paybill.getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
     }
@@ -76,5 +81,23 @@ public class controllerShowBill extends UI {
     public void setLabelcost(float Cost){
         String text=Float.toString(Cost);
         cost.setText(text);
+    }
+    public void populateTableViewfromBill()throws Exception{
+        ArrayList<BookingModel> getBook = bookingService.showFinishedBookingOfCustomer(Cid);
+
+        //Load second scene
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("showfinishedbooking.fxml"));
+        Parent root = loader.load();
+
+        //Get controller of scene2
+        controllerFinishedBooking scene2Controller = loader.getController();
+        //Pass whatever data you want. You can have multiple method calls here
+
+        scene2Controller.initializeBookingArrayList(getBook,Cid);
+
+        //Show scene 2 in new window
+        Stage stage = (Stage) paybill.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 }

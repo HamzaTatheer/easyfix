@@ -12,8 +12,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import java.awt.*;
-import java.awt.ActiveEvent;
+//import java.awt.*;
+//import java.awt.ActiveEvent;
+//import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -37,24 +38,47 @@ public class controllerComplain extends UI {
             boolean b = complainService.giveComplain(cid, wid, complaintext.getText());
             if (b == true) {
                 System.out.println("Complain registered successfully");
-                changeCScene("showfinishedbooking.fxml", Complain);
+                populateTableView();
             }
         }
         else if(event.getSource()==home)
-            changeCScene("home.fxml",home);
+            changeCScene();
     }
     public void recieveData(int c_id,int selected_WID){
         cid=c_id;
         wid=selected_WID;
     }
-    public void changeCScene(String file,Button btn)throws Exception{
-        Parent root;
-        Stage stage;
+    public void changeCScene()throws Exception{
+        //Load second scene
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("homepage.fxml"));
+        Parent root = loader.load();
 
-        stage = (Stage) btn.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource(file));
+        //Get controller of scene2
+        controllerHomePage scene2Controller = loader.getController();
+        //Pass whatever data you want. You can have multiple method calls here
 
-        stage = (Stage) btn.getScene().getWindow();
+        scene2Controller.transferId(cid);
+
+        //Show scene 2 in new window
+        Stage stage = (Stage) home.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+    public void populateTableView()throws Exception{
+        ArrayList<BookingModel> getBook = bookingService.showFinishedBookingOfCustomer(cid);
+
+        //Load second scene
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("showfinishedbooking.fxml"));
+        Parent root = loader.load();
+
+        //Get controller of scene2
+        controllerFinishedBooking scene2Controller = loader.getController();
+        //Pass whatever data you want. You can have multiple method calls here
+
+        scene2Controller.initializeBookingArrayList(getBook,cid);
+
+        //Show scene 2 in new window
+        Stage stage = (Stage) Complain.getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
     }
