@@ -7,11 +7,13 @@ cash
 5400.0
 lahore
 valencia
-4
+6
 2
 3
 6
 1
+5
+4
 2
 Rashid
 rashid@gmail.com
