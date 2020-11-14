@@ -22,6 +22,15 @@ public class SparePartManager implements SparePartService {
     }
 
     public boolean addSparePartsToBooking(int bid,int pid,int quantity){
-        return db.store_spare_holder(bid,pid,quantity);
+        SparePartModel sp = db.get_spare_part(pid);
+        if(sp.quantity >= quantity){
+            db.deduct_part(pid,quantity);//from warehouse
+            return db.store_spare_holder(bid,pid,quantity);
+        }
+        else
+        {
+            return false;
+        }
+
     }
 }

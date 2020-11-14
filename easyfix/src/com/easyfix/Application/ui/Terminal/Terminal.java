@@ -155,6 +155,12 @@ public class Terminal extends UI {
         System.out.println("=============================================");
         String action = "nothing";
         while(action != "exit") {
+
+
+
+
+
+
             System.out.print("\033[H\033[2J");
             System.out.flush();
             try {
@@ -162,20 +168,37 @@ public class Terminal extends UI {
                 for(int i=0;i<c.size();i++){
                     System.out.println(c.get(i).senderName +": " + c.get(i).message);
                 }
-
-                System.out.println("Enter Message (type exit to exit chat and refresh to refresh chat): ");
-                String message = sc.nextLine();
-                if(message == "exit"){
-                    return;
-                }
-                else if(message != "refresh"){
-                    chatService.sendMessage(cid,wid,message);
-                }
-
             }
             catch (Exception e){
-                System.out.println("New Chat");
+                System.out.println(e.getMessage());
             }
+
+
+            System.out.println("Enter Message (type exit to exit chat and refresh to refresh chat): ");
+            String message = sc.nextLine();
+            if(message.equals("exit")){
+                break;
+            }
+            else if(!message.equals("refresh")){
+                try {
+                    chatService.sendMessage(cid, wid, message);
+                }
+                catch (Exception e){
+                    System.out.println("Message failed to send");
+                }
+            }
+
+
+
+
+
+
+
+
+
+
+
+
         }
     }
 
@@ -187,10 +210,13 @@ public class Terminal extends UI {
 
         try {
             BillingModel b = billingService.showBill(bill_id);
-            System.out.println("id: "+ b.bookingId +" title: "+ b.title+ " Worker: " + b.workerName + " Cost: "+ b.totalCost + " status: "+b.status);
-            if(b.status != "paid") {
+            System.out.println("id: "+ b.bookingId +" title: "+ b.title+ " Worker: " + b.wid + " Cost: "+ b.totalCost + " status: "+b.status);
+            if(!b.status.equals("paid")) {
                  if(bookingService.payForBooking(cid,b.bookingId)==true)
                      System.out.println("Payment Successful!");
+            }
+            else{
+                System.out.println("Bill is already paid");
             }
         }
         catch (Exception e){
@@ -219,11 +245,11 @@ public class Terminal extends UI {
             int choice2 = sc.nextInt();
 
             if (choice2 == 1) {
-                /*ArrayList<WorkerModel> favourites = customerService.getFavourites(cid);
+                ArrayList<WorkerModel> favourites = customerService.getFavourites(cid);
                 System.out.println("Your Favourites: ");
                 for (int i = 0; i < favourites.size(); i++) {
                     System.out.println("id: " + favourites.get(i).id + " " + favourites.get(i).name + " speciality: " + favourites.get(i).speciality);
-                }*/
+                }
             } else if (choice2 == 2) {
 
                 ArrayList<WorkerModel> workers = new ArrayList<WorkerModel>();
@@ -280,7 +306,7 @@ public class Terminal extends UI {
                 System.out.println("How much do you want to rate him ? ");
                 int rating = sc.nextInt();
                 try {
-                    customerService.giveRating(cid, workerid,rating);
+                    ratingService.giveRating(cid, workerid,rating);
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
@@ -315,7 +341,6 @@ public class Terminal extends UI {
                                     b.spareParts = new ArrayList<Integer>();
 
                                     try {
-                                        bookingService.makeBooking(b.cid, b.wid, b.text, b.startTime, new ArrayList<SparePartModel>());
                                         ArrayList<SparePartModel> sp = sparePartService.showAllSpareParts();
                                         for (int i = 0; i < sp.size(); i++) {
                                             System.out.println("id: " + sp.get(i).id + "  name: " + sp.get(i).name + "  " + (sp.get(i).quantity > 0 ? "Available" : "Not Available"));
@@ -330,13 +355,11 @@ public class Terminal extends UI {
                                             System.out.println("Enter Quantity to Add:");
                                             temp.quantity = sc.nextInt();
                                             myspareparts.add(temp);
+                                            sc.nextLine();
                                             System.out.println("Do you want to add any more items");
                                             done = sc.nextLine();
                                         }
-
-                                        for (int i = 0; i < myspareparts.size(); i++) {
-                                            sparePartService.addSparePartsToBooking(b.id, myspareparts.get(i).id, myspareparts.get(i).quantity);
-                                        }
+                                        bookingService.makeBooking(b.cid, b.wid, b.text, b.startTime, myspareparts);
                                     } catch (Exception e) {
                                         System.out.println("Error: " + e.getMessage());
                                     }
@@ -347,10 +370,11 @@ public class Terminal extends UI {
                 for (BookingModel bookingModel : b) {
                     System.out.println("id: "+ bookingModel.id + " Title: " + bookingModel.text+"    "+bookingModel.status + " Start Time: "+bookingModel.startTime);
                     try {
-                        WorkerModel workerDetails = workerService.getWorker(bookingModel.id);
+                        WorkerModel workerDetails = workerService.getWorker(bookingModel.wid);
                         System.out.println("By Worker: "+ workerDetails.name + " id: "+workerDetails.id);
                     }
                     catch (Exception e){
+                        System.out.println(e.getMessage());
                         System.out.println("By Worker: ...");
                     }
                 }
@@ -368,7 +392,7 @@ public class Terminal extends UI {
                 for (BookingModel bookingModel : b) {
                     System.out.println("id: "+ bookingModel.id + " Title: " + bookingModel.text+"    "+bookingModel.status + " Start Time: "+bookingModel.startTime);
                     try {
-                        WorkerModel workerDetails = workerService.getWorker(bookingModel.id);
+                        WorkerModel workerDetails = workerService.getWorker(bookingModel.wid);
                         System.out.println("By Worker: "+ workerDetails.name + " id: "+workerDetails.id);
                     }
                     catch (Exception e){
@@ -377,8 +401,10 @@ public class Terminal extends UI {
                 }
 
                 System.out.println("Want to Chat with a worker ? yes or no");
+                sc.nextLine();
                 String answer = sc.nextLine();
-                if(answer == "yes"){
+                if(answer.equals("yes")){
+                    System.out.println("Enter the worker id");
                     int chatWith = sc.nextInt();
                     chatScreen(chatWith);
                 }
@@ -389,7 +415,7 @@ public class Terminal extends UI {
                 for (BookingModel bookingModel : b) {
                     System.out.println("id: "+ bookingModel.id + " Title: " + bookingModel.text+"    "+bookingModel.status + " Start Time: "+bookingModel.startTime);
                     try {
-                        WorkerModel workerDetails = workerService.getWorker(bookingModel.id);
+                        WorkerModel workerDetails = workerService.getWorker(bookingModel.wid);
                         System.out.println("By Worker: "+ workerDetails.name + " id: "+workerDetails.id);
                     }
                     catch (Exception e){

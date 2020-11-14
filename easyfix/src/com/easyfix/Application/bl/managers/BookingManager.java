@@ -5,6 +5,7 @@ import com.easyfix.Application.bl.classes.Customer;
 import com.easyfix.Application.bl.classes.SparePart;
 import com.easyfix.Application.bl.classes.Worker;
 import com.easyfix.Application.bl.services.BookingService;
+import com.easyfix.Application.bl.services.SparePartService;
 import com.easyfix.Application.db.dbProviders;
 import com.easyfix.Application.db.services.DbService;
 import com.easyfix.Application.models.BillingModel;
@@ -59,7 +60,15 @@ public class BookingManager implements BookingService {
 
 
 
-        db.store_booking(mybooking.getCustomer().getId(),mybooking.getWorker().getId(),mybooking.getText(),mybooking.getStatus(),mybooking.getStartTime(),mybooking.getEndTime(),new ArrayList<Integer>());
+
+        int bid = db.store_booking(mybooking.getCustomer().getId(),mybooking.getWorker().getId(),mybooking.getText(),mybooking.getStatus(),mybooking.getStartTime(),mybooking.getEndTime(),new ArrayList<Integer>());
+        SparePartManager sp = new SparePartManager();
+        for(int i=0;i<_sparePart.size();i++)
+        {
+            SparePartModel part = _sparePart.get(i);
+            sp.addSparePartsToBooking(bid,part.id,part.quantity);
+        }
+
         return true;
     }
 

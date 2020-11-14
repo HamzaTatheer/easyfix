@@ -2,7 +2,7 @@
 Ahmed
 ahmed@gmail.com
 12345
-0.0
+2.0
 500.0
 lahore
 valencia
@@ -11,7 +11,7 @@ plumber
 Nawaz
 nawaz@gmail.com
 1234567
-3.0
+2.0
 400.0
 islamabad
 blue
@@ -38,7 +38,7 @@ plumber
 Kamran
 kamran@gmail.com
 12345789
-0.0
+2.0
 300.0
 lahore
 valencia
