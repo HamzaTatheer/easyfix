@@ -512,7 +512,7 @@ public class dbsql implements DB_interface {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
             Statement mystmt = conn.createStatement();
 
-            ResultSet rs = mystmt.executeQuery("select * from booking where customer_id = '" + customer_id+"'" + "and worker_id = '" + worker_id +"'" );
+            ResultSet rs = mystmt.executeQuery("select * from booking where customer_id = '" + customer_id+"'" + "and worker_id = '" + worker_id +" ' and booking_text = '"+text+"'" );
             if(rs.next())
             {
                 return rs.getInt("bid");
@@ -538,7 +538,7 @@ public class dbsql implements DB_interface {
         return 0;
     }
 
-    public boolean store_booking(int customer_id, int worker_id, String text, String status, LocalDateTime start_time, LocalDateTime end_time, ArrayList<Integer> spareParts)//done
+    public int store_booking(int customer_id, int worker_id, String text, String status, LocalDateTime start_time, LocalDateTime end_time, ArrayList<Integer> spareParts)//done
     {
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
@@ -556,9 +556,6 @@ public class dbsql implements DB_interface {
             pstmt.setDate(8, Date.valueOf(end_time.toLocalDate()));
 
 
-
-
-
             int rowAffected = pstmt.executeUpdate();
             if(rowAffected == 1)
             {
@@ -574,21 +571,20 @@ public class dbsql implements DB_interface {
                     pstmt2.setInt(2,spareParts.get(i));
                     int rowAffected2 = pstmt2.executeUpdate();
                 }
-                return true;
+                return get_bid(customer_id,worker_id,text);
             }
-
 
 
         }
         catch (Exception e) {
             e.printStackTrace();
         }
-        return false;
+        return -1;
 
     }//bid given by default by DB
 
 
-    public ArrayList<BookingModel> get_booking_of_customer(int customer_id)
+    public ArrayList<BookingModel> get_booking_of_customer(int customer_id)//done
     {
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
@@ -657,7 +653,76 @@ public class dbsql implements DB_interface {
         return null;
     }
 
-    public ArrayList<BookingModel> get_booking_of_customer(int customer_id,String status)
+    public  ArrayList<BookingModel> get_booking(int bid)//done
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            ResultSet rs = mystmt.executeQuery("select * from booking where bid = "+ bid);
+            //WorkerModel c1=new WorkerModel();
+            ArrayList<BookingModel> c1=new ArrayList<BookingModel>();
+            BookingModel c2=new BookingModel();
+
+            int i=0;
+            while (rs.next()) {
+
+                c2.id= rs.getInt("bid");
+                c2.cid=rs.getInt("customer_id");
+                c2.wid=rs.getInt("worker_id");
+                c2.text=rs.getString("booking_text");
+                c2.status=rs.getString("booking_status");
+
+                Time st=rs.getTime("start_time");
+                Time et=rs.getTime("end_time");
+                Date sd=rs.getDate("start_date");
+                Date ed=rs.getDate("end_date");
+                String ss= String.valueOf(sd)+" "+String.valueOf(st);
+                String ee= String.valueOf(ed)+" "+String.valueOf(et);
+
+
+                DateTimeFormatter formator=DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                c2.startTime=LocalDateTime.parse(ss,formator);
+                c2.endTime=LocalDateTime.parse(ee,formator);
+                c1.add(c2);
+
+                //i++;
+
+                Statement mystmt2 = conn.createStatement();
+
+                ResultSet rs2 = mystmt2.executeQuery("select * from booking_spareparts where bid = "+rs.getInt("bid")  );
+
+                //SparePartModel s1=new SparePartModel();
+                int partid;
+
+
+                c2.spareParts=new ArrayList<Integer>();
+
+                while (rs2.next())
+                {
+                    partid=rs2.getInt("part_id");
+
+                    //c1.get(i).spareParts.add(get_spare_part(partid));// get spare part function
+                    c2.spareParts.add(partid);
+                    c1.add(c2);
+                }
+
+
+
+
+            }
+
+            return c1;
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public ArrayList<BookingModel> get_booking_of_customer(int customer_id,String status)//done
     {
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
@@ -726,7 +791,7 @@ public class dbsql implements DB_interface {
         return null;
     }
 
-    public ArrayList<BookingModel> get_booking_of_worker(int worker_id)
+    public ArrayList<BookingModel> get_booking_of_worker(int worker_id)//done
     {
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
@@ -793,7 +858,7 @@ public class dbsql implements DB_interface {
         return null;
     }
 
-    public ArrayList<BookingModel> get_booking_of_worker(int worker_id, String status)
+    public ArrayList<BookingModel> get_booking_of_worker(int worker_id, String status)//done
     {
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
@@ -1339,6 +1404,30 @@ public class dbsql implements DB_interface {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public boolean update_average_rating(int id, float rate)//done
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            String sql = "update worker set average_rating = ? where wid = ?" ;
+            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            pstmt.setFloat(1,rate);
+            pstmt.setInt(2,id);
+            int rowAffected2 = pstmt.executeUpdate();
+            return true;
+
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
 

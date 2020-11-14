@@ -16,5 +16,4 @@ public class serviceProviders{
     public static ComplainService getComplainService(){return new ComplainManager();}
     public static RatingService getRatingService(){return new RatingManager();}
     public static  BillingService getBillingService(){return new BillingManager();}
-
 }
