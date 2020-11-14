@@ -1,23 +1,22 @@
 package com.easyfix.Application.ui.Gui;
 
-import com.easyfix.Application.bl.classes.Customer;
 import com.easyfix.Application.models.BookingModel;
 import com.easyfix.Application.models.WorkerModel;
 import com.easyfix.Application.ui.UI;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import javafx.scene.control.TextField;
 
+import java.io.IOException;
+import java.util.ArrayList;
 
 //import java.awt.*;
 //import java.awt.event.ActionEvent;
-import java.io.IOException;
-import java.util.ArrayList;
 
 public class controllerHomePage extends UI {
     private int Cust_id;
@@ -72,6 +71,10 @@ public class controllerHomePage extends UI {
                 //Pass whatever data you want. You can have multiple method calls here
                 scene2Controller.initializeWorkerArrayList(getWork,Cust_id);
 
+                //close window
+                final Node source = (Node) event.getSource();
+                final Stage hide = (Stage) source.getScene().getWindow();
+                hide.close();
                 //Show scene 2 in new window
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
@@ -87,7 +90,6 @@ public class controllerHomePage extends UI {
             E.getMessage();
         }
     }
-
     @FXML
     public void handleEditProfile1Action(ActionEvent event) {
         System.out.println("profile : "+Cust_id);

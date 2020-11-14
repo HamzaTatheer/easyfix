@@ -1,5 +1,9 @@
 package com.easyfix.Application.ui.Gui;
 
+
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+
 public class WorkerJAVAFX {
 
     private int _Id;
@@ -7,14 +11,17 @@ public class WorkerJAVAFX {
     private float _Rating;
     private float _HourlyRate;
     private String _Speciality;
+    private Button button;
 
-
-    public WorkerJAVAFX(Integer _Id, String _Name, float _Rating,float _HourlyRate,String _Speciality) {
+    public WorkerJAVAFX(Integer _Id, String _Name, float _Rating,float _HourlyRate,String _Speciality,Button button) {
         this._Id=_Id;
         this._Name=_Name;
         this._Rating=_Rating;
         this._HourlyRate=_HourlyRate;
         this._Speciality=_Speciality;
+        this.button=button;
+        button.setText("SELECT");
+        button.setAlignment(Pos.CENTER);
     }
 
     public Float get_Rating() {
@@ -59,5 +66,13 @@ public class WorkerJAVAFX {
 
     public void set_Speciality(String _Speciality) {
         this._Speciality = _Speciality;
+    }
+
+    public Button getButton() {
+        return button;
+    }
+
+    public void setButton(Button button) {
+        this.button = button;
     }
 }
