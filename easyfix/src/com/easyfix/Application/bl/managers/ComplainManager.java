@@ -12,40 +12,31 @@ public class ComplainManager implements ComplainService {
 
     private DbService dbService;
 
-    ComplainManager(){
+    public ComplainManager(){
         dbService = dbProviders.getDbService();
     }
 
-    public Boolean giveComplain(int _id,int _wid,int _cid, String _text)throws Exception{
+    public Boolean giveComplain(int cid,int wid, String _text)throws Exception{
 
-
-        //if((dbService.does_customer_exist(_wid)&& (dbService.does_worker_exist(_cid)))){
-
-            //ComplainDbService complainDbService=dbProviders.getComplainDbService();
-            //c is model
-            ComplainModel c = new ComplainModel();
-            c.id = _id;
-            c.wid=_wid;
-            c.cid=_cid;
-            c.text=_text;
-
-            boolean updated =false;
-            Complain complainObj = new Complain(c);//convert model to class
-            updated = complainObj.checkTextlength(_text); //update in class
-
-            if(updated == true){
-                dbService.store_complaint(_cid,_wid,_text);
+            if(dbService.does_customer_exist(cid) && dbService.does_worker_exist(wid)){
+                dbService.store_complaint(cid,wid,_text);
                 return true;
             }
-            else {
-                throw new Exception("Invalid Complain text length");
+            else{
+                throw new Exception("Invalid customer or worker id");
             }
+
 
         }
         //else
             //throw new Exception("One of the user doesn't exist. Please try again\n");
-        public ArrayList<ComplainModel> showAllComplains(int _cid){
-            return null;
+        public ArrayList<ComplainModel> showAllComplains(int _cid) throws Exception {
+            if(dbService.does_customer_exist(_cid) == true) {
+                return dbService.show_all_complaint(_cid);
+            }
+            else{
+                throw new Exception("Customer Does Not Exist");
+            }
         }
 
 

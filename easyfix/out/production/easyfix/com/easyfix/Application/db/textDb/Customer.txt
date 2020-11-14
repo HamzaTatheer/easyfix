@@ -4,7 +4,7 @@ bilal@gmail.com
 12345
 cash
 554433
-7000.0
+5400.0
 lahore
 valencia
 4
@@ -71,4 +71,14 @@ cash
 200.0
 multan
 valencia
+0
+8
+Talha
+talha@gmail.com
+123456
+cash
+123
+200.0
+Lahore
+DHA
 0

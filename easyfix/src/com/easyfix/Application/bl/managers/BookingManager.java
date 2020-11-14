@@ -7,6 +7,7 @@ import com.easyfix.Application.bl.classes.Worker;
 import com.easyfix.Application.bl.services.BookingService;
 import com.easyfix.Application.db.dbProviders;
 import com.easyfix.Application.db.services.DbService;
+import com.easyfix.Application.models.BillingModel;
 import com.easyfix.Application.models.BookingModel;
 
 import java.time.LocalDateTime;
@@ -14,8 +15,15 @@ import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class BookingManager implements BookingService {
+
+    private DbService db;
+
+    public BookingManager(){
+        db = dbProviders.getDbService();
+    }
+
+
     public Boolean makeBooking(int _cid, int _wid, String _text, LocalDateTime _startTime,ArrayList<Integer>_sparePart) throws Exception {
-        DbService db = dbProviders.getDbService();
         //get all bookings of the required worker (a)
         ArrayList<BookingModel> workerBookingsModel = db.get_booking_of_worker(_wid);
         //Convert bookingModel to booking
@@ -43,30 +51,71 @@ public class BookingManager implements BookingService {
         }
         //if it does return false
         //if it does not create booking
-        return db.store_booking(mybooking.getCustomer().getId(),mybooking.getWorker().getId(),mybooking.getText(),mybooking.getStatus(),mybooking.getStartTime(),mybooking.getEndTime(),new ArrayList<Integer>());
+        return db.store_booking(mybooking.getCustomer().getId(),mybooking.getWorker().getId(),mybooking.getText(),mybooking.getStatus(),mybooking.getStartTime(),mybooking.getEndTime(),_sparePart);
+    }
+
+    public boolean payForBooking(int cid,int bid) throws Exception {
+        CustomerManager customerManager = new CustomerManager();
+        BillingManager billManager = new BillingManager();
+        BillingModel bill;
+        try {
+            bill = billManager.showBill(bid);
+        } catch (Exception e) {
+            throw new Exception(e);
+        }
+
+        try {
+            customerManager.payMoney(cid, bill.totalCost);
+            finishBooking(bid);
+            return true;
+        }
+        catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
     }
 
     public Boolean acceptBooking(int _bid){
-        return false;
+        try {
+            db.update_booking_status(_bid, "active");
+        }
+        catch (Exception e){
+            return false;
+        }
+
+        return true;
     }
     public Boolean rejectBooking(int _bid){
-        return false;
+        try {
+            db.update_booking_status(_bid, "rejected");
+            return true;
+        }
+        catch (Exception e){
+            return false;
+        }
     }
 
-    public Boolean activateBookingTime(int bid){
-        return false;
-    }
-    public Boolean finishBookingTime(int bid){
-        return false;
+    public Boolean finishBooking(int bid){
+        try {
+            db.update_booking_status(bid, "finished");
+            db.updateFinishTime(bid,LocalDateTime.now());
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            return false;
+        }
+
+        return true;
     }
     public ArrayList<BookingModel> showPendingBookingsOfCustomer(int cid){
         DbService db = dbProviders.getDbService();
         return db.get_booking_of_customer(cid,"pending");
     }
-    public ArrayList<BookingModel> showFinishedBookingOfCustomer(int uid){
-        return new ArrayList<>();
+    public ArrayList<BookingModel> showFinishedBookingOfCustomer(int cid){
+        DbService db = dbProviders.getDbService();
+        return db.get_booking_of_customer(cid,"finished");
     }
     public ArrayList<BookingModel> showActiveBookingOfWorker(int cid){
-        return new ArrayList<>();
+        DbService db = dbProviders.getDbService();
+        return db.get_booking_of_customer(cid,"active");
     }
 }

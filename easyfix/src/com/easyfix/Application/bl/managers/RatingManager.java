@@ -1,47 +1,44 @@
 package com.easyfix.Application.bl.managers;
 
+import com.easyfix.Application.bl.classes.Customer;
 import com.easyfix.Application.bl.classes.Rating;
+import com.easyfix.Application.bl.classes.Worker;
 import com.easyfix.Application.bl.services.RatingService;
 import com.easyfix.Application.db.dbProviders;
 import com.easyfix.Application.db.services.DbService;
+import com.easyfix.Application.models.BookingModel;
 import com.easyfix.Application.models.RatingModel;
 
-public class RatingManager implements RatingService {
-    //public ArrayList<RatingModel> showAllRatings(int id){ //pending}
+import java.util.ArrayList;
 
-    // UI should send us model, then we will extract giverID,  receiverID, workerRating,, What do you say?
-    public Boolean giveRating(int giverID,int receiverID,int workerRating) throws Exception{
+public class RatingManager implements RatingService {
+    public Boolean giveRating(int giverID, int receiverID, int workerRating) throws Exception {
 
         DbService dbService = dbProviders.getDbService();
+        boolean exists = true;
 
-        //if((dbService.does_customer_exist(giverID)&& (dbService.does_worker_exist(receiverID)))){
-            //RatingDbService rateDbService=dbProviders.getRatingDbService();
-            //r is model
-            RatingModel r = new RatingModel();
-            r.cid = giverID;
-            r.wid=receiverID;
-            r.rating=workerRating;
-            boolean updated =false;
-            Rating ratingObj = new Rating(r);//convert model to class
-            updated = ratingObj.checkRating(workerRating); //update in class
-
-            if(updated){
-                //get updated model and store in db
-                r = ratingObj.getRatingModel(); //get model
-                //store in db
-
-               // if(rateDbService.store_rating(giverID,receiverID,workerRating))
-                //{
-                    return true;
-                //}
-                //else
-                    //throw new Exception("You already have given rating\n");
+        if(dbService.does_customer_exist(giverID)){
+            if(dbService.does_worker_exist(receiverID)){
+                exists = true;
             }
-            else
-                throw new Exception("Invalid Rating");
-
         }
-        //else
-            //throw new Exception("One of the user doesn't exist. Please try again\n");
+
+        if(exists = true){
+            ArrayList<BookingModel> b = dbService.get_booking_of_customer(giverID,"finished");
+
+            if(b ==null || b.size()<=0){
+                throw new Exception("Customer needs to have at least one booking with worker before giving rating");
+            }
+
+            if(Worker.isRatingCorrect(workerRating)){
+                dbService.store_rating(giverID,receiverID,workerRating);
+            }
+            else{
+                throw new Exception("Rating is Incorrect. Please give rating between 0-5");
+            }
+        }
+
+
+        return true;
     }
-//}
+}

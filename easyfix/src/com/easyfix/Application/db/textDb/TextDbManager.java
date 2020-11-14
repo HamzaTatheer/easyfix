@@ -1,6 +1,5 @@
 package com.easyfix.Application.db.textDb;
 
-import com.easyfix.Application.bl.classes.Worker;
 import com.easyfix.Application.db.services.DbService;
 import com.easyfix.Application.models.*;
 
@@ -14,11 +13,11 @@ import java.util.Scanner;
 
 public class TextDbManager implements DbService {
 
-    private static String currentPath = "./src/com/easyfix/Application/db/textDb/";
+    private static String currentPath = "E:\\easyfix\\easyfix\\src\\com\\easyfix\\Application\\db\\textDb\\";
+    //private static String currentPath = "./";
 
     @Override
     public boolean does_customer_exist(int id) {
-
         File myobj=new  File(currentPath+"Customer.txt");
 
 
@@ -62,7 +61,6 @@ public class TextDbManager implements DbService {
 
     @Override
     public int does_customer_exist(String email, String password) {
-
         File myobj=new  File(currentPath+"Customer.txt");
 
 
@@ -1191,6 +1189,72 @@ public class TextDbManager implements DbService {
     }
 
 
+    @Override
+    public ArrayList<BookingModel> get_booking(int booking_id) {
+        File myobj=new  File(currentPath+"Booking.txt");
+
+        ArrayList<BookingModel> give=new ArrayList<BookingModel>();
+
+
+        try {
+            Scanner myReader = new Scanner(myobj);
+            while(myReader.hasNext()) {
+
+                int bid = myReader.nextInt();
+                myReader.nextLine();
+                int cid = myReader.nextInt();
+                myReader.nextLine();
+                int wid = myReader.nextInt();
+                myReader.nextLine();
+                String text = myReader.nextLine();
+                String status = myReader.nextLine();
+                LocalDateTime start = LocalDateTime.parse(myReader.next());
+                LocalDateTime end= LocalDateTime.parse(myReader.next());
+                int size=myReader.nextInt();
+                myReader.nextLine();
+                ArrayList<Integer> spare=new ArrayList<Integer>();
+
+                for (int i=0;i<size;i++)
+                {
+                    spare.add(myReader.nextInt());
+                    myReader.nextLine();
+
+                }
+                if (bid == booking_id) {
+                    BookingModel ret=new BookingModel();
+
+
+                    ret.id=bid;
+                    ret.cid=cid;
+                    ret.wid=wid;
+                    ret.text=text;
+                    ret.status=status;
+                    ret.startTime=start;
+                    ret.endTime=end;
+                    ret.spareParts=spare;
+
+
+                    /*
+                        System.out.print(bid+"\n");
+                    System.out.print(cid+"\n");
+                    System.out.print(wid+"\n");
+                    System.out.print(text+"\n");
+                    System.out.print(status+"\n");
+                    System.out.print(start+"\n");
+                    System.out.print(end+"\n");
+*/
+                    give.add(ret);
+                }
+            }
+        } catch (FileNotFoundException e) {
+            //  System.out.print("Error in reading a file\n");
+            e.printStackTrace();
+        }
+        // System.out.print("ID not found\n");
+
+
+        return give;
+    }
 
     @Override
     public ArrayList<BookingModel> get_booking_of_customer(int customer_id) {

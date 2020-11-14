@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="365.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easyfix.Application.ui.Gui.controller1">
+   <children>
+      <Pane prefHeight="365.0" prefWidth="221.0" styleClass="linear-grade" stylesheets="@test.css">
+         <children>
+            <ImageView fitHeight="147.0" fitWidth="139.0" layoutX="41.0" layoutY="190.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Daco_1849574.png" />
+               </image>
+            </ImageView>
+             <Label layoutX="41.0" layoutY="45.0" prefHeight="51.0" prefWidth="171.0" text="EasyFix">
+                 <font>
+                     <Font size="43.0" />
+                 </font>
+                 <textFill>
+                  <RadialGradient centerX="0.5311111026340061" centerY="0.47709922208130817" radius="0.5">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.9078947305679321" green="0.05211988463997841" blue="0.05211988463997841" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.9815789461135864" green="0.9688547849655151" blue="0.9688547849655151" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </RadialGradient>
+                 </textFill>
+             </Label>
+         </children>
+      </Pane>
+      <Label layoutX="300.0" layoutY="63.0" prefHeight="34.0" prefWidth="158.0" text="Login" textFill="#440097">
+         <font>
+            <Font size="33.0" />
+         </font>
+      </Label>
+      <TextField fx:id="choice" layoutX="300.0" layoutY="183.0" prefHeight="43.0" prefWidth="199.0" promptText="As Customer/Worker" />
+      <Label layoutX="300.0" layoutY="153.0" prefHeight="23.0" prefWidth="158.0" text="As customer/worker" />
+      <Button fx:id="next" onAction="#handleMainAction" layoutX="434.0" layoutY="256.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="65.0" stylesheets="@test.css" text="Next" />
+   </children>
+</Pane>

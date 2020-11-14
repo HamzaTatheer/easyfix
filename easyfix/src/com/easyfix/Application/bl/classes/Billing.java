@@ -11,7 +11,7 @@ public class Billing {
     private String status;
     private Float totalCost;
     //constructors
-    Billing(int _bookingId,String _title,String _customerName,String _workerName,String _status,Float _TotalCost){
+    public Billing(int _bookingId, String _title, String _customerName, String _workerName, String _status, Float _TotalCost){
         bookingId = _bookingId;
         title = _title;
         customerName = _customerName;

@@ -56,6 +56,27 @@ public class CustomerManager implements CustomerService {
         }
     }
 
+    @Override
+    public boolean payMoney(int cid, float amount) {
+        CustomerModel customer = dbService.get_customer(cid);
+
+
+
+        if(customer.paymentMethod.equals("wallet")){
+            if(customer.wallet >= amount){
+                dbService.update_customerWallet(cid,customer.wallet-amount);
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        else{
+            //contact api like hbl api to make payment and return true
+            return true;
+        }
+    }
+
     public ArrayList<WorkerModel> getFavourites(int cid){
         ArrayList<Integer> w = dbService.get_favourites(cid);
         ArrayList<WorkerModel> workers = new ArrayList<WorkerModel>();
@@ -93,12 +114,17 @@ public class CustomerManager implements CustomerService {
 
     public boolean changePaymentMethod(int cid,String newPaymentMethod){
         Customer c = new Customer(dbService.get_customer(cid));
-        return c.changePaymentMethod(newPaymentMethod);
+
+        if(c.changePaymentMethod(newPaymentMethod)==true)
+        return dbService.update_customerPayment(cid,c.getPaymentMethod());
+        else
+            return false;
     }
 
     public boolean changeCity(int cid,String newCity){
         Customer c = new Customer(dbService.get_customer(cid));
-        return (c.changeCity(newCity));
+        c.changeCity(newCity);
+        return dbService.update_customer_city(cid,c.getCity());
     }
 
     public boolean giveRating(int cid, int wid,int rating) throws Exception {

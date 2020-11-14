@@ -1,43 +1,58 @@
 package com.easyfix.Application.bl.managers;
 
+import com.easyfix.Application.bl.classes.ChatMessage;
 import com.easyfix.Application.bl.services.ChatService;
 import com.easyfix.Application.bl.services.UserService;
+import com.easyfix.Application.db.dbProviders;
+import com.easyfix.Application.db.services.DbService;
 import com.easyfix.Application.models.ChatMessageModel;
 
 import java.security.spec.ECField;
 import java.util.ArrayList;
 
 public class ChatManager implements ChatService {
-    public boolean sendMessage(int senderId,int receiverId,String message){
-        //call db Service to store message in db
-        //Return true when there is a message in db for sure
-        //Hence User can do loadmessagehistory as soon as message is stored in db to get new messages
-        return true;
+
+    public DbService dbService;
+
+    public ChatManager(){
+        dbService = dbProviders.getDbService();
     }
-    public ArrayList<ChatMessageModel> loadMessageHistory(int senderId, int receiverId){
-
-        UserManager userManage = new UserManager();
-
-        //get chats from db and store in array list
-        ArrayList<ChatMessageModel> chat = new ArrayList<ChatMessageModel>();
-        ChatMessageModel reply1 = new ChatMessageModel();
-        reply1.senderId = 1;
-        reply1.receiverId = 2;
 
 
-        reply1.message = "Hi i called you 6 months ago.you did not come you stupid man";
-        chat.add(reply1);
+    public boolean sendMessage(int senderId,int receiverId,String message) throws Exception {
 
-        ChatMessageModel reply2 = new ChatMessageModel();
-        reply2.senderId = 2;
-        reply2.receiverId = 1;
+        boolean exists = true;
 
+        if(dbService.does_customer_exist(senderId) || dbService.does_worker_exist(senderId)){
+            if(dbService.does_customer_exist(receiverId) || dbService.does_worker_exist(receiverId)){
+                exists = true;
+            }
+        }
 
+        if(exists = true){
+            ChatMessage c = new ChatMessage(senderId,receiverId,message);
+            dbService.store_chat(c.getSenderId(),c.getReceiverId(),"sender","receiver",c.getMessage());
+            return true;
+        }
+        else{
+            throw new Exception("Either the sender or reciever does not exist");
+        }
+    }
+    public ArrayList<ChatMessageModel> loadMessageHistory(int senderId, int receiverId) throws Exception{
+        boolean exists = true;
 
+        if(dbService.does_customer_exist(senderId) || dbService.does_worker_exist(senderId)){
+            if(dbService.does_customer_exist(receiverId) || dbService.does_worker_exist(receiverId)){
+                exists = true;
+            }
+        }
 
-        reply2.message = "Sorry sir, this wont happen again. i promise";
-        chat.add(reply2);
-        return chat;
+        if(exists = true){
+            return dbService.get_chat_history(senderId,receiverId);
+        }
+        else{
+            throw new Exception("Either the sender or reciever does not exist");
+        }
     }
 
 }
