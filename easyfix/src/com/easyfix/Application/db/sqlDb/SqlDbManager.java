@@ -134,18 +134,18 @@ public class SqlDbManager implements DbService {
 
             ResultSet rs = mystmt.executeQuery("select * from customers where email = '" + email + "' and password = '" + password + "' ");
 
-
-            if(!rs.next())
-            {
-                return -1;
-            }
-
             while (rs.next())
             {
                 System.out.println( rs.getInt("id"));
                 return rs.getInt("id");
 
             }
+
+            if(!rs.next())
+            {
+                return -1;
+            }
+
 
 
         }
@@ -454,16 +454,13 @@ public class SqlDbManager implements DbService {
             Statement mystmt = conn.createStatement();
 
             ResultSet rs = mystmt.executeQuery("select * from worker where city = '"+ city + "' and area = '"+area + "'");
-            //WorkerModel c1=new WorkerModel();
             ArrayList<WorkerModel> c1=new ArrayList<WorkerModel>();
-            WorkerModel c2=new WorkerModel();
 
             int i=0;
             while (rs.next()) {
-
+                WorkerModel c2=new WorkerModel();
                 c2.id= rs.getInt("wid");
 
-                System.out.println("id "+c2.id);
                 c2.name=rs.getString("name");
                 c2.email=rs.getString("email");
                 c2.password=rs.getString("password");
@@ -473,7 +470,6 @@ public class SqlDbManager implements DbService {
                 c2.area=rs.getString("area");
                 c2.speciality=rs.getString("speciality");
                 c1.add(c2);
-                System.out.println(c1.get(i).id);
                 //i++;
 
 
@@ -757,7 +753,7 @@ public class SqlDbManager implements DbService {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
             Statement mystmt = conn.createStatement();
 
-            ResultSet rs = mystmt.executeQuery("select * from booking where customer_id = "+ customer_id + "and status = " + status);
+            ResultSet rs = mystmt.executeQuery("select * from booking where customer_id = "+ customer_id + " and booking_status = '" + status +"'");
             //WorkerModel c1=new WorkerModel();
             ArrayList<BookingModel> c1=new ArrayList<BookingModel>();
             BookingModel c2=new BookingModel();
