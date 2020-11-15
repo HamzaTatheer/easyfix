@@ -11,7 +11,7 @@
    <children>
       <Pane prefHeight="109.0" prefWidth="600.0" styleClass="linear-grade" stylesheets="@test.css">
          <children>
-            <Button fx:id="home" layoutX="43.0" layoutY="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Home" />
+            <Button fx:id="home" onAction="#handleComplainAction" layoutX="43.0" layoutY="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Home" />
             <ImageView fitHeight="93.0" fitWidth="120.0" layoutX="480.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@Daco_1849574.png" />

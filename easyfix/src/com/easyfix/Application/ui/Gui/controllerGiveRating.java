@@ -37,26 +37,50 @@ public class controllerGiveRating extends UI{
 
             if (b == true) {
                 System.out.println("Worker Rated successfully");
-                changeRScene("showfinishedbooking.fxml", ratingbtn);
+                populateTableViewfromRating();
             }
         }
         else if(event.getSource()==home)
-            changeRScene("home.fxml",home);
+            changeRScene();
 
     }
     public void getData(int Cid,int Wid){
         cid=Cid;
         wid=Wid;
     }
-    public void changeRScene(String file,Button btn)throws Exception{
-        Parent root;
-        Stage stage;
+    public void populateTableViewfromRating()throws Exception{
+        ArrayList<BookingModel> getBook = bookingService.showFinishedBookingOfCustomer(cid);
 
-        stage = (Stage) btn.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource(file));
+        //Load second scene
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("showfinishedbooking.fxml"));
+        Parent root = loader.load();
 
-        stage = (Stage) btn.getScene().getWindow();
+        //Get controller of scene2
+        controllerFinishedBooking scene2Controller = loader.getController();
+        //Pass whatever data you want. You can have multiple method calls here
+
+        scene2Controller.initializeBookingArrayList(getBook,cid);
+
+        //Show scene 2 in new window
+        Stage stage = (Stage) ratingbtn.getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
+    }
+    public void changeRScene()throws Exception{
+
+            //Load second scene
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("homepage.fxml"));
+            Parent root = loader.load();
+
+            //Get controller of scene2
+            controllerHomePage scene2Controller = loader.getController();
+            //Pass whatever data you want. You can have multiple method calls here
+
+            scene2Controller.transferId(cid);
+
+            //Show scene 2 in new window
+            Stage stage = (Stage) home.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
     }
 }

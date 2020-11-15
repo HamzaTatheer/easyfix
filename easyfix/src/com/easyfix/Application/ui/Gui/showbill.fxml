@@ -9,7 +9,7 @@
    <children>
       <Pane prefHeight="101.0" prefWidth="600.0" styleClass="linear-grade" stylesheets="@test.css">
          <children>
-            <Button fx:id="home" onAction="#handlepayBillAction" layoutX="42.0" layoutY="62.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="58.0" text="Home" />
+            <Button fx:id="home" onAction="#handlepayBillAction"  layoutX="42.0" layoutY="62.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="58.0" text="Home" />
             <ImageView fitHeight="90.0" fitWidth="104.0" layoutX="496.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@Daco_1849574.png" />

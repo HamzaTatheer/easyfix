@@ -64,7 +64,6 @@ public class BillingManager implements BillingService {
         try {
             totalCost = b.calculateCost();
             db.store_customer_billing(bid, b.getText(), c.getId(), w.getId(), "unpaid", totalCost);
-            db.change_billing_status(bid,b.getStatus());
         }
         catch (Exception e){
             //System.out.println(e.getMessage());
@@ -81,8 +80,6 @@ public class BillingManager implements BillingService {
         mybill.status = "unpaid";
         mybill.totalCost = totalCost;
         return mybill;
-
-
     }
 
 
