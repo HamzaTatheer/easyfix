@@ -377,7 +377,7 @@ public class Terminal extends UI {
                 }
 
                 System.out.println("Want to Chat with a worker ? yes or no");
-                String answer = sc.nextLine();
+                String  answer= sc.nextLine();
                 if(answer == "yes"){
                     int chatWith = sc.nextInt();
                     chatScreen(chatWith);

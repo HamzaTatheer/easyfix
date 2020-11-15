@@ -41,7 +41,43 @@ public class controllerHomePage extends UI {
 
     @FXML
     private Button gotoChangeCity,gotoChangeArea,gotoChangePayment,home,profile,finishedbooking;
+    @FXML
+    private Button PendingBook;
 
+    @FXML
+    void HandlePendingBookings(ActionEvent event) {
+        try {
+            try {
+                ArrayList<BookingModel> getBook = bookingService.showPendingBookingsOfCustomer(Cust_id);//get all active bookings by cust_id
+                //Load second scene
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("ShowPendingBookings.fxml"));
+                Parent root = loader.load();
+
+                //Get controller of scene2
+                ShowPendingBookingsController scene2Controller = loader.getController();
+                //Pass whatever data you want. You can have multiple method calls here
+                scene2Controller.initializePendingBookings(getBook,Cust_id);
+
+                //close window
+                final Node source = (Node) event.getSource();
+                final Stage hide = (Stage) source.getScene().getWindow();
+                hide.close();
+                //Show scene 2 in new window
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.show();
+
+            }
+            catch (Exception E){
+                System.out.println(E.getMessage());
+            }
+
+        }
+        catch (Exception E){
+            E.getMessage();
+        }
+
+    }
     @FXML
     public void handleBookWorkerAction(ActionEvent event) throws IOException {
         //System.out.println("Customer Id " + Cust_id+"\n"); //Cust_id passed to Book Worker
@@ -142,7 +178,7 @@ public class controllerHomePage extends UI {
 
             }
             catch (Exception E){
-                E.getMessage();
+                System.out.print("E.getMessage()");
             }
 
         }

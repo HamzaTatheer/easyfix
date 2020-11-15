@@ -24,6 +24,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class BookingConfirmationController extends UI {
     int Cust_ID;
@@ -62,6 +63,8 @@ public class BookingConfirmationController extends UI {
 
     @FXML
     private TextField SpText;
+    @FXML
+    private TextField year;
     @FXML
     private Button ConfirmationHome;
     @FXML
@@ -104,15 +107,25 @@ public class BookingConfirmationController extends UI {
         r=rate;
         h_r=h__r;
         MonthText.setText(Integer.toString(month));
+        MonthText.setEditable(false);
         DateText.setText(Integer.toString(day));
+        DateText.setEditable(false);
         HourText.setText(Integer.toString(hour));
+        HourText.setEditable(false);
         MinuteText.setText(Integer.toString(minute));
+        MinuteText.setEditable(false);
         TitleText.setText(title);
+        TitleText.setEditable(false);
         NameText.setText(_name);
+        NameText.setEditable(false);
         RatingText.setText(Float.toString(r));
+        RatingText.setEditable(false);
         RateText.setText(Float.toString(h_r));
+        RateText.setEditable(false);
         SpText.setText(_special);
-
+        SpText.setEditable(false);
+        year.setText(Integer.toString(Calendar.getInstance().get(Calendar.YEAR)));
+        year.setEditable(false);
 
     }
 
