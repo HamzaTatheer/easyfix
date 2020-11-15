@@ -2,11 +2,11 @@
 Bilal
 bilal@gmail.com
 12345
-wallet
+cash
 554433
 5400.0
-okara
-cantt
+lahore
+valencia
 6
 2
 3
@@ -81,6 +81,6 @@ talha@gmail.com
 cash
 123
 200.0
-Lahore
-DHA
+lahore
+dha
 0

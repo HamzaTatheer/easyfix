@@ -200,6 +200,8 @@ public class SqlDbManager implements DbService {
                 c1.wallet=rs.getFloat("wallet");
                 c1.city=rs.getString("city");
                 c1.area=rs.getString("area");
+                c1.paymentMethod=rs.getString("credit_no");
+
             }
 
             Statement mystmt2 = conn.createStatement();

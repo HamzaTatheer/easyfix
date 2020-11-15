@@ -5,7 +5,7 @@ ahmed@gmail.com
 2.0
 500.0
 lahore
-valencia
+dha
 plumber
 2
 Nawaz
@@ -23,7 +23,7 @@ ferdos@gmail.com
 0.0
 100.0
 lahore
-valencia
+dha
 plumber
 4
 Jamal
@@ -38,7 +38,7 @@ plumber
 Kamran
 kamran@gmail.com
 12345789
-3.0
+2.0
 300.0
 lahore
 valencia

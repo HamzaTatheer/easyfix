@@ -81,6 +81,6 @@ talha@gmail.com
 cash
 123
 200.0
-Lahore
-DHA
+lahore
+dha
 0

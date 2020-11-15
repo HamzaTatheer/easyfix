@@ -48,6 +48,12 @@ public class BookingJAVAFX {
         chat.setText("Chat");
         chat.setAlignment(Pos.CENTER);
     }
+    public BookingJAVAFX(int _CID,String _Text,LocalDateTime s,LocalDateTime e){
+        cid=_CID;
+        bookingtext=_Text;
+        startTime=s;
+        endTime=e;
+    }
     public int getId() {
         return id;
     }
