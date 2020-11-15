@@ -458,13 +458,11 @@ public class SqlDbManager implements DbService {
             ResultSet rs = mystmt.executeQuery("select * from worker where city = '"+ city + "' and area = '"+area + "'");
             //WorkerModel c1=new WorkerModel();
             ArrayList<WorkerModel> c1=new ArrayList<WorkerModel>();
-            WorkerModel c2=new WorkerModel();
 
             int i=0;
             while (rs.next()) {
-
+                WorkerModel c2=new WorkerModel();
                 c2.id= rs.getInt("wid");
-
                 System.out.println("id "+c2.id);
                 c2.name=rs.getString("name");
                 c2.email=rs.getString("email");
