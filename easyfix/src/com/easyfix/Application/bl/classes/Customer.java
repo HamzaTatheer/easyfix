@@ -20,24 +20,6 @@ public class Customer extends User{
         city = model.city;
         area = model.area;
     }
-    //member functions
-    /*public CustomerModel getCustomerModel(){
-        CustomerModel c = new CustomerModel();
-        c.id = id;
-        c.name = name;
-        c.email = email;
-        c.password = "hidden";
-        c.wallet=wallet;
-        c.creditno = creditno;
-        c.paymentMethod =paymentMethod;
-        c.city = city;
-        c.area = area;
-        return c;
-    }
-    */
-
-
-
 
     public Boolean addToWallet(Float newAmount){
         wallet += newAmount;
@@ -55,13 +37,18 @@ public class Customer extends User{
     }
 
     public boolean changePaymentMethod(String newMethod){
+        if(newMethod == "cash" || newMethod == "credit")
         paymentMethod = newMethod;
         return true;
     }
 
     public Boolean changeCity(String newCity){
-        city = newCity;
-        return true;
+        if(newCity == "lahore"|| newCity=="islamabad" || newCity=="karachi"){
+            city = newCity;
+            return true;
+        }
+        else
+            return false;
     }
 
     public Boolean changeArea(String newArea){
