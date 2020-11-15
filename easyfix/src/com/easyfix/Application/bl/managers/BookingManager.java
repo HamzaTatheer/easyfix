@@ -5,7 +5,6 @@ import com.easyfix.Application.bl.classes.Customer;
 import com.easyfix.Application.bl.classes.SparePart;
 import com.easyfix.Application.bl.classes.Worker;
 import com.easyfix.Application.bl.services.BookingService;
-import com.easyfix.Application.bl.services.SparePartService;
 import com.easyfix.Application.db.dbProviders;
 import com.easyfix.Application.db.services.DbService;
 import com.easyfix.Application.models.BillingModel;
@@ -14,7 +13,6 @@ import com.easyfix.Application.models.SparePartModel;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class BookingManager implements BookingService {
 
@@ -25,7 +23,7 @@ public class BookingManager implements BookingService {
     }
 
 
-    public Boolean makeBooking(int _cid, int _wid, String _text, LocalDateTime _startTime,ArrayList<SparePartModel>_sparePart) throws Exception {
+    public int makeBooking(int _cid, int _wid, String _text, LocalDateTime _startTime,ArrayList<SparePartModel>_sparePart) throws Exception {
         //get all bookings of the required worker (a)
         ArrayList<BookingModel> workerBookingsModel = db.get_booking_of_worker(_wid);
         //Convert bookingModel to booking
@@ -69,7 +67,7 @@ public class BookingManager implements BookingService {
             sp.addSparePartsToBooking(bid,part.id,part.quantity);
         }
 
-        return true;
+        return bid;
     }
 
     public boolean payForBooking(int cid,int bid) throws Exception {

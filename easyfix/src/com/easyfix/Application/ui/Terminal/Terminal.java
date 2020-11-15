@@ -187,7 +187,7 @@ public class Terminal extends UI {
 
         try {
             BillingModel b = billingService.showBill(bill_id);
-            System.out.println("id: "+ b.bookingId +" title: "+ b.title+ " Worker: " + b.workerName + " Cost: "+ b.totalCost + " status: "+b.status);
+            //System.out.println("id: "+ b.bookingId +" title: "+ b.title+ " Worker: " + b.workerName + " Cost: "+ b.totalCost + " status: "+b.status);
             if(b.status != "paid") {
                  if(bookingService.payForBooking(cid,b.bookingId)==true)
                      System.out.println("Payment Successful!");

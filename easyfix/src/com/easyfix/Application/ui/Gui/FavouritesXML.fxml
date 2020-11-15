@@ -14,7 +14,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="522.0" prefWidth="659.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easyfix.Application.ui.Gui.FavouritesController" >
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="522.0" prefWidth="659.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easyfix.Application.ui.Gui.FavouritesController">
     <children>
         <Pane prefHeight="522.0" prefWidth="659.0" styleClass="linear-grade" stylesheets="@test.css">
             <children>
@@ -44,7 +44,7 @@
                         <ColorAdjust brightness="-0.07" />
                     </effect>
                     <children>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="509.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="129.0" fitWidth="134.0" layoutX="516.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@folder-favourites-icon.png" />
                             </image>

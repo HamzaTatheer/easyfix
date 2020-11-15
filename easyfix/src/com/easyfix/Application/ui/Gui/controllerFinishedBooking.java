@@ -1,26 +1,24 @@
 package com.easyfix.Application.ui.Gui;
-import com.easyfix.Application.bl.classes.Booking;
-import com.easyfix.Application.models.BookingModel;
 import com.easyfix.Application.models.BillingModel;
+import com.easyfix.Application.models.BookingModel;
 import com.easyfix.Application.ui.UI;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.Node;
+import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.stage.Stage;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.fxml.FXMLLoader;
-import javafx.event.EventHandler;
 
 public class controllerFinishedBooking extends UI {
     private ArrayList<BookingModel> getBookings;
@@ -238,8 +236,8 @@ public class controllerFinishedBooking extends UI {
         controllerShowBill scene2Controller = loader.getController();
         scene2Controller.setLabelid(bill.bookingId);
         scene2Controller.setLabeltitle(bill.title);
-        scene2Controller.setLabelcustomer(bill.customerName);
-        scene2Controller.setLabelworker(bill.workerName);
+        //scene2Controller.setLabelcustomer(bill.customerName);
+        //scene2Controller.setLabelworker(bill.workerName);
         scene2Controller.setLabelstatus(bill.status);
         scene2Controller.setLabelcost(bill.totalCost);
 

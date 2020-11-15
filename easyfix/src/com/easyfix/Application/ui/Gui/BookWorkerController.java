@@ -75,12 +75,13 @@ public class BookWorkerController extends UI {
         TableView.setItems(list);
 
     }
-
+    int store_button_index;
     private void handleButtonAction(ActionEvent actionEvent) throws IOException {
         int size=getWorkers.size();
         for(int i=0;i<size;i++) {
             if (actionEvent.getSource() == buttonsArr[i]) {
                 selected_WID=getWorkers.get(i).id;
+                store_button_index=i;
                 //System.out.println("Button" + (i + 1) + "Pressed\n");
                 //System.out.println("WorkerID selected"+selected_WID);
             }
@@ -98,7 +99,7 @@ public class BookWorkerController extends UI {
         //Get controller of scene2
         BookingDetailsController scene2Controller = loader.getController();
         //Pass whatever data you want. You can have multiple method calls here
-        scene2Controller.recieveData(c_id,selected_WID);
+        scene2Controller.recieveData(c_id,selected_WID,getWorkers.get(store_button_index).name,getWorkers.get(store_button_index).avgRating,getWorkers.get(store_button_index).hourlyRate,getWorkers.get(store_button_index).speciality);
 
         //Show scene 2 in new window
         Stage stage = new Stage();
