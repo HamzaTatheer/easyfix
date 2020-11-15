@@ -35,7 +35,7 @@ public class Terminal extends UI {
         }
 
         if(choice < start || choice > end)
-        throw new Exception("Please Enter from the choices given in Menu");
+            throw new Exception("Please Enter from the choices given in Menu");
 
         return choice;
     }
@@ -66,76 +66,76 @@ public class Terminal extends UI {
 
 
     public void loginCustomer(){
-                int choice2 = -1;
-                Scanner sc = new Scanner(System.in);
-                System.out.println("Enter Choice : ");
-                System.out.println("Enter Email :");
-                String email = sc.nextLine();
-                System.out.println("Enter Password :");
-                String password = sc.nextLine();
-                try {
+        int choice2 = -1;
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter Choice : ");
+        System.out.println("Enter Email :");
+        String email = sc.nextLine();
+        System.out.println("Enter Password :");
+        String password = sc.nextLine();
+        try {
 
-                    cid = customerService.login(email, password);
-                    System.out.println("Login Successful");
-                    CustomerModel c = customerService.getCustomerDetails(cid);
-                    System.out.println("ID             : " + c.id);
-                    System.out.println("Name           : " + c.name);
-                    System.out.println("City           : " + c.city);
-                    System.out.println("Area           : " + c.area);
-                    System.out.println("Wallet         : "+c.wallet);
-                    System.out.println("Payment method : " + c.paymentMethod);
-
-
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                    cid = -2;
-                }
+            cid = customerService.login(email, password);
+            System.out.println("Login Successful");
+            CustomerModel c = customerService.getCustomerDetails(cid);
+            System.out.println("ID             : " + c.id);
+            System.out.println("Name           : " + c.name);
+            System.out.println("City           : " + c.city);
+            System.out.println("Area           : " + c.area);
+            System.out.println("Wallet         : "+c.wallet);
+            System.out.println("Payment method : " + c.paymentMethod);
 
 
-                if (cid != -2)
-                    customerMenu();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            cid = -2;
+        }
+
+
+        if (cid != -2)
+            customerMenu();
     }
 
 
 
     public void loginWorker(){
-                    Scanner sc = new Scanner(System.in);
-                    System.out.println("Enter Email :");
-                    String wemail = sc.nextLine();
-                    System.out.println("Enter Password :");
-                    String wpassword = sc.nextLine();
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter Email :");
+        String wemail = sc.nextLine();
+        System.out.println("Enter Password :");
+        String wpassword = sc.nextLine();
 
-                    try {
-                        wid = workerService.login(wemail, wpassword);
-                    } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                        wid = -1;
-                    }
-                    if (wid != -1) {
-                        workerMenu(wid);
-                    }
+        try {
+            wid = workerService.login(wemail, wpassword);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            wid = -1;
+        }
+        if (wid != -1) {
+            workerMenu(wid);
+        }
     }
 
 
     public void registerCustomer(){
-                    Scanner sc = new Scanner(System.in);
-                    System.out.println("Enter Name :");
-                    String name = sc.nextLine();
-                    System.out.println("Enter Email :");
-                    String remail = sc.nextLine();
-                    System.out.println("Enter Password :");
-                    String rpassword = sc.nextLine();
-                    System.out.println("Enter credit no to use with account");
-                    String creditno = sc.nextLine();
-                    System.out.println("Enter City :");
-                    String city = sc.nextLine();
-                    System.out.println("Enter Area :");
-                    String area = sc.nextLine();
-                    try {
-                        int id = customerService.register(name, remail, rpassword,creditno, city, area);
-                    } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                    }
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter Name :");
+        String name = sc.nextLine();
+        System.out.println("Enter Email :");
+        String remail = sc.nextLine();
+        System.out.println("Enter Password :");
+        String rpassword = sc.nextLine();
+        System.out.println("Enter credit no to use with account");
+        String creditno = sc.nextLine();
+        System.out.println("Enter City :");
+        String city = sc.nextLine();
+        System.out.println("Enter Area :");
+        String area = sc.nextLine();
+        try {
+            int id = customerService.register(name, remail, rpassword,creditno, city, area);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void chatScreenWorker(int cid){
@@ -230,8 +230,8 @@ public class Terminal extends UI {
             BillingModel b = billingService.showBill(bill_id);
             //System.out.println("id: "+ b.bookingId +" title: "+ b.title+ " Worker: " + b.workerName + " Cost: "+ b.totalCost + " status: "+b.status);
             if(b.status != "paid") {
-                 if(bookingService.payForBooking(cid,b.bookingId)==true)
-                     System.out.println("Payment Successful!");
+                if(bookingService.payForBooking(cid,b.bookingId)==true)
+                    System.out.println("Payment Successful!");
             }
         }
         catch (Exception e){
@@ -353,53 +353,53 @@ public class Terminal extends UI {
                 }
                 System.out.println("Select a worker to Book (enter number. enter -1 to go back): ");
                 int selected_worker = sc.nextInt();
-                                if(selected_worker != -1) {
-                                    BookingModel b = new BookingModel();
-                                    System.out.println("Select day");
-                                    int bDay = sc.nextInt();
-                                    System.out.println("Select month");
-                                    int bMonth = sc.nextInt();
-                                    //leaving year
-                                    System.out.println("Select Hour (24 hour clock) ");
-                                    int bHour = sc.nextInt();
-                                    System.out.println("Select Minute");
-                                    int bMinute = sc.nextInt();
-                                    b.startTime = LocalDateTime.of(LocalDate.of(2020, bMonth, bDay), LocalTime.of(bHour, bMinute));
-                                    System.out.println("Select Title");
-                                    Scanner scc = new Scanner(System.in);//sc was skipping text
-                                    b.text = scc.nextLine();
-                                    b.cid = cid;
-                                    b.wid = selected_worker;
-                                    b.spareParts = new ArrayList<Integer>();
+                if(selected_worker != -1) {
+                    BookingModel b = new BookingModel();
+                    System.out.println("Select day");
+                    int bDay = sc.nextInt();
+                    System.out.println("Select month");
+                    int bMonth = sc.nextInt();
+                    //leaving year
+                    System.out.println("Select Hour (24 hour clock) ");
+                    int bHour = sc.nextInt();
+                    System.out.println("Select Minute");
+                    int bMinute = sc.nextInt();
+                    b.startTime = LocalDateTime.of(LocalDate.of(2020, bMonth, bDay), LocalTime.of(bHour, bMinute));
+                    System.out.println("Select Title");
+                    Scanner scc = new Scanner(System.in);//sc was skipping text
+                    b.text = scc.nextLine();
+                    b.cid = cid;
+                    b.wid = selected_worker;
+                    b.spareParts = new ArrayList<Integer>();
 
-                                    try {
-                                        bookingService.makeBooking(b.cid, b.wid, b.text, b.startTime, new ArrayList<SparePartModel>());
-                                        ArrayList<SparePartModel> sp = sparePartService.showAllSpareParts();
-                                        for (int i = 0; i < sp.size(); i++) {
-                                            System.out.println("id: " + sp.get(i).id + "  name: " + sp.get(i).name + "  " + (sp.get(i).quantity > 0 ? "Available" : "Not Available"));
-                                        }
-                                        System.out.println("Do you want to add spareparts");
-                                        sc.nextLine();
-                                        String done = sc.nextLine();
-                                        ArrayList<SparePartModel> myspareparts = new ArrayList<>();
-                                        while (done == "yes") {
-                                            SparePartModel temp = new SparePartModel();
-                                            System.out.println("Enter Part ID: ");
-                                            temp.id = sc.nextInt();
-                                            System.out.println("Enter Quantity to Add:");
-                                            temp.quantity = sc.nextInt();
-                                            myspareparts.add(temp);
-                                            System.out.println("Do you want to add any more items");
-                                            done = sc.nextLine();
-                                        }
+                    try {
+                        bookingService.makeBooking(b.cid, b.wid, b.text, b.startTime, new ArrayList<SparePartModel>());
+                        ArrayList<SparePartModel> sp = sparePartService.showAllSpareParts();
+                        for (int i = 0; i < sp.size(); i++) {
+                            System.out.println("id: " + sp.get(i).id + "  name: " + sp.get(i).name + "  " + (sp.get(i).quantity > 0 ? "Available" : "Not Available"));
+                        }
+                        System.out.println("Do you want to add spareparts");
+                        sc.nextLine();
+                        String done = sc.nextLine();
+                        ArrayList<SparePartModel> myspareparts = new ArrayList<>();
+                        while (done == "yes") {
+                            SparePartModel temp = new SparePartModel();
+                            System.out.println("Enter Part ID: ");
+                            temp.id = sc.nextInt();
+                            System.out.println("Enter Quantity to Add:");
+                            temp.quantity = sc.nextInt();
+                            myspareparts.add(temp);
+                            System.out.println("Do you want to add any more items");
+                            done = sc.nextLine();
+                        }
 
-                                        for (int i = 0; i < myspareparts.size(); i++) {
-                                            sparePartService.addSparePartsToBooking(b.id, myspareparts.get(i).id, myspareparts.get(i).quantity);
-                                        }
-                                    } catch (Exception e) {
-                                        System.out.println("Error: " + e.getMessage());
-                                    }
-                                }
+                        for (int i = 0; i < myspareparts.size(); i++) {
+                            sparePartService.addSparePartsToBooking(b.id, myspareparts.get(i).id, myspareparts.get(i).quantity);
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Error: " + e.getMessage());
+                    }
+                }
             }
             else if(choice2 == 8){
                 ArrayList<BookingModel> b =  bookingService.showPendingBookingsOfCustomer(cid);
@@ -471,9 +471,9 @@ public class Terminal extends UI {
 
             }
             else if (choice2 == 11) {
-                 break;
+                break;
             }
-       }
+        }
 
     }
     public void workerMenu(int wid){
@@ -501,7 +501,7 @@ public class Terminal extends UI {
                     System.out.println("Enter Booking id to accept. -1 to go back");
                     int accepted = sc.nextInt();
                     if(accepted != -1)
-                    bookingService.acceptBooking(accepted);
+                        bookingService.acceptBooking(accepted);
 
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
@@ -523,7 +523,7 @@ public class Terminal extends UI {
                     System.out.println("Enter Customer to chat with. -1 to go back");
                     int chatWith = sc.nextInt();
                     if(chatWith != -1)
-                    chatScreenWorker(chatWith);
+                        chatScreenWorker(chatWith);
 
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
