@@ -1,10 +1,9 @@
 package com.easyfix.Application.bl.managers;
 
-import com.easyfix.Application.bl.classes.Customer;
 import com.easyfix.Application.bl.classes.Worker;
 import com.easyfix.Application.bl.services.WorkerService;
 import com.easyfix.Application.db.dbProviders;
-import com.easyfix.Application.db.services.DbService;
+import com.easyfix.Application.bl.services.DbService;
 import com.easyfix.Application.models.WorkerModel;
 
 import java.util.ArrayList;

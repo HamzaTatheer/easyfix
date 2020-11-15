@@ -1,14 +1,11 @@
 package com.easyfix.Application.bl.managers;
 
-import com.easyfix.Application.bl.classes.Customer;
-import com.easyfix.Application.bl.classes.Rating;
 import com.easyfix.Application.bl.classes.Worker;
 import com.easyfix.Application.bl.services.RatingService;
 import com.easyfix.Application.db.dbProviders;
-import com.easyfix.Application.db.services.DbService;
+import com.easyfix.Application.bl.services.DbService;
 import com.easyfix.Application.models.BookingModel;
 import com.easyfix.Application.models.RatingModel;
-import com.easyfix.Application.utils.Arrayfuncs;
 
 import java.util.ArrayList;
 

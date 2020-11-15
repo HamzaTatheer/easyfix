@@ -1,7 +1,7 @@
 package com.easyfix.Application.db.sqlDb;
 
 import com.easyfix.Application.models.*;
-import com.easyfix.Application.db.services.DbService;
+import com.easyfix.Application.bl.services.DbService;
 
 import java.sql.*;
 import java.time.LocalDate;

@@ -1,6 +1,6 @@
 package com.easyfix.Application.db.textDb;
 
-import com.easyfix.Application.db.services.DbService;
+import com.easyfix.Application.bl.services.DbService;
 import com.easyfix.Application.models.*;
 
 import java.nio.file.Path;

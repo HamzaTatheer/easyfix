@@ -1,7 +1,7 @@
 package com.easyfix.Application.db;
 
 import com.easyfix.Application.Config;
-import com.easyfix.Application.db.services.DbService;
+import com.easyfix.Application.bl.services.DbService;
 import com.easyfix.Application.db.sqlDb.SqlDbManager;
 import com.easyfix.Application.db.textDb.TextDbManager;
 

@@ -6,7 +6,7 @@ import com.easyfix.Application.bl.classes.SparePart;
 import com.easyfix.Application.bl.classes.Worker;
 import com.easyfix.Application.bl.services.BillingService;
 import com.easyfix.Application.db.dbProviders;
-import com.easyfix.Application.db.services.DbService;
+import com.easyfix.Application.bl.services.DbService;
 import com.easyfix.Application.models.*;
 
 import java.util.ArrayList;

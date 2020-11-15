@@ -2,7 +2,7 @@ package com.easyfix.Application.bl.managers;
 
 import com.easyfix.Application.bl.services.SparePartService;
 import com.easyfix.Application.db.dbProviders;
-import com.easyfix.Application.db.services.DbService;
+import com.easyfix.Application.bl.services.DbService;
 import com.easyfix.Application.models.SparePartModel;
 
 import java.util.ArrayList;

@@ -1,16 +1,14 @@
 package com.easyfix.Application.bl.managers;
-import com.easyfix.Application.bl.classes.Booking;
 import com.easyfix.Application.bl.classes.Customer;
 import com.easyfix.Application.bl.services.CustomerService;
 import com.easyfix.Application.bl.services.RatingService;
 import com.easyfix.Application.db.dbProviders;
-import com.easyfix.Application.db.services.DbService;
+import com.easyfix.Application.bl.services.DbService;
 import com.easyfix.Application.models.BookingModel;
 import com.easyfix.Application.models.CustomerModel;
 import com.easyfix.Application.models.WorkerModel;
 
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 
 public class CustomerManager implements CustomerService {
 

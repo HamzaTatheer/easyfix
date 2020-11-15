@@ -1,9 +1,8 @@
 package com.easyfix.Application.bl.managers;
 
-import com.easyfix.Application.bl.classes.Complain;
 import com.easyfix.Application.bl.services.ComplainService;
 import com.easyfix.Application.db.dbProviders;
-import com.easyfix.Application.db.services.DbService;
+import com.easyfix.Application.bl.services.DbService;
 import com.easyfix.Application.models.ComplainModel;
 
 import java.util.ArrayList;
