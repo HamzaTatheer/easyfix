@@ -22,7 +22,7 @@
                         <Image url="@Daco_1849574.png" />
                     </image>
                 </ImageView>
-                <Button layoutX="196.0" layoutY="461.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="283.0" text="Back To HomePage">
+                <Button fx:id="DetailsHome" layoutX="196.0" layoutY="461.0" mnemonicParsing="false" onAction="#HandleDetailsHome" prefHeight="36.0" prefWidth="283.0" text="Return To Home">
                     <textFill>
                         <RadialGradient centerX="0.17555554707845056" centerY="0.47709922208130817" radius="0.5">
                             <stops>
@@ -43,7 +43,15 @@
                         <ColorAdjust brightness="-0.07" />
                     </effect>
                <children>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="509.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="114.0" fitWidth="111.0" layoutX="512.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@check.png" />
+                     </image>
+                     <effect>
+                        <ColorAdjust brightness="0.17" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="120.0" fitWidth="205.0" layoutX="23.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@6eb28c8ea93febd971943f5a73364b2f.png" />
                      </image>

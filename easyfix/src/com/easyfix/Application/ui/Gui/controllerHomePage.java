@@ -175,6 +175,7 @@ public class controllerHomePage extends UI {
 
     @FXML
     public void handleshowActiveBooking(ActionEvent event) {
+
         try {
             try {
                 ArrayList<BookingModel> getBook = bookingService.showActiveBookingOfWorker(Cust_id);//get all active bookings by cust_id

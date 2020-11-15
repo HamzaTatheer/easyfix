@@ -23,7 +23,7 @@
                         <Image url="@Daco_1849574.png" />
                     </image>
                 </ImageView>
-                <Button layoutX="196.0" layoutY="461.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="283.0" text="Back To HomePage">
+                <Button fx:id="favHomePage" layoutX="196.0" layoutY="461.0" mnemonicParsing="false" onAction="#handleHomePage" prefHeight="36.0" prefWidth="283.0" text="Back To HomePage.">
                     <textFill>
                         <RadialGradient centerX="0.17555554707845056" centerY="0.47709922208130817" radius="0.5">
                             <stops>

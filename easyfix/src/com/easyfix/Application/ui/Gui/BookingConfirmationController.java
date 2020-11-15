@@ -2,15 +2,23 @@ package com.easyfix.Application.ui.Gui;
 
 import com.easyfix.Application.models.SparePartModel;
 import com.easyfix.Application.ui.UI;
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -54,7 +62,35 @@ public class BookingConfirmationController extends UI {
 
     @FXML
     private TextField SpText;
+    @FXML
+    private Button ConfirmationHome;
+    @FXML
+    void handleConfirmationHome(ActionEvent event) {
+        //close window
+        final Node source = (Node) event.getSource();
+        final Stage hide = (Stage) source.getScene().getWindow();
+        hide.close();
+        try {
+            //Load second scene
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("homepage.fxml"));
+            Parent root = loader.load();
 
+            //Get controller of scene2
+            controllerHomePage scene2Controller = loader.getController();
+            //Pass whatever data you want. You can have multiple method calls here
+            scene2Controller.transferId(Cust_ID);
+
+            //Show scene 2 in new window
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+        }
+        catch (Exception E){
+            System.out.println(E.getMessage());
+        }
+
+
+    }
     public void intializeBookingConfirmation(int C,int W,int dd,int m,int h,int mm,String title,String na,String s_p,float rate,float h__r){
         Cust_ID=C;
         Work_ID=W;
@@ -82,42 +118,107 @@ public class BookingConfirmationController extends UI {
 
 
     public void HandleFinalAction(ActionEvent actionEvent) throws Exception {
-        try{
-            ArrayList<SparePartModel> sendSpareParts=sparePartService.showAllSpareParts();
+        try {
+            ArrayList<SparePartModel> sendSpareParts = sparePartService.showAllSpareParts();
             //close window
             final Node source = (Node) actionEvent.getSource();
             final Stage hide = (Stage) source.getScene().getWindow();
             hide.close();
             LocalDateTime makeTime = LocalDateTime.of(LocalDate.of(2020, month, day), LocalTime.of(hour, minute));
-            ArrayList<SparePartModel>dummy=new ArrayList<SparePartModel>();
-            int bi_d=bookingService.makeBooking(Cust_ID,Work_ID,titletext,makeTime,dummy);
-            if(bi_d>0) {
-                //Load second scene
-                try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("BookingSpartPartXML.fxml"));
-                    Parent root = loader.load();
+            ArrayList<SparePartModel> dummy = new ArrayList<SparePartModel>();
 
-                    //Get controller of scene2
-                    BookingSparePartController scene2Controller = loader.getController();
-                    //Pass whatever data you want. You can have multiple method calls here'
-                    scene2Controller.initializeSpareArrayList(sendSpareParts, Cust_ID, Work_ID, bi_d);
+            Text text = new Text();
 
-                    //Show scene 2 in new window
-                    Stage stage = new Stage();
-                    stage.setScene(new Scene(root));
-                    stage.show();
-                }
-                catch (Exception e){
-                    System.out.println(e.getMessage());
-                }
-            }
-            else
-            {
-                //booking not created
-            }
+            //Setting font to the text
+            text.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 50));
+
+            //setting the position of the text
+            text.setX(50);
+            text.setY(130);
+
+            //Setting the color
+            text.setFill(Color.GREEN);
+
+            //Setting the Stroke
+            text.setStrokeWidth(2);
+
+            // Setting the stroke color
+            text.setStroke(Color.YELLOW);
+
+            int bi_d = bookingService.makeBooking(Cust_ID, Work_ID, titletext, makeTime, dummy);
+
+            //Load second scene
+
+                //Setting the text to be added.
+                text.setText("Booking Created");
+
+                //Creating a Group object
+                Group rt = new Group(text);
+
+                //Creating a scene object
+                Scene scene = new Scene(rt, 600, 300);
+
+                // can use an Alert, Dialog, or PopupWindow as needed...
+                Stage popup = new Stage();
+                // configure UI for popup etc...
+                popup.setScene(scene);
+                // hide popup after 3 seconds:
+                PauseTransition delay = new PauseTransition(Duration.seconds(4));
+                delay.setOnFinished(e -> popup.hide());
+
+                popup.show();
+                delay.play();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("BookingSpartPartXML.fxml"));
+                Parent root = loader.load();
+
+                //Get controller of scene2
+                BookingSparePartController scene2Controller = loader.getController();
+                //Pass whatever data you want. You can have multiple method calls here'
+                scene2Controller.initializeSpareArrayList(sendSpareParts, Cust_ID, Work_ID, bi_d);
+
+                //Show scene 2 in new window
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.show();
+
         }
-        catch (Exception e){
-            e.getMessage();
+        catch (Exception F){
+            Text text = new Text();
+
+            //Setting font to the text
+            text.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 50));
+
+            //setting the position of the text
+            text.setX(50);
+            text.setY(130);
+
+            //Setting the color
+            text.setFill(Color.RED);
+
+            //Setting the Stroke
+            text.setStrokeWidth(2);
+
+            // Setting the stroke color
+            text.setStroke(Color.YELLOW);
+            //Setting the text to be added.
+            text.setText(F.getMessage());
+
+            //Creating a Group object
+            Group rt = new Group(text);
+
+            //Creating a scene object
+            Scene scene = new Scene(rt, 600, 300);
+
+            // can use an Alert, Dialog, or PopupWindow as needed...
+            Stage popup = new Stage();
+            // configure UI for popup etc...
+            popup.setScene(scene);
+            // hide popup after 3 seconds:
+            PauseTransition delay = new PauseTransition(Duration.seconds(1));
+            delay.setOnFinished(e -> popup.hide());
+
+            popup.show();
+            delay.play();
         }
     }
 }

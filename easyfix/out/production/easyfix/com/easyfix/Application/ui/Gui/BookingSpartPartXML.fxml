@@ -44,7 +44,7 @@
                         </TableView>
                     </content>
                 </ScrollPane>
-                <Button layoutX="187.0" layoutY="462.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="283.0" text="Back To HomePage">
+                <Button fx:id="SpareHome" layoutX="187.0" layoutY="462.0" mnemonicParsing="false" onAction="#HandleSpareHome" prefHeight="36.0" prefWidth="283.0" text="Back To HomePage">
                     <textFill>
                         <RadialGradient centerX="0.17555554707845056" centerY="0.47709922208130817" radius="0.5">
                             <stops>
@@ -72,14 +72,14 @@
                         <Image url="@61fnMMgkGIL._AC_SL1098_.jpg" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="124.0" fitWidth="115.0" layoutX="364.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@ms-hex-nut-bolt-500x500.jpg" />
-                     </image>
-                  </ImageView>
                   <ImageView fitHeight="102.0" fitWidth="139.0" layoutX="506.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@APR_lg.jpg" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="112.0" fitWidth="139.0" layoutX="373.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@screw-nut-threading-bolt-stainless-steel-metal-screw-nut.jpg" />
                      </image>
                   </ImageView>
                </children>
