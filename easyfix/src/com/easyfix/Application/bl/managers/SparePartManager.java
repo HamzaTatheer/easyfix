@@ -1,6 +1,5 @@
 package com.easyfix.Application.bl.managers;
 
-import com.easyfix.Application.bl.classes.SparePart;
 import com.easyfix.Application.bl.services.SparePartService;
 import com.easyfix.Application.db.dbProviders;
 import com.easyfix.Application.db.services.DbService;
@@ -21,7 +20,7 @@ public class SparePartManager implements SparePartService {
         return db.get_all_parts();
     }
 
-    public boolean addSparePartsToBooking(int bid,int pid,int quantity){
+    public boolean addSparePartsToBooking(int bid,int pid,int quantity)throws Exception{
         SparePartModel sp = db.get_spare_part(pid);
         if(sp.quantity >= quantity){
             db.deduct_part(pid,quantity);//from warehouse
@@ -29,7 +28,7 @@ public class SparePartManager implements SparePartService {
         }
         else
         {
-            return false;
+            throw new Exception("Quantity of SpartPart exceeded");
         }
 
     }

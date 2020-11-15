@@ -23,7 +23,6 @@ public class TextDbManager implements DbService {
     //private static String currentPath = "C:\\Users\\Fahad\\Documents\\easyfix\\easyfix\\src\\com\\easyfix\\Application\\db\\textDb\\";
     //private static String currentPath = "./";
 
-
     @Override
     public boolean does_customer_exist(int id) {
 
@@ -2588,7 +2587,7 @@ public class TextDbManager implements DbService {
                 sum=sum+store.get(i).rating;
 
             }
-            rat=(float)sum/(float)store.size();
+            rat=sum/store.size();
 
             return rat;
 

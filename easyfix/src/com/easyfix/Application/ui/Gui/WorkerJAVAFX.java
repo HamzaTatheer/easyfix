@@ -20,8 +20,8 @@ public class WorkerJAVAFX {
         this._HourlyRate=_HourlyRate;
         this._Speciality=_Speciality;
         this.button=button;
-        button.setText("SELECT");
-        button.setAlignment(Pos.CENTER);
+        this.button.setText("SELECT");
+        this.button.setAlignment(Pos.CENTER);
     }
     public WorkerJAVAFX(Integer _Id, String _Name, float _Rating,float _HourlyRate,String _Speciality) {
         this._Id=_Id;

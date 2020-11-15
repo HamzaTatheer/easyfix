@@ -42,13 +42,13 @@
                     <effect>
                         <ColorAdjust brightness="-0.07" />
                     </effect>
-                    <children>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="502.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@images.png" />
-                            </image>
-                        </ImageView>
-                    </children>
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="509.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@6eb28c8ea93febd971943f5a73364b2f.png" />
+                     </image>
+                  </ImageView>
+               </children>
                 </Pane>
                 <Text fill="#f8f8f8" layoutX="164.0" layoutY="186.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please ! Enter Booking Details." textAlignment="CENTER" wrappingWidth="330.13671875">
                     <font>
@@ -65,13 +65,13 @@
                   <Font name="System Bold" size="19.0" />
                </font>
             </Text>
-            <TextField fx:id="MonthText" layoutX="293.0" layoutY="256.0" prefHeight="25.0" prefWidth="61.0" promptText="Month" />
-            <TextField fx:id="DateText" layoutX="390.0" layoutY="255.0" prefHeight="25.0" prefWidth="61.0" promptText="Date" />
+            <TextField fx:id="MonthText" layoutX="390.0" layoutY="255.0" prefHeight="25.0" prefWidth="61.0" promptText="Month" />
+            <TextField fx:id="DateText" layoutX="293.0" layoutY="255.0" prefHeight="25.0" prefWidth="61.0" promptText="Day" />
             <TextField fx:id="Hour" layoutX="293.0" layoutY="305.0" prefHeight="25.0" prefWidth="61.0" promptText="Hour" />
             <TextField fx:id="MinuteText" layoutX="390.0" layoutY="305.0" prefHeight="25.0" prefWidth="61.0" promptText="Minute" />
-            <Text fill="#bf1818" layoutX="31.0" layoutY="368.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Note * You can add SparePart(s) later." textAlignment="CENTER" wrappingWidth="613.13671875">
+            <Text fill="#bf1818" layoutX="31.0" layoutY="367.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Note * You can add SparePart(s) later." textAlignment="CENTER" wrappingWidth="613.13671875">
                <font>
-                  <Font size="21.0" />
+                  <Font size="18.0" />
                </font>
                <effect>
                   <Glow />
@@ -80,7 +80,7 @@
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
             </Text>
-            <Button fx:id="FinalBook" layoutX="294.0" layoutY="399.0" mnemonicParsing="false" onAction="#HandleFinalBookAction" prefHeight="39.0" prefWidth="96.0" text="Book">
+            <Button fx:id="Next" layoutX="290.0" layoutY="381.0" mnemonicParsing="false" onAction="#HandleNextAction" prefHeight="39.0" prefWidth="96.0" text="Next">
                <font>
                   <Font size="18.0" />
                </font>
@@ -94,6 +94,17 @@
                </font>
             </Text>
             <TextField fx:id="TitleText" layoutX="293.0" layoutY="208.0" prefHeight="25.0" prefWidth="161.0" promptText="Title" />
+            <Text fill="#bf1818" layoutX="31.0" layoutY="446.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Press Next to Confirm Your Booking" textAlignment="CENTER" wrappingWidth="613.13671875">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <effect>
+                  <Glow />
+               </effect>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </Text>
             </children>
         </Pane>
     </children>

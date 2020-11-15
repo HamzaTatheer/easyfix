@@ -4,3 +4,9 @@ fix my house
 1
 finished
 500.0
+3
+fix this
+1
+5
+finished
+800.0

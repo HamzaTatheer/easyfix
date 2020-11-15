@@ -7,5 +7,5 @@ import java.util.ArrayList;
 public interface SparePartService {
     public Boolean addSparePart(String _name,float _cost,int _quantity);
     public ArrayList<SparePartModel> showAllSpareParts();
-    public boolean addSparePartsToBooking(int bid, int pid,int quantity);
+    public boolean addSparePartsToBooking(int bid, int pid,int quantity) throws Exception;
 }

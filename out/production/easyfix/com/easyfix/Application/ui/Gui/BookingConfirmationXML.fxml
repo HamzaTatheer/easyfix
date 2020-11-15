@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="522.0" prefWidth="659.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easyfix.Application.ui.Gui.BookingConfirmationController">
+    <children>
+        <Pane prefHeight="522.0" prefWidth="659.0" styleClass="linear-grade" stylesheets="@test.css">
+            <children>
+                <ImageView fitHeight="49.0" fitWidth="39.0" layoutX="606.0" layoutY="471.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@Daco_1849574.png" />
+                    </image>
+                </ImageView>
+                <Button layoutX="215.0" layoutY="470.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="227.0" text="Back To HomePage">
+                    <textFill>
+                        <RadialGradient centerX="0.17555554707845056" centerY="0.47709922208130817" radius="0.5">
+                            <stops>
+                                <Stop color="#ad2626ce" />
+                                <Stop color="#652929d9" offset="1.0" />
+                            </stops>
+                        </RadialGradient>
+                    </textFill>
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="WAIT" />
+                    </cursor>
+                </Button>
+                <Pane layoutX="-1.0" layoutY="-2.0" prefHeight="156.0" prefWidth="659.0" style="-fx-background-color: white;">
+                    <effect>
+                        <ColorAdjust brightness="-0.07" />
+                    </effect>
+                    <children>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="445.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@tutorial-preview-small.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </Pane>
+                <Text fill="#f8f8f8" layoutX="164.0" layoutY="186.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please ! Confirm Your Booking." textAlignment="CENTER" wrappingWidth="330.13671875">
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                </Text>
+                <Text fill="WHITE" layoutX="349.0" layoutY="229.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date" wrappingWidth="61.0">
+                    <font>
+                        <Font name="System Bold" size="19.0" />
+                    </font>
+                </Text>
+                <Text fill="WHITE" layoutX="110.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time" wrappingWidth="102.13671875">
+                    <font>
+                        <Font name="System Bold" size="19.0" />
+                    </font>
+                </Text>
+                <TextField fx:id="MonthText" layoutX="504.0" layoutY="209.0" prefHeight="25.0" prefWidth="61.0" promptText="N/A" />
+                <TextField fx:id="DateText" layoutX="407.0" layoutY="209.0" prefHeight="25.0" prefWidth="61.0" promptText="N/A" />
+                <TextField fx:id="HourText" layoutX="178.0" layoutY="250.0" prefHeight="25.0" prefWidth="61.0" promptText="N/A" />
+                <TextField fx:id="MinuteText" layoutX="275.0" layoutY="250.0" prefHeight="25.0" prefWidth="61.0" promptText="N/A" />
+                <Text fill="#bf1818" layoutX="31.0" layoutY="399.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Note * You can add SparePart(s) later." textAlignment="CENTER" wrappingWidth="613.13671875">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                    <effect>
+                        <Glow />
+                    </effect>
+                    <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                    </cursor>
+                </Text>
+                <Button fx:id="FinalBook" layoutX="248.0" layoutY="416.0" mnemonicParsing="false" onAction="#HandleFinalBookAction" prefHeight="39.0" prefWidth="161.0" text="Finish Booking">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="WAIT" />
+                    </cursor>
+                </Button>
+                <Text fill="WHITE" layoutX="110.0" layoutY="229.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title" wrappingWidth="61.0">
+                    <font>
+                        <Font name="System Bold" size="19.0" />
+                    </font>
+                </Text>
+                <TextField fx:id="TitleText" layoutX="176.0" layoutY="209.0" prefHeight="25.0" prefWidth="161.0" promptText="N/A" />
+            <Text fill="WHITE" layoutX="111.0" layoutY="315.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Worker Name" wrappingWidth="130.0">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Text>
+            <TextField fx:id="NameText" layoutX="266.0" layoutY="295.0" prefHeight="25.0" prefWidth="130.0" promptText="N/A" />
+            <Text fill="WHITE" layoutX="422.0" layoutY="315.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rating" wrappingWidth="61.0">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Text>
+            <TextField fx:id="RatingText" layoutX="504.0" layoutY="296.0" prefHeight="25.0" prefWidth="61.0" promptText="N/A" />
+            <Text fill="WHITE" layoutX="111.0" layoutY="357.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hourly Rate" wrappingWidth="120.0">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Text>
+            <TextField fx:id="RateText" layoutX="245.0" layoutY="338.0" prefHeight="25.0" prefWidth="61.0" promptText="N/A" />
+            <Text fill="WHITE" layoutX="345.0" layoutY="357.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Speciality" wrappingWidth="102.13671875">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Text>
+            <TextField fx:id="SpText" layoutX="465.0" layoutY="339.0" prefHeight="25.0" prefWidth="61.0" promptText="N/A" />
+            </children>
+        </Pane>
+    </children>
+</Pane>

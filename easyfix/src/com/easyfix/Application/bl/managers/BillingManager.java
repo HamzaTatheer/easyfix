@@ -1,13 +1,14 @@
 package com.easyfix.Application.bl.managers;
 
-import com.easyfix.Application.bl.classes.*;
+import com.easyfix.Application.bl.classes.Booking;
+import com.easyfix.Application.bl.classes.Customer;
+import com.easyfix.Application.bl.classes.SparePart;
+import com.easyfix.Application.bl.classes.Worker;
 import com.easyfix.Application.bl.services.BillingService;
 import com.easyfix.Application.db.dbProviders;
 import com.easyfix.Application.db.services.DbService;
 import com.easyfix.Application.models.*;
 
-import java.beans.BeanInfo;
-import java.lang.Math;
 import java.util.ArrayList;
 
 public class BillingManager implements BillingService {
@@ -74,8 +75,8 @@ public class BillingManager implements BillingService {
         BillingModel mybill = new BillingModel();
         mybill.bookingId = bid;
         mybill.title = b.getText();
-        mybill.cid = c.getId();
-        mybill.wid = w.getId();
+        //mybill.cid = c.getId();
+        //mybill.wid = w.getId();
         mybill.status = "unpaid";
         mybill.totalCost = totalCost;
         return mybill;
