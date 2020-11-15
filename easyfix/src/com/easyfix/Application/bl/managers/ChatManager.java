@@ -19,7 +19,7 @@ public class ChatManager implements ChatService {
     }
 
 
-    public boolean sendMessage(int senderId,int receiverId,String message) throws Exception {
+    public boolean sendMessage(int senderId,int receiverId,String senderType ,String message) throws Exception {
 
         boolean exists = true;
 
@@ -31,7 +31,10 @@ public class ChatManager implements ChatService {
 
         if(exists = true){
             ChatMessage c = new ChatMessage(senderId,receiverId,message);
-            dbService.store_chat(c.getSenderId(),c.getReceiverId(),"sender","receiver",c.getMessage());
+            if(senderType.equals("customer"))
+                dbService.store_chat(c.getSenderId(),c.getReceiverId(),dbService.get_customer(senderId).name,dbService.get_worker(receiverId).name,c.getMessage());
+            else if(senderType.equals("worker"))
+                dbService.store_chat(c.getSenderId(),c.getReceiverId(),dbService.get_worker(senderId).name,dbService.get_customer(receiverId).name,c.getMessage());
             return true;
         }
         else{
