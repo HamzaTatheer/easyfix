@@ -198,7 +198,7 @@ public class controllerHomePage extends UI {
 
             }
             catch (Exception E){
-                E.getMessage();
+                System.out.println(E.getMessage());
             }
 
         }
