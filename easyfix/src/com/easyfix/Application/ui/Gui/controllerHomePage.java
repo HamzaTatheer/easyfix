@@ -177,7 +177,7 @@ public class controllerHomePage extends UI {
     public void handleshowActiveBooking(ActionEvent event) {
         try {
             try {
-                ArrayList<BookingModel> getBook = bookingService.showActiveBookingOfWorker(Cust_id);//get all active bookings by cust_id
+                ArrayList<BookingModel> getBook = bookingService.showActiveBookingOfCustomer(Cust_id);//get all active bookings by cust_id
                 //Load second scene
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("ShowActiveXML.fxml"));
                 Parent root = loader.load();
