@@ -898,11 +898,9 @@ public class SqlDbManager implements DbService {
             ResultSet rs = mystmt.executeQuery("select * from booking where worker_id = "+ worker_id + " and booking_status = '" + status+"'");
             //WorkerModel c1=new WorkerModel();
             ArrayList<BookingModel> c1=new ArrayList<BookingModel>();
-            BookingModel c2=new BookingModel();
-
             int i=0;
             while (rs.next()) {
-
+                BookingModel c2=new BookingModel();
                 c2.id= rs.getInt("bid");
                 c2.cid=rs.getInt("customer_id");
                 c2.wid=rs.getInt("worker_id");
@@ -1091,15 +1089,12 @@ public class SqlDbManager implements DbService {
             ResultSet rs = mystmt.executeQuery("select * from billing where bid = "+ booking_id );
 
             //ArrayList<BillingModel> c1=new ArrayList<BillingModel>();
-            BillingModel c2=new BillingModel();
+            BillingModel c2=null;
 
             int i=0;
-            if(!rs.next())
-            {
-                return null;
-            }
 
             while (rs.next()) {
+                c2 = new BillingModel();
 
                 c2.bookingId= rs.getInt("bid");
                 c2.title=rs.getString("title");
@@ -1108,8 +1103,11 @@ public class SqlDbManager implements DbService {
                 c2.status=rs.getString("status");
                 c2.totalCost=rs.getFloat("totalcost");
                 //c1.add(c2);
-
             }
+
+
+
+
             return c2;
 
 
