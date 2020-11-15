@@ -73,7 +73,7 @@ public class Controller extends UI{
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        if(userid>0 || workerid>0){
+        if(userid>0){
 
             //Load second scene
             FXMLLoader loader = new FXMLLoader(getClass().getResource("homepage.fxml"));
@@ -83,6 +83,21 @@ public class Controller extends UI{
             controllerHomePage scene2Controller = loader.getController();
             //Pass whatever data you want. You can have multiple method calls here
             scene2Controller.transferId(userid);
+
+            //Show scene 2 in new window
+            Stage stage=(Stage) login.getScene().getWindow();;
+            stage.setScene(new Scene(root));
+            stage.show();
+        }
+        else if(workerid>0){
+            //Load second scene
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("workerhomepage.fxml"));
+            Parent root = loader.load();
+
+            //Get controller of scene2
+            controllerWorkerHomePage scene2Controller = loader.getController();
+            //Pass whatever data you want. You can have multiple method calls here
+            scene2Controller.getWID(workerid);
 
             //Show scene 2 in new window
             Stage stage=(Stage) login.getScene().getWindow();;

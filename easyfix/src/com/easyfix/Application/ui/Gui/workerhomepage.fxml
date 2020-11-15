@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easyfix.Application.ui.Gui.controllerWorkerHomePage">
+    <children>
+        <Label layoutX="226.0" layoutY="168.0" prefHeight="40.0" prefWidth="299.0" text="Welcome to Homepage">
+            <font>
+                <Font size="25.0" />
+            </font>
+        </Label>
+        <Pane layoutY="-2.0" prefHeight="381.0" prefWidth="182.0" styleClass="linear-grade" stylesheets="@test.css">
+            <children>
+                <Button fx:id="addtoWallet" layoutX="19.0" layoutY="166.0" mnemonicParsing="false"  prefHeight="25.0" prefWidth="139.0" stylesheets="@test.css" text="Add To Wallet" />
+                <Button fx:id="finishBooking" layoutX="16.0" layoutY="210.0" mnemonicParsing="false"  prefHeight="25.0" prefWidth="139.0" stylesheets="@test.css" text="Finish Booking" />
+                <Button fx:id="chat" layoutX="19.0" layoutY="256.0" mnemonicParsing="false"  prefHeight="25.0" prefWidth="139.0" text="Chat" />
+                <Button fx:id="logout"  onAction="#handleWLogoutAction" layoutX="18.0" layoutY="300.0" mnemonicParsing="false"  prefHeight="25.0" prefWidth="139.0" text="Logout" />
+                <Button fx:id="editWorkerprofile" onAction="#handlegotoWorkerProfileAction" layoutX="18.0" layoutY="124.0" mnemonicParsing="false"  prefHeight="25.0" prefWidth="139.0" stylesheets="@test.css" text="Edit Profile" />
+                <ImageView fitHeight="99.0" fitWidth="152.0" layoutX="32.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@Daco_1849574.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </Pane>
+    </children>
+</Pane>

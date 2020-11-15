@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="361.0" prefWidth="635.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easyfix.Application.ui.Gui.controllerWorkerHomePage">
+    <children>
+        <Pane prefHeight="117.0" prefWidth="635.0" styleClass="linear-grade" stylesheets="@test.css">
+            <children>
+                <ImageView fitHeight="105.0" fitWidth="114.0" layoutX="509.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@PngItem_1468479.png" />
+                    </image>
+                </ImageView>
+                <Button fx:id="gotoChangeCity" onAction="#handleWorkerProfileAction"  layoutX="138.0" layoutY="78.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Change City" textFill="WHITE">
+                    <effect>
+                        <InnerShadow />
+                    </effect>
+                </Button>
+                <Button fx:id="gotoChangeArea" onAction="#handleWorkerProfileAction"  layoutX="233.0" layoutY="78.0" mnemonicParsing="false" text="Change Area">
+                    <effect>
+                        <InnerShadow />
+                    </effect>
+                </Button>
+                <Button fx:id="gotoChangeHourlyRate" onAction="#handleWorkerProfileAction" layoutX="328.0" layoutY="78.0" mnemonicParsing="false" text="Change Hourly Rate">
+                    <effect>
+                        <InnerShadow />
+                    </effect>
+                </Button>
+                <Button fx:id="home" onAction="#handleWorkerProfileAction" layoutX="39.0" layoutY="78.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="84.0" text="Home">
+                    <effect>
+                        <InnerShadow />
+                    </effect>
+                </Button>
+            </children></Pane>
+    </children>
+</Pane>
