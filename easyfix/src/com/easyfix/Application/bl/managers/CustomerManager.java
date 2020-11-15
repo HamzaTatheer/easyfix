@@ -15,13 +15,14 @@ public class CustomerManager implements CustomerService {
 
     private DbService dbService;
 
+    //correct
     public CustomerManager(){
         dbService = dbProviders.getDbService();
         RatingService ratingDbService = new RatingManager();
     }
 
 
-    //return id
+    //correct
     public int login(String email, String password) throws Exception {
         int userid = dbService.does_customer_exist(email,password);
 
@@ -32,7 +33,7 @@ public class CustomerManager implements CustomerService {
         return userid;
     }
 
-    //return id
+    //correct
     public int register(String name,String email,String password,String credit,String city,String area) throws Exception{
         int userid = 0;
         if(password.length() <= 5){
@@ -43,7 +44,7 @@ public class CustomerManager implements CustomerService {
             throw new Exception("User can not be registered. Please try again");
         }
 
-        dbService.store_customer(name,email,password,credit,200,city,area,new ArrayList<Integer> ());
+        dbService.store_customer(name,email,password,credit,2000,city,area,new ArrayList<Integer> ());
         return 1;
     }
 
