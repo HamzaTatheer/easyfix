@@ -42,6 +42,35 @@ public class BookWorkerController extends UI {
 
     @FXML
     private TableColumn<WorkerJAVAFX, String> BookWButton;
+    @FXML
+    private Button WorkerHome;
+
+    @FXML
+    void HandleWorkerHome(ActionEvent event) {
+        //close window
+        final Node source = (Node) event.getSource();
+        final Stage hide = (Stage) source.getScene().getWindow();
+        hide.close();
+        try {
+            //Load second scene
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("homepage.fxml"));
+            Parent root = loader.load();
+
+            //Get controller of scene2
+            controllerHomePage scene2Controller = loader.getController();
+            //Pass whatever data you want. You can have multiple method calls here
+            scene2Controller.transferId(c_id);
+
+            //Show scene 2 in new window
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+        }
+        catch (Exception E){
+            System.out.println(E.getMessage());
+        }
+
+    }
 
     public void initializeWorkerArrayList(ArrayList<WorkerModel> W,int c){
         getWorkers=new ArrayList<WorkerModel>(W);

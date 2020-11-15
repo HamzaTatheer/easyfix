@@ -46,7 +46,7 @@
                         </TableView>
                     </content>
                 </ScrollPane>
-                <Button layoutX="187.0" layoutY="416.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="283.0" text="Back To HomePage">
+                <Button fx:id="WorkerHome" layoutX="187.0" layoutY="416.0" mnemonicParsing="false" onAction="#HandleWorkerHome" prefHeight="36.0" prefWidth="283.0" text="Return To Home">
                     <textFill>
                         <RadialGradient centerX="0.17555554707845056" centerY="0.47709922208130817" radius="0.5">
                             <stops>
@@ -64,11 +64,21 @@
                   <ColorAdjust brightness="-0.07" />
                </effect>
                <children>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="495.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="124.0" fitWidth="168.0" layoutX="521.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images.png" />
+                        <Image url="@check.png" />
                      </image>
                   </ImageView>
+                  <ImageView fitHeight="133.0" fitWidth="153.0" layoutX="29.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@6eb28c8ea93febd971943f5a73364b2f.png" />
+                     </image>
+                  </ImageView>
+                  <Text layoutX="144.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="STEP 1 of 4 STEPS" wrappingWidth="371.13671875">
+                     <font>
+                        <Font size="43.0" />
+                     </font>
+                  </Text>
                </children>
             </Pane>
             <Text fill="#f8f8f8" layoutX="199.0" layoutY="199.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please ! Choose Worker." textAlignment="CENTER" wrappingWidth="260.13671875">
