@@ -10,6 +10,7 @@ import com.easyfix.Application.models.CustomerModel;
 import com.easyfix.Application.models.WorkerModel;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 public class CustomerManager implements CustomerService {
 
@@ -24,6 +25,13 @@ public class CustomerManager implements CustomerService {
 
     //correct
     public int login(String email, String password) throws Exception {
+
+        if(!Customer.validateEmail(email))
+            throw new Exception("Email must be of the format. helloworld@gmail.com");
+
+        if(!Customer.validatePassword(password))
+            throw new Exception("Invalid Password. Make sure your password has correct length greater than 3");
+
         int userid = dbService.does_customer_exist(email,password);
 
         if(userid <= -1){
@@ -33,16 +41,19 @@ public class CustomerManager implements CustomerService {
         return userid;
     }
 
-    //correct
-    public int register(String name,String email,String password,String credit,String city,String area) throws Exception{
-        int userid = 0;
-        if(password.length() <= 5){
-            throw new Exception("Password length must be greater than 5");
-        }
 
-        if(userid < -1){
-            throw new Exception("User can not be registered. Please try again");
-        }
+
+
+    public int register(String name,String email,String password,String credit,String city,String area) throws Exception{
+
+        if(!Customer.validateEmail(email))
+            throw new Exception("Invalid Email: Please try again");
+
+        if(!Customer.validatePassword(password))
+            throw new Exception("Invalid Password. Password length must be greater than 3");
+
+        if(!Customer.validateCreditCard(credit))
+            throw new Exception("Invalid Credit card no. Credit card no length must be exactly 10");
 
         dbService.store_customer(name,email,password,credit,2000,city,area,new ArrayList<Integer> ());
         return 1;
@@ -57,7 +68,9 @@ public class CustomerManager implements CustomerService {
         }
 
         CustomerModel customer = dbService.get_customer(cid);
-        return dbService.update_customerWallet(cid,customer.wallet+amount);
+        Customer c = new Customer(customer);
+        c.addToWallet(amount);
+        return dbService.update_customerWallet(cid,c.getWallet());
     }
 
     public CustomerModel getCustomerDetails(int cid) throws Exception {
@@ -71,13 +84,13 @@ public class CustomerManager implements CustomerService {
 
     @Override
     public boolean payMoney(int cid, float amount) {
-        CustomerModel customer = dbService.get_customer(cid);
+        CustomerModel c = dbService.get_customer(cid);
+        Customer customer = new Customer(c);
 
-
-
-        if(customer.paymentMethod.equals("wallet")){
-            if(customer.wallet >= amount){
-                dbService.update_customerWallet(cid,customer.wallet-amount);
+        if(customer.getPaymentMethod().equals("wallet")){
+            if(customer.canPayFromWallet(amount)){
+                customer.addToWallet(amount);
+                dbService.update_customerWallet(cid,customer.getWallet());
                 return true;
             }
             else{
@@ -86,6 +99,7 @@ public class CustomerManager implements CustomerService {
         }
         else{
             //contact api like hbl api to make payment and return true
+            //use Customer.getCredit
             return true;
         }
     }
@@ -104,10 +118,13 @@ public class CustomerManager implements CustomerService {
     public boolean addToFavourite(int cid,int wid) throws Exception {
         DbService db = dbProviders.getDbService();
         if((db.does_worker_exist(wid)==true)&&(db.does_customer_exist(cid) == true)){
+
             ArrayList<Integer> customerFavourites = db.get_favourites(cid);
+
             if(customerFavourites.contains(wid) == true){
                 throw new Exception("You have already added this worker to favourites");
             }
+
             return db.add_favourite(cid,wid);
         }
         else{
@@ -142,6 +159,7 @@ public class CustomerManager implements CustomerService {
 
     public boolean giveRating(int cid, int wid,int rating) throws Exception {
         ArrayList<BookingModel> bookings = dbService.get_booking_of_customer(cid);
+
         boolean hiredWorker = false;
         for (BookingModel booking : bookings) {
             if(booking.wid == wid){
