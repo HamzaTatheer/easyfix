@@ -81,7 +81,7 @@ public class BookingConfirmationController extends UI {
     }
 
 
-    public void HandleFinalBookAction(ActionEvent actionEvent) throws Exception {
+    public void HandleFinalAction(ActionEvent actionEvent) throws Exception {
         try{
             ArrayList<SparePartModel> sendSpareParts=sparePartService.showAllSpareParts();
             //close window
@@ -93,18 +93,23 @@ public class BookingConfirmationController extends UI {
             int bi_d=bookingService.makeBooking(Cust_ID,Work_ID,titletext,makeTime,dummy);
             if(bi_d>0) {
                 //Load second scene
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("BookingSpartPartXML.fxml"));
-                Parent root = loader.load();
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("BookingSpartPartXML.fxml"));
+                    Parent root = loader.load();
 
-                //Get controller of scene2
-                BookingSparePartController scene2Controller = loader.getController();
-                //Pass whatever data you want. You can have multiple method calls here'
-                scene2Controller.initializeSpareArrayList(sendSpareParts, Cust_ID, Work_ID,bi_d);
+                    //Get controller of scene2
+                    BookingSparePartController scene2Controller = loader.getController();
+                    //Pass whatever data you want. You can have multiple method calls here'
+                    scene2Controller.initializeSpareArrayList(sendSpareParts, Cust_ID, Work_ID, bi_d);
 
-                //Show scene 2 in new window
-                Stage stage = new Stage();
-                stage.setScene(new Scene(root));
-                stage.show();
+                    //Show scene 2 in new window
+                    Stage stage = new Stage();
+                    stage.setScene(new Scene(root));
+                    stage.show();
+                }
+                catch (Exception e){
+                    System.out.println(e.getMessage());
+                }
             }
             else
             {

@@ -80,7 +80,7 @@
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
             </Text>
-            <Button fx:id="Next" layoutX="290.0" layoutY="381.0" mnemonicParsing="false" onAction="#HandleNextAction" prefHeight="39.0" prefWidth="96.0" text="Next">
+            <Button fx:id="Next" layoutX="290.0" layoutY="381.0" mnemonicParsing="false" onAction="#HandleNextAction" prefHeight="39.0" prefWidth="96.0" text="Next.">
                <font>
                   <Font size="18.0" />
                </font>

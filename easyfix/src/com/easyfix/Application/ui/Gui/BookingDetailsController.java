@@ -44,6 +44,10 @@ public class BookingDetailsController extends UI {
 
     }
 
+    public void HandleFinalBookAction(ActionEvent actionEvent){
+        //
+        int y;
+    }
     public void HandleNextAction(ActionEvent actionEvent) throws Exception {
         try{
             //ArrayList<SparePartModel> sendSpareParts=sparePartService.showAllSpareParts();

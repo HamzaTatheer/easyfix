@@ -16,7 +16,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class BookWorkerController extends UI {
@@ -59,13 +58,8 @@ public class BookWorkerController extends UI {
         list= FXCollections.observableArrayList();
         for (int i=0;i<buttonsArr.length;i++){
             buttonsArr[i]=new Button();
-            buttonsArr[i].setOnAction(actionEvent -> {
-                try {
-                    handleButtonAction(actionEvent);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
+            buttonsArr[i].setOnAction(this::handleButtonAction);
+
         }
         int i=0;
         for (WorkerModel workerModel : getWorkers) {
@@ -76,7 +70,7 @@ public class BookWorkerController extends UI {
 
     }
     int store_button_index;
-    private void handleButtonAction(ActionEvent actionEvent) throws IOException {
+    private void handleButtonAction(ActionEvent actionEvent) {
         int size=getWorkers.size();
         for(int i=0;i<size;i++) {
             if (actionEvent.getSource() == buttonsArr[i]) {
@@ -91,20 +85,26 @@ public class BookWorkerController extends UI {
         final Stage hide = (Stage) source.getScene().getWindow();
         hide.close();
 
+        try {
 
-        //Load second scene
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("BookingDetails.fxml"));
-        Parent root = loader.load();
 
-        //Get controller of scene2
-        BookingDetailsController scene2Controller = loader.getController();
-        //Pass whatever data you want. You can have multiple method calls here
-        scene2Controller.recieveData(c_id,selected_WID,getWorkers.get(store_button_index).name,getWorkers.get(store_button_index).avgRating,getWorkers.get(store_button_index).hourlyRate,getWorkers.get(store_button_index).speciality);
+            //Load second scene
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("BookingDetails.fxml"));
+            Parent root = loader.load();
 
-        //Show scene 2 in new window
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.show();
+            //Get controller of scene2
+            BookingDetailsController scene2Controller = loader.getController();
+            //Pass whatever data you want. You can have multiple method calls here
+            scene2Controller.recieveData(c_id, selected_WID, getWorkers.get(store_button_index).name, getWorkers.get(store_button_index).avgRating, getWorkers.get(store_button_index).hourlyRate, getWorkers.get(store_button_index).speciality);
+
+            //Show scene 2 in new window
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
 }

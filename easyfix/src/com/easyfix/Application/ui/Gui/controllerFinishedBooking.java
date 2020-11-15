@@ -14,18 +14,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-<<<<<<< HEAD
 import javafx.stage.Stage;
 
-=======
-import javafx.scene.Node;
-
-//import java.awt.*;
-//import java.awt.event.ActionEvent;
->>>>>>> 98bdf27b98d04a88aeb568ac1c57f89d2e39b3c0
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+
+//import java.awt.*;
+//import java.awt.event.ActionEvent;
 
 public class controllerFinishedBooking extends UI {
     private ArrayList<BookingModel> getBookings;
@@ -256,13 +252,12 @@ public class controllerFinishedBooking extends UI {
         controllerShowBill scene2Controller = loader.getController();
         scene2Controller.setLabelid(bill.bookingId);
         scene2Controller.setLabeltitle(bill.title);
-<<<<<<< HEAD
+
         //scene2Controller.setLabelcustomer(bill.customerName);
         //scene2Controller.setLabelworker(bill.workerName);
-=======
+
         scene2Controller.setLabelcustomer(cname);
         scene2Controller.setLabelworker(wname);
->>>>>>> 98bdf27b98d04a88aeb568ac1c57f89d2e39b3c0
         scene2Controller.setLabelstatus(bill.status);
         scene2Controller.setLabelcost(bill.totalCost);
 
