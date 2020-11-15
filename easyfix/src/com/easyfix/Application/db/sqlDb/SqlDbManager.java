@@ -490,6 +490,7 @@ public class SqlDbManager implements DbService {
 
     }
 
+
     public ArrayList<WorkerModel> get_all_worker()
     {
         try {
@@ -500,15 +501,10 @@ public class SqlDbManager implements DbService {
             //WorkerModel c1=new WorkerModel();
             ArrayList<WorkerModel> c1=new ArrayList<WorkerModel>();
 
-            if(!rs.next())
-            {
-                return null;
-            }
-
-
+            int i=0;
             while (rs.next()) {
                 WorkerModel c2=new WorkerModel();
-
+                //System.out.println("id "+c2.id);
                 c2.id=rs.getInt("wid");
                 c2.name=rs.getString("name");
                 c2.email=rs.getString("email");
@@ -525,8 +521,6 @@ public class SqlDbManager implements DbService {
 
 
             }
-
-
             return c1;
 
 
@@ -537,6 +531,7 @@ public class SqlDbManager implements DbService {
         return null;
 
     }
+
 
 
     public boolean update_Worker_city(int id,String city)//done
