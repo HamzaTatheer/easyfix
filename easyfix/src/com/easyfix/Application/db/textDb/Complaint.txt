@@ -6,3 +6,7 @@ the worker did not do right work
 1
 2
 bad behaviour
+3
+1
+5
+not fixed

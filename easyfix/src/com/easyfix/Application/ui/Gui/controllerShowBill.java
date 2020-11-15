@@ -1,6 +1,7 @@
 package com.easyfix.Application.ui.Gui;
 import com.easyfix.Application.bl.classes.Booking;
 import com.easyfix.Application.models.BookingModel;
+import com.easyfix.Application.models.BillingModel;
 import com.easyfix.Application.ui.UI;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,6 +23,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 public class controllerShowBill extends UI {
     int Cid,Bid;
@@ -33,14 +36,19 @@ public class controllerShowBill extends UI {
     public void handlepayBillAction(ActionEvent event)throws Exception{
         if(event.getSource()==paybill){
             boolean b=bookingService.payForBooking(Cid,Bid);
-            if(b == true)
+            BillingModel bill=billingService.showBill(Bid);
+            if(bill.status.equals("unpaid") || bill.status.equals("finished"))
             {
-                System.out.println("Bill payed successfully");
+                //System.out.println("Bill paid successfully");
+                showAlert("Bill paid successfully",Alert.AlertType.INFORMATION);
                 populateTableViewfromBill();
             }
-            else if(event.getSource()==home)
-                changeBScene();
+            else if(bill.status.equals("paid")){
+                showAlert("Bill already paid",Alert.AlertType.ERROR);
+            }
         }
+        else if(event.getSource()==home)
+            changeBScene();
     }
     public void changeBScene()throws Exception{
         //Load second scene
@@ -99,5 +107,10 @@ public class controllerShowBill extends UI {
         Stage stage = (Stage) paybill.getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
+    }
+    private void showAlert(String alertMessage, Alert.AlertType type){
+        Alert alert = new Alert(type);
+        alert.setContentText(alertMessage);
+        alert.show();
     }
 }

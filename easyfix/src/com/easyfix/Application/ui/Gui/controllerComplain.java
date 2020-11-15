@@ -23,6 +23,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 public class controllerComplain extends UI {
     int wid;
@@ -37,8 +39,12 @@ public class controllerComplain extends UI {
 
             boolean b = complainService.giveComplain(cid, wid, complaintext.getText());
             if (b == true) {
-                System.out.println("Complain registered successfully");
+                //System.out.println("Complain registered successfully");
+                showAlert("Comlaint registered successfully",Alert.AlertType.INFORMATION);
                 populateTableView();
+            }
+            else if(b == false){
+                showAlert("Error in Registering complaint",Alert.AlertType.INFORMATION);
             }
         }
         else if(event.getSource()==home)
@@ -81,5 +87,10 @@ public class controllerComplain extends UI {
         Stage stage = (Stage) Complain.getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
+    }
+    private void showAlert(String alertMessage, Alert.AlertType type){
+        Alert alert = new Alert(type);
+        alert.setContentText(alertMessage);
+        alert.show();
     }
 }

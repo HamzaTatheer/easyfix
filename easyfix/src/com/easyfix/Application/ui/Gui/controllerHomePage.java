@@ -144,6 +144,12 @@ public class controllerHomePage extends UI {
         }
         else if(event.getSource()==home){
 
+            try{
+                sendDatatoHome("homepage.fxml",home);
+            }
+            catch(Exception e){
+                e.getMessage();
+            }
         }
     }
 
@@ -191,22 +197,22 @@ public class controllerHomePage extends UI {
     @FXML
     public void handleShowFinishedBooking(ActionEvent event)throws Exception {
 
-            ArrayList<BookingModel> getBook = bookingService.showFinishedBookingOfCustomer(Cust_id);
+        ArrayList<BookingModel> getBook = bookingService.showFinishedBookingOfCustomer(Cust_id);
 
-            //Load second scene
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("showfinishedbooking.fxml"));
-            Parent root = loader.load();
+        //Load second scene
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("showfinishedbooking.fxml"));
+        Parent root = loader.load();
 
-            //Get controller of scene2
-            controllerFinishedBooking scene2Controller = loader.getController();
-            //Pass whatever data you want. You can have multiple method calls here
+        //Get controller of scene2
+        controllerFinishedBooking scene2Controller = loader.getController();
+        //Pass whatever data you want. You can have multiple method calls here
 
-            scene2Controller.initializeBookingArrayList(getBook,Cust_id);
+        scene2Controller.initializeBookingArrayList(getBook,Cust_id);
 
-            //Show scene 2 in new window
-            Stage stage = (Stage) finishedbooking.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
+        //Show scene 2 in new window
+        Stage stage = (Stage) finishedbooking.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
     @FXML
@@ -214,7 +220,7 @@ public class controllerHomePage extends UI {
 
         try {
             try {
-                ArrayList<BookingModel> getBook = bookingService.showActiveBookingOfWorker(Cust_id);//get all active bookings by cust_id
+                ArrayList<BookingModel> getBook = bookingService.showActiveBookingOfCustomer(Cust_id);//get all active bookings by cust_id
                 //Load second scene
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("ShowActiveXML.fxml"));
                 Parent root = loader.load();
@@ -281,6 +287,21 @@ public class controllerHomePage extends UI {
         controllerEditProfile scene2Controller = loader.getController();
         //Pass whatever data you want. You can have multiple method calls here
         scene2Controller.transferID(Cust_id);
+
+        //Show scene 2 in new window
+        Stage stage=(Stage) btn.getScene().getWindow();;
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+    public void sendDatatoHome(String file,Button btn)throws Exception{
+        //Load second scene
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(file));
+        Parent root = loader.load();
+
+        //Get controller of scene2
+        controllerHomePage scene2Controller = loader.getController();
+        //Pass whatever data you want. You can have multiple method calls here
+        scene2Controller.transferId(Cust_id);
 
         //Show scene 2 in new window
         Stage stage=(Stage) btn.getScene().getWindow();;

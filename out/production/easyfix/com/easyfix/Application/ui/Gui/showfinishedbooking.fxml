@@ -1,21 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="365.0" prefWidth="705.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easyfix.Application.ui.Gui.controllerFinishedBooking">
    <children>
-      <Pane prefHeight="106.0" prefWidth="705.0" styleClass="linear-grade" stylesheets="@test.css" />
+      <Pane prefHeight="106.0" prefWidth="705.0" styleClass="linear-grade" stylesheets="@test.css">
+         <children>
+            <Button fx:id="home" layoutX="34.0" layoutY="67.0" mnemonicParsing="false" onAction="#handleHomeAction" prefHeight="23.0" prefWidth="64.0" text="Home" />
+            <ImageView fitHeight="94.0" fitWidth="107.0" layoutX="598.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Daco_1849574.png" />
+               </image>
+            </ImageView>
+         </children></Pane>
       <TableView fx:id="tableview" layoutY="106.0" prefHeight="260.0" prefWidth="705.0">
         <columns>
           <TableColumn fx:id="workerid" prefWidth="68.20001524686813" text="Worker ID" />
-          <TableColumn fx:id="booktext" prefWidth="121.39999389648438" text="Text" />
-            <TableColumn fx:id="starttime" prefWidth="90.80000305175781" text="Start Time" />
-            <TableColumn fx:id="endtime" prefWidth="91.5999755859375" text="End Time" />
-            <TableColumn fx:id="complain" prefWidth="72.60003662109375" text="Complain" />
-            <TableColumn fx:id="addtofavourite" prefWidth="99.5999755859375" text="Add to Favourite" />
-            <TableColumn fx:id="giverating" prefWidth="70.0" text="Give Rating" />
-            <TableColumn fx:id="showbill" prefWidth="88.79998779296875" text="Show Bill" />
+          <TableColumn fx:id="booktext" prefWidth="102.60001373291016" text="Text" />
+            <TableColumn fx:id="starttime" prefWidth="101.39999389648438" text="Start Time" />
+            <TableColumn fx:id="endtime" prefWidth="89.60003662109375" text="End Time" />
+            <TableColumn fx:id="complain" prefWidth="77.79998779296875" text="Complain" />
+            <TableColumn fx:id="addtofavourite" prefWidth="106.99996948242188" text="Add to Favourite" />
+            <TableColumn fx:id="giverating" prefWidth="76.4000244140625" text="Give Rating" />
+            <TableColumn fx:id="showbill" prefWidth="82.79998779296875" text="Show Bill" />
         </columns>
       </TableView>
    </children>

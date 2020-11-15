@@ -22,6 +22,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 public class controllerGiveRating extends UI{
     int cid,wid;
@@ -33,11 +35,14 @@ public class controllerGiveRating extends UI{
     public void handleRatingAction(ActionEvent event)throws Exception{
         if(event.getSource()==ratingbtn) {
             int i=Integer.parseInt(rating.getText());
-            boolean b=ratingService.giveRating(cid,wid,i);
-
-            if (b == true) {
-                System.out.println("Worker Rated successfully");
+            try {
+                boolean b = ratingService.giveRating(cid, wid, i);
+                showAlert("Worker Rated successfully",Alert.AlertType.INFORMATION);
                 populateTableViewfromRating();
+            }
+            catch(Exception e){
+                //e.getMessage();
+                showAlert("Worker already Rated",Alert.AlertType.ERROR);
             }
         }
         else if(event.getSource()==home)
@@ -68,19 +73,24 @@ public class controllerGiveRating extends UI{
     }
     public void changeRScene()throws Exception{
 
-            //Load second scene
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("homepage.fxml"));
-            Parent root = loader.load();
+        //Load second scene
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("homepage.fxml"));
+        Parent root = loader.load();
 
-            //Get controller of scene2
-            controllerHomePage scene2Controller = loader.getController();
-            //Pass whatever data you want. You can have multiple method calls here
+        //Get controller of scene2
+        controllerHomePage scene2Controller = loader.getController();
+        //Pass whatever data you want. You can have multiple method calls here
 
-            scene2Controller.transferId(cid);
+        scene2Controller.transferId(cid);
 
-            //Show scene 2 in new window
-            Stage stage = (Stage) home.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
+        //Show scene 2 in new window
+        Stage stage = (Stage) home.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+    private void showAlert(String alertMessage, Alert.AlertType type){
+        Alert alert = new Alert(type);
+        alert.setContentText(alertMessage);
+        alert.show();
     }
 }

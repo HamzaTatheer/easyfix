@@ -38,7 +38,7 @@ plumber
 Kamran
 kamran@gmail.com
 12345789
-2.0
+3.0
 300.0
 lahore
 valencia
