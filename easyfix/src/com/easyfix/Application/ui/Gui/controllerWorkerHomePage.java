@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
+//Worker Functions
 public class controllerWorkerHomePage extends UI {
     int WID;
     @FXML
