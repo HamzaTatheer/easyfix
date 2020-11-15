@@ -228,8 +228,8 @@ public class Terminal extends UI {
 
         try {
             BillingModel b = billingService.showBill(bill_id);
-            //System.out.println("id: "+ b.bookingId +" title: "+ b.title+ " Worker: " + b.workerName + " Cost: "+ b.totalCost + " status: "+b.status);
-            if(b.status != "paid") {
+            System.out.println("id: "+ b.bookingId +" title: "+ b.title + " Cost: "+ b.totalCost + " status: "+b.status);
+            if(!b.status.equals("paid")) {
                 if(bookingService.payForBooking(cid,b.bookingId)==true)
                     System.out.println("Payment Successful!");
             }
@@ -382,7 +382,7 @@ public class Terminal extends UI {
                         sc.nextLine();
                         String done = sc.nextLine();
                         ArrayList<SparePartModel> myspareparts = new ArrayList<>();
-                        while (done == "yes") {
+                        while (done.equals("yes")) {
                             SparePartModel temp = new SparePartModel();
                             System.out.println("Enter Part ID: ");
                             temp.id = sc.nextInt();
@@ -480,7 +480,7 @@ public class Terminal extends UI {
         while(true) {
             System.out.println("1-Show Pending Bookings");
             System.out.println("2-Show Active Bookings");
-            System.out.println("4-Logout");
+            System.out.println("3-Logout");
             int wchoice;
             Scanner sc = new Scanner(System.in);
             wchoice = sc.nextInt();
@@ -520,10 +520,18 @@ public class Terminal extends UI {
                         }
                     }
 
-                    System.out.println("Enter Customer to chat with. -1 to go back");
+
+
+                    System.out.println("Enter Customer to chat with. -1 to go finish booking. -2 to go back");
                     int chatWith = sc.nextInt();
-                    if(chatWith != -1)
+                    if(chatWith >= 0)
                         chatScreenWorker(chatWith);
+
+                    if(chatWith == -1){
+
+                        int bookingFinish = sc.nextInt();
+                        bookingService.finishBooking(bookingFinish);
+                    }
 
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
