@@ -55,7 +55,7 @@ public class CustomerManager implements CustomerService {
         if(!Customer.validateCreditCard(credit))
             throw new Exception("Invalid Credit card no. Credit card no length must be exactly 10");
 
-        dbService.store_customer(name,email,password,credit,2000,city,area,new ArrayList<Integer> ());
+        dbService.store_customer(name,email,password,credit,"wallet",2000,city,area,new ArrayList<Integer> ());
         return 1;
     }
 

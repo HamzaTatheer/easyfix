@@ -277,11 +277,11 @@ public class Terminal extends UI {
             int choice2 = sc.nextInt();
 
             if (choice2 == 1) {
-                /*ArrayList<WorkerModel> favourites = customerService.getFavourites(cid);
+                ArrayList<WorkerModel> favourites = customerService.getFavourites(cid);
                 System.out.println("Your Favourites: ");
                 for (int i = 0; i < favourites.size(); i++) {
                     System.out.println("id: " + favourites.get(i).id + " " + favourites.get(i).name + " speciality: " + favourites.get(i).speciality);
-                }*/
+                }
             } else if (choice2 == 2) {
 
                 ArrayList<WorkerModel> workers = new ArrayList<WorkerModel>();

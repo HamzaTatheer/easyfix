@@ -114,7 +114,7 @@ public class TextDbManager implements DbService {
     }
 
     @Override
-    public boolean store_customer(String name, String email, String password,String credit_no, float wallet, String city,String area, ArrayList<Integer> favourite) {
+    public boolean store_customer(String name, String email, String password,String credit_no,String paymentMethod, float wallet, String city,String area, ArrayList<Integer> favourite) {
         int id=0;
         File myo=new  File(currentPath+"CountCustomer.txt");
         try {
@@ -142,8 +142,7 @@ public class TextDbManager implements DbService {
             mywriter.write(email+"\n");
             mywriter.write(password+"\n");
             //default payment of customer
-            String payment="cash";
-            mywriter.write(payment+"\n");
+            mywriter.write(paymentMethod+"\n");
             mywriter.write(credit_no+"\n");
             mywriter.write(wallet+"\n");
             mywriter.write(city+"\n");

@@ -13,6 +13,101 @@ import java.util.ArrayList;
 
 public class SqlDbManager implements DbService {
 
+
+    public  ArrayList<BookingModel> get_booking(int bid)//done
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            ResultSet rs = mystmt.executeQuery("select * from booking where bid = "+ bid);
+            //WorkerModel c1=new WorkerModel();
+            ArrayList<BookingModel> c1=new ArrayList<BookingModel>();
+
+
+            int i=0;
+            while (rs.next()) {
+                BookingModel c2=new BookingModel();
+                c2.id= rs.getInt("bid");
+                c2.cid=rs.getInt("customer_id");
+                c2.wid=rs.getInt("worker_id");
+                c2.text=rs.getString("booking_text");
+                c2.status=rs.getString("booking_status");
+
+                Time st=rs.getTime("start_time");
+                Time et=rs.getTime("end_time");
+                Date sd=rs.getDate("start_date");
+                Date ed=rs.getDate("end_date");
+                String ss= String.valueOf(sd)+" "+String.valueOf(st);
+                String ee= String.valueOf(ed)+" "+String.valueOf(et);
+
+
+                DateTimeFormatter formator=DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                c2.startTime=LocalDateTime.parse(ss,formator);
+                c2.endTime=LocalDateTime.parse(ee,formator);
+                c1.add(c2);
+
+                //i++;
+
+                Statement mystmt2 = conn.createStatement();
+
+                ResultSet rs2 = mystmt2.executeQuery("select * from booking_spareparts where bid = "+rs.getInt("bid")  );
+
+                //SparePartModel s1=new SparePartModel();
+                int partid;
+
+
+                c2.spareParts=new ArrayList<Integer>();
+
+                while (rs2.next())
+                {
+                    partid=rs2.getInt("part_id");
+
+                    //c1.get(i).spareParts.add(get_spare_part(partid));// get spare part function
+                    c2.spareParts.add(partid);
+                    c1.add(c2);
+                }
+
+
+
+
+            }
+
+            return c1;
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    public boolean update_average_rating(int id, float rate)//done
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            String sql = "update worker set average_rating = ? where wid = ?" ;
+            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            pstmt.setFloat(1,rate);
+            pstmt.setInt(2,id);
+            int rowAffected2 = pstmt.executeUpdate();
+            return true;
+
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
     public boolean does_customer_exist(int id)//done
     {
         try {
@@ -39,18 +134,19 @@ public class SqlDbManager implements DbService {
 
             ResultSet rs = mystmt.executeQuery("select * from customers where email = '" + email + "' and password = '" + password + "' ");
 
-
-            if(!rs.next())
-            {
-                return -1;
-            }
-
             while (rs.next())
             {
                 System.out.println( rs.getInt("id"));
                 return rs.getInt("id");
 
             }
+
+            if(!rs.next())
+            {
+                return -1;
+            }
+
+
 
 
         }
@@ -60,7 +156,7 @@ public class SqlDbManager implements DbService {
         return 0;
     }
 
-    public boolean store_customer(String name, String email, String password, String credit_no, float wallet, String city, String area, ArrayList<Integer> favourite)//done
+    public boolean store_customer(String name, String email, String password, String credit_no,String paymentMethod, float wallet, String city, String area, ArrayList<Integer> favourite)//done
     {
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
@@ -71,7 +167,7 @@ public class SqlDbManager implements DbService {
             pstmt.setString(1, name);
             pstmt.setString(2,email);
             pstmt.setString(3,password);
-            pstmt.setString(4,credit_no);
+            pstmt.setString(4,paymentMethod);
             pstmt.setFloat(5,wallet);
             pstmt.setString(6,city);
             pstmt.setString(7,area);
@@ -192,6 +288,7 @@ public class SqlDbManager implements DbService {
 
             CustomerModel c1=new CustomerModel();
             while (rs.next()) {
+
                 c1.id=id;
                 c1.name=rs.getString("name");
                 c1.email=rs.getString("email");
@@ -378,7 +475,7 @@ public class SqlDbManager implements DbService {
                 c2.area=rs.getString("area");
                 c2.speciality=rs.getString("speciality");
                 c1.add(c2);
-                System.out.println(c1.get(i).id);
+
                 //i++;
 
 
@@ -394,6 +491,7 @@ public class SqlDbManager implements DbService {
 
     }
 
+
     public ArrayList<WorkerModel> get_all_worker()
     {
         try {
@@ -403,10 +501,10 @@ public class SqlDbManager implements DbService {
             ResultSet rs = mystmt.executeQuery("select * from worker ");
             //WorkerModel c1=new WorkerModel();
             ArrayList<WorkerModel> c1=new ArrayList<WorkerModel>();
-            WorkerModel c2=new WorkerModel();
+
             int i=0;
             while (rs.next()) {
-
+                WorkerModel c2=new WorkerModel();
                 //System.out.println("id "+c2.id);
                 c2.id=rs.getInt("wid");
                 c2.name=rs.getString("name");
@@ -434,6 +532,7 @@ public class SqlDbManager implements DbService {
         return null;
 
     }
+
 
 
     public boolean update_Worker_city(int id,String city)//done
@@ -515,7 +614,7 @@ public class SqlDbManager implements DbService {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
             Statement mystmt = conn.createStatement();
 
-            ResultSet rs = mystmt.executeQuery("select * from booking where customer_id = '" + customer_id+"'" + "and worker_id = '" + worker_id +" ' and booking_text = '"+text+"'" );
+            ResultSet rs = mystmt.executeQuery("select * from booking where customer_id = '" + customer_id+"'" + " and worker_id = '" + worker_id +" ' and booking_text = '"+text+"'" );
             if(rs.next())
             {
                 return rs.getInt("bid");
@@ -587,7 +686,7 @@ public class SqlDbManager implements DbService {
     }//bid given by default by DB
 
 
-    public ArrayList<BookingModel> get_booking_of_customer(int customer_id)//done
+    public ArrayList<BookingModel> get_booking_of_customer(int customer_id)
     {
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
@@ -596,11 +695,11 @@ public class SqlDbManager implements DbService {
             ResultSet rs = mystmt.executeQuery("select * from booking where customer_id = "+ customer_id );
             //WorkerModel c1=new WorkerModel();
             ArrayList<BookingModel> c1=new ArrayList<BookingModel>();
-            BookingModel c2=new BookingModel();
+
 
             int i=0;
             while (rs.next()) {
-
+                BookingModel c2=new BookingModel();
                 c2.id= rs.getInt("bid");
                 c2.cid=rs.getInt("customer_id");
                 c2.wid=rs.getInt("worker_id");
@@ -656,20 +755,20 @@ public class SqlDbManager implements DbService {
         return null;
     }
 
-    public  ArrayList<BookingModel> get_booking(int bid)//done
+    public ArrayList<BookingModel> get_booking_of_customer(int customer_id,String status)
     {
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
             Statement mystmt = conn.createStatement();
 
-            ResultSet rs = mystmt.executeQuery("select * from booking where bid = "+ bid);
+            ResultSet rs = mystmt.executeQuery("select * from booking where customer_id = "+ customer_id + " and booking_status = '" + status+"'");
             //WorkerModel c1=new WorkerModel();
             ArrayList<BookingModel> c1=new ArrayList<BookingModel>();
-            BookingModel c2=new BookingModel();
+
 
             int i=0;
             while (rs.next()) {
-
+                BookingModel c2=new BookingModel();
                 c2.id= rs.getInt("bid");
                 c2.cid=rs.getInt("customer_id");
                 c2.wid=rs.getInt("worker_id");
@@ -725,76 +824,7 @@ public class SqlDbManager implements DbService {
         return null;
     }
 
-    public ArrayList<BookingModel> get_booking_of_customer(int customer_id,String status)//done
-    {
-        try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
-            Statement mystmt = conn.createStatement();
-
-            ResultSet rs = mystmt.executeQuery("select * from booking where customer_id = "+ customer_id + "and status = " + status);
-            //WorkerModel c1=new WorkerModel();
-            ArrayList<BookingModel> c1=new ArrayList<BookingModel>();
-            BookingModel c2=new BookingModel();
-
-            int i=0;
-            while (rs.next()) {
-
-                c2.id= rs.getInt("bid");
-                c2.cid=rs.getInt("customer_id");
-                c2.wid=rs.getInt("worker_id");
-                c2.text=rs.getString("booking_text");
-                c2.status=rs.getString("booking_status");
-
-                Time st=rs.getTime("start_time");
-                Time et=rs.getTime("end_time");
-                Date sd=rs.getDate("start_date");
-                Date ed=rs.getDate("end_date");
-                String ss= String.valueOf(sd)+" "+String.valueOf(st);
-                String ee= String.valueOf(ed)+" "+String.valueOf(et);
-
-
-                DateTimeFormatter formator=DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                c2.startTime=LocalDateTime.parse(ss,formator);
-                c2.endTime=LocalDateTime.parse(ee,formator);
-                c1.add(c2);
-
-                //i++;
-
-                Statement mystmt2 = conn.createStatement();
-
-                ResultSet rs2 = mystmt2.executeQuery("select * from booking_spareparts where bid = "+rs.getInt("bid")  );
-
-                //SparePartModel s1=new SparePartModel();
-                int partid;
-
-
-                c2.spareParts=new ArrayList<Integer>();
-
-                while (rs2.next())
-                {
-                    partid=rs2.getInt("part_id");
-
-                    //c1.get(i).spareParts.add(get_spare_part(partid));// get spare part function
-                    c2.spareParts.add(partid);
-                    c1.add(c2);
-                }
-
-
-
-
-            }
-
-            return c1;
-
-
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public ArrayList<BookingModel> get_booking_of_worker(int worker_id)//done
+    public ArrayList<BookingModel> get_booking_of_worker(int worker_id)
     {
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
@@ -861,13 +891,13 @@ public class SqlDbManager implements DbService {
         return null;
     }
 
-    public ArrayList<BookingModel> get_booking_of_worker(int worker_id, String status)//done
+    public ArrayList<BookingModel> get_booking_of_worker(int worker_id, String status)
     {
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
             Statement mystmt = conn.createStatement();
 
-            ResultSet rs = mystmt.executeQuery("select * from booking where worker_id = "+ worker_id + "and status = " + status);
+            ResultSet rs = mystmt.executeQuery("select * from booking where worker_id = "+ worker_id + " and booking_status = '" + status+"'");
             //WorkerModel c1=new WorkerModel();
             ArrayList<BookingModel> c1=new ArrayList<BookingModel>();
             BookingModel c2=new BookingModel();
@@ -1028,11 +1058,11 @@ public class SqlDbManager implements DbService {
             ResultSet rs = mystmt.executeQuery("select * from billing where bid = "+ booking_id );
 
             ArrayList<BillingModel> c1=new ArrayList<BillingModel>();
-            BillingModel c2=new BillingModel();
+
 
             int i=0;
             while (rs.next()) {
-
+                BillingModel c2=new BillingModel();
                 c2.bookingId= rs.getInt("bid");
                 c2.title=rs.getString("title");
                 c2.cid= rs.getInt("cid");
@@ -1066,6 +1096,11 @@ public class SqlDbManager implements DbService {
             BillingModel c2=new BillingModel();
 
             int i=0;
+            if(!rs.next())
+            {
+                return null;
+            }
+
             while (rs.next()) {
 
                 c2.bookingId= rs.getInt("bid");
@@ -1156,19 +1191,19 @@ public class SqlDbManager implements DbService {
 
             ArrayList<ComplainModel> c1=new ArrayList<ComplainModel>();
 
-            int i=0;
+
+
             while (rs.next()) {
+                ComplainModel c2=new ComplainModel();
 
-                c1.get(i).id= rs.getInt("id");
-                c1.get(i).cid=rs.getInt("cid");
-                c1.get(i).wid=rs.getInt("wid");
-                c1.get(i).text=rs.getString("complain_text");
-
-                i++;
+                c2.id= rs.getInt("id");
+                c2.cid=rs.getInt("cid");
+                c2.wid=rs.getInt("wid");
+                c2.text=rs.getString("complain_text");
+                c1.add(c2);
 
             }
             return c1;
-
 
         }
         catch (Exception e) {
@@ -1269,13 +1304,13 @@ public class SqlDbManager implements DbService {
             ResultSet rs = mystmt.executeQuery("select * from sparepart where quantity > 0 " );
 
             ArrayList<SparePartModel> c1=new ArrayList<SparePartModel>();
-            SparePartModel c2=new SparePartModel();
+
 
             int i=0;
             while (rs.next()) {
+                SparePartModel c2=new SparePartModel();
 
                 c2.id= rs.getInt("id");
-
                 c2.name=rs.getString("part_name");
                 c2.cost=rs.getFloat("cost");
                 c2.quantity=rs.getInt("quantity");
@@ -1386,12 +1421,12 @@ public class SqlDbManager implements DbService {
             ResultSet rs = mystmt.executeQuery("select * from rating where cid = "+ customer_id );
 
             ArrayList<RatingModel> c1=new ArrayList<RatingModel>();
-            RatingModel c2=new RatingModel();
+
 
             int i=0;
             while (rs.next()) {
 
-
+                RatingModel c2=new RatingModel();
                 c2.cid=rs.getInt("cid");
                 c2.wid=rs.getInt("wid");
                 c2.rating=rs.getInt("rate");
@@ -1407,30 +1442,6 @@ public class SqlDbManager implements DbService {
             e.printStackTrace();
         }
         return null;
-    }
-
-    public boolean update_average_rating(int id, float rate)//done
-    {
-        try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
-            Statement mystmt = conn.createStatement();
-
-            String sql = "update worker set average_rating = ? where wid = ?" ;
-            PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-
-            pstmt.setFloat(1,rate);
-            pstmt.setInt(2,id);
-            int rowAffected2 = pstmt.executeUpdate();
-            return true;
-
-
-
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return false;
     }
 
 
@@ -1468,15 +1479,15 @@ public class SqlDbManager implements DbService {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
             Statement mystmt = conn.createStatement();
 
-            ResultSet rs = mystmt.executeQuery("select * from chat where senderId = "+ customer_id +"and receiverId = "+worker_id);
+            ResultSet rs = mystmt.executeQuery("select * from chat where senderId = "+ customer_id +" and receiverId = "+worker_id);
 
             ArrayList<ChatMessageModel> c1=new ArrayList<ChatMessageModel>();
-            ChatMessageModel c2=new ChatMessageModel();
+
 
             int i=0;
             while (rs.next()) {
 
-
+                ChatMessageModel c2=new ChatMessageModel();
                 c2.senderId=rs.getInt("senderId");
                 c2.receiverId=rs.getInt("receiverId");
                 c2.senderName=rs.getString("senderName");
@@ -1579,7 +1590,30 @@ public class SqlDbManager implements DbService {
 
 
 
-    public ArrayList<Integer> get_favourites(int customer_id) {
+    public ArrayList<Integer> get_favourites(int customer_id)
+    {
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/easyfix", "root", "elektra");
+            Statement mystmt = conn.createStatement();
+
+            ResultSet rs = mystmt.executeQuery("select * from favorite where id = "+customer_id );
+
+            ArrayList<Integer> c1=new ArrayList<Integer>();
+
+
+            int i=0;
+            while (rs.next()) {
+
+                c1.add(rs.getInt("favourite"));
+
+            }
+            return c1;
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
@@ -1592,11 +1626,11 @@ public class SqlDbManager implements DbService {
             ResultSet rs = mystmt.executeQuery("select * from spareparts_holder where bid = "+booking_id );
 
             ArrayList<SparePartModel> c1=new ArrayList<SparePartModel>();
-            SparePartModel c2=new SparePartModel();
+
 
             int i=0;
             while (rs.next()) {
-
+                SparePartModel c2=new SparePartModel();
                 //c2.id= rs.getInt("part_id");
                 c2=get_spare_part(rs.getInt("part_id"));
 
