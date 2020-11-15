@@ -109,10 +109,10 @@ public class Terminal extends UI {
                         wid = workerService.login(wemail, wpassword);
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
+                        wid = -1;
                     }
                     if (wid != -1) {
                         workerMenu(wid);
-
                     }
     }
 
@@ -138,7 +138,48 @@ public class Terminal extends UI {
                     }
     }
 
-    public void chatScreen(int wid){
+    public void chatScreenWorker(int cid){
+        CustomerModel customerDetails;
+        try {
+            customerDetails = customerService.getCustomerDetails(cid);
+        }
+        catch (Exception e){
+            return;
+        }
+
+        Scanner sc = new Scanner(System.in);
+
+        String customerName = customerDetails.name;
+        System.out.println("Chatting with "+ customerName);
+        System.out.println("=============================================");
+        String action = "nothing";
+        while(action != "exit") {
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
+            try {
+                ArrayList<ChatMessageModel> c = chatService.loadMessageHistory(cid, wid);
+                for(int i=0;i<c.size();i++){
+                    System.out.println(c.get(i).senderName +": " + c.get(i).message);
+                }
+
+                System.out.println("Enter Message (type exit to exit chat and refresh to refresh chat): ");
+                String message = sc.nextLine();
+                if(message.equals("exit")){
+                    return;
+                }
+                else if(!message.equals("refresh")){
+                    chatService.sendMessage(cid,wid,"worker",message);
+                }
+
+            }
+            catch (Exception e){
+                System.out.println(e.getMessage());
+                System.out.println("New Chat");
+                break;
+            }
+        }
+    }
+    public void chatScreenCustomer(int wid){
 
         WorkerModel workerDetails;
         try {
@@ -165,11 +206,11 @@ public class Terminal extends UI {
 
                 System.out.println("Enter Message (type exit to exit chat and refresh to refresh chat): ");
                 String message = sc.nextLine();
-                if(message == "exit"){
+                if(message.equals("exit")){
                     return;
                 }
-                else if(message != "refresh"){
-                    chatService.sendMessage(cid,wid,message);
+                else if(!message.equals("refresh")){
+                    chatService.sendMessage(cid,wid,"customer",message);
                 }
 
             }
@@ -338,6 +379,7 @@ public class Terminal extends UI {
                                             System.out.println("id: " + sp.get(i).id + "  name: " + sp.get(i).name + "  " + (sp.get(i).quantity > 0 ? "Available" : "Not Available"));
                                         }
                                         System.out.println("Do you want to add spareparts");
+                                        sc.nextLine();
                                         String done = sc.nextLine();
                                         ArrayList<SparePartModel> myspareparts = new ArrayList<>();
                                         while (done == "yes") {
@@ -364,7 +406,7 @@ public class Terminal extends UI {
                 for (BookingModel bookingModel : b) {
                     System.out.println("id: "+ bookingModel.id + " Title: " + bookingModel.text+"    "+bookingModel.status + " Start Time: "+bookingModel.startTime);
                     try {
-                        WorkerModel workerDetails = workerService.getWorker(bookingModel.id);
+                        WorkerModel workerDetails = workerService.getWorker(bookingModel.wid);
                         System.out.println("By Worker: "+ workerDetails.name + " id: "+workerDetails.id);
                     }
                     catch (Exception e){
@@ -381,11 +423,11 @@ public class Terminal extends UI {
 
             }
             else if(choice2 == 9){
-                ArrayList<BookingModel> b = bookingService.showActiveBookingOfWorker(cid);
+                ArrayList<BookingModel> b = bookingService.showActiveBookingOfCustomer(cid);
                 for (BookingModel bookingModel : b) {
                     System.out.println("id: "+ bookingModel.id + " Title: " + bookingModel.text+"    "+bookingModel.status + " Start Time: "+bookingModel.startTime);
                     try {
-                        WorkerModel workerDetails = workerService.getWorker(bookingModel.id);
+                        WorkerModel workerDetails = workerService.getWorker(bookingModel.wid);
                         System.out.println("By Worker: "+ workerDetails.name + " id: "+workerDetails.id);
                     }
                     catch (Exception e){
@@ -394,10 +436,12 @@ public class Terminal extends UI {
                 }
 
                 System.out.println("Want to Chat with a worker ? yes or no");
+                sc.nextLine();
                 String answer = sc.nextLine();
-                if(answer == "yes"){
-                    int chatWith = sc.nextInt();
-                    chatScreen(chatWith);
+                if(answer.equals("yes")){
+                    Scanner scc =new Scanner(System.in);
+                    int chatWith = scc.nextInt();
+                    chatScreenCustomer(chatWith);
                 }
 
             }
@@ -406,7 +450,7 @@ public class Terminal extends UI {
                 for (BookingModel bookingModel : b) {
                     System.out.println("id: "+ bookingModel.id + " Title: " + bookingModel.text+"    "+bookingModel.status + " Start Time: "+bookingModel.startTime);
                     try {
-                        WorkerModel workerDetails = workerService.getWorker(bookingModel.id);
+                        WorkerModel workerDetails = workerService.getWorker(bookingModel.wid);
                         System.out.println("By Worker: "+ workerDetails.name + " id: "+workerDetails.id);
                     }
                     catch (Exception e){
@@ -434,45 +478,60 @@ public class Terminal extends UI {
     }
     public void workerMenu(int wid){
         while(true) {
-            System.out.println("1-Get Worker");
-            System.out.println("2-Change Area");
-            System.out.println("3-Change City");
-            System.out.println("4-Change Hourly rate");
-            System.out.println("5-Logout");
+            System.out.println("1-Show Pending Bookings");
+            System.out.println("2-Show Active Bookings");
+            System.out.println("4-Logout");
             int wchoice;
             Scanner sc = new Scanner(System.in);
             wchoice = sc.nextInt();
             if (wchoice == 1) {
                 try {
-                    WorkerModel w = workerService.getWorker(wid);
-                    System.out.println(w);
+                    ArrayList<BookingModel> b = bookingService.showPendingBookingsOfWorker(wid);
+                    for (BookingModel bookingModel : b) {
+                        System.out.println("id: "+ bookingModel.id + " Title: " + bookingModel.text+"    "+bookingModel.status + " Start Time: "+bookingModel.startTime);
+                        try {
+                            CustomerModel customerDetails = customerService.getCustomerDetails(bookingModel.cid);
+                            System.out.println("Of Customer: "+ customerDetails.name + " id: "+customerDetails.id);
+                        }
+                        catch (Exception e){
+                            System.out.println("Of Customer: ...");
+                        }
+                    }
+
+                    System.out.println("Enter Booking id to accept. -1 to go back");
+                    int accepted = sc.nextInt();
+                    if(accepted != -1)
+                    bookingService.acceptBooking(accepted);
+
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
             } else if (wchoice == 2) {
-                System.out.println("Enter area :");
-                Scanner sss = new Scanner(System.in);
-                String area = sss.nextLine();
-                boolean b = workerService.changeArea(wid, area);
-                if (b == true)
-                    System.out.println("Area updated successfully");
-            } else if (wchoice == 3) {
-                System.out.println("Enter city :");
-                Scanner sss = new Scanner(System.in);
-                String city = sss.nextLine();
-                boolean b = workerService.changeArea(wid, city);
-                if (b == true)
-                    System.out.println("City updated successfully");
-            } else if (wchoice == 4) {
-                System.out.println("Enter hourly rate :");
-                float rate = sc.nextFloat();
-                boolean b = workerService.changeHourlyRate(wid, rate);
-                if (b == true)
-                    System.out.println("Hourly rate updated successfully");
-            } else if (wchoice == 5) {
-                break;
-            }
+                try {
+                    ArrayList<BookingModel> b = bookingService.showActiveOfWorker(wid);
+                    for (BookingModel bookingModel : b) {
+                        System.out.println("id: "+ bookingModel.id + " Title: " + bookingModel.text+"    "+bookingModel.status + " Start Time: "+bookingModel.startTime);
+                        try {
+                            CustomerModel customerDetails = customerService.getCustomerDetails(bookingModel.cid);
+                            System.out.println("Of Customer: "+ customerDetails.name + " id: "+customerDetails.id);
+                        }
+                        catch (Exception e){
+                            System.out.println("Of Customer: ...");
+                        }
+                    }
 
+                    System.out.println("Enter Customer to chat with. -1 to go back");
+                    int chatWith = sc.nextInt();
+                    if(chatWith != -1)
+                    chatScreenWorker(chatWith);
+
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+            else if(wchoice == 3){
+                return;
+            }
         }
     }
 }
