@@ -84,7 +84,9 @@ public class BookingManager implements BookingService {
             throw new Exception("Bill is already paid");
 
         try {
-            customerManager.payMoney(cid, bill.totalCost);
+            if(customerManager.payMoney(cid, bill.totalCost)==true){
+                throw new Exception("Unable to pay. Make Sure you wallet has enough money or creditcard no is correct");
+            }
             db.change_billing_status(bid,"paid");
             return true;
         }
