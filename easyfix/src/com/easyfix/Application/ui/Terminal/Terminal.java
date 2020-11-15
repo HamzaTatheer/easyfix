@@ -224,6 +224,23 @@ public class Terminal extends UI {
         }
     }
 
+    public void complainScreen(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter id worker you want to complain");
+        int id = sc.nextInt();
+        System.out.println("What do you want to complain about");
+        String complain = sc.nextLine();
+
+        try {
+            complainService.giveComplain(cid,id,complain);
+            System.out.println("Complain Made!");
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+    }
+
     public void customerMenu(){
         while (true) {
             System.out.println("------------------------------------------------");
@@ -345,8 +362,8 @@ public class Terminal extends UI {
                                         for (int i = 0; i < sp.size(); i++) {
                                             System.out.println("id: " + sp.get(i).id + "  name: " + sp.get(i).name + "  " + (sp.get(i).quantity > 0 ? "Available" : "Not Available"));
                                         }
-
-                                        String done = "yes";
+                                        System.out.println("Do you want to add spareparts");
+                                        String done = sc.nextLine();
                                         ArrayList<SparePartModel> myspareparts = new ArrayList<>();
                                         while (done == "yes") {
                                             SparePartModel temp = new SparePartModel();
@@ -423,11 +440,14 @@ public class Terminal extends UI {
                     }
                 }
 
-                System.out.println("Want to select and pay Bill ? (yes or no)");
+                System.out.println("Type bill to show bill, complain to complain worker and backto go back");
                 Scanner myscanner = new Scanner(System.in);
                 String answer = myscanner.nextLine();
-                if(answer.equals("yes")){
+                if(answer.equals("bill")){
                     billScreen();
+                }
+                if(answer.equals("complain")){
+                    complainScreen();
                 }
 
 
