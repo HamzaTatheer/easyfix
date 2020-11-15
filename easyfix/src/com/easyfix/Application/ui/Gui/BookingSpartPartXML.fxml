@@ -62,17 +62,17 @@
                         <ColorAdjust brightness="-0.21" contrast="0.48" />
                     </effect>
                <children>
-                  <ImageView fitHeight="150.0" fitWidth="146.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@61fnMMgkGIL._AC_SL1098_.jpg" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="150.0" fitWidth="146.0" layoutX="183.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="150.0" fitWidth="146.0" layoutX="14.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@61GodVIyhZL.jpg" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="150.0" fitWidth="146.0" layoutX="357.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="112.0" fitWidth="139.0" layoutX="190.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@61fnMMgkGIL._AC_SL1098_.jpg" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="124.0" fitWidth="115.0" layoutX="364.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@ms-hex-nut-bolt-500x500.jpg" />
                      </image>
