@@ -182,6 +182,37 @@ public class controllerHomePage extends UI {
     @FXML
     public void handleshowActiveBooking(ActionEvent event) {
 
+        try {
+            try {
+                ArrayList<BookingModel> getBook = bookingService.showActiveBookingOfCustomer(Cust_id);//get all active bookings by cust_id
+                //Load second scene
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("ShowActiveXML.fxml"));
+                Parent root = loader.load();
+
+                //Get controller of scene2
+                ShowActiveController scene2Controller = loader.getController();
+                //Pass whatever data you want. You can have multiple method calls here
+                scene2Controller.initializeActiveBookings(getBook,Cust_id);
+
+                //close window
+                final Node source = (Node) event.getSource();
+                final Stage hide = (Stage) source.getScene().getWindow();
+                hide.close();
+                //Show scene 2 in new window
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.show();
+
+            }
+            catch (Exception E){
+                System.out.println(E.getMessage());
+            }
+
+        }
+        catch (Exception E){
+            E.getMessage();
+        }
+
     }
     public void changeScene(String file,Button btn)throws Exception{
         Parent root;
@@ -248,6 +279,32 @@ public class controllerHomePage extends UI {
     public void transferId(int _Cust_id) { //Communication: pass user's id from Controller (Multiple fxml files) to handlebookAction
         //Display the message
         Cust_id=_Cust_id;
+    }
+    @FXML
+    void handleEditProfileActionhome(ActionEvent event) {
+        final Node source = (Node) event.getSource();
+        final Stage hide = (Stage) source.getScene().getWindow();
+        hide.close();
+        try {
+            //Load second scene
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("homepage.fxml"));
+            Parent root = loader.load();
+
+            //Get controller of scene2
+            controllerHomePage scene2Controller = loader.getController();
+            //Pass whatever data you want. You can have multiple method calls here
+            scene2Controller.transferId(Cust_id);
+
+            //Show scene 2 in new window
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+        }
+        catch (Exception E){
+            System.out.println(E.getMessage());
+        }
+
+
     }
 
 }

@@ -1,6 +1,5 @@
 package com.easyfix.Application.ui.Gui;
 
-import com.easyfix.Application.models.WorkerModel;
 import com.easyfix.Application.ui.UI;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,16 +7,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.stage.Stage;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
+import javafx.stage.Stage;
 
 //import java.awt.*;
 //import java.awt.event.ActionEvent;
-import java.io.IOException;
-import java.util.ArrayList;
 
 public class controllerEditProfile extends UI {
 

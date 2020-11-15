@@ -100,9 +100,13 @@ public class BookingManager implements BookingService {
         catch (Exception e){
             return false;
         }
-
         return true;
     }
+
+
+
+
+
     public Boolean rejectBooking(int _bid){
         try {
             db.update_booking_status(_bid, "rejected");
@@ -133,8 +137,21 @@ public class BookingManager implements BookingService {
         DbService db = dbProviders.getDbService();
         return db.get_booking_of_customer(cid,"finished");
     }
-    public ArrayList<BookingModel> showActiveBookingOfWorker(int cid){
+    public ArrayList<BookingModel> showActiveBookingOfCustomer(int cid){
         DbService db = dbProviders.getDbService();
         return db.get_booking_of_customer(cid,"active");
     }
+
+
+
+    public ArrayList<BookingModel> showPendingBookingsOfWorker(int wid){
+        DbService db = dbProviders.getDbService();
+        return db.get_booking_of_worker(wid,"pending");
+    }
+    public ArrayList<BookingModel> showActiveOfWorker(int wid){
+        DbService db = dbProviders.getDbService();
+        return db.get_booking_of_worker(wid,"active");
+    }
+
+
 }

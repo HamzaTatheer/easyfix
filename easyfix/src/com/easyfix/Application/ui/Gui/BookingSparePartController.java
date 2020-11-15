@@ -7,7 +7,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -43,7 +46,35 @@ public class BookingSparePartController extends UI {
     @FXML
     private TableColumn<SpareJAVAFX, String > BookWButton;
     private Button[]buttonsArr;
+    @FXML
+    private Button SpareHome;
 
+    @FXML
+    void HandleSpareHome(ActionEvent event) {
+        //close window
+        final Node source = (Node) event.getSource();
+        final Stage hide = (Stage) source.getScene().getWindow();
+        hide.close();
+        try {
+            //Load second scene
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("homepage.fxml"));
+            Parent root = loader.load();
+
+            //Get controller of scene2
+            controllerHomePage scene2Controller = loader.getController();
+            //Pass whatever data you want. You can have multiple method calls here
+            scene2Controller.transferId(Cust_ID);
+
+            //Show scene 2 in new window
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+        }
+        catch (Exception E){
+            System.out.println(E.getMessage());
+        }
+
+    }
     public void initializeSpareArrayList(ArrayList<SparePartModel> W, int c,int w,int b)throws Exception{
         bID=b;
         getSpareParts=new ArrayList<SparePartModel>(W);
