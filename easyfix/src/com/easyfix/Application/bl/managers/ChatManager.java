@@ -2,15 +2,13 @@ package com.easyfix.Application.bl.managers;
 
 import com.easyfix.Application.bl.classes.ChatMessage;
 import com.easyfix.Application.bl.services.ChatService;
-import com.easyfix.Application.bl.services.UserService;
 import com.easyfix.Application.db.dbProviders;
 import com.easyfix.Application.db.services.DbService;
 import com.easyfix.Application.models.ChatMessageModel;
 
-import java.security.spec.ECField;
 import java.util.ArrayList;
 
-public class ChatManager implements ChatService {
+public class  ChatManager implements ChatService {
 
     public DbService dbService;
 

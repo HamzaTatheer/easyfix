@@ -163,9 +163,10 @@ public class BookingConfirmationController extends UI {
                 // configure UI for popup etc...
                 popup.setScene(scene);
                 // hide popup after 3 seconds:
-                PauseTransition delay = new PauseTransition(Duration.seconds(4));
+                PauseTransition delay = new PauseTransition(Duration.seconds(5));
                 delay.setOnFinished(e -> popup.hide());
 
+                popup.show();
                 popup.show();
                 delay.play();
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("BookingSpartPartXML.fxml"));
@@ -214,7 +215,7 @@ public class BookingConfirmationController extends UI {
             // configure UI for popup etc...
             popup.setScene(scene);
             // hide popup after 3 seconds:
-            PauseTransition delay = new PauseTransition(Duration.seconds(1));
+            PauseTransition delay = new PauseTransition(Duration.seconds(7));
             delay.setOnFinished(e -> popup.hide());
 
             popup.show();

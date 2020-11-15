@@ -132,15 +132,18 @@ public class BookingDetailsController extends UI {
             // configure UI for popup etc...
             popup.setScene(scene);
             // hide popup after 3 seconds:
-            PauseTransition delay = new PauseTransition(Duration.seconds(3));
+            PauseTransition delay = new PauseTransition(Duration.seconds(5));
             delay.setOnFinished(e -> popup.hide());
 
             popup.show();
+            popup.show();
+            delay.play();
             delay.play();
             //Show scene 2 in new window
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();
+
         }
         catch (Exception F){
             Text text = new Text();
@@ -150,7 +153,7 @@ public class BookingDetailsController extends UI {
 
             //setting the position of the text
             text.setX(10);
-            text.setY(30);
+            text.setY(10);
 
             //Setting the color
             text.setFill(Color.RED);
@@ -160,7 +163,7 @@ public class BookingDetailsController extends UI {
 
             // Setting the stroke color
             text.setStroke(Color.YELLOW);
-            text.setText("Failure\n"+F.getMessage()+"\nYou did enter values right");
+            text.setText("\n\nFailure\n"+F.getMessage()+"\nInvalid Inputs");
 
             //Creating a Group object
             Group rt = new Group(text);
@@ -173,11 +176,36 @@ public class BookingDetailsController extends UI {
             // configure UI for popup etc...
             popup.setScene(scene);
             // hide popup after 3 seconds:
-            PauseTransition delay = new PauseTransition(Duration.seconds(5));
+            PauseTransition delay = new PauseTransition(Duration.seconds(2));
             delay.setOnFinished(e -> popup.hide());
 
             popup.show();
             delay.play();
+            delay.play();
+            delay.play();
+            //close window
+            final Node source = (Node) actionEvent.getSource();
+            final Stage hide = (Stage) source.getScene().getWindow();
+            hide.close();
+            try {
+                //Load second scene
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("homepage.fxml"));
+                Parent root = loader.load();
+
+                //Get controller of scene2
+                controllerHomePage scene2Controller = loader.getController();
+                //Pass whatever data you want. You can have multiple method calls here
+                scene2Controller.transferId(Cust_ID);
+
+                //Show scene 2 in new window
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.show();
+            }
+            catch (Exception E){
+                System.out.println(E.getMessage());
+            }
+
         }
     }
 }

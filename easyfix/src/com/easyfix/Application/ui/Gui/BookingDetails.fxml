@@ -56,6 +56,11 @@
                         <Image url="@6eb28c8ea93febd971943f5a73364b2f.png" />
                      </image>
                   </ImageView>
+                  <Text layoutX="144.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="STEP 2 of 4 STEPS" wrappingWidth="371.13671875">
+                     <font>
+                        <Font size="43.0" />
+                     </font>
+                  </Text>
                </children>
                 </Pane>
                 <Text fill="#f8f8f8" layoutX="164.0" layoutY="186.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please ! Enter Booking Details." textAlignment="CENTER" wrappingWidth="330.13671875">
