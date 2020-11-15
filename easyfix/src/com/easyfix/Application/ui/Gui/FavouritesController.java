@@ -61,7 +61,7 @@ public class FavouritesController extends UI {
     }
     @FXML
     void handleHomePage(ActionEvent event) {
-        //close window
+
         final Node source = (Node) event.getSource();
         final Stage hide = (Stage) source.getScene().getWindow();
         hide.close();

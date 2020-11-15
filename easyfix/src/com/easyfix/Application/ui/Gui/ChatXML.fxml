@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="522.0" prefWidth="659.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easyfix.Application.ui.Gui.ChatController">
+    <children>
+        <Pane prefHeight="522.0" prefWidth="659.0" styleClass="linear-grade" stylesheets="@test.css">
+            <children>
+                <ImageView fitHeight="49.0" fitWidth="39.0" layoutX="606.0" layoutY="471.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@Daco_1849574.png" />
+                    </image>
+                </ImageView>
+                <Button fx:id="ConfirmationHome" layoutX="215.0" layoutY="470.0" mnemonicParsing="false" onAction="#handleConfirmationHome" prefHeight="24.0" prefWidth="227.0" text="Return to Home">
+                    <textFill>
+                        <RadialGradient centerX="0.17555554707845056" centerY="0.47709922208130817" radius="0.5">
+                            <stops>
+                                <Stop color="#ad2626ce" />
+                                <Stop color="#652929d9" offset="1.0" />
+                            </stops>
+                        </RadialGradient>
+                    </textFill>
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="WAIT" />
+                    </cursor>
+                </Button>
+                <Pane layoutX="-1.0" layoutY="-2.0" prefHeight="156.0" prefWidth="659.0" style="-fx-background-color: white;">
+                    <effect>
+                        <ColorAdjust brightness="-0.07" />
+                    </effect>
+                    <children>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="450.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@chatnow.jpg" />
+                            </image>
+                        </ImageView>
+                        <Text layoutX="41.0" layoutY="97.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Let's Chat :)" wrappingWidth="371.13671875">
+                            <font>
+                                <Font size="43.0" />
+                            </font>
+                     <fill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                           <stops>
+                              <Stop color="#2f5865" />
+                              <Stop color="WHITE" offset="1.0" />
+                           </stops>
+                        </LinearGradient>
+                     </fill>
+                        </Text>
+                    </children>
+                </Pane>
+            <TextField layoutX="37.0" layoutY="398.0" prefHeight="47.0" prefWidth="465.0" style="-fx-background-color: green;">
+               <effect>
+                  <ColorAdjust brightness="0.86" contrast="0.29" />
+               </effect>
+            </TextField>
+            <Button layoutX="538.0" layoutY="407.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="79.0" text="SEND" textFill="#388c66" />
+            <TextFlow layoutX="167.0" layoutY="138.0" prefHeight="200.0" prefWidth="275.0" />
+            </children>
+        </Pane>
+      <ScrollPane fitToWidth="true" layoutX="-1.0" layoutY="178.0" prefHeight="189.0" prefWidth="659.0">
+         <content>
+            <TableView fx:id="TableView" nodeOrientation="LEFT_TO_RIGHT" opacity="0.91" prefHeight="190.0" prefWidth="644.0" style="-fx-background-color: pink;">
+               <columns>
+                  <TableColumn fx:id="_FavName" editable="false" prefWidth="320.0" style="-fx-alignment: CENTER;" />
+                  <TableColumn fx:id="_FavName1" editable="false" prefWidth="320.0" style="-fx-alignment: CENTER;" />
+               </columns>
+               <effect>
+                  <ColorAdjust brightness="0.02" contrast="0.36" saturation="0.17" />
+               </effect>
+               <cursor>
+                  <Cursor fx:constant="CLOSED_HAND" />
+               </cursor>
+               <opaqueInsets>
+                  <Insets bottom="33.0" right="33.0" top="23.0" />
+               </opaqueInsets>
+            </TableView>
+         </content>
+      </ScrollPane>
+    </children>
+</Pane>
