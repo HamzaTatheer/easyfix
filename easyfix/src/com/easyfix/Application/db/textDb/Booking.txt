@@ -2,15 +2,15 @@
 1
 1
 fix my house
-active
+finished
 2020-11-14T04:52
-2020-11-14T19:03:21.613246400
+2020-11-16T19:28:39.628256800
 0
 2
 1
 1
 fix laptop
-pending
+rejected
 2020-11-14T04:54
 2020-11-14T04:54
 0
@@ -26,7 +26,7 @@ finished
 1
 3
 frjekejr
-pending
+rejected
 2020-01-01T01:01
 2020-01-01T01:01
 0
@@ -34,7 +34,7 @@ pending
 1
 1
 fhe3grhg
-pending
+rejected
 2020-01-01T01:01
 2020-01-01T01:01
 0
@@ -42,7 +42,7 @@ pending
 1
 5
 fegwfhwlegf
-pending
+rejected
 2020-06-22T23:33
 2020-06-22T23:33
 0
@@ -50,7 +50,7 @@ pending
 1
 5
 fhewhf
-pending
+rejected
 2020-03-03T03:10
 2020-03-03T03:10
 0
@@ -58,7 +58,7 @@ pending
 1
 5
 hfhwef
-pending
+rejected
 2020-01-01T01:01
 2020-01-01T01:01
 0
@@ -66,7 +66,7 @@ pending
 1
 5
 hbefhweb
-pending
+rejected
 2020-04-04T04:04
 2020-04-04T04:04
 0
@@ -74,7 +74,7 @@ pending
 1
 3
 fgwlgfge
-pending
+rejected
 2020-07-17T12:20
 2020-07-17T12:20
 0
@@ -82,7 +82,7 @@ pending
 1
 1
 fygefhgf
-pending
+rejected
 2020-11-22T02:22
 2020-11-22T02:22
 0
@@ -90,7 +90,7 @@ pending
 1
 3
 gewefgfew
-pending
+rejected
 2020-05-22T22:22
 2020-05-22T22:22
 0
@@ -98,7 +98,7 @@ pending
 1
 3
 HEllo world
-pending
+rejected
 2020-08-22T02:22
 2020-08-22T02:22
 0
@@ -106,7 +106,7 @@ pending
 1
 3
 dhhhhhhh
-pending
+rejected
 2020-06-06T06:06
 2020-06-06T06:06
 0
@@ -114,7 +114,7 @@ pending
 1
 3
 dgd
-pending
+rejected
 2020-02-22T02:02
 2020-02-22T02:02
 0
@@ -122,7 +122,7 @@ pending
 1
 3
 dgelhw
-pending
+rejected
 2020-08-08T08:08
 2020-08-08T08:08
 0
@@ -130,7 +130,7 @@ pending
 1
 5
 regrgryg3ryrgf3y
-pending
+rejected
 2020-03-03T07:45
 2020-03-03T07:45
 0
@@ -138,7 +138,7 @@ pending
 1
 3
 hfwjf
-pending
+rejected
 2020-11-03T04:54
 2020-11-03T04:54
 0
@@ -146,7 +146,7 @@ pending
 1
 5
 whelgfhe
-pending
+rejected
 2020-06-06T06:03
 2020-06-06T06:03
 0
@@ -154,7 +154,7 @@ pending
 1
 5
 Fix 
-pending
+rejected
 2020-04-04T07:22
 2020-04-04T07:22
 0
@@ -162,7 +162,7 @@ pending
 1
 5
 dhgdhq
-pending
+rejected
 2020-03-03T04:44
 2020-03-03T04:44
 0
@@ -170,7 +170,7 @@ pending
 1
 3
 ee
-pending
+rejected
 2020-06-04T07:08
 2020-06-04T07:08
 0
@@ -178,7 +178,7 @@ pending
 1
 3
 heefr
-pending
+rejected
 2020-02-01T03:04
 2020-02-01T03:04
 0
@@ -186,7 +186,7 @@ pending
 1
 5
 rgherg
-pending
+rejected
 2020-03-01T05:06
 2020-03-01T05:06
 0
@@ -194,7 +194,7 @@ pending
 1
 1
 fegwwe
-pending
+rejected
 2020-04-04T05:07
 2020-04-04T05:07
 0
@@ -202,7 +202,7 @@ pending
 1
 5
 Fix Tap
-pending
+rejected
 2020-03-03T01:01
 2020-03-03T01:01
 0
@@ -210,7 +210,7 @@ pending
 1
 3
 Fix
-pending
+rejected
 2020-05-01T09:55
 2020-05-01T09:55
 0
@@ -218,7 +218,7 @@ pending
 1
 1
 Dgdgh
-pending
+rejected
 2020-02-02T03:05
 2020-02-02T03:05
 0
@@ -226,7 +226,7 @@ pending
 1
 1
 gehr
-pending
+rejected
 2020-02-01T03:04
 2020-02-01T03:04
 0
@@ -234,7 +234,7 @@ pending
 1
 3
 gfeghr
-pending
+rejected
 2020-01-01T05:08
 2020-01-01T05:08
 0
@@ -242,7 +242,7 @@ pending
 1
 3
 flf
-pending
+rejected
 2020-03-03T03:03
 2020-03-03T03:03
 0
@@ -250,7 +250,7 @@ pending
 1
 3
 gyweghff
-pending
+rejected
 2020-02-01T03:40
 2020-02-01T03:40
 0
@@ -258,7 +258,7 @@ pending
 1
 1
 treywr
-pending
+rejected
 2020-04-03T10:10
 2020-04-03T10:10
 0
@@ -266,7 +266,7 @@ pending
 1
 5
 hfhfj
-pending
+rejected
 2020-01-01T01:09
 2020-01-01T01:09
 0
@@ -274,7 +274,7 @@ pending
 8
 1
 Need to fix the lock of the door
-pending
+rejected
 2020-06-12T02:44
 2020-06-12T02:44
 0
@@ -282,7 +282,7 @@ pending
 1
 5
 Fix tap
-pending
+rejected
 2020-12-12T12:02
 2020-12-12T12:02
 0
@@ -290,7 +290,95 @@ pending
 1
 5
 check the door
+rejected
+2020-02-02T02:02
+2020-02-02T02:02
+0
+38
+1
+1
+Fix Door
+rejected
+2020-01-02T01:01
+2020-01-02T01:01
+0
+39
+1
+1
+Fix Lock
+rejected
+2020-02-02T02:23
+2020-02-02T02:23
+0
+40
+1
+1
+Fix the tap
+rejected
+2020-02-02T02:02
+2020-02-02T02:02
+0
+41
+1
+1
+Fix the lock
+rejected
+2020-02-02T23:03
+2020-02-02T23:03
+0
+42
+1
+1
+Fix the door
+finished
+2020-03-02T03:30
+2020-11-16T19:33:19.620207700
+0
+43
+1
+1
+Fix the stage
+finished
+2020-02-02T02:12
+2020-11-16T19:30:24.616187800
+0
+44
+1
+1
+Fix my room's lock
+rejected
+2020-03-03T03:03
+2020-03-03T03:03
+0
+45
+1
+1
+Fix the door
+finished
+2020-12-02T02:02
+2020-11-16T20:11:26.066360100
+0
+46
+1
+1
+Fix the tap
+rejected
+2020-02-02T03:04
+2020-02-02T03:04
+0
+47
+1
+1
+Fix the lock
+active
+2020-04-02T03:34
+2020-04-02T03:34
+0
+48
+1
+1
+Fix the tap
 pending
-2020-02-02T02:02
-2020-02-02T02:02
+2020-03-02T03:04
+2020-03-02T03:04
 0

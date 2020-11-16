@@ -70,9 +70,10 @@
                     <content>
                         <TableView fx:id="TableView" nodeOrientation="LEFT_TO_RIGHT" opacity="0.91" prefHeight="181.0" prefWidth="644.0" style="-fx-background-color: pink;">
                             <columns>
-                                <TableColumn fx:id="ActiveTitle" editable="false" prefWidth="180.0" style="-fx-alignment: CENTER;" text="Title" />
-                                <TableColumn fx:id="ActiveStart" editable="false" prefWidth="200.0" style="-fx-alignment: CENTER;" text="Start Time" />
-                                <TableColumn fx:id="ActiveEnd" editable="false" prefWidth="200.0" style="-fx-alignment: CENTER;" text="End Time" />
+                                <TableColumn fx:id="ActiveTitle" editable="false" prefWidth="160.0" style="-fx-alignment: CENTER;" text="Title" />
+                                <TableColumn fx:id="ActiveStart" editable="false" prefWidth="140.0" style="-fx-alignment: CENTER;" text="Start Time" />
+                                <TableColumn fx:id="ActiveEnd" editable="false" prefWidth="130.0" style="-fx-alignment: CENTER;" text="End Time" />
+                        <TableColumn fx:id="ConfirmActiveEmail" editable="false" prefWidth="150.0" style="-fx-alignment: CENTER;" text="Confirm Email" />
                                 <TableColumn fx:id="ActiveOption" editable="false" prefWidth="70.0" style="-fx-alignment: CENTER;" text="Option" />
                             </columns>
                             <effect>

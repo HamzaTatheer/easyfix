@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="369.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.easyfix.Application.ui.Gui.WalletController">
+    <children>
+        <Pane prefHeight="101.0" prefWidth="600.0" styleClass="linear-grade" stylesheets="@test.css">
+            <children>
+                <Button fx:id="home" layoutX="42.0" layoutY="62.0" mnemonicParsing="false" onAction="#handleWalletHome" prefHeight="20.0" prefWidth="58.0" text="Home" />
+                <ImageView fitHeight="90.0" fitWidth="104.0" layoutX="496.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@Daco_1849574.png" />
+                    </image>
+                </ImageView>
+            </children></Pane>
+        <Button fx:id="paybill" layoutX="251.0" layoutY="281.0" mnemonicParsing="false" onAction="#handleaddtowallet" prefHeight="27.0" prefWidth="77.0" styleClass="linear-grade" stylesheets="@test.css" text="Add" />
+      <TextField fx:id="walletText" layoutX="300.0" layoutY="172.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </TextField>
+      <Text layoutX="111.0" layoutY="197.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter amount:" wrappingWidth="144.13671875">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text fill="#d30b0b" layoutX="84.0" layoutY="242.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Note: This amount will be added to customer wallet of selected booking" wrappingWidth="487.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <Text layoutX="111.0" layoutY="147.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Verify Customer Email:" wrappingWidth="160.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <TextField fx:id="CustomerEmailText" layoutX="300.0" layoutY="123.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </TextField>
+    </children>
+</Pane>

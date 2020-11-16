@@ -4,8 +4,8 @@ ahmed@gmail.com
 12345
 2.0
 500.0
-lahore
-dha
+okara
+cantt
 plumber
 2
 Nawaz
@@ -38,7 +38,7 @@ plumber
 Kamran
 kamran@gmail.com
 12345789
-2.0
+3.0
 300.0
 lahore
 valencia

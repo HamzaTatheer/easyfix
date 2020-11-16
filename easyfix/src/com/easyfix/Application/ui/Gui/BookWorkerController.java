@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -67,39 +68,52 @@ public class BookWorkerController extends UI {
             stage.show();
         }
         catch (Exception E){
-            System.out.println(E.getMessage());
+            showAlert(E.getMessage(), Alert.AlertType.INFORMATION);
         }
 
     }
+    private void showAlert(String alertMessage, Alert.AlertType type){
+        Alert alert = new Alert(type);
+        alert.setContentText(alertMessage);
+        alert.show();
+    }
 
     public void initializeWorkerArrayList(ArrayList<WorkerModel> W,int c){
-        getWorkers=new ArrayList<WorkerModel>(W);
-        buttonsArr=new Button[getWorkers.size()];
-        c_id=c;
-        //setSpacing(5);
-        TableView.setStyle( "-fx-alignment: Centre;");
+        try {
 
-        _Name.setCellValueFactory(new PropertyValueFactory<WorkerJAVAFX,String>("_Name"));
-        _Rating.setCellValueFactory(new PropertyValueFactory<WorkerJAVAFX, Float>("_Rating"));
-        _HourlyRate.setCellValueFactory(new PropertyValueFactory<WorkerJAVAFX, Float>("_HourlyRate"));
-        _Speciality.setCellValueFactory(new PropertyValueFactory<WorkerJAVAFX,String>("_Speciality"));
-        BookWButton.setCellValueFactory(new PropertyValueFactory<WorkerJAVAFX,String>("button"));
-        list= FXCollections.observableArrayList();
-        for (int i=0;i<buttonsArr.length;i++){
-            buttonsArr[i]=new Button();
-            buttonsArr[i].setOnAction(this::handleButtonAction);
 
+            getWorkers = new ArrayList<WorkerModel>(W);
+            buttonsArr = new Button[getWorkers.size()];
+            c_id = c;
+            //setSpacing(5);
+            TableView.setStyle("-fx-alignment: Centre;");
+
+            _Name.setCellValueFactory(new PropertyValueFactory<WorkerJAVAFX, String>("_Name"));
+            _Rating.setCellValueFactory(new PropertyValueFactory<WorkerJAVAFX, Float>("_Rating"));
+            _HourlyRate.setCellValueFactory(new PropertyValueFactory<WorkerJAVAFX, Float>("_HourlyRate"));
+            _Speciality.setCellValueFactory(new PropertyValueFactory<WorkerJAVAFX, String>("_Speciality"));
+            BookWButton.setCellValueFactory(new PropertyValueFactory<WorkerJAVAFX, String>("button"));
+            list = FXCollections.observableArrayList();
+            for (int i = 0; i < buttonsArr.length; i++) {
+                buttonsArr[i] = new Button();
+                buttonsArr[i].setOnAction(this::handleButtonAction);
+
+            }
+            int i = 0;
+            for (WorkerModel workerModel : getWorkers) {
+                list.add(new WorkerJAVAFX(workerModel.id, workerModel.name, workerModel.avgRating, workerModel.hourlyRate, workerModel.speciality, buttonsArr[i]));
+                i++;
+            }
+            TableView.setItems(list);
         }
-        int i=0;
-        for (WorkerModel workerModel : getWorkers) {
-            list.add(new WorkerJAVAFX(workerModel.id,workerModel.name,workerModel.avgRating,workerModel.hourlyRate,workerModel.speciality,buttonsArr[i]));
-            i++;
+        catch (Exception E){
+            showAlert(E.getMessage(), Alert.AlertType.INFORMATION);
         }
-        TableView.setItems(list);
 
     }
     int store_button_index;
     private void handleButtonAction(ActionEvent actionEvent) {
+        try {
         int size=getWorkers.size();
         for(int i=0;i<size;i++) {
             if (actionEvent.getSource() == buttonsArr[i]) {
@@ -114,7 +128,6 @@ public class BookWorkerController extends UI {
         final Stage hide = (Stage) source.getScene().getWindow();
         hide.close();
 
-        try {
 
 
             //Load second scene
@@ -132,7 +145,7 @@ public class BookWorkerController extends UI {
             stage.show();
         }
         catch (Exception e){
-            System.out.println(e.getMessage());
+            showAlert(e.getMessage(), Alert.AlertType.INFORMATION);
         }
     }
 

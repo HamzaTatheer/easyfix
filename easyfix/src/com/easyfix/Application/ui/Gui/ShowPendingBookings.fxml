@@ -56,7 +56,7 @@
                                 <Font size="40.0" />
                             </font>
                      <fill>
-                        <LinearGradient endX="1.0" endY="1.0" startX="0.7523809523809524" startY="0.1571428571428572">
+                        <LinearGradient endX="1.0" startX="0.2238095238095238" startY="0.3238095238095238">
                            <stops>
                               <Stop color="#c31b16" />
                               <Stop color="WHITE" offset="1.0" />
@@ -70,9 +70,11 @@
                     <content>
                         <TableView fx:id="TableView" nodeOrientation="LEFT_TO_RIGHT" opacity="0.91" prefHeight="181.0" prefWidth="644.0" style="-fx-background-color: pink;">
                             <columns>
-                                <TableColumn fx:id="PendingTitle" editable="false" prefWidth="250.0" style="-fx-alignment: CENTER;" text="Title" />
-                                <TableColumn fx:id="PendingStart" editable="false" prefWidth="200.0" style="-fx-alignment: CENTER;" text="Start Time" />
-                                <TableColumn fx:id="PendingEnd" editable="false" prefWidth="200.0" style="-fx-alignment: CENTER;" text="End Time" />
+                                <TableColumn fx:id="PendingTitle" editable="false" prefWidth="140.0" style="-fx-alignment: CENTER;" text="Title" />
+                                <TableColumn fx:id="PendingStart" editable="false" prefWidth="140.0" style="-fx-alignment: CENTER;" text="Start Time" />
+                                <TableColumn fx:id="PendingEnd" editable="false" prefWidth="140.0" style="-fx-alignment: CENTER;" text="End Time" />
+                        <TableColumn fx:id="confirmEmailText" editable="false" prefWidth="150.0" style="-fx-alignment: CENTER;" text="Confirm Email" />
+                        <TableColumn fx:id="PendingOption" prefWidth="70.0" text="Option" />
                             </columns>
                             <effect>
                                 <ColorAdjust brightness="0.02" contrast="0.36" saturation="0.17" />
