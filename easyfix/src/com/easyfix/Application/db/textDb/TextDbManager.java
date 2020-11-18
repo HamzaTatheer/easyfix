@@ -18,8 +18,8 @@ import java.util.Scanner; // Import the Scanner class to read text files
 public class TextDbManager implements DbService {
 
     //Hamzas Path do not delete
-    //private static String currentPath = "./easyfix/src/com/easyfix/Application/db/textDb/";
-    private static String currentPath = "E:\\easyfix\\easyfix\\src\\com\\easyfix\\Application\\db\\textDb\\";
+    private static String currentPath = "./easyfix/src/com/easyfix/Application/db/textDb/";
+    //private static String currentPath = "E:\\easyfix\\easyfix\\src\\com\\easyfix\\Application\\db\\textDb\\";
     //private static String currentPath = "C:\\Users\\Fahad\\Documents\\easyfix\\easyfix\\src\\com\\easyfix\\Application\\db\\textDb\\";
     //private static String currentPath = "./";
 
@@ -2679,7 +2679,7 @@ public class TextDbManager implements DbService {
                 ret.senderName=myReader.nextLine();
                 ret.receiverName=myReader.nextLine();
                 ret.message=myReader.nextLine();
-                if (ret.senderId==customer_id&&ret.receiverId==worker_id)
+                if ((ret.senderId==customer_id&&ret.receiverId==worker_id)||(ret.senderId==worker_id&&ret.receiverId==customer_id))
                 {
                     store.add(ret);
                 }

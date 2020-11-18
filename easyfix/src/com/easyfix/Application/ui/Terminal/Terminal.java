@@ -168,7 +168,7 @@ public class Terminal extends UI {
                     return;
                 }
                 else if(!message.equals("refresh")){
-                    chatService.sendMessage(cid,wid,"worker",message);
+                    chatService.sendMessage(wid,cid,"worker",message);
                 }
 
             }

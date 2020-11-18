@@ -102,7 +102,7 @@ public class Controller extends UI{
     private void handleRegisterAction(ActionEvent event) throws Exception{
         int cid=0;
         try {
-            cid = customerService.register(name.getText(),email.getText(),pass.getText(),"123",city.getText(),area.getText());
+            cid = customerService.register(name.getText(),email.getText(),pass.getText(),"1234567891",city.getText(),area.getText());
             System.out.println("Signup successful");
         } catch (Exception e) {
             System.out.println(e.getMessage());
