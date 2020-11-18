@@ -45,7 +45,7 @@ public class Customer extends User{
     }
 
     public Boolean changeCity(String newCity){
-        if(newCity.equals("lahore") || newCity.equals("lahore") || newCity.equals("lahore")){
+        if(newCity.equals("lahore") || newCity.equals("karachi") || newCity.equals("islamabad")){
             city = newCity;
             return true;
         }

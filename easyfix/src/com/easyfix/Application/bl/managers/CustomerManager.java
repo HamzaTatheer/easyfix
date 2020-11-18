@@ -151,8 +151,12 @@ public class CustomerManager implements CustomerService {
 
     public boolean changeCity(int cid,String newCity){
         Customer c = new Customer(dbService.get_customer(cid));
-        c.changeCity(newCity);
-        return dbService.update_customer_city(cid,c.getCity());
+        if(c.changeCity(newCity)==true) {
+            return dbService.update_customer_city(cid, c.getCity());
+        }
+        else{
+            return false;
+        }
     }
 
     public boolean giveRating(int cid, int wid,int rating) throws Exception {
