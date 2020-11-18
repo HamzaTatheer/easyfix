@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
@@ -46,7 +47,7 @@ public class controllerHomePage extends UI {
 
     @FXML
     void HandlePendingBookings(ActionEvent event) {
-        try {
+
             try {
                 ArrayList<BookingModel> getBook = bookingService.showPendingBookingsOfCustomer(Cust_id);//get all active bookings by cust_id
                 //Load second scene
@@ -56,7 +57,7 @@ public class controllerHomePage extends UI {
                 //Get controller of scene2
                 ShowPendingBookingsController scene2Controller = loader.getController();
                 //Pass whatever data you want. You can have multiple method calls here
-                scene2Controller.initializePendingBookings(getBook,Cust_id);
+                scene2Controller.initializePendingBookings(getBook,Cust_id,0);
 
                 //close window
                 final Node source = (Node) event.getSource();
@@ -69,19 +70,14 @@ public class controllerHomePage extends UI {
 
             }
             catch (Exception E){
-                System.out.println(E.getMessage());
+                showAlert(E.getMessage(), Alert.AlertType.INFORMATION);
             }
 
-        }
-        catch (Exception E){
-            E.getMessage();
-        }
 
     }
     @FXML
     public void handleBookWorkerAction(ActionEvent event) throws IOException {
-        //System.out.println("Customer Id " + Cust_id+"\n"); //Cust_id passed to Book Worker
-        try {
+
             try {
                 ArrayList<WorkerModel> getWork = customerService.getWorkersCloseBy(Cust_id);//get all workers by cust_id
                 //Load second scene
@@ -104,13 +100,10 @@ public class controllerHomePage extends UI {
 
             }
             catch (Exception E){
-                E.getMessage();
+                showAlert(E.getMessage(), Alert.AlertType.INFORMATION);
             }
 
-        }
-        catch (Exception E){
-            E.getMessage();
-        }
+
     }
     @FXML
     public void handleEditProfile1Action(ActionEvent event) {
@@ -121,7 +114,7 @@ public class controllerHomePage extends UI {
                 sendDatatoProfile("changecity.fxml", gotoChangeCity);
             }
             catch(Exception e){
-                e.getMessage();
+                showAlert(e.getMessage(), Alert.AlertType.INFORMATION);
             }
         }
         else if(event.getSource()==gotoChangeArea){
@@ -129,7 +122,7 @@ public class controllerHomePage extends UI {
                 sendDatatoProfile("changearea.fxml", gotoChangeArea);
             }
             catch(Exception e){
-                e.getMessage();
+                showAlert(e.getMessage(), Alert.AlertType.INFORMATION);
             }
 
         }
@@ -138,7 +131,7 @@ public class controllerHomePage extends UI {
                 sendDatatoProfile("changepayment.fxml", gotoChangePayment);
             }
             catch(Exception e){
-                e.getMessage();
+                showAlert(e.getMessage(), Alert.AlertType.INFORMATION);
             }
 
         }
@@ -148,20 +141,14 @@ public class controllerHomePage extends UI {
                 sendDatatoHome("homepage.fxml",home);
             }
             catch(Exception e){
-                e.getMessage();
+                showAlert(e.getMessage(), Alert.AlertType.INFORMATION);
             }
         }
     }
 
-
-    @FXML
-    public void handleLogout(ActionEvent event) {
-
-    }
-
     @FXML
     public void handleShowFavouritesAction(ActionEvent event) {
-        try {
+
             try {
                 ArrayList<WorkerModel> getWork = customerService.getFavourites(Cust_id);//get all workers by cust_id
                 //Load second scene
@@ -184,13 +171,8 @@ public class controllerHomePage extends UI {
 
             }
             catch (Exception E){
-                System.out.print("E.getMessage()");
+                showAlert(E.getMessage(), Alert.AlertType.INFORMATION);
             }
-
-        }
-        catch (Exception E){
-            E.getMessage();
-        }
 
     }
 
@@ -218,7 +200,7 @@ public class controllerHomePage extends UI {
     @FXML
     public void handleshowActiveBooking(ActionEvent event) {
 
-        try {
+
             try {
                 ArrayList<BookingModel> getBook = bookingService.showActiveBookingOfCustomer(Cust_id);//get all active bookings by cust_id
                 //Load second scene
@@ -228,7 +210,7 @@ public class controllerHomePage extends UI {
                 //Get controller of scene2
                 ShowActiveController scene2Controller = loader.getController();
                 //Pass whatever data you want. You can have multiple method calls here
-                scene2Controller.initializeActiveBookings(getBook,Cust_id);
+                scene2Controller.initializeActiveBookings(getBook,Cust_id,0);
 
                 //close window
                 final Node source = (Node) event.getSource();
@@ -241,13 +223,10 @@ public class controllerHomePage extends UI {
 
             }
             catch (Exception E){
-                System.out.println(E.getMessage());
+                showAlert(E.getMessage(), Alert.AlertType.INFORMATION);
             }
 
-        }
-        catch (Exception E){
-            E.getMessage();
-        }
+
 
     }
     public void changeScene(String file,Button btn)throws Exception{
@@ -293,6 +272,12 @@ public class controllerHomePage extends UI {
         stage.setScene(new Scene(root));
         stage.show();
     }
+    private void showAlert(String alertMessage, Alert.AlertType type){
+        Alert alert = new Alert(type);
+        alert.setContentText(alertMessage);
+        alert.show();
+    }
+
     public void sendDatatoHome(String file,Button btn)throws Exception{
         //Load second scene
         FXMLLoader loader = new FXMLLoader(getClass().getResource(file));
@@ -337,10 +322,11 @@ public class controllerHomePage extends UI {
             stage.show();
         }
         catch (Exception E){
-            System.out.println(E.getMessage());
+            showAlert(E.getMessage(), Alert.AlertType.INFORMATION);
         }
 
 
     }
 
 }
+

@@ -1,47 +1,22 @@
 package com.easyfix.Application.ui.Gui;
 //import java.awt.event.ActionEvent;
-import java.io.IOException;
-import com.easyfix.Application.models.*;
-import java.net.URL;
-import java.util.ResourceBundle;
+
+import com.easyfix.Application.ui.UI;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-
-import com.easyfix.Application.bl.serviceProviders;
-import com.easyfix.Application.bl.services.BookingService;
-import com.easyfix.Application.models.WorkerModel;
-import com.easyfix.Application.ui.UI;
-import javafx.application.Application;
-import com.easyfix.Application.models.WorkerModel;
-import javafx.event.EventHandler;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
-import com.easyfix.Application.bl.classes.SparePart;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import javafx.scene.control.TextField;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.Label;
-import com.easyfix.Application.bl.services.CustomerService;
-//import com.easyfix.Application.bl.serviceProviders;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.Reflection;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-import javafx.geometry.Insets;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
-import javax.swing.*;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+//import com.easyfix.Application.bl.serviceProviders;
 
 public class Controller extends UI{
 
@@ -53,7 +28,8 @@ public class Controller extends UI{
     @FXML
     private TextField name,email,pass,city,area,choice,getcity;
 
-    String Choice;
+    static String Choice;
+    static String username;
 
     @FXML
     private void handleLoginAction(ActionEvent event) throws Exception{
@@ -63,18 +39,21 @@ public class Controller extends UI{
             System.out.println(email.getText()+ pass.getText());
 
             System.out.println("cc "+Choice);
-            if(Choice.equals("customer"))
-                userid = customerService.login(email.getText(),pass.getText());
+            if(Choice.equalsIgnoreCase("customer")) {
+                userid = customerService.login(email.getText(), pass.getText());
 
-            else if(Choice.equals("worker"))
-                workerid = workerService.login(email.getText(),pass.getText());
-            System.out.println("Login Successful");
+            }
+            else if(Choice.equalsIgnoreCase("worker")) {
+                workerid = workerService.login(email.getText(), pass.getText());
+            }
+            showAlert("Login Successful", Alert.AlertType.INFORMATION);
 
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        }
+        catch (Exception e) {
+            showAlert(e.getMessage(), Alert.AlertType.INFORMATION);
         }
         if(userid>0){
-
+            username=customerService.getCustomerDetails(userid).name;
             //Load second scene
             FXMLLoader loader = new FXMLLoader(getClass().getResource("homepage.fxml"));
             Parent root = loader.load();
@@ -91,6 +70,7 @@ public class Controller extends UI{
         }
         else if(workerid>0){
             //Load second scene
+            username=workerService.getWorker(workerid).name;
             FXMLLoader loader = new FXMLLoader(getClass().getResource("workerhomepage.fxml"));
             Parent root = loader.load();
 
@@ -162,6 +142,11 @@ public class Controller extends UI{
     public void initialize(URL url, ResourceBundle resources) {
         // Initialization code can go here.
         // The parameters url and resources can be omitted if they are not needed
+    }
+    private void showAlert(String alertMessage, Alert.AlertType type){
+        Alert alert = new Alert(type);
+        alert.setContentText(alertMessage);
+        alert.show();
     }
 
 }

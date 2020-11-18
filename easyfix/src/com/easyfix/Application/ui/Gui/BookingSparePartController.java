@@ -2,27 +2,20 @@ package com.easyfix.Application.ui.Gui;
 
 import com.easyfix.Application.models.SparePartModel;
 import com.easyfix.Application.ui.UI;
-import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.util.ArrayList;
 
@@ -109,82 +102,27 @@ public class BookingSparePartController extends UI {
     }
 
     private void handleButtonAction(ActionEvent actionEvent)throws Exception{
-        Text text = new Text();
-
-        //Setting font to the text
-        text.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 50));
-
-        //setting the position of the text
-        text.setX(50);
-        text.setY(130);
-
-        //Setting the color
-        text.setFill(Color.GREEN);
-
-        //Setting the Stroke
-        text.setStrokeWidth(2);
-
-        // Setting the stroke color
-        text.setStroke(Color.YELLOW);
-
-
-
-
+        try {
 
         for(int i=0;i<buttonsArr.length;i++) {
             if (actionEvent.getSource() == buttonsArr[i]) {
-                try {
 
                     sparePartService.addSparePartsToBooking(bID, i, 1);
-                    //Setting the text to be added.
-                    text.setText("Added");
+                    showAlert("SUCCESS! SparePart added", Alert.AlertType.INFORMATION);
 
-                    //Creating a Group object
-                    Group root = new Group(text);
-
-                    //Creating a scene object
-                    Scene scene = new Scene(root, 600, 300);
-
-                    // can use an Alert, Dialog, or PopupWindow as needed...
-                    Stage popup = new Stage();
-                    // configure UI for popup etc...
-                    popup.setScene(scene);
-                    // hide popup after 3 seconds:
-                    PauseTransition delay = new PauseTransition(Duration.seconds(1));
-                    delay.setOnFinished(e -> popup.hide());
-
-                    popup.show();
-                    delay.play();
-                }
-                catch (Exception E){
-                    //Setting the text to be added.
-                    text.setFill(Color.RED);
-                    text.setText("Not Added");
-
-                    //Creating a Group object
-                    Group root = new Group(text);
-
-                    //Creating a scene object
-                    Scene scene = new Scene(root, 600, 300);
-
-                    // can use an Alert, Dialog, or PopupWindow as needed...
-                    Stage popup = new Stage();
-                    // configure UI for popup etc...
-                    popup.setScene(scene);
-                    // hide popup after 3 seconds:
-                    PauseTransition delay = new PauseTransition(Duration.seconds(1));
-                    delay.setOnFinished(e -> popup.hide());
-
-                    popup.show();
-                    delay.play();
-                    //System.out.println(E.getMessage());
                 }
 
-                //System.out.println("Button" + (i + 1) + "Pressed\n");
-                //System.out.println("WorkerID selected"+selected_WID);
             }
         }
+        catch (Exception E){
+            showAlert("SparePart not added", Alert.AlertType.INFORMATION);
+        }
 
+    }
+    private void showAlert(String alertMessage, Alert.AlertType type){
+        Alert alert = new Alert(type);
+        alert.setContentText(alertMessage);
+        alert.show();
     }
 
 
