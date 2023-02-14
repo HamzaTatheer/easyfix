@@ -1,4 +1,4 @@
-# easyfix
+# easyfix - University Course project
 
 
 ![alt text](https://i.ibb.co/Ycr7P2C/ezbg.png)
